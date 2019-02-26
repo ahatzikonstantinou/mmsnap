@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">MMSNAP</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">MM SNAP</string>
+    <string name="nav_header_subtitle">kospiro@yahoo.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_header_about">About</string>
+    <string name="summary_about">We are a team of like-minded people, specialized in development of Android App Development creating new trends across the app space. Glad to Help in anyway!</string>
+    <string name="app_version">1.0</string>
+    <string name="summary_support">Got any queries? We are happy to help!</string>
+    <string name="title_send_feedback">Send Feedback</string>
+    <string name="title_faq">FAQ</string>
+    <string name="summary_faq">View frequently asked questions</string>
+    <string name="url_faq">https://www.mmsnap.info/faq/</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="url_privacy">https://www.mmsnap.info/privacy-policy/</string>
+    <string name="title_terms">Terms &amp; Conditions</string>
+    <string name="url_terms">https://www.mmsnap.info/terms-of-service/</string>
+    <string name="title_version">Version</string>
+    <string name="choose_email_client">Choose email client</string>
+    <string name="key_send_feedback">key_send_feedback</string>
+    <string name="username">username</string>
+    <string name="key_username">key_username</string>
+    <string name="title_username">Username</string>
+    <string name="password">password</string>
+    <string name="key_password">key_password</string>
+    <string name="title_password">Password</string>
+    <string name="mm_snap_btn_text">MM-SNAP</string>
+    <string name="assessments_btn_txt">ASSESSMENTS</string>
+    <string name="education_btn_txt">EDUCATION</string>
+    <string name="if_then_btn_txt">IF - THEN</string>
+    <string name="agents_btn_txt">AGENTS</string>
+
+</resources>
