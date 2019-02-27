@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="main_button_icon_size">60dp</dimen>
+    <dimen name="subcategory_button_icon_size">45dp</dimen>
+    <dimen name="mmsnap_logo_size">35dp</dimen>
+    <dimen name="mmsnap_logo_text_size">12sp</dimen>
 </resources>

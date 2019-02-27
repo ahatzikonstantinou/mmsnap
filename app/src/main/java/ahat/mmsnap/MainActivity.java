@@ -14,9 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.os.Process;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity
-    implements NavigationView.OnNavigationItemSelectedListener
+    implements NavigationView.OnNavigationItemSelectedListener, android.view.View.OnClickListener
 {
 
     @Override
@@ -35,6 +36,31 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById( R.id.nav_view );
         navigationView.setNavigationItemSelectedListener( this );
+
+        //buttons events
+        Button mmsnapButton = ( Button ) findViewById( R.id.mmsnap_btn );
+        mmsnapButton.setOnClickListener( this );
+        Button assessmentsButton = ( Button ) findViewById( R.id.assessments_btn );
+        assessmentsButton.setOnClickListener( this );
+        Button educationButton = ( Button ) findViewById( R.id.education_btn );
+        educationButton.setOnClickListener( this );
+        Button ifThenButton = ( Button ) findViewById( R.id.if_then_btn );
+        ifThenButton.setOnClickListener( this );
+        Button agentsButton = ( Button ) findViewById( R.id.agents_btn );
+        agentsButton.setOnClickListener( this );
+    }
+
+    @Override
+    public void onClick( View view )
+    {
+        switch (view.getId()){
+            case R.id.mmsnap_btn:
+                Intent intent = new Intent(this, MMSNAPActivity.class);
+                startActivity( intent );
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

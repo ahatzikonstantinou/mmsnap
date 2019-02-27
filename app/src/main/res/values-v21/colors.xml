@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
     <color name="main_background_color">#EFE4B0</color>
+    <color name="what_this_up_is_for">#9BBB58</color>
+    <color name="about_multimorbidity_mm">#8064A0</color>
+    <color name="the_association_between_mm_mb">#4AACC5</color>
+    <color name="about_multibehaviour_mb">#F69549</color>
+    <color name="how_to_use_this_app">#C0504E</color>
 </resources>

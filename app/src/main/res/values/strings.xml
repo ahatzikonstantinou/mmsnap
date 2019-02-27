@@ -35,5 +35,24 @@
     <string name="education_btn_txt">EDUCATION</string>
     <string name="if_then_btn_txt">IF - THEN</string>
     <string name="agents_btn_txt">AGENTS</string>
+    <string name="title_subcategory_list">Subcategories</string>
+    <string name="title_subcategory_detail">Subcategory Detail</string>
+    <string name="title_activity_mmsnap">MM SNAP</string>
+    <string name="what_this_up_is_for">WHAT THIS UP IS FOR</string>
+    <string name="about_multimorbidity_mm">ABOUT MULTIMORBIDITY MM</string>
+    <string name="the_association_between_mm_mb">THE ASSOCIATION BETWEEN MM - MB</string>
+    <string name="about_multibehaviour_mb">ABOUT MULTIBEHAVIOUR MB</string>
+    <string name="how_to_use_this_app">HOW TO USE THIS APP</string>
+    <string name="how_to_use_this_app_text">The MM SNAP application aims to support your efforts to change one or more of the targeted health risk behaviours (Smoking, Nutrition, Alcohol, Physical activity) that have been involved in the development or the progression of your Mulitmorbidity in a step by step process.\n\n
+        In main page you can see all the six necessary steps to obtain your goal. First of all go to "My MM SNAP" in order to be informed about what this app is all abour, which is the target population and which behaviour change is involved.\n\n
+        In main page you can see all the six necessary steps to obtain your goal. First of all go to "My MM SNAP" in order to be informed about what this app is all abour, which is the target population and which behaviour change is involved.\n\n
+        Then go to "Assessments" page. This is the page where the evaluation process will take place. Completing a small number of questions, you will know which health behaviours have exceeded the risk level and need change in relation to you health Multimorbidity status. Finally, an assessment toward your readiness of change level will redirect to a certain group whre IF - THEN statements tailored to your needs will be available to you for their implementation.\n\n
+        The "Agents" page is where you can see your targets that have been set up by you for the specific day as well as for the entire week. Also, a final option lets you have a look at your accomplishments, where you need to focus more in the futeure, as well as your total number of collected points and bonuses.\n\n
+        The "EDU" page is a simple formed guide for developing effective and personalized IF - THEN statements. Completing the available test, you verify your acquired knowledge and then an option of wording your own IF-THEN statements will be available to you. Thiw means that you no longer need to depend to predetermined IF_THEN statements, instead you can create your own tailored to your personal needs.
+    </string>
+    <string name="what_this_up_is_for_text">what_this_up_is_for_text</string>
+    <string name="about_multimorbidity_mm_text">about_multimorbidity_mm_text</string>
+    <string name="about_multibehaviour_mb_text">about_multibehaviour_mb_text</string>
+    <string name="the_association_between_mm_mb_text">the_association_between_mm_mb_text</string>
 
 </resources>

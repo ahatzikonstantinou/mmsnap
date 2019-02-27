@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background_color"
+    tools:context=".MMSNAPSubCategoryFragment">
+        <!--<View-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:background="@drawable/mmsnap_subcategory_border"-->
+            <!--android:backgroundTint="@color/how_to_use_this_app"-->
+            <!--android:layout_margin="20dp"-->
+            <!--&gt;-->
+        <!--</View>-->
+
+
+
+
+            <LinearLayout
+                android:id="@+id/mmsnap_subcategory_linearlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:background="@drawable/mmsnap_subcategory_border"
+                android:backgroundTint="@color/how_to_use_this_app"
+                android:orientation="vertical">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <!--</ScrollView>-->
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_marginTop="2dp"
+                            android:background="#ffffff"
+
+                            >
+                        </View>
+
+                        <TextView
+                            android:id="@+id/mmsnap_subcategory_textview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:background="#ffffff"
+                            android:padding="10dp"
+                            android:text="@string/how_to_use_this_app_text"
+                            android:textColor="#000000"
+                            android:textSize="15sp"
+                            />
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:id="@+id/mmsnap_subcategory_title_textview"
+                    android:layout_width="334dp"
+                    android:layout_height="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/how_to_use_this_app"
+                    android:text="@string/how_to_use_this_app"
+                    android:textAlignment="center"
+                    android:textColor="#ffffff"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    />
+            </RelativeLayout>
+
+</FrameLayout>
