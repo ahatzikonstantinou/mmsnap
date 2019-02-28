@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background_color"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".HealthRiskActivity"
+    tools:showIn="@layout/activity_health_risk">
+
+    <include layout="@layout/assessment_logo"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:padding="15dp"
+            android:background="@drawable/mmsnap_subcategory_border"
+            android:backgroundTint="@color/assessments_risk_btn"
+            android:orientation="vertical">
+
+
+            <CheckBox
+                android:id="@+id/risk_smoke_cbx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_border_white_bkg"
+                android:padding="10dp"
+                android:textSize="18sp"
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                android:text="Are you smoking one cigarette per week?"/>
+
+            <CheckBox
+                android:id="@+id/risk_exercise_cbx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_border_white_bkg"
+                android:padding="10dp"
+                android:textSize="18sp"
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                android:text="In the past week have you exercised less than 150 min moderate or 60 min intense manner?"/>
+
+            <CheckBox
+                android:id="@+id/risk_food_cbx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_border_white_bkg"
+                android:padding="10dp"
+                android:textSize="18sp"
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                android:text="Are you regularly eating less than 5 portions [125 ml] of fruits/vegetables on a daily basis? [1 portion = 1 orange]"/>
+
+            <CheckBox
+                android:id="@+id/risk_alcohol_cbx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_border_white_bkg"
+                android:padding="10dp"
+                android:textSize="18sp"
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                android:text="Are you drinking alcohol more than 10 for women and more than 15 for men standard drinks per week? [1 standard drink = 1/2 pint of beer or 1 glass of wine]"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="334dp"
+                android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:background="@color/assessments_risk_btn"
+                android:text="@string/assessments_risk_btn_text"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
+        </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>

@@ -9,4 +9,9 @@
     <color name="the_association_between_mm_mb">#4AACC5</color>
     <color name="about_multibehaviour_mb">#F69549</color>
     <color name="how_to_use_this_app">#C0504E</color>
+    <color name="assessments_illness_btn">#9BBB58</color>
+    <color name="assessments_risk_btn">#8064A1</color>
+    <color name="assessments_efficacy_btn">#4AACC5</color>
+    <color name="assessments_plans_btn">#F79647</color>
+    <color name="assessments_health_btn">#C04F4D</color>
 </resources>

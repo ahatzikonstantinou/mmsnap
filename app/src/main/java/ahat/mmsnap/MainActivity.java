@@ -53,9 +53,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onClick( View view )
     {
+        Intent intent;
         switch (view.getId()){
             case R.id.mmsnap_btn:
-                Intent intent = new Intent(this, MMSNAPActivity.class);
+                intent = new Intent(this, MMSNAPActivity.class);
+                startActivity( intent );
+                break;
+            case R.id.assessments_btn:
+                intent = new Intent(this, AssessmentsActivity.class);
                 startActivity( intent );
                 break;
             default:

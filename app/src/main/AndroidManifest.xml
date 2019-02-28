@@ -10,6 +10,42 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".PlansActivity"
+            android:label="@string/title_activity_plans"
+            android:parentActivityName=".AssessmentsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.AssessmentsActivity"/>
+        </activity>
+        <activity
+            android:name=".HealthRiskActivity"
+            android:label="@string/title_activity_health_risk"
+            android:parentActivityName=".AssessmentsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.AssessmentsActivity"/>
+        </activity>
+        <activity
+            android:name=".EfficacyActivity"
+            android:label="@string/title_activity_efficacy"
+            android:parentActivityName=".AssessmentsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.AssessmentsActivity"/>
+        </activity>
+        <activity
+            android:name=".AssessmentsActivity"
+            android:label="@string/title_activity_assessments"
+            android:parentActivityName=".MMSNAPActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.MMSNAPActivity"/>
+        </activity>
+        <activity
             android:name=".MMSNAPSubCategoryActivity"
             android:parentActivityName=".MMSNAPActivity"
             android:theme="@style/AppTheme.NoActionBar">

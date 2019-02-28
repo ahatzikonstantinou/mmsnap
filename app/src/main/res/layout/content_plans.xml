@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background_color"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".PlansActivity"
+    tools:showIn="@layout/activity_plans">
+
+
+    <include layout="@layout/assessment_logo"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:padding="15dp"
+            android:background="@drawable/mmsnap_subcategory_border"
+            android:backgroundTint="@color/assessments_plans_btn"
+            android:orientation="vertical">
+
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text="Tick the box if you agree with the statement"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:textSize="18sp"
+                        android:text="I have made a detailed plan regarding ..."/>
+
+                    <CheckBox
+                        android:id="@+id/plan_exercise_when_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="when to exercise"/>
+
+                    <CheckBox
+                        android:id="@+id/plan_exercise_pastweek_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="In the past week have you exercised less than 150 min moderate or 60 min intense manner?"/>
+
+                    <CheckBox
+                        android:id="@+id/plan_exercise_where_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="where to exercise"/>
+
+                    <CheckBox
+                        android:id="@+id/plan_exercise_how_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="how to exercise"/>
+
+                    <CheckBox
+                        android:id="@+id/plan_exercise_often_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="how often to exercise"/>
+
+                    <CheckBox
+                        android:id="@+id/plan_exercise_whom_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="with whom to exercise"/>
+
+                    <CheckBox
+                        android:id="@+id/plan_exercise_interfere_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="what to do if something interferes with my plans"/>
+
+                    <CheckBox
+                        android:id="@+id/plan_exercise_setbacks_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="how to cope with possilble setbacks"/>
+
+                    <CheckBox
+                        android:id="@+id/plan_exercise_situations_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="what to do in difficult situations in order to act according to my intentions"/>
+
+                    <CheckBox
+                        android:id="@+id/plan_exercise_opportunities_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="which good opportunities for action to take"/>
+
+                    <CheckBox
+                        android:id="@+id/plan_exercise_lapses_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="when I have to pay extra attention to prevent lapses"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?android:attr/listDivider"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_marginTop="25dp"
+                        android:textSize="18sp"
+                        android:text="I intend to ..."/>
+
+                    <CheckBox
+                        android:id="@+id/plan_intend_times_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="exercise several times per week"/>
+
+                    <CheckBox
+                        android:id="@+id/plan_intend_sweat_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="work up a sweat regularly int."/>
+
+                    <CheckBox
+                        android:id="@+id/plan_intend_regularly_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="exercise regularly"/>
+
+                    <CheckBox
+                        android:id="@+id/plan_intend_active_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="be physically active for a minimum of 30 minutes at least three times a week"/>
+
+                    <CheckBox
+                        android:id="@+id/plan_intend_leisure_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="increase my leisure time activity"/>
+
+                    <CheckBox
+                        android:id="@+id/plan_intend_rehabilitation_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="adhere to the exercise regime prescribed to me during the rehabilitation"/>
+
+
+                </LinearLayout>
+            </ScrollView>
+
+
+
+
+
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="334dp"
+                android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:background="@color/assessments_plans_btn"
+                android:text="@string/assessments_plans_btn_text"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                />
+        </RelativeLayout>
+    </FrameLayout>
+
+</LinearLayout>
