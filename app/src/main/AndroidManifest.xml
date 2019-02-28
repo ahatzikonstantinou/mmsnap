@@ -10,6 +10,33 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".EQVASActivity"
+            android:label="@string/title_activity_eqvas"
+            android:parentActivityName=".AssessmentsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.AssessmentsActivity"/>
+        </activity>
+        <activity
+            android:name=".WeeklyEvaluationActivity"
+            android:label="@string/title_activity_weekly_evaluation"
+            android:parentActivityName=".AssessmentsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.AssessmentsActivity"/>
+        </activity>
+        <activity
+            android:name=".SelfRatedHealthActivity"
+            android:label="@string/title_activity_self_rated_health"
+            android:parentActivityName=".AssessmentsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.AssessmentsActivity"/>
+        </activity>
+        <activity
             android:name=".PlansActivity"
             android:label="@string/title_activity_plans"
             android:parentActivityName=".AssessmentsActivity"

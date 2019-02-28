@@ -15,4 +15,5 @@
     <color name="assessments_efficacy_btn">#4AACC5</color>
     <color name="assessments_plans_btn">#F79647</color>
     <color name="assessments_health_btn">#C04F4D</color>
+    <color name="assessments_weekly_btn">#00A3E8</color>
 </resources>

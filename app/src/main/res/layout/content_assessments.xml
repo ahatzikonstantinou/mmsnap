@@ -15,12 +15,12 @@
         android:id="@+id/assessments_illness_btn"
         android:layout_width="0dp"
         android:layout_height="64dp"
-        android:layout_marginBottom="46dp"
+        android:layout_marginBottom="31dp"
         android:layout_marginEnd="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/mmsnap_btn_bkg"
         android:backgroundTint="@color/assessments_illness_btn"
         android:drawableRight="@drawable/subcategory_btn_img"
@@ -35,14 +35,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"/>
+        app:layout_constraintTop_toBottomOf="@+id/button"/>
 
     <Button
         android:id="@+id/assessments_risk_btn"
         android:layout_width="0dp"
         android:layout_height="64dp"
-        android:layout_marginBottom="46dp"
+        android:layout_marginBottom="31dp"
         android:layout_marginEnd="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
@@ -60,13 +59,14 @@
         app:layout_constraintBottom_toTopOf="@+id/assessments_efficacy_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <Button
         android:id="@+id/assessments_efficacy_btn"
         android:layout_width="0dp"
         android:layout_height="64dp"
-        android:layout_marginBottom="47dp"
+        android:layout_marginBottom="31dp"
         android:layout_marginEnd="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
@@ -84,13 +84,14 @@
         app:layout_constraintBottom_toTopOf="@+id/assessments_plans_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <Button
         android:id="@+id/assessments_plans_btn"
         android:layout_width="0dp"
         android:layout_height="64dp"
-        android:layout_marginBottom="46dp"
+        android:layout_marginBottom="31dp"
         android:layout_marginEnd="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
@@ -108,13 +109,14 @@
         app:layout_constraintBottom_toTopOf="@+id/assessments_health_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <Button
         android:id="@+id/assessments_health_btn"
         android:layout_width="0dp"
         android:layout_height="64dp"
-        android:layout_marginBottom="52dp"
+        android:layout_marginBottom="32dp"
         android:layout_marginEnd="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
@@ -129,10 +131,36 @@
         android:textColor="#FFFFFF"
         android:textSize="21dp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/assessments_weekly_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Button
+        android:id="@+id/assessments_weekly_btn"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="52dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/mmsnap_btn_bkg"
+        android:backgroundTint="@color/assessments_weekly_btn"
+        android:drawableRight="@drawable/subcategory_btn_img"
+        android:drawableTint="#FFFFFF"
+        android:paddingLeft="22dp"
+        android:paddingRight="10dp"
+        android:text="@string/assessments_weekly_btn_text"
+        android:textColor="#FFFFFF"
+        android:textSize="21dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <Button
         android:id="@+id/button"

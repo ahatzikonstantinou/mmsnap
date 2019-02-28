@@ -4,4 +4,6 @@
     <dimen name="subcategory_button_icon_size">45dp</dimen>
     <dimen name="mmsnap_logo_size">35dp</dimen>
     <dimen name="mmsnap_logo_text_size">12sp</dimen>
+    <dimen name="custom_numeric_radio_button_size">24dp</dimen>
+    <dimen name="custom_numeric_radio_space">15dp</dimen>
 </resources>

@@ -66,5 +66,8 @@
     <string name="assessments_health_btn_text">SELF RATED HEALTH</string>
     <string name="title_activity_assessments">Assessments</string>
     <string name="title_activity_efficacy">Self Efficacy</string>
+    <string name="assessments_weekly_btn_text">WEEKLY EVALUATION</string>
+    <string name="assessments_weekly_title">EVALUATION OF WEEK\'S PLANS</string>
+    <string name="assessments_eqvas_title">EQ VAS</string>
 
 </resources>

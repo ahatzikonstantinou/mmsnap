@@ -26,54 +26,69 @@
             android:backgroundTint="@color/assessments_risk_btn"
             android:orientation="vertical">
 
-
-            <CheckBox
-                android:id="@+id/risk_smoke_cbx"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_border_white_bkg"
-                android:padding="10dp"
-                android:textSize="18sp"
-                android:button="@null"
-                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
-                android:text="Are you smoking one cigarette per week?"/>
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <CheckBox
-                android:id="@+id/risk_exercise_cbx"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_border_white_bkg"
-                android:padding="10dp"
-                android:textSize="18sp"
-                android:button="@null"
-                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
-                android:text="In the past week have you exercised less than 150 min moderate or 60 min intense manner?"/>
+                    <CheckBox
+                        android:id="@+id/risk_smoke_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="Are you smoking one cigarette per week?"/>
 
-            <CheckBox
-                android:id="@+id/risk_food_cbx"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_border_white_bkg"
-                android:padding="10dp"
-                android:textSize="18sp"
-                android:button="@null"
-                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
-                android:text="Are you regularly eating less than 5 portions [125 ml] of fruits/vegetables on a daily basis? [1 portion = 1 orange]"/>
+                    <CheckBox
+                        android:id="@+id/risk_exercise_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="In the past week have you exercised less than 150 min moderate or 60 min intense manner?"/>
 
-            <CheckBox
-                android:id="@+id/risk_alcohol_cbx"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_border_white_bkg"
-                android:padding="10dp"
-                android:textSize="18sp"
-                android:button="@null"
-                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
-                android:text="Are you drinking alcohol more than 10 for women and more than 15 for men standard drinks per week? [1 standard drink = 1/2 pint of beer or 1 glass of wine]"/>
+                    <CheckBox
+                        android:id="@+id/risk_food_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="Are you regularly eating less than 5 portions [125 ml] of fruits/vegetables on a daily basis? [1 portion = 1 orange]"/>
+
+                    <CheckBox
+                        android:id="@+id/risk_alcohol_cbx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rounded_border_white_bkg"
+                        android:padding="10dp"
+                        android:textSize="18sp"
+                        android:button="@null"
+                        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+                        android:text="Are you drinking alcohol more than 10 for women and more than 15 for men standard drinks per week? [1 standard drink = 1/2 pint of beer or 1 glass of wine]"/>
+
+                    <Button
+                        android:id="@+id/risk_submit_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Submit"/>
+                </LinearLayout>
+            </ScrollView>
         </LinearLayout>
 
         <RelativeLayout

@@ -31,6 +31,8 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
         pButton.setOnClickListener( this );
         Button rButton = ( Button ) findViewById( R.id.assessments_risk_btn );
         rButton.setOnClickListener( this );
+        Button wButton = ( Button ) findViewById( R.id.assessments_weekly_btn );
+        wButton.setOnClickListener( this );
     }
 
     @Override
@@ -43,9 +45,12 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
                 startActivity( intent );
                 break;
             case R.id.assessments_health_btn:
-
+                intent = new Intent( this, SelfRatedHealthActivity.class);
+                startActivity( intent );
                 break;
             case R.id.assessments_illness_btn:
+                intent = new Intent( this, EQVASActivity.class);
+                startActivity( intent );
                 break;
             case R.id.assessments_plans_btn:
                 intent = new Intent( this, PlansActivity.class);
@@ -53,6 +58,10 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
                 break;
             case R.id.assessments_risk_btn:
                 intent = new Intent( this, HealthRiskActivity.class);
+                startActivity( intent );
+                break;
+            case R.id.assessments_weekly_btn:
+                intent = new Intent( this, WeeklyEvaluationActivity.class);
                 startActivity( intent );
                 break;
             default:
