@@ -47,7 +47,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:textSize="15sp"
+                        android:textSize="18sp"
                         android:textColor="#000000"
                         android:background="@drawable/rounded_border_white_bkg"
                         android:text="How many of the last SEVEN DAYS have you followed a healthy eating plan and eaten five or more servings of fruits and vegetables?"/>
@@ -152,7 +152,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:textSize="15sp"
+                        android:textSize="18sp"
                         android:textColor="#000000"
                         android:background="@drawable/rounded_border_white_bkg"
                         android:text="Have you smoked a cigarette - even one puff - during the past SEVEN DAYS?"/>
@@ -257,7 +257,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:textSize="15sp"
+                        android:textSize="18sp"
                         android:textColor="#000000"
                         android:background="@drawable/rounded_border_white_bkg"
                         android:text="On how many of the last SEVEN DAYS did you participate in at least 30 minutes of physical activity? (Total minutes of continuous activity, including walking)"/>
@@ -363,7 +363,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
-                        android:textSize="15sp"
+                        android:textSize="18sp"
                         android:textColor="#000000"
                         android:background="@drawable/rounded_border_white_bkg"
                         android:text="Have you managed to drink alcohol within the recommended limit - of at least 14 standard units of drink - in the last SEVEN DAYS?"/>

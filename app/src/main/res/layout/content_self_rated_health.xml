@@ -42,7 +42,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:textSize="16sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         android:text="The Multimorbidity illness Perception Scale (MULTIPleS)"/>
 
@@ -50,7 +50,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:text="These questions are about the thoughts and feelings you sometimes experience. Please indicate how much you agree with each statement by ticking the corresponding box"/>
 
                     <TableLayout
@@ -66,19 +66,19 @@
                                 android:layout_column="1"
                                 />
                             <TextView
-                                android:layout_width="60dp"
+                                android:layout_width="70dp"
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:text="Strongly Disagree"/>
                             <View
                                 android:layout_weight="1"
                                 android:layout_span="2"/>
                             <TextView
-                                android:layout_width="60dp"
+                                android:layout_width="67dp"
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:text="Strongly Agree"/>
                         </TableRow>
                         <TableRow
@@ -94,7 +94,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="One of my conditions is more serious than the others"/>
@@ -102,6 +102,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -139,7 +140,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="Time spent managing my conditions has made it more difficult to carry out my usual activities"/>
@@ -147,6 +148,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -184,7 +186,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="I feel so overwhelmed by the treatment for one condition it is hard to manage any others"/>
@@ -192,28 +194,29 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
-                            <RadioButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                />
-                            <RadioButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                />
-                            <RadioButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                />
-                            <RadioButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_marginRight="5dp"
-                                />
+                                <RadioButton
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    />
+                                <RadioButton
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    />
+                                <RadioButton
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    />
+                                <RadioButton
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:layout_marginRight="5dp"
+                                    />
                             </RadioGroup>
                         </TableRow>
                         <TableRow
@@ -229,7 +232,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="The causes of my conditions are linked"/>
@@ -237,6 +240,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -274,7 +278,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="It is difficult to take all my medications the way I am supposed to"/>
@@ -282,6 +286,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -319,7 +324,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="Time spent managing my condition has limited my activities"/>
@@ -327,6 +332,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -364,7 +370,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="Taking different medications for each of my conditions has caused me problems"/>
@@ -372,6 +378,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -409,7 +416,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="I don't like mixing medications for different conditions"/>
@@ -417,6 +424,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -454,7 +462,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="Having more than one condition makes my treatments less effective"/>
@@ -462,6 +470,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -499,7 +508,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="One of my conditions has caused another"/>
@@ -507,6 +516,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -544,7 +554,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="One of my conditions dominates the others"/>
@@ -552,6 +562,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -589,7 +600,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="My conditions interact with each other"/>
@@ -597,6 +608,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -634,7 +646,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="Having more than one condition makes it difficult to get the best available treatment"/>
@@ -642,6 +654,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -679,7 +692,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="Time spent managing my conditions has reduced my social life"/>
@@ -687,6 +700,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -724,7 +738,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="Having more than one conditions makes me unhappy"/>
@@ -732,6 +746,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -769,7 +784,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="Having more than one conditions makes me more anxious"/>
@@ -777,6 +792,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -814,7 +830,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="Having more than one conditions makes me angry or frustrated"/>
@@ -822,6 +838,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -859,7 +876,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="Having more than one health problems makes me feel sad"/>
@@ -867,6 +884,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -904,7 +922,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="Having more than one conditions makes me more irritable"/>
@@ -912,6 +930,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -949,7 +968,7 @@
                                 android:layout_weight="80"
                                 android:layout_gravity="fill"
                                 android:layout_span="10"
-                                android:textSize="12sp"
+                                android:textSize="18sp"
                                 android:layout_column="1"
                                 android:textColor="#000000"
                                 android:text="If I feel sad or depressed, managing my conditions is a struggle"/>
@@ -957,6 +976,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:layout_gravity="center_vertical"
                                 android:orientation="horizontal">
                                 <RadioButton
                                     android:layout_width="wrap_content"
