@@ -63,6 +63,10 @@ public class MainActivity extends AppCompatActivity
                 intent = new Intent(this, AssessmentsActivity.class);
                 startActivity( intent );
                 break;
+            case R.id.education_btn:
+                intent = new Intent(this, EduActivity.class);
+                startActivity( intent );
+                break;
             default:
                 break;
         }

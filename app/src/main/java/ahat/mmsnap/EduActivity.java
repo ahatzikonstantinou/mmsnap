@@ -7,34 +7,31 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class MMSNAPActivity extends AppCompatActivity
-    implements OnClickListener
+public class EduActivity extends AppCompatActivity
+    implements View.OnClickListener
 {
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_mmsnap );
+        setContentView( R.layout.activity_edu );
         Toolbar toolbar = findViewById( R.id.toolbar );
         setSupportActionBar( toolbar );
 
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
 
         //buttons events
-        Button forButton = ( Button ) findViewById( R.id.mmsnap_for_btn );
-        forButton.setOnClickListener( this );
-        Button mmButton = ( Button ) findViewById( R.id.mmsnap_mm_btn );
-        mmButton.setOnClickListener( this );
-        Button mbButton = ( Button ) findViewById( R.id.mmsnap_mb_btn );
-        mbButton.setOnClickListener( this );
-        Button assocButton = ( Button ) findViewById( R.id.mmsnap_assoc_btn );
-        assocButton.setOnClickListener( this );
-        Button appButton = ( Button ) findViewById( R.id.mmsnap_app_btn );
-        appButton.setOnClickListener( this );
+        Button wButton = ( Button ) findViewById( R.id.edu_what_btn );
+        wButton.setOnClickListener( this );
+        Button iButton = ( Button ) findViewById( R.id.edu_if_btn );
+        iButton.setOnClickListener( this );
+        Button nButton = ( Button ) findViewById( R.id.edu_then_btn );
+        nButton.setOnClickListener( this );
+        Button tButton = ( Button ) findViewById( R.id.edu_test_btn );
+        tButton.setOnClickListener( this );
     }
 
     @Override
@@ -42,33 +39,26 @@ public class MMSNAPActivity extends AppCompatActivity
     {
         Intent intent = new Intent( this, MMSNAPSubCategoryActivity.class);
         Bundle b = new Bundle();
-        b.putSerializable( "section", MMSNAPSubCategoryActivity.Section.MMSNAP );
+        b.putSerializable( "section", MMSNAPSubCategoryActivity.Section.EDU );
 
         switch (view.getId()){
-            case R.id.mmsnap_for_btn:
+            case R.id.edu_what_btn:
                 b.putInt( "subcategory", 0 );
                 intent.putExtras( b );
                 startActivity( intent );
                 break;
-            case R.id.mmsnap_mm_btn:
+            case R.id.edu_if_btn:
                 b.putInt( "subcategory", 1 );
                 intent.putExtras( b );
                 startActivity( intent );
                 break;
-            case R.id.mmsnap_mb_btn:
+            case R.id.edu_then_btn:
                 b.putInt( "subcategory", 2 );
                 intent.putExtras( b );
                 startActivity( intent );
                 break;
-            case R.id.mmsnap_assoc_btn:
-                b.putInt( "subcategory", 3 );
-                intent.putExtras( b );
-                startActivity( intent );
-                break;
-            case R.id.mmsnap_app_btn:
-                b.putInt( "subcategory", 4 );
-                intent.putExtras( b );
-                startActivity( intent );
+            case R.id.edu_test_btn:
+                //TODO
                 break;
             default:
                 break;

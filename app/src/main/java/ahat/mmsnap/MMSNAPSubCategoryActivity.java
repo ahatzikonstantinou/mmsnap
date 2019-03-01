@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 
 public class MMSNAPSubCategoryActivity extends AppCompatActivity
 {
+
     public static class MMSNAPSubCategoryPagerAdapter extends FragmentPagerAdapter
     {
         private static int NUM_ITEMS = 5;
@@ -58,6 +59,10 @@ public class MMSNAPSubCategoryActivity extends AppCompatActivity
 
 //    FragmentPagerAdapter adapterViewPager;
 
+    enum Section { MMSNAP, EDU }
+    private static final int MMSNAP_SUBCATEGORIES = 5;
+    private static final int EDU_SUBCATEGORIES = 3;
+
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
@@ -77,29 +82,79 @@ public class MMSNAPSubCategoryActivity extends AppCompatActivity
 //        TabLayout tabLayout = (TabLayout) findViewById( R.id.mmsnap_subcategory_tablayout);
 //        tabLayout.setupWithViewPager( vpPager, true);
 
+//                vpPager.setCurrentItem( value );
+
         Bundle b = getIntent().getExtras();
         int value = -1;
         if(b != null)
         {
+            Section section = (Section) b.get( "section" );
             value = b.getInt("subcategory");
-            if( value >=0 && value < MMSNAPSubCategoryPagerAdapter.NUM_ITEMS )
+            Fragment f = null;
+            switch( section )
             {
-//                vpPager.setCurrentItem( value );
-                FragmentManager fm = getSupportFragmentManager();
+                case MMSNAP:
+                    if( value < 0 || value >= MMSNAP_SUBCATEGORIES )
+                    {
+                        return;
+                    }
 
-                //reuse the code that I already have in MMSNAPSubCategoryPagerAdapter
-                FragmentPagerAdapter a = new MMSNAPSubCategoryPagerAdapter( fm );
-                Fragment fragment = a.getItem( value );
+                    switch( value )
+                    {
+                        case 0:
+                            f = MMSNAPSubCategoryFragment.newInstance( 0,  R.string.what_this_up_is_for, R.string.what_this_up_is_for_text, R.color.how_to_use_this_app );
+                            break;
+                        case 1:
+                            f = MMSNAPSubCategoryFragment.newInstance(1,  R.string.about_multimorbidity_mm, R.string.about_multimorbidity_mm_text, R.color.about_multimorbidity_mm );
+                            break;
+                        case 2:
+                            f = MMSNAPSubCategoryFragment.newInstance(2,  R.string.about_multibehaviour_mb, R.string.about_multibehaviour_mb_text, R.color.about_multibehaviour_mb );
+                            break;
+                        case 3:
+                            f = MMSNAPSubCategoryFragment.newInstance(3,  R.string.the_association_between_mm_mb, R.string.the_association_between_mm_mb_text, R.color.the_association_between_mm_mb );
+                            break;
+                        case 4:
+                            f = MMSNAPSubCategoryFragment.newInstance(4,  R.string.how_to_use_this_app, R.string.how_to_use_this_app_text, R.color.how_to_use_this_app );
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case EDU:
+                    if( value < 0 || value >= EDU_SUBCATEGORIES )
+                    {
+                        return;
+                    }
 
-                // Begin Fragment transaction.
-                FragmentTransaction fragmentTransaction = fm.beginTransaction();
-
-                // Replace the layout holder with the required Fragment object.
-                fragmentTransaction.replace( R.id.mmsnap_subcategory_fragment, fragment );
-
-                // Commit the Fragment replace action.
-                fragmentTransaction.commit();
+                    switch( value )
+                    {
+                        case 0:
+                            f = MMSNAPSubCategoryFragment.newInstance( 0,  R.string.what_is_the_if_then_statements, R.string.what_is_the_if_then_statements_text, R.color.edu_what_btn );
+                            break;
+                        case 1:
+                            f = MMSNAPSubCategoryFragment.newInstance( 1,  R.string.how_to_word_effective_if, R.string.how_to_word_effective_if_text, R.color.edu_if_btn );
+                            break;
+                        case 2:
+                            f = MMSNAPSubCategoryFragment.newInstance( 2,  R.string.how_to_word_effective_then, R.string.how_to_word_effective_then_text, R.color.edu_then_btn );
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
             }
+
+
+            FragmentManager fm = getSupportFragmentManager();
+
+            // Begin Fragment transaction.
+            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+            // Replace the layout holder with the required Fragment object.
+            fragmentTransaction.replace( R.id.mmsnap_subcategory_fragment, f );
+
+            // Commit the Fragment replace action.
+            fragmentTransaction.commit();
+
         }
 
     }

@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".EduActivity"
+            android:label="@string/title_activity_edu"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.MainActivity"/>
+        </activity>
+        <activity
             android:name=".EQVASActivity"
             android:label="@string/title_activity_eqvas"
             android:parentActivityName=".AssessmentsActivity"

@@ -7,144 +7,9 @@
     android:layout_height="match_parent"
     android:background="@color/main_background_color"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MMSNAPActivity"
-    tools:showIn="@layout/activity_mmsnap">
+    tools:context=".EduActivity"
+    tools:showIn="@layout/activity_edu">
 
-
-    <Button
-        android:id="@+id/mmsnap_for_btn"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="46dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="132dp"
-        android:background="@drawable/mmsnap_btn_bkg"
-        android:backgroundTint="@color/what_this_up_is_for"
-        android:drawableRight="@drawable/subcategory_btn_img"
-        android:drawableTint="#FFFFFF"
-        android:paddingLeft="22dp"
-        android:paddingRight="10dp"
-        android:text="@string/what_this_up_is_for"
-        android:textColor="#FFFFFF"
-        android:textSize="21dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/mmsnap_mm_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"/>
-
-    <Button
-        android:id="@+id/mmsnap_mm_btn"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="46dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
-        android:background="@drawable/mmsnap_btn_bkg"
-        android:backgroundTint="@color/about_multimorbidity_mm"
-        android:drawableRight="@drawable/subcategory_btn_img"
-        android:drawableTint="#FFFFFF"
-        android:paddingLeft="22dp"
-        android:paddingRight="10dp"
-        android:text="@string/about_multimorbidity_mm"
-        android:textColor="#FFFFFF"
-        android:textSize="21dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/mmsnap_mb_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <Button
-        android:id="@+id/mmsnap_assoc_btn"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="47dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
-        android:background="@drawable/mmsnap_btn_bkg"
-        android:backgroundTint="@color/the_association_between_mm_mb"
-        android:drawableRight="@drawable/subcategory_btn_img"
-        android:drawableTint="#FFFFFF"
-        android:paddingLeft="22dp"
-        android:paddingRight="10dp"
-        android:text="@string/the_association_between_mm_mb"
-        android:textColor="#FFFFFF"
-        android:textSize="21dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/mmsnap_app_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <Button
-        android:id="@+id/mmsnap_mb_btn"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="46dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
-        android:background="@drawable/mmsnap_btn_bkg"
-        android:backgroundTint="@color/about_multibehaviour_mb"
-        android:drawableRight="@drawable/subcategory_btn_img"
-        android:drawableTint="#FFFFFF"
-        android:paddingLeft="22dp"
-        android:paddingRight="10dp"
-        android:text="@string/about_multibehaviour_mb"
-        android:textColor="#FFFFFF"
-        android:textSize="21dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/mmsnap_assoc_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <Button
-        android:id="@+id/mmsnap_app_btn"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="52dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
-        android:background="@drawable/mmsnap_btn_bkg"
-        android:backgroundTint="@color/how_to_use_this_app"
-        android:drawableRight="@drawable/subcategory_btn_img"
-        android:drawableTint="#FFFFFF"
-        android:paddingLeft="22dp"
-        android:paddingRight="10dp"
-        android:text="@string/how_to_use_this_app"
-        android:textColor="#FFFFFF"
-        android:textSize="21dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <!--<Button-->
-        <!--android:id="@+id/button"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:backgroundTint="@color/mmsnap"-->
-        <!--android:drawableTint="#EFE4B0"-->
-        <!--android:drawableTop="@drawable/mmsnap_section_logo"-->
-        <!--android:text="MM SNAP"-->
-        <!--android:textColor="#FFFFFF"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent"/>-->
 
     <FrameLayout
         android:id="@+id/button"
@@ -152,7 +17,109 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-        <include layout="@layout/logo_mmsnap"/>
+        <include layout="@layout/logo_edu"/>
     </FrameLayout>
+
+
+    <Button
+        android:id="@+id/edu_what_btn"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="31dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/mmsnap_btn_bkg"
+        android:backgroundTint="@color/edu_what_btn"
+        android:drawableRight="@drawable/subcategory_btn_img"
+        android:drawableTint="#FFFFFF"
+        android:paddingLeft="22dp"
+        android:paddingRight="10dp"
+        android:text="@string/what_is_the_if_then_statements"
+        android:textColor="#FFFFFF"
+        android:textSize="21dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/edu_if_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"/>
+
+    <Button
+        android:id="@+id/edu_if_btn"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="31dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/mmsnap_btn_bkg"
+        android:backgroundTint="@color/edu_if_btn"
+        android:drawableRight="@drawable/subcategory_btn_img"
+        android:drawableTint="#FFFFFF"
+        android:paddingLeft="22dp"
+        android:paddingRight="10dp"
+        android:text="@string/how_to_word_effective_if"
+        android:textColor="#FFFFFF"
+        android:textSize="21dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/edu_then_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edu_what_btn"
+        />
+
+    <Button
+        android:id="@+id/edu_then_btn"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="31dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/mmsnap_btn_bkg"
+        android:backgroundTint="@color/edu_then_btn"
+        android:drawableRight="@drawable/subcategory_btn_img"
+        android:drawableTint="#FFFFFF"
+        android:paddingLeft="22dp"
+        android:paddingRight="10dp"
+        android:text="@string/how_to_word_effective_then"
+        android:textColor="#FFFFFF"
+        android:textSize="21dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/edu_test_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edu_if_btn"
+        />
+
+    <Button
+        android:id="@+id/edu_test_btn"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="240dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/mmsnap_btn_bkg"
+        android:backgroundTint="@color/edu_test_btn"
+        android:drawableRight="@drawable/subcategory_btn_img"
+        android:drawableTint="#FFFFFF"
+        android:paddingLeft="22dp"
+        android:paddingRight="10dp"
+        android:text="&quot;IF - THEN&quot; KNOWLEDGE TEST"
+        android:textColor="#FFFFFF"
+        android:textSize="21dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edu_then_btn"/>
 
 </android.support.constraint.ConstraintLayout>

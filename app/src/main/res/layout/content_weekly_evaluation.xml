@@ -11,7 +11,7 @@
     tools:context=".WeeklyEvaluationActivity"
     tools:showIn="@layout/activity_weekly_evaluation">
 
-    <include layout="@layout/assessment_logo"/>
+    <include layout="@layout/logo_assessment"/>
 
     <ScrollView
         android:layout_width="match_parent"

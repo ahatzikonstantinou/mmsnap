@@ -11,7 +11,7 @@
     tools:context=".HealthRiskActivity"
     tools:showIn="@layout/activity_health_risk">
 
-    <include layout="@layout/assessment_logo"/>
+    <include layout="@layout/logo_assessment"/>
 
     <ScrollView
         android:layout_width="match_parent"

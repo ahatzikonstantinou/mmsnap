@@ -8,11 +8,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import static android.text.Html.FROM_HTML_MODE_LEGACY;
 
 public class MMSNAPSubCategoryFragment extends Fragment
 {
@@ -52,9 +56,8 @@ public class MMSNAPSubCategoryFragment extends Fragment
         title.setBackgroundColor( getResources().getColor( getArguments().getInt( "colorResId" ) ) );
 
         TextView text = ( TextView ) view.findViewById( R.id.mmsnap_subcategory_textview );
-        text.setText( getResources().getString( getArguments().getInt( "textResId" ) ) );
-
-//        view.invalidate();
+//        text.setText( getResources().getString( getArguments().getInt( "textResId" ) ) );
+        text.setText( Html.fromHtml( getResources().getString( getArguments().getInt( "textResId" ) ), FROM_HTML_MODE_LEGACY ) );
 
         return view;
     }

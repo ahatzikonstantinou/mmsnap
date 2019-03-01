@@ -11,7 +11,7 @@
     tools:context=".SelfRatedHealthActivity"
     tools:showIn="@layout/activity_self_rated_health">
 
-    <include layout="@layout/assessment_logo"/>
+    <include layout="@layout/logo_assessment"/>
 
     <ScrollView
         android:layout_width="match_parent"

@@ -162,17 +162,25 @@
         app:layout_constraintStart_toStartOf="parent"
         />
 
-    <Button
+    <!--<Button-->
+        <!--android:id="@+id/button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:backgroundTint="@color/assessments_btn"-->
+        <!--android:drawableTint="#EFE4B0"-->
+        <!--android:drawableTop="@drawable/assessments_section_logo"-->
+        <!--android:text="ASSESSMENTS"-->
+        <!--android:textColor="#FFFFFF"-->
+        <!--android:textSize="10sp"-->
+        <!--app:layout_constraintStart_toStartOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent"/>-->
+    <FrameLayout
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#00A3EB"
-        android:drawableTint="#EFE4B0"
-        android:drawableTop="@drawable/assessments_section_logo"
-        android:text="ASSESSMENTS"
-        android:textColor="#FFFFFF"
-        android:textSize="10sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
+        <include layout="@layout/logo_assessment"/>
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
