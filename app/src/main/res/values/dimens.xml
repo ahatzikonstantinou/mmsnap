@@ -14,4 +14,10 @@
     <dimen name="mmsnap_logo_text_size">12sp</dimen>
     <dimen name="custom_numeric_radio_button_size">24dp</dimen>
     <dimen name="custom_numeric_radio_space">15dp</dimen>
+    <dimen name="subsection_marginTop">15dp</dimen>
+    <dimen name="subsection_marginSide">10dp</dimen>
+    <dimen name="subsection_marginBottom">10dp</dimen>
+    <dimen name="subsection_title_width">334dp</dimen>
+    <dimen name="subsection_title_height">30dp</dimen>
+    <dimen name="subsection_title_textSize">18sp</dimen>
 </resources>

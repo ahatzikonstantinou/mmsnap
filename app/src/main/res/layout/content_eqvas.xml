@@ -13,39 +13,38 @@
 
     <include layout="@layout/assessment_logo"/>
 
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="25dp"
-            android:padding="15dp"
-            android:background="@drawable/mmsnap_subcategory_border"
-            android:backgroundTint="@color/assessments_illness_btn"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <ScrollView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/subsection_marginTop"
+                android:layout_marginBottom="@dimen/subsection_marginBottom"
+                android:layout_marginRight="@dimen/subsection_marginSide"
+                android:layout_marginLeft="@dimen/subsection_marginSide"
+                android:padding="15dp"
+                android:background="@drawable/mmsnap_subcategory_border"
+                android:backgroundTint="@color/assessments_illness_btn"
+                android:orientation="vertical">
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="&#8226; We would like to know how good or bad your health is TODAY.
-&#8226; This scale is numbered from 0 to 100.
-&#8226; 100 means the best health you can imagine.
-&#8226; 0 means the worst health you can imagine.
-&#8226; Move the cursor on the scale to indicate how your health is today."
-                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        />
+                    android:layout_marginTop="20dp"
+                    android:text="&#8226; We would like to know how good or bad your health is TODAY.
+    &#8226; This scale is numbered from 0 to 100.
+    &#8226; 100 means the best health you can imagine.
+    &#8226; 0 means the worst health you can imagine.
+    &#8226; Move the cursor on the scale to indicate how your health is today."
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -115,33 +114,32 @@
                         />
                 </LinearLayout>
 
-                    <Button
-                        android:id="@+id/eqvas_submit_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Submit"/>
+                <Button
+                    android:id="@+id/eqvas_submit_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/rounded_border_trnsp_bkg"
+                    android:text="Submit"/>
 
-                </LinearLayout>
-            </ScrollView>
-        </LinearLayout>
+            </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
 
-            <TextView
-                android:layout_width="334dp"
-                android:layout_height="30dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:background="@color/assessments_illness_btn"
-                android:text="@string/assessments_eqvas_title"
-                android:textAlignment="center"
-                android:textColor="#ffffff"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                />
-        </RelativeLayout>
-    </FrameLayout>
+                <TextView
+                    android:layout_width="@dimen/subsection_title_width"
+                    android:layout_height="@dimen/subsection_title_height"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/assessments_illness_btn"
+                    android:text="@string/assessments_eqvas_title"
+                    android:textAlignment="center"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/subsection_title_textSize"
+                    android:textStyle="bold"
+                    />
+            </RelativeLayout>
+        </FrameLayout>
+    </ScrollView>
 </LinearLayout>

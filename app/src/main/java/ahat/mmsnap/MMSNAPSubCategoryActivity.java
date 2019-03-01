@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,7 +56,7 @@ public class MMSNAPSubCategoryActivity extends AppCompatActivity
 
     }
 
-    FragmentPagerAdapter adapterViewPager;
+//    FragmentPagerAdapter adapterViewPager;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -68,12 +69,13 @@ public class MMSNAPSubCategoryActivity extends AppCompatActivity
 
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
 
-        ViewPager vpPager = (ViewPager) findViewById( R.id.mmsnap_subcategory_viewpager );
-        adapterViewPager = new MMSNAPSubCategoryPagerAdapter( getSupportFragmentManager() );
-        vpPager.setAdapter( adapterViewPager );
+//        ahat: replaced view pager because user experience was inconsistent with other sections of the app
+//        ViewPager vpPager = (ViewPager) findViewById( R.id.mmsnap_subcategory_viewpager );
+//        adapterViewPager = new MMSNAPSubCategoryPagerAdapter( getSupportFragmentManager() );
+//        vpPager.setAdapter( adapterViewPager );
 
-        TabLayout tabLayout = (TabLayout) findViewById( R.id.mmsnap_subcategory_tablayout);
-        tabLayout.setupWithViewPager( vpPager, true);
+//        TabLayout tabLayout = (TabLayout) findViewById( R.id.mmsnap_subcategory_tablayout);
+//        tabLayout.setupWithViewPager( vpPager, true);
 
         Bundle b = getIntent().getExtras();
         int value = -1;
@@ -82,8 +84,23 @@ public class MMSNAPSubCategoryActivity extends AppCompatActivity
             value = b.getInt("subcategory");
             if( value >=0 && value < MMSNAPSubCategoryPagerAdapter.NUM_ITEMS )
             {
-                vpPager.setCurrentItem( value );
+//                vpPager.setCurrentItem( value );
+                FragmentManager fm = getSupportFragmentManager();
+
+                //reuse the code that I already have in MMSNAPSubCategoryPagerAdapter
+                FragmentPagerAdapter a = new MMSNAPSubCategoryPagerAdapter( fm );
+                Fragment fragment = a.getItem( value );
+
+                // Begin Fragment transaction.
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+                // Replace the layout holder with the required Fragment object.
+                fragmentTransaction.replace( R.id.mmsnap_subcategory_fragment, fragment );
+
+                // Commit the Fragment replace action.
+                fragmentTransaction.commit();
             }
         }
+
     }
 }
