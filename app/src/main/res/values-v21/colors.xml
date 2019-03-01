@@ -21,4 +21,8 @@
     <color name="edu_if_btn">#8064A1</color>
     <color name="edu_then_btn">#4AACC5</color>
     <color name="edu_test_btn">#F79647</color>
+    <color name="then">#F3C309</color>
+    <color name="if_color">#A80A3E</color>
+    <color name="statement_dark">#A349A4</color>
+    <color name="statement_light">#FF7F27</color>
 </resources>

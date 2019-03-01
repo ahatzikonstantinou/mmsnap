@@ -58,7 +58,8 @@ public class EduActivity extends AppCompatActivity
                 startActivity( intent );
                 break;
             case R.id.edu_test_btn:
-                //TODO
+                intent = new Intent( this, TestActivity.class);
+                startActivity( intent );
                 break;
             default:
                 break;

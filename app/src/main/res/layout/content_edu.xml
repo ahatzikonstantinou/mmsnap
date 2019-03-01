@@ -112,7 +112,7 @@
         android:drawableTint="#FFFFFF"
         android:paddingLeft="22dp"
         android:paddingRight="10dp"
-        android:text="&quot;IF - THEN&quot; KNOWLEDGE TEST"
+        android:text="@string/if_then_knowledge_test_btn_txt"
         android:textColor="#FFFFFF"
         android:textSize="21dp"
         android:textStyle="bold"
