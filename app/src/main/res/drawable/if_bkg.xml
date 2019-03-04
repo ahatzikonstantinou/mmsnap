@@ -6,7 +6,7 @@
         <shape android:shape="rectangle">
             <size
                 android:width="60dp"
-                android:height="40dp" />
+                android:height="30dp" />
             <solid android:color="@color/if_color" />
         </shape>
     </item>

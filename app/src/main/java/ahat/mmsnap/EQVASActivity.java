@@ -28,6 +28,12 @@ public class EQVASActivity extends AppCompatActivity
         setSupportActionBar( toolbar );
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
 
+        getSupportActionBar().setIcon( getResources().getDrawable( R.drawable.assessments_section_logo) );
+        getSupportActionBar().setTitle( R.string.title_activity_assessments );
+        getSupportActionBar().setSubtitle( R.string.title_activity_eqvas );
+
+
+
         mEditText = (EditText) findViewById( R.id.eqvas_editText );
         mEditText.setFilters(new InputFilter[]{ new InputFilterMinMax( "0", "100")});
 

@@ -13,179 +13,254 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="2dp">
 
-        <include layout="@layout/logo_edu"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_weight="1"/>
+        <!--<include layout="@layout/logo_edu"-->
+                 <!--android:layout_width="wrap_content"-->
+                 <!--android:layout_height="wrap_content"-->
+                 <!--android:layout_weight="1"/>-->
 
-        <ProgressBar
-            android:id="@+id/edu_test_progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:progress="0"
-            android:max="100"
+        <!--<ProgressBar-->
+            <!--android:id="@+id/edu_test_progressBar"-->
+            <!--style="?android:attr/progressBarStyleHorizontal"-->
+            <!--android:progress="0"-->
+            <!--android:max="100"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="40"-->
+            <!--android:layout_margin="25dp"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--/>-->
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:padding="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical">
+            <ProgressBar
+                android:id="@+id/edu_test_progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="0"
+                android:progressDrawable="@drawable/custom_progressbar"
+                android:secondaryProgress="0"/>
+            <TextView
+                android:id="@+id/edu_test_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                />
+            <ImageView
+                android:id="@+id/edu_test_correct"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/ic_correct"
+                android:layout_centerInParent="true"
+                android:backgroundTint="#00ff00"
+                android:visibility="gone"/>
+            <ImageView
+                android:id="@+id/edu_test_error"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/ic_error"
+                android:layout_centerInParent="true"
+                android:backgroundTint="#ff0000"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="40"
-            android:layout_margin="25dp"
+            android:text="Select an ending to complete the IF - THEN statement"
+            android:layout_weight="100"
             android:layout_gravity="center_vertical"
+            android:textSize="15sp"
             />
 
+        <Button
+            android:id="@+id/edu_test_play_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Play"
+            android:background="@drawable/rounded_border_trnsp_bkg"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="5dp"/>
 
     </LinearLayout>
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginTop="-15dp">-->
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginTop="-10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/subsection_marginTop"
                 android:layout_marginBottom="@dimen/subsection_marginBottom"
-                android:layout_marginRight="@dimen/subsection_marginSide"
                 android:layout_marginLeft="@dimen/subsection_marginSide"
-                android:padding="3dip"
+                android:layout_marginRight="@dimen/subsection_marginSide"
+                android:layout_marginTop="@dimen/subsection_marginTop"
                 android:background="@drawable/mmsnap_subcategory_border"
                 android:backgroundTint="@color/edu_test_btn"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="3dip">
 
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#ffffff"
                     android:orientation="vertical"
-                    android:paddingTop="20dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp">
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="15dp">
 
                     <LinearLayout
+                        android:id="@+id/edu_test_if_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:background="@drawable/if_then_border"
+                        android:backgroundTint="@color/if_color"
                         android:orientation="horizontal"
-                        android:layout_margin="5dp">
+                        android:padding="10dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/layout2"
+                        app:layout_constraintLeft_toLeftOf="parent">
+
                         <Button
                             android:id="@+id/edu_test_if_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/if_bkg_border"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:background="@drawable/if_bkg"
                             android:text="IF"
                             android:textColor="#FFFFFF"
                             android:textSize="18sp"
                             android:textStyle="bold"
-                            android:layout_weight="1"
                             />
+
                         <TextView
                             android:id="@+id/edu_test_if_statement"
                             android:layout_width="300dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="3"
-                            android:background="@drawable/statement_border_trnsp_bkg"
-                            android:backgroundTint="@color/if_color"
-                            android:text="I will go for a walk"
-                            android:textSize="18sp"
                             android:padding="10dp"
+                            android:text=""
+                            android:textSize="18sp"
                             />
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layout2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="2dp"
+                        android:background="@drawable/if_then_border"
+                        android:backgroundTint="@color/then"
                         android:orientation="horizontal"
-                        android:layout_margin="5dp">
-                    <Button
-                        android:id="@+id/edu_test_then_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/then_bkg"
-                        android:text="THEN"
-                        android:textColor="#A349A4"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:paddingRight="15dp"
-                        android:layout_weight="1"
-                        />
+                        android:padding="10dp"
+                        app:layout_constraintTop_toBottomOf="@+id/edu_test_if_layout"
+                        app:layout_constraintBottom_toTopOf="@+id/edu_test_if1_btn"
+                        app:layout_constraintLeft_toLeftOf="parent">
+
+                        <Button
+                            android:id="@+id/edu_test_then_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:background="@drawable/then_bkg"
+                            android:paddingRight="15dp"
+                            android:text="THEN"
+                            android:textColor="#A349A4"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            />
+
                         <TextView
+                            android:id="@+id/edu_test_then_statement"
                             android:layout_width="300dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="3"
-                            android:background="@drawable/statement_border_trnsp_bkg"
-                            android:backgroundTint="@color/then"
+                            android:padding="10dp"
                             android:text="I will go for a 30 minutes walk"
                             android:textSize="18sp"
-                            android:padding="10dp"
                             />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <Button
+                        android:id="@+id/edu_test_if1_btn"
+                        android:layout_width="350dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_gravity="right"
-                        android:layout_margin="5dp">
-                        <View
-                            android:layout_width="40dp"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/statement_left_dark"
-                            />
-                        <Button
-                            android:id="@+id/edu_test_if1_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="I return from work this Friday"
-                            android:textAllCaps="false"
-                            android:background="@drawable/statement_border_trnsp_bkg"
-                            android:backgroundTint="@color/statement_dark"
-                            android:textSize="18sp"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
-                            android:paddingRight="20dp"
-                            />
+                        android:layout_margin="2dp"
+                        android:background="@drawable/if_then_border"
+                        android:backgroundTint="@color/statement_dark"
+                        android:drawableLeft="@drawable/statement_left_dark"
+                        android:drawablePadding="2dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="10dp"
+                        android:text="I return from work this Friday"
+                        android:textAllCaps="false"
+                        android:textSize="18sp"
+                        app:layout_constraintTop_toBottomOf="@id/layout2"
+                        app:layout_constraintBottom_toTopOf="@id/edu_test_if2_btn"
+                        app:layout_constraintRight_toRightOf="parent"
+                        />
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
+                    <Button
+                        android:id="@+id/edu_test_if2_btn"
+                        android:layout_width="350dp"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_gravity="center"
-                        android:layout_margin="5dp">
-                        <View
-                            android:layout_width="40dp"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/statement_left_light"
-                            />
-                        <Button
-                            android:id="@+id/edu_test_if2_btn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="someday this week I am free"
-                            android:textAllCaps="false"
-                            android:background="@drawable/statement_border_trnsp_bkg"
-                            android:backgroundTint="@color/statement_light"
-                            android:textSize="18sp"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="10dp"
-                            android:paddingBottom="10dp"
-                            android:paddingRight="20dp"
-                            />
+                        android:layout_margin="2dp"
+                        android:background="@drawable/if_then_border"
+                        android:backgroundTint="@color/statement_light"
+                        android:drawableLeft="@drawable/statement_left_light"
+                        android:drawablePadding="2dp"
+                        android:paddingBottom="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="20dp"
+                        android:paddingTop="10dp"
+                        android:text="someday this week I am free"
+                        android:textAllCaps="false"
+                        android:textSize="18sp"
+                        app:layout_constraintTop_toBottomOf="@id/edu_test_if1_btn"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintHorizontal_bias="0.7"
+                        />
 
-                    </LinearLayout>
-
-                </LinearLayout>
-
+                </android.support.constraint.ConstraintLayout>
 
 
             </LinearLayout>
 
             <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <TextView
                     android:layout_width="@dimen/subsection_title_width"
@@ -200,6 +275,6 @@
                     />
             </RelativeLayout>
         </FrameLayout>
-    </ScrollView>
+    <!--</ScrollView>-->
 
 </LinearLayout>

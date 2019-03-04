@@ -14,39 +14,30 @@
     <Button
         android:id="@+id/mmsnap_for_btn"
         android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="46dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="132dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:background="@drawable/mmsnap_btn_bkg"
         android:backgroundTint="@color/what_this_up_is_for"
         android:drawableRight="@drawable/subcategory_btn_img"
         android:drawableTint="#FFFFFF"
         android:paddingLeft="22dp"
         android:paddingRight="10dp"
-        android:text="@string/what_this_up_is_for"
+        android:text="@string/what_this_app_is_for"
         android:textColor="#FFFFFF"
         android:textSize="21dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/mmsnap_mm_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"/>
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintVertical_chainStyle="spread"/>
 
     <Button
         android:id="@+id/mmsnap_mm_btn"
         android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="46dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
+        android:layout_height="0dp"
         android:background="@drawable/mmsnap_btn_bkg"
         android:backgroundTint="@color/about_multimorbidity_mm"
         android:drawableRight="@drawable/subcategory_btn_img"
@@ -58,19 +49,16 @@
         android:textSize="21dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/mmsnap_mb_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toEndOf="@+id/mmsnap_for_btn"
+        app:layout_constraintStart_toStartOf="@+id/mmsnap_for_btn"
+        app:layout_constraintTop_toBottomOf="@+id/mmsnap_for_btn"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintVertical_chainStyle="spread"/>
 
     <Button
         android:id="@+id/mmsnap_assoc_btn"
         android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="47dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
+        android:layout_height="0dp"
         android:background="@drawable/mmsnap_btn_bkg"
         android:backgroundTint="@color/the_association_between_mm_mb"
         android:drawableRight="@drawable/subcategory_btn_img"
@@ -82,19 +70,16 @@
         android:textSize="21dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/mmsnap_app_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toEndOf="@+id/mmsnap_mb_btn"
+        app:layout_constraintStart_toStartOf="@+id/mmsnap_mb_btn"
+        app:layout_constraintTop_toBottomOf="@+id/mmsnap_mb_btn"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintVertical_chainStyle="spread"/>
 
     <Button
         android:id="@+id/mmsnap_mb_btn"
         android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="46dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
+        android:layout_height="0dp"
         android:background="@drawable/mmsnap_btn_bkg"
         android:backgroundTint="@color/about_multibehaviour_mb"
         android:drawableRight="@drawable/subcategory_btn_img"
@@ -106,19 +91,16 @@
         android:textSize="21dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/mmsnap_assoc_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toEndOf="@+id/mmsnap_mm_btn"
+        app:layout_constraintStart_toStartOf="@+id/mmsnap_mm_btn"
+        app:layout_constraintTop_toBottomOf="@+id/mmsnap_mm_btn"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintVertical_chainStyle="spread"/>
 
     <Button
         android:id="@+id/mmsnap_app_btn"
         android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="52dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
+        android:layout_height="0dp"
         android:background="@drawable/mmsnap_btn_bkg"
         android:backgroundTint="@color/how_to_use_this_app"
         android:drawableRight="@drawable/subcategory_btn_img"
@@ -130,29 +112,33 @@
         android:textSize="21dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintEnd_toEndOf="@+id/mmsnap_assoc_btn"
+        app:layout_constraintStart_toStartOf="@+id/mmsnap_assoc_btn"
+        app:layout_constraintTop_toBottomOf="@+id/mmsnap_assoc_btn"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintVertical_chainStyle="spread"/>
 
     <!--<Button-->
+    <!--android:id="@+id/button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:backgroundTint="@color/mmsnap"-->
+    <!--android:drawableTint="#EFE4B0"-->
+    <!--android:drawableTop="@drawable/mmsnap_section_logo"-->
+    <!--android:text="MM SNAP"-->
+    <!--android:textColor="#FFFFFF"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toTopOf="parent"/>-->
+
+    <!--The section logo here takes too much space. Moved it to the toolbar (in Activity onCreate code-->
+    <!--<FrameLayout-->
         <!--android:id="@+id/button"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
-        <!--android:backgroundTint="@color/mmsnap"-->
-        <!--android:drawableTint="#EFE4B0"-->
-        <!--android:drawableTop="@drawable/mmsnap_section_logo"-->
-        <!--android:text="MM SNAP"-->
-        <!--android:textColor="#FFFFFF"-->
         <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent"/>-->
+        <!--app:layout_constraintTop_toTopOf="parent">-->
 
-    <FrameLayout
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <include layout="@layout/logo_mmsnap"/>
-    </FrameLayout>
+        <!--<include layout="@layout/logo_mmsnap"/>-->
+    <!--</FrameLayout>-->
 
 </android.support.constraint.ConstraintLayout>

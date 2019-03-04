@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MMSNAP</string>
+    <string name="app_name">MM SNAP</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">MM SNAP</string>
@@ -36,7 +36,7 @@
     <string name="if_then_btn_txt">IF - THEN</string>
     <string name="agents_btn_txt">AGENTS</string>
     <string name="title_activity_mmsnap">MM SNAP</string>
-    <string name="what_this_up_is_for">WHAT THIS UP IS FOR</string>
+    <string name="what_this_app_is_for">WHAT THIS APP IS FOR</string>
     <string name="about_multimorbidity_mm">ABOUT MULTIMORBIDITY MM</string>
     <string name="the_association_between_mm_mb">THE ASSOCIATION BETWEEN MM - MB</string>
     <string name="about_multibehaviour_mb">ABOUT MULTIBEHAVIOUR MB</string>

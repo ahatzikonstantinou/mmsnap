@@ -11,11 +11,12 @@
     tools:context=".SelfRatedHealthActivity"
     tools:showIn="@layout/activity_self_rated_health">
 
-    <include layout="@layout/logo_assessment"/>
+    <!--<include layout="@layout/logo_assessment"/>-->
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -58,7 +59,7 @@
                         android:layout_height="wrap_content"
                         >
                         <View
-                            android:layout_weight="6"
+                            android:layout_weight="16"
                             android:layout_column="1"
                             />
                         <TextView

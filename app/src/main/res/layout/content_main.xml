@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--<FrameLayout-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--&gt;-->
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,10 +23,8 @@
     <Button
         android:id="@+id/mmsnap_btn"
         android:layout_width="0dp"
-        android:layout_height="85dp"
+        android:layout_height="0dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
         android:layout_marginStart="30dp"
         android:background="@drawable/mmsnap_btn_bkg"
         android:drawableLeft="@drawable/mmsnap_btn_img"
@@ -29,18 +37,15 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/assessments_btn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintVertical_chainStyle="spread"/>
 
     <Button
         android:id="@+id/assessments_btn"
         android:layout_width="0dp"
-        android:layout_height="85dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
+        android:layout_height="0dp"
         android:background="@drawable/assessments_btn_bkg"
         android:drawableLeft="@drawable/assessments_btn_img"
         android:drawableTint="#EFE4B0"
@@ -51,19 +56,16 @@
         android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/education_btn"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/mmsnap_btn"
+        app:layout_constraintHeight_default="wrap"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/mmsnap_btn"
         app:layout_constraintTop_toBottomOf="@+id/mmsnap_btn"/>
 
     <Button
         android:id="@+id/education_btn"
         android:layout_width="0dp"
-        android:layout_height="85dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
+        android:layout_height="0dp"
         android:background="@drawable/education_btn_bkg"
         android:drawableLeft="@drawable/education_btn_img"
         android:drawableTint="#EFE4B0"
@@ -74,42 +76,16 @@
         android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/if_then_btn"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/assessments_btn"
+        app:layout_constraintHeight_default="wrap"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/assessments_btn"
         app:layout_constraintTop_toBottomOf="@+id/assessments_btn"/>
-
-    <Button
-        android:id="@+id/agents_btn"
-        android:layout_width="0dp"
-        android:layout_height="85dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
-        android:background="@drawable/agents_btn_bkg"
-        android:drawableLeft="@drawable/agents_btn_img"
-        android:drawableTint="#EFE4B0"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="@string/agents_btn_txt"
-        android:textColor="#EFE4B0"
-        android:textSize="35dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/if_then_btn"/>
 
     <Button
         android:id="@+id/if_then_btn"
         android:layout_width="0dp"
-        android:layout_height="85dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginStart="30dp"
+        android:layout_height="0dp"
         android:background="@drawable/if_then_btn_bkg"
         android:drawableLeft="@drawable/if_then_btn_img"
         android:drawableTint="#22B14C"
@@ -120,9 +96,33 @@
         android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/agents_btn"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/education_btn"
+        app:layout_constraintHeight_default="wrap"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/education_btn"
         app:layout_constraintTop_toBottomOf="@+id/education_btn"/>
 
+    <Button
+        android:id="@+id/agents_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/agents_btn_bkg"
+        android:drawableLeft="@drawable/agents_btn_img"
+        android:drawableTint="#EFE4B0"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/agents_btn_txt"
+        android:textColor="#EFE4B0"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/if_then_btn"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/if_then_btn"
+        app:layout_constraintTop_toBottomOf="@+id/if_then_btn"/>
+
 </android.support.constraint.ConstraintLayout>
+
+    <!--</ScrollView>-->
+<!--</FrameLayout>-->

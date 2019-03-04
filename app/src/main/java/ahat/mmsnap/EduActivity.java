@@ -22,6 +22,7 @@ public class EduActivity extends AppCompatActivity
         setSupportActionBar( toolbar );
 
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+        getSupportActionBar().setIcon( getResources().getDrawable( R.drawable.edu_section_logo) );
 
         //buttons events
         Button wButton = ( Button ) findViewById( R.id.edu_what_btn );

@@ -78,7 +78,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity
             String stringValue = newValue.toString();
 
             if (preference instanceof ListPreference) {
-                // For list preferences, look up the correct display value in
+                // For list preferences, look up the correctImageView display value in
                 // the preference's 'entries' list.
                 ListPreference listPreference = (ListPreference) preference;
                 int index = listPreference.findIndexOfValue(stringValue);

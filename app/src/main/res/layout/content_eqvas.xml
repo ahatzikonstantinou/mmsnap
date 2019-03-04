@@ -11,11 +11,12 @@
     tools:context=".EQVASActivity"
     tools:showIn="@layout/activity_eqvas">
 
-    <include layout="@layout/logo_assessment"/>
+    <!--<include layout="@layout/logo_assessment"/>-->
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -37,11 +38,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="&#8226; We would like to know how good or bad your health is TODAY.
-    &#8226; This scale is numbered from 0 to 100.
-    &#8226; 100 means the best health you can imagine.
-    &#8226; 0 means the worst health you can imagine.
-    &#8226; Move the cursor on the scale to indicate how your health is today."
+                    android:text="&#8226; We would like to know how good or bad your health is TODAY.\n
+&#8226; This scale is numbered from 0 to 100.\n
+&#8226; 100 means the best health you can imagine.\n
+&#8226; 0 means the worst health you can imagine.\n
+&#8226; Move the cursor on the scale to indicate how your health is today."
                     android:textColor="#000000"
                     android:textSize="15sp"
                     />

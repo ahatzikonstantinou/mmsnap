@@ -1,6 +1,8 @@
 package ahat.mmsnap;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -23,6 +25,8 @@ public class MMSNAPActivity extends AppCompatActivity
         setSupportActionBar( toolbar );
 
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+
+        getSupportActionBar().setIcon( getResources().getDrawable( R.drawable.mmsnap_section_logo ) );
 
         //buttons events
         Button forButton = ( Button ) findViewById( R.id.mmsnap_for_btn );

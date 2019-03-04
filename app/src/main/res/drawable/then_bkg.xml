@@ -6,7 +6,7 @@
         <shape android:shape="rectangle">
             <size
                 android:width="60dp"
-                android:height="40dp" />
+                android:height="30dp" />
             <solid android:color="@color/then" />
         </shape>
     </item>
@@ -52,13 +52,13 @@
     </item>
 
     <!--border-->
-    <item
-        android:right="-8dp">
-        <shape android:shape="rectangle">
-            <corners android:radius="5dp" />
-            <stroke android:color="@color/then" android:width="8dp" />
-        </shape>
-    </item>
+    <!--<item-->
+        <!--android:right="-8dp">-->
+        <!--<shape android:shape="rectangle">-->
+            <!--<corners android:radius="5dp" />-->
+            <!--<stroke android:color="@color/then" android:width="8dp" />-->
+        <!--</shape>-->
+    <!--</item>-->
 
 </layer-list>
 

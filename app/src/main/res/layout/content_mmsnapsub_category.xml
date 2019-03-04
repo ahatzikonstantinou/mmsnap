@@ -24,7 +24,7 @@
         <!--android:textColor="#FFFFFF"-->
         <!--app:layout_constraintStart_toStartOf="parent"-->
         <!--app:layout_constraintTop_toTopOf="parent"/>-->
-    <include layout="@layout/logo_mmsnap"/>
+    <!--<include layout="@layout/logo_mmsnap"/>-->
 
     <!--ahat: replaced view pager because user experience was inconsistent with other sections of the app-->
     <!--<android.support.v4.view.ViewPager-->
@@ -51,5 +51,7 @@
     <FrameLayout
         android:id="@+id/mmsnap_subcategory_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></FrameLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        ></FrameLayout>
 </LinearLayout>

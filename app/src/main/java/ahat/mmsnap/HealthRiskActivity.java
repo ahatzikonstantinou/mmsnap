@@ -19,6 +19,11 @@ public class HealthRiskActivity extends AppCompatActivity
         setSupportActionBar( toolbar );
 
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+
+        getSupportActionBar().setIcon( getResources().getDrawable( R.drawable.assessments_section_logo) );
+        getSupportActionBar().setTitle( R.string.title_activity_assessments );
+        getSupportActionBar().setSubtitle( R.string.title_activity_health_risk );
+
     }
 
 }

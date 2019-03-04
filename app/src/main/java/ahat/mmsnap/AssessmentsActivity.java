@@ -19,6 +19,7 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
         setSupportActionBar( toolbar );
 
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+        getSupportActionBar().setIcon( getResources().getDrawable( R.drawable.assessments_section_logo) );
 
         //buttons events
         Button effButton = ( Button ) findViewById( R.id.assessments_efficacy_btn );

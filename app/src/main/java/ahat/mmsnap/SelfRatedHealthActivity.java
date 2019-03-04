@@ -18,6 +18,11 @@ public class SelfRatedHealthActivity extends AppCompatActivity
         Toolbar toolbar = findViewById( R.id.toolbar );
         setSupportActionBar( toolbar );
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
+
+        getSupportActionBar().setIcon( getResources().getDrawable( R.drawable.assessments_section_logo) );
+        getSupportActionBar().setTitle( R.string.title_activity_assessments );
+        getSupportActionBar().setSubtitle( R.string.title_activity_self_rated_health );
+
     }
 
 }
