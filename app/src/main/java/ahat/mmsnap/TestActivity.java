@@ -77,6 +77,9 @@ public class TestActivity extends AppCompatActivity
         correctImageView = (ImageView) findViewById( R.id.edu_test_correct );
         errorImageView = (ImageView) findViewById( R.id.edu_test_error );
 
+        TextView prompt = (TextView) findViewById( R.id.edu_test_prompt );
+        prompt.setText( getString( R.string.edu_test_prompt, PROGRESS_STEPS ) );
+
         mPlayButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick( View view )
