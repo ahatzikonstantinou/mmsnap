@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background_color"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".CounterfactualDetailActivity"
+    tools:showIn="@layout/activity_counterfactual_detail"
+    android:paddingTop="10dp"
+    android:id="@+id/counterfactual_detail_main_layout">
+
+    <!--<FrameLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="0dp"-->
+        <!--app:layout_constraintLeft_toLeftOf="parent"-->
+        <!--app:layout_constraintRight_toRightOf="parent"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/progressbar_layout"-->
+        <!--&gt;-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/subsection_marginBottom"
+            android:layout_marginLeft="@dimen/subsection_marginSide"
+            android:layout_marginRight="@dimen/subsection_marginSide"
+            android:layout_marginTop="@dimen/subsection_marginTop"
+            android:background="@drawable/mmsnap_subcategory_border"
+            android:backgroundTint="@color/counterfactual"
+            android:orientation="vertical"
+            android:padding="3dip"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/counterfactual_detail_switch">
+
+            <ScrollView
+                android:id="@+id/counterfactual_detail_scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:fillViewport="true"
+                >
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:orientation="vertical"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="15dp">
+
+                    <LinearLayout
+                        android:id="@+id/counterfactual_detail_if_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/if_then_border"
+                        android:backgroundTint="@color/if_color"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        app:layout_constraintBottom_toTopOf="@+id/counterfactual_detail_layout2"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        >
+
+                        <Button
+                            android:id="@+id/counterfactual_detail_if_btn"
+                            android:layout_width="95dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:background="@drawable/if_bkg"
+                            android:text="IF"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            />
+
+                        <EditText
+                            android:id="@+id/counterfactual_detail_if_statement"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:padding="20dp"
+                            android:text="If I return from work before 8 o'clock "
+                            android:textSize="18sp"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/counterfactual_detail_layout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/if_then_border"
+                        android:backgroundTint="@color/then"
+                        android:orientation="horizontal"
+                        android:padding="12dp"
+                        app:layout_constraintBottom_toTopOf="@+id/edu_test_if1_btn"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/counterfactual_detail_if_layout"
+                        >
+
+                        <Button
+                            android:id="@+id/counterfactual_detail_then_btn"
+                            android:layout_width="95dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:background="@drawable/then_bkg"
+                            android:paddingRight="15dp"
+                            android:text="THEN"
+                            android:textColor="#A349A4"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            />
+
+                        <EditText
+                            android:id="@+id/counterfactual_detail_then_statement"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="3"
+                            android:padding="15dp"
+                            android:text="I will go for a 30 minutes walk"
+                            android:textSize="18sp"
+                            />
+                    </LinearLayout>
+
+                </android.support.constraint.ConstraintLayout>
+
+            </ScrollView>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/counterfactual_detail_relativelayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="@dimen/subsection_title_width"
+                android:layout_height="@dimen/subsection_title_height"
+                android:layout_centerHorizontal="true"
+                android:background="@color/counterfactual"
+                android:text="@string/title_activity_counterfactual"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/subsection_title_textSize"
+                android:textStyle="bold"
+                />
+
+        </RelativeLayout>
+    <!--</FrameLayout>-->
+
+    <Switch
+        android:id="@+id/counterfactual_detail_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SET"
+        android:textOn="ON"
+        android:textOff="OFF"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/counterfactual_detail_save"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <Button
+        android:id="@+id/counterfactual_detail_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_border_trnsp_bkg"
+        android:text="Save"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+
+</android.support.constraint.ConstraintLayout>

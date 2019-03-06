@@ -10,6 +10,33 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".CounterfactualDetailActivity"
+            android:label="@string/title_activity_counterfactual_detail"
+            android:parentActivityName=".CounterfactualActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.CounterfactualActivity"/>
+        </activity>
+        <activity
+            android:name=".CounterfactualActivity"
+            android:label="@string/title_activity_counterfactual"
+            android:parentActivityName=".IfThenActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.IfThenActivity"/>
+        </activity>
+        <activity
+            android:name=".IfThenActivity"
+            android:label="@string/title_activity_if_then"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.MainActivity"/>
+        </activity>
+        <activity
             android:name=".TestActivity"
             android:label="@string/title_activity_test"
             android:parentActivityName=".EduActivity"

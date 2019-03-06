@@ -26,4 +26,9 @@
     <color name="if_color">#A80A3E</color>
     <color name="statement_dark">#A349A4</color>
     <color name="statement_light">#FF7F27</color>
+    <color name="if_then">#22B14C</color>
+    <color name="if_then_bkg">#FFF200</color>
+    <color name="counterfactual">#7F639F</color>
+    <color name="action_plan">#F49547</color>
+    <color name="coping_plan">#4AACC5</color>
 </resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!--this is to create a margin between the logo and the title in the toolbar-->
+    <item android:width="45dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent"/>
+        </shape>
+    </item>
+
+    <!--this is the background color of the logo-->
+    <item
+        android:width="15dp"
+        android:height="12dp"
+        android:left="11dp"
+        android:top="11dp"
+        >
+        <shape android:shape="rectangle">
+            <solid android:color="@color/if_then_bkg"/>
+        </shape>
+    </item>
+
+    <!--this is the actual icon used for the logo-->
+    <item
+        android:drawable="@drawable/ic_if_then_light"
+        android:width="@dimen/mmsnap_logo_size"
+        android:height="@dimen/mmsnap_logo_size"
+        />
+
+</layer-list >

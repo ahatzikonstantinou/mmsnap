@@ -48,7 +48,7 @@ public class TestActivity extends AppCompatActivity
     int            timeLapsed;
     int            testIndex;
     JSONObject     test;
-    int            TOTAL_MILLIS        = 10000;
+    int            TOTAL_MILLIS        = 20000;
     int            INTERVAL_MILLIS     = 1000;
     int            PROGRESS_STEPS      = TOTAL_MILLIS / INTERVAL_MILLIS;
 
@@ -84,7 +84,7 @@ public class TestActivity extends AppCompatActivity
             @Override
             public void onClick( View view )
             {
-                mPlayButton.setVisibility( View.GONE );
+                mPlayButton.setVisibility( View.INVISIBLE );
                 loadTest();
                 timeLapsed = 0;
                 lapsedProgressTicks = 0;

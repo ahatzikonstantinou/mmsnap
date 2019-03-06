@@ -91,4 +91,7 @@
     <string name="title_activity_test">IF THEN KNOWLEDGE TEST</string>
     <string name="if_then_knowledge_test_btn_txt">\"IF - THEN\" KNOWLEDGE TEST</string>
     <string name="edu_test_prompt">In %1$d seconds select one of the two bottom sentences to complete the IF - THEN statement</string>
+    <string name="title_activity_if_then">IF THEN</string>
+    <string name="title_activity_counterfactual">COUNTERFACTUAL THOUGHTS</string>
+    <string name="title_activity_counterfactual_detail">Counterfactual Detail</string>
 </resources>
