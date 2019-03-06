@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ActionPlansDetailActivity"
+            android:label="@string/title_activity_action_plans_detail"
+            android:parentActivityName=".ActionPlansActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.ActionPlansActivity"/>
+        </activity>
+        <activity
             android:name=".CounterfactualDetailActivity"
             android:label="@string/title_activity_counterfactual_detail"
             android:parentActivityName=".CounterfactualActivity"
@@ -17,6 +26,24 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ahat.mmsnap.CounterfactualActivity"/>
+        </activity>
+        <activity
+            android:name=".CopingPlansActivity"
+            android:label="@string/title_activity_coping_plans"
+            android:parentActivityName=".IfThenActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.IfThenActivity"/>
+        </activity>
+        <activity
+            android:name=".ActionPlansActivity"
+            android:label="@string/title_activity_action_plans"
+            android:parentActivityName=".IfThenActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.IfThenActivity"/>
         </activity>
         <activity
             android:name=".CounterfactualActivity"

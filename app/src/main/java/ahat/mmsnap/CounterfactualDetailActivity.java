@@ -21,11 +21,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static ahat.mmsnap.CounterfactualActivity.FILENAME;
-
 public class CounterfactualDetailActivity extends AppCompatActivity
 {
-
+    private String FILENAME;
     int itemId = 0;
     JSONArray items;
     private Switch activeSwitch;
@@ -48,11 +46,17 @@ public class CounterfactualDetailActivity extends AppCompatActivity
         thenText = (EditText) findViewById( R.id.counterfactual_detail_then_statement );
         activeSwitch = (Switch) findViewById( R.id.counterfactual_detail_switch );
 
-        items = CounterfactualActivity.loadItems( this, findViewById( R.id.counterfactual_detail_main_layout ), "Could not load counterfactual thoughts." );
+        Bundle b = getIntent().getExtras();
+        FILENAME = b.getString( "FILENAME" );
+
+        items = JSONArrayIOHandler.loadItems( this,
+                                              findViewById( R.id.counterfactual_detail_main_layout ),
+                                              "Could not load counterfactual thoughts.",
+                                              getFilesDir().getPath() + "/" + FILENAME );
 
         itemId = items.length();
 
-        Bundle b = getIntent().getExtras();
+
         if( null != b && b.containsKey( "itemId" ) )
         {
             itemId = b.getInt( "itemId" );
@@ -119,7 +123,7 @@ public class CounterfactualDetailActivity extends AppCompatActivity
                         items.put( o );
                     }
 
-                    saveItems( getBaseContext(), items );
+                    JSONArrayIOHandler.saveItems( getBaseContext(), items, getFilesDir().getPath() + "/" + FILENAME );
                 }
                 catch( Exception e )
                 {
@@ -132,19 +136,6 @@ public class CounterfactualDetailActivity extends AppCompatActivity
     }
 
 
-    public static void saveItems( Context context, JSONArray items ) throws IOException
-    {
-        String filePath = context.getFilesDir().getPath().toString() + "/" + FILENAME;
-        File file = new File( filePath );
-        if(!file.exists())
-        {
-            file.createNewFile();
-        }
-
-        FileOutputStream fos = context.openFileOutput( FILENAME, Context.MODE_PRIVATE );
-        fos.write( items.toString().getBytes() );
-        fos.close();
-    }
 
     protected void showErrorSnackBar( String message )
     {

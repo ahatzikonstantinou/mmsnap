@@ -41,10 +41,10 @@ public class IfThenActivity extends AppCompatActivity implements View.OnClickLis
                  startActivity( new Intent( this, CounterfactualActivity.class) );
                 break;
             case R.id.if_then_action_btn:
-
+                startActivity( new Intent( this, ActionPlansActivity.class) );
                 break;
             case R.id.if_then_coping_btn:
-
+                startActivity( new Intent( this, CopingPlansActivity.class) );
                 break;
             default:
                 break;

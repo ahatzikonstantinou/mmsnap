@@ -12,4 +12,6 @@
     <dimen name="subsection_title_width">334dp</dimen>
     <dimen name="subsection_title_height">30dp</dimen>
     <dimen name="subsection_title_textSize">18sp</dimen>
+    <dimen name="behavior_icon_size_big">60dp</dimen>
+    <dimen name="behavior_image_scale_big">2</dimen>
 </resources>

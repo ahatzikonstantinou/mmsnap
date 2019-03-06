@@ -94,4 +94,9 @@
     <string name="title_activity_if_then">IF THEN</string>
     <string name="title_activity_counterfactual">COUNTERFACTUAL THOUGHTS</string>
     <string name="title_activity_counterfactual_detail">Counterfactual Detail</string>
+    <string name="title_activity_action_plans">ACTION PLANS</string>
+    <string name="title_activity_coping_plans">COPING PLANS</string>
+    <string name="title_activity_action_plans_detail">ActionPlansDetailActivity</string>
+    <string name="title_activity_if_then_detail">IfThenDetailActivity</string>
+    <string name="select_plan_dates">Please select the dates to activate you action plan</string>
 </resources>

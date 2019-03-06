@@ -88,4 +88,7 @@
     <string name="how_to_word_effective_then_text">Specifying simple behaviours (such as pressing a response key) as well as complex behaviours (by using \"OR\" - \"AND\") it is very effective in meeting your goals</string>
     <string name="if_then_knowledge_test_btn_txt">\"IF - THEN\" KNOWLEDGE TEST</string>
     <string name="edu_test_prompt">In %1$d seconds select one of the two bottom sentences to complete the IF - THEN statement</string>
+    <string name="title_activity_action_plans">ACTION PLANS</string>
+    <string name="title_activity_coping_plans">COPING PLANS</string>
+    <string name="select_plan_dates">Please select the dates to activate you action plan</string>
 </resources>

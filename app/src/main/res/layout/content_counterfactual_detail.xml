@@ -63,7 +63,7 @@
                         android:background="@drawable/if_then_border"
                         android:backgroundTint="@color/if_color"
                         android:orientation="horizontal"
-                        android:padding="10dp"
+                        android:padding="12dp"
                         app:layout_constraintBottom_toTopOf="@+id/counterfactual_detail_layout2"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -87,7 +87,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
-                            android:padding="20dp"
+                            android:padding="15dp"
                             android:text="If I return from work before 8 o'clock "
                             android:textSize="18sp"
                             />
@@ -104,7 +104,6 @@
                         android:backgroundTint="@color/then"
                         android:orientation="horizontal"
                         android:padding="12dp"
-                        app:layout_constraintBottom_toTopOf="@+id/edu_test_if1_btn"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/counterfactual_detail_if_layout"
                         >

@@ -2,10 +2,10 @@ package ahat.mmsnap;
 
 import android.os.Bundle;
 
-public class CounterfactualActivity extends IfThenListActivity
+public class CopingPlansActivity extends IfThenListActivity
 {
 
-    public final String FILENAME = "counterfactual.json";
+    public final String FILENAME = "coping_plans.json";
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -25,22 +25,17 @@ public class CounterfactualActivity extends IfThenListActivity
 
     protected String getLoadItemsErrorMessage()
     {
-        return "Counterfactual thoughts could not be loaded.";
+        return "Coping plans could not be loaded.";
     }
 
     protected String getDeleteItemsErrorMessage()
     {
-        return "Could not delete selected counterfactual thoughts";
+        return "Could not delete selected coping plans";
     }
 
     protected int getSubtitleStringResId()
     {
-        return R.string.title_activity_counterfactual;
-    }
-
-    protected int getTitleStringResId()
-    {
-        return R.string.title_activity_if_then;
+        return R.string.title_activity_coping_plans;
     }
 
     protected int getLogoDrawableResId()

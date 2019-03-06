@@ -1,46 +1,24 @@
 package ahat.mmsnap;
 
 import android.app.Activity;
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 
-public class CounterfactualListAdapter extends ArrayAdapter
+public class CounterfactualListAdapter extends IfThenListAdapter
 {
-    //to reference the Activity
-    private final Activity context;
-
-    //to store the animal images
-    private final JSONArray items;
-    public boolean deleteAction;
-    public ArrayList deleteIndex = new ArrayList();
 
     public CounterfactualListAdapter( Activity context, JSONArray items, boolean deleteAction )
     {
-        super( context, R.layout.counterfactual_list_item );
-
-        this.context = context;
-        this.items   = items;
-        this.deleteAction = deleteAction;
+        super( context, items, deleteAction );
     }
 
-    @Override
-    public int getCount()
-    {
-        return items.length();
-    }
 
     @Override
     public View getView(int position, View view, ViewGroup parent)
@@ -74,8 +52,6 @@ public class CounterfactualListAdapter extends ArrayAdapter
             ImageView chk = (ImageView) view.findViewById( R.id.counterfactual_list_item_chk );
             chk.setVisibility( deleteAction ? View.VISIBLE : View.GONE );
             chk.setImageResource( deleteIndex.contains( position ) ? R.drawable.ic_check_box_black_24dp : R.drawable.ic_check_box_outline_blank_black_24dp );
-//            String m = "Item " + String.valueOf( position ) + " is " + ( deleteIndex.contains( position ) ? "" : "not" ) + " in deleteIndex";
-//            Log.d( "Ahat:", m );
         }
         catch( Exception e )
         {
@@ -85,12 +61,5 @@ public class CounterfactualListAdapter extends ArrayAdapter
         return view;
 
     };
-
-//    public ArrayList getCheckedIndexes()
-//    {
-//        LayoutInflater inflater = context.getLayoutInflater();
-//        View view = inflater.inflate( R.id.counterfactual_list, null,true );
-//
-//    }
 
 }
