@@ -14,42 +14,44 @@
     <!--ahat: add the following line to the above layout to re-activate itemOnClick-->
     <!--android:descendantFocusability="blocksDescendants"-->
 
-    <ImageView
-        android:id="@+id/counterfactual_list_item_chk"
-        android:layout_gravity="center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_margin="5dp">
-        <ImageView
-            android:id="@+id/counterfactual_list_item_active"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:visibility="gone"
-            android:layout_column="1"
-            android:layout_weight="1"
-            android:src="@drawable/ic_active_alt_24dp"
-            android:layout_height="wrap_content"/>
-        <ImageView
-            android:id="@+id/counterfactual_list_item_inactive"
-            android:layout_centerInParent="true"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:visibility="gone"
-            android:layout_column="1"
-            android:layout_weight="1"
-            android:src="@drawable/ic_inactive_alt_24dp"
-            android:layout_height="wrap_content"/>
-        </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <include layout="@layout/if_then_list_fragment"/>
+
+    <!--<ImageView-->
+        <!--android:id="@+id/counterfactual_list_item_chk"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:visibility="gone"/>-->
+    <!--<RelativeLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_margin="5dp">-->
+        <!--<ImageView-->
+            <!--android:id="@+id/counterfactual_list_item_active"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:visibility="gone"-->
+            <!--android:layout_column="1"-->
+            <!--android:layout_weight="1"-->
+            <!--android:src="@drawable/ic_active_alt_24dp"-->
+            <!--android:layout_height="wrap_content"/>-->
+        <!--<ImageView-->
+            <!--android:id="@+id/counterfactual_list_item_inactive"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:visibility="gone"-->
+            <!--android:layout_column="1"-->
+            <!--android:layout_weight="1"-->
+            <!--android:src="@drawable/ic_inactive_alt_24dp"-->
+            <!--android:layout_height="wrap_content"/>-->
+        <!--</RelativeLayout>-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
         <!--<LinearLayout-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="wrap_content"-->
@@ -214,112 +216,6 @@
 
         <!--</TableLayout>-->
 
-        <include layout="@layout/if_then_list_fragment"/>
-        <TableLayout
-            android:id="@+id/coping_plan_layout"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="2dp"
-            >
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="1dp"
-                >
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_column="1"
-                    android:gravity="center"
-                    >
-                    <ImageView
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:src="@drawable/ic_if_bkg_alt"
-                        android:tint="@color/coping_plan"
-                        android:scaleY="1.4"
-                        android:scaleX="2"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="IF"
-                        android:textAlignment="center"
-                        android:textColor="#ffffff"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginEnd="30dp"
-                        android:layout_marginStart="5dp"
-                        android:paddingTop="2dp"
-                        android:paddingBottom="2dp"
-                        />
-                </RelativeLayout>
-                <TextView
-                    android:layout_column="2"
-                    android:layout_weight="30"
-                    android:id="@+id/item_coping_if_statement"
-                    android:layout_height="wrap_content"
-                    android:text="if statement"
-                    android:textSize="15sp"
-                    android:textStyle="italic"
-                    android:layout_gravity="center_vertical"
-                    />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="1dp"
-                >
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_column="1"
-                    android:layout_marginEnd="5dp"
-                    >
-
-                    <ImageView
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:src="@drawable/ic_then_bkg_alt"
-                        android:tint="@color/coping_plan"
-                        android:layout_centerInParent="true"
-                        android:scaleY="2"
-                        android:scaleX="3"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ffffff"
-                        android:text="THEN"
-                        android:textAlignment="center"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_gravity="center_vertical"
-                        android:layout_centerInParent="true"
-                        android:paddingEnd="5dp"
-                        />
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_column="2"
-                    android:layout_weight="30"
-                    android:id="@+id/item_coping_then_statement"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="0dp"
-                    android:text="then statement"
-                    android:textSize="15sp"
-                    android:textStyle="italic"
-                    android:layout_gravity="center_vertical"
-                    />
-            </TableRow>
-
-        </TableLayout>
-
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
 </LinearLayout>

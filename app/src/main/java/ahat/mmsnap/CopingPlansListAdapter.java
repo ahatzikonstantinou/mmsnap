@@ -36,7 +36,7 @@ public class CopingPlansListAdapter extends IfThenListAdapter
         if( null == view )
         {
 //            view = LayoutInflater.from(getContext()).inflate(R.layout.item_user, parent, false);
-            view = inflater.inflate( R.layout.action_plans_list_item, null,true );
+            view = inflater.inflate( R.layout.coping_plans_list_item, null,true );
         }
 //        View rowView = inflater.inflate( R.layout.counterfactual_list_item, null,true );
 

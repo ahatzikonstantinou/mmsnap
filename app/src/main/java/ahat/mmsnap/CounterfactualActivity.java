@@ -1,6 +1,5 @@
 package ahat.mmsnap;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 public class CounterfactualActivity extends IfThenListActivity
@@ -37,11 +36,6 @@ public class CounterfactualActivity extends IfThenListActivity
     protected int getSubtitleStringResId()
     {
         return R.string.title_activity_counterfactual;
-    }
-
-    protected int getTitleStringResId()
-    {
-        return R.string.title_activity_if_then;
     }
 
     protected int getLogoDrawableResId()

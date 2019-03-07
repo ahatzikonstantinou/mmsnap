@@ -99,6 +99,7 @@ public class ActionPlansListAdapter extends IfThenListAdapter
             {
                 copingIfStatement.setText(  item.getString( "coping_if" ).trim() );
                 copingThenStatement.setText(  item.getString( "coping_then" ).trim() );
+                view.findViewById( R.id.coping_plan_layout ).setVisibility( View.VISIBLE );
             }
         }
         catch( Exception e )
