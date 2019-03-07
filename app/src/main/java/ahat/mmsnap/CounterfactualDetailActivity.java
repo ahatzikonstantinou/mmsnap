@@ -24,8 +24,8 @@ import java.io.IOException;
 public class CounterfactualDetailActivity extends AppCompatActivity
 {
     private String FILENAME;
-    int itemId = 0;
-    JSONArray items;
+    int itemId = -1;
+
     private Switch activeSwitch;
     private EditText thenText;
     private EditText ifText;
@@ -49,36 +49,24 @@ public class CounterfactualDetailActivity extends AppCompatActivity
         Bundle b = getIntent().getExtras();
         FILENAME = b.getString( "FILENAME" );
 
-        items = JSONArrayIOHandler.loadItems( this,
-                                              findViewById( R.id.counterfactual_detail_main_layout ),
-                                              "Could not load counterfactual thoughts.",
-                                              getFilesDir().getPath() + "/" + FILENAME );
-
-        itemId = items.length();
-
-
         if( null != b && b.containsKey( "itemId" ) )
         {
             itemId = b.getInt( "itemId" );
-            if( itemId > items.length() - 1 )
+            try
             {
-//                Toast.makeText( this, "The requsted counterfactual thought was not found. Create a new one or retry.", Toast.LENGTH_LONG ).show();
-                showErrorSnackBar( "The requested counterfactual thought was not found. Create a new one or retry." );
+                JSONObject item = JSONArrayIOHandler.loadItem( getFilesDir().getPath() + "/" + FILENAME, itemId  );
+                if( null == item )
+                {
+                    item = createEmptyItem();
+                }
+                ifText.setText( item.getString( "if" ) );
+                thenText.setText( item.getString( "then" ) );
+                activeSwitch.setChecked( item.getBoolean( "active" ) );
             }
-            else
+            catch( Exception e )
             {
-                try
-                {
-                    ifText.setText( ( (JSONObject) items.get( itemId ) ).getString( "if" ) );
-                    thenText.setText( ( (JSONObject) items.get( itemId ) ).getString( "then" ) );
-                    activeSwitch.setChecked( ( (JSONObject) items.get( itemId ) ).getBoolean( "active" ) );
-                }
-                catch( JSONException e )
-                {
-                    e.printStackTrace();
-//                    Toast.makeText( this, "Could not load counterfactual thought", Toast.LENGTH_LONG ).show();
-                    showErrorSnackBar( "Could not load counterfactual thought" );
-                }
+                e.printStackTrace();
+                showErrorSnackBar( "Could not load counterfactual thought" );
             }
         }
 
@@ -101,7 +89,6 @@ public class CounterfactualDetailActivity extends AppCompatActivity
                 if( 0 < error.length() )
                 {
                     error += "Please ";
-                    Toast.makeText( CounterfactualDetailActivity.this, error, Toast.LENGTH_LONG ).show();
                     showErrorSnackBar( error );
                     return;
                 }
@@ -109,25 +96,16 @@ public class CounterfactualDetailActivity extends AppCompatActivity
                 try
                 {
                     JSONObject o = new JSONObject();
-                    if( itemId < items.length() )
-                    {
-                        o = (JSONObject) items.get( itemId );
-                    }
                     o.put( "id", String.valueOf( itemId ) );
                     o.put( "if", ifStatement );
                     o.put( "then", thenStatement );
                     o.put( "active", activeSwitch.isChecked() );
 
-                    if( itemId == items.length() )
-                    {
-                        items.put( o );
-                    }
-
-                    JSONArrayIOHandler.saveItems( getBaseContext(), items, getFilesDir().getPath() + "/" + FILENAME );
+                    JSONArrayIOHandler.saveItem( getBaseContext(), o, getFilesDir().getPath() + "/" + FILENAME );
                 }
                 catch( Exception e )
                 {
-                    showErrorSnackBar( "Could not save counterfactual thought! File " + FILENAME + " was not found." );
+                    showErrorSnackBar( "Could not save counterfactual thought!" );
                 }
 
                 startActivity( new Intent( getBaseContext(), CounterfactualActivity.class ) );
@@ -135,6 +113,22 @@ public class CounterfactualDetailActivity extends AppCompatActivity
         } );
     }
 
+    private JSONObject createEmptyItem()
+    {
+        JSONObject o = new JSONObject();
+        try
+        {
+            o.put( "id", 0 );
+            o.put( "if", "" );
+            o.put( "then", "" );
+            o.put( "active", true );
+        }
+        catch( JSONException e )
+        {
+            e.printStackTrace();
+        }
+        return o;
+    }
 
 
     protected void showErrorSnackBar( String message )

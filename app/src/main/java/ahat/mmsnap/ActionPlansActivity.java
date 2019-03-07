@@ -15,7 +15,7 @@ public class ActionPlansActivity extends IfThenListActivity
 
     protected IfThenListAdapter createListAdapter()
     {
-        return new CounterfactualListAdapter( this, items, delete );
+        return new ActionPlansListAdapter( this, items, delete );
     }
 
     protected String getFilename()

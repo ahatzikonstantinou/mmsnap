@@ -63,7 +63,7 @@
                         android:background="@drawable/if_then_border"
                         android:backgroundTint="@color/if_color"
                         android:orientation="horizontal"
-                        android:padding="12dp"
+                        android:padding="5dp"
                         app:layout_constraintBottom_toTopOf="@+id/counterfactual_detail_layout2"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -71,14 +71,15 @@
 
                         <Button
                             android:id="@+id/counterfactual_detail_if_btn"
-                            android:layout_width="95dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:background="@drawable/if_bkg"
+                            android:background="@drawable/ic_if_bkg_alt"
+                            android:backgroundTint="@color/if_color"
                             android:text="IF"
                             android:textColor="#FFFFFF"
-                            android:textSize="18sp"
+                            android:textSize="15sp"
                             android:textStyle="bold"
                             />
 
@@ -88,8 +89,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:padding="15dp"
-                            android:text="If I return from work before 8 o'clock "
-                            android:textSize="18sp"
+                            android:layout_marginRight="10dp"
+                            android:text="I return from work before 8 o'clock "
+                            android:textSize="15sp"
                             />
                     </LinearLayout>
 
@@ -103,22 +105,24 @@
                         android:background="@drawable/if_then_border"
                         android:backgroundTint="@color/then"
                         android:orientation="horizontal"
-                        android:padding="12dp"
+                        android:padding="5dp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/counterfactual_detail_if_layout"
                         >
 
                         <Button
                             android:id="@+id/counterfactual_detail_then_btn"
-                            android:layout_width="95dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
-                            android:background="@drawable/then_bkg"
-                            android:paddingRight="15dp"
+                            android:background="@drawable/ic_then_bkg_alt"
+                            android:backgroundTint="@color/then"
+                            android:paddingRight="8dp"
+                            android:paddingLeft="3dp"
                             android:text="THEN"
                             android:textColor="#A349A4"
-                            android:textSize="18sp"
+                            android:textSize="15sp"
                             android:textStyle="bold"
                             />
 
@@ -128,8 +132,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
                             android:padding="15dp"
+                            android:layout_marginRight="10dp"
                             android:text="I will go for a 30 minutes walk"
-                            android:textSize="18sp"
+                            android:textSize="15sp"
                             />
                     </LinearLayout>
 

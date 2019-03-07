@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".CopingPlansDetailActivity"
+            android:label="@string/title_activity_coping_plans_detail"
+            android:parentActivityName=".CopingPlansActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.CopingPlansActivity"/>
+        </activity>
+        <activity
             android:name=".ActionPlansDetailActivity"
             android:label="@string/title_activity_action_plans_detail"
             android:parentActivityName=".ActionPlansActivity"

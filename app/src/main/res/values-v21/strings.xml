@@ -90,5 +90,5 @@
     <string name="edu_test_prompt">In %1$d seconds select one of the two bottom sentences to complete the IF - THEN statement</string>
     <string name="title_activity_action_plans">ACTION PLANS</string>
     <string name="title_activity_coping_plans">COPING PLANS</string>
-    <string name="select_plan_dates">Please select the dates to activate you action plan</string>
+    <string name="select_plan_dates">Please select the date to activate your action plan</string>
 </resources>

@@ -1,17 +1,16 @@
 package ahat.mmsnap;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -30,14 +29,16 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
     private static final int SELECTED_COLOR = Color.rgb( 255, 255, 0 );
     private static final int NOT_SELECTED_COLOR = Color.rgb( 255, 255, 255 );
 
-    enum Behavior { EATING, ACTIVITY, ALCOHOL, SMOKING } ;
+    enum Behavior { EATING, ACTIVITY, ALCOHOL, SMOKING }
     protected HashMap<Behavior, Boolean> BehaviorIsSelected;
-    protected String actionDate;
+    protected String actionDate = "";
     protected abstract int getActivityResLayout();
     protected abstract int getContentRootLayoutResId();
     protected abstract JSONObject getIfThenItem();
+    protected abstract Class<?> getListActivityClass();
+    protected abstract String getSaveErrorMessage();
 
-    private JSONObject item;
+    protected JSONObject item;
     private String FILENAME;
     protected String getFILENAME()
     {
@@ -52,6 +53,8 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
 
     private TextView ifStatementTextView;
     private TextView thenStatementTextView;
+    private Switch   activeSwitch;
+
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
@@ -74,22 +77,47 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
         item = getIfThenItem();
 
         //behavior layout events
-        findViewById( R.id.eating ).setOnClickListener( this );
-        findViewById( R.id.activity ).setOnClickListener( this );
-        findViewById( R.id.alcohol ).setOnClickListener( this );
-        findViewById( R.id.smoking ).setOnClickListener( this );
+        findViewById( R.id.eating_image ).setOnClickListener( this );
+        findViewById( R.id.activity_image ).setOnClickListener( this );
+        findViewById( R.id.alcohol_image ).setOnClickListener( this );
+        findViewById( R.id.smoking_image ).setOnClickListener( this );
         findViewById( R.id.date_selector_layout ).setOnClickListener( this );
-        findViewById( R.id.action_plan_data ).setOnClickListener( this );
-        findViewById( R.id.coping_plan_data ).setOnClickListener( this );
+        findViewById( R.id.save ).setOnClickListener( this );
 
         ifStatementTextView = findViewById( R.id.item_if_statement );
         thenStatementTextView = findViewById( R.id.item_then_statement );
+        activeSwitch = findViewById( R.id.active_switch );
 
         BehaviorIsSelected = new HashMap<>();
         BehaviorIsSelected.put( Behavior.EATING, false );
         BehaviorIsSelected.put( Behavior.ACTIVITY, false );
         BehaviorIsSelected.put( Behavior.ALCOHOL, false );
         BehaviorIsSelected.put( Behavior.SMOKING, false );
+
+        try
+        {
+            ifStatementTextView.setText( item.getString( "if" ) );
+            thenStatementTextView.setText( item.getString( "then" ) );
+            activeSwitch.setChecked( item.getBoolean( "active" ) );
+            actionDate = item.getString( "date" );
+            setDateTextView();
+
+            setBehaviorIsSelected( Behavior.EATING, item.getBoolean( "EATING" ) );
+            setBehaviorIsSelected( Behavior.ACTIVITY, item.getBoolean( "ACTIVITY" ) );
+            setBehaviorIsSelected( Behavior.ALCOHOL, item.getBoolean( "ALCOHOL" ) );
+            setBehaviorIsSelected( Behavior.SMOKING, item.getBoolean( "SMOKING" ) );
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            View view = findViewById( getContentRootLayoutResId() );
+            Snackbar.make( view, "Could not parse IF THEN item!", Snackbar.LENGTH_LONG).show();
+        }
+
+        updateBehaviorUI( Behavior.EATING );
+        updateBehaviorUI( Behavior.ACTIVITY );
+        updateBehaviorUI( Behavior.ALCOHOL );
+        updateBehaviorUI( Behavior.SMOKING );
     }
 
     @Override
@@ -98,20 +126,20 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
 
         switch (view.getId())
         {
-            case R.id.eating:
+            case R.id.eating_image:
                 toggleBehavior( Behavior.EATING );
                 break;
-            case R.id.activity:
+            case R.id.activity_image:
                 toggleBehavior( Behavior.ACTIVITY );
                 break;
-            case R.id.alcohol:
+            case R.id.alcohol_image:
                 toggleBehavior( Behavior.ALCOHOL );
                 break;
-            case R.id.smoking:
+            case R.id.smoking_image:
                 toggleBehavior( Behavior.SMOKING );
                 break;
             case R.id.date_selector_layout:
-                //TODO: for multiple date selectio use http://codesfor.in/android-multi-datepicker-calendar-example/
+                //TODO: for multiple date selection use http://codesfor.in/android-multi-datepicker-calendar-example/
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                     this, this,
                     Calendar.getInstance().get( Calendar.YEAR ),
@@ -119,62 +147,79 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
                     Calendar.getInstance().get( Calendar.DAY_OF_MONTH ) );
                 datePickerDialog.show();
                 break;
-            case R.id.action_plan_data:
-                // custom dialog
-                final Dialog dialog = new Dialog( this );
-                dialog.setContentView( R.layout.if_then_dlg_layout );
-                dialog.setTitle("Enter IF THEN statements");
-
-                // set the custom dialog components
-                Button dialogButton = dialog.findViewById( R.id.dialogButtonOK);
-                dialogButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        EditText ifEdit = v.findViewById( R.id.if_statement );
-                        EditText thenEdit = v.findViewById( R.id.then_statement );
-
-                        try
-                        {
-                            item.put( "if", ifEdit.getText().toString() );
-                            item.put( "then", thenEdit.getText().toString() );
-                        }
-                        catch( JSONException e )
-                        {
-                            e.printStackTrace();
-                            Snackbar.make( findViewById( getContentRootLayoutResId() ), "Could not read data from the IF THEN dialog", Snackbar.LENGTH_SHORT ).show();
-                        }
-
-                        ifStatementTextView.setText( ifEdit.getText().toString() );
-                        thenStatementTextView.setText( thenEdit.getText().toString() );
-
-                        dialog.dismiss();
-                    }
-                });
-                dialogButton = dialog.findViewById( R.id.dialogButtonCancel);
-                dialogButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.cancel();
-                    }
-                });
-
-                TextView ifText = dialog.findViewById( R.id.if_statement);
-                TextView thenText = dialog.findViewById( R.id.then_statement);
-                try
-                {
-                    ifText.setText( item.getString( "if" ) );
-                    thenText.setText( item.getString( "then" ) );
-
-                    dialog.show();
-                }
-                catch( Exception e )
-                {
-                    e.printStackTrace();
-                    Snackbar.make( findViewById( getContentRootLayoutResId() ), "Could not open the IF THEN dialog", Snackbar.LENGTH_SHORT ).show();
-                }
+            case R.id.save:
+                saveItem();
                 break;
             default:
                 break;
+        }
+    }
+
+    protected String fillItemFromUI() throws JSONException
+    {
+        String ifStatement = ifStatementTextView.getText().toString().trim();
+        String thenStatement = thenStatementTextView.getText().toString().trim();
+        String error = "";
+        if( 0 == ifStatement.length() )
+        {
+            error = "enter an IF statement";
+        }
+        if( 0 == thenStatement.length() )
+        {
+            error += ( error.length() > 0 ? " and " : "enter " ) + "a THEN statement";
+        }
+        if( 0 == actionDate.trim().length() )
+        {
+            error += ( error.length() > 0 ? " and " : "" ) + "select a DATE";
+        }
+        if( !getBehaviorIsSelected( Behavior.EATING ) &&
+            !getBehaviorIsSelected( Behavior.ACTIVITY ) &&
+            !getBehaviorIsSelected( Behavior.ALCOHOL ) &&
+            !getBehaviorIsSelected( Behavior.SMOKING )
+        )
+        {
+            error += ( error.length() > 0 ? " and " : "" ) + "select at least one HEALTH behavior";
+        }
+
+        if( 0 < error.length() )
+        {
+            return error;
+        }
+
+        item.put( "id", String.valueOf( itemId ) );
+        item.put( "if", ifStatement );
+        item.put( "then", thenStatement );
+        item.put( "active", activeSwitch.isChecked() );
+        item.put( "date", actionDate );
+        item.put( "EATING", getBehaviorIsSelected( Behavior.EATING ) );
+        item.put( "ACTIVITY", getBehaviorIsSelected( Behavior.ACTIVITY ) );
+        item.put( "ALCOHOL", getBehaviorIsSelected( Behavior.ALCOHOL ) );
+        item.put( "SMOKING", getBehaviorIsSelected( Behavior.SMOKING ) );
+
+        return "";
+    }
+
+    private void saveItem()
+    {
+        try
+        {
+            String error = fillItemFromUI();
+            if( 0 == error.length() )
+            {
+                JSONArrayIOHandler.saveItem( getBaseContext(), item, getFilesDir().getPath() + "/" + FILENAME );
+                startActivity( new Intent( getBaseContext(), getListActivityClass() ) );
+            }
+            else
+            {
+                error = "Please " + error;  // Do not put a fullstop at the end in case a class overriding this method wishes to add it's own errors.
+                View view = findViewById( getContentRootLayoutResId() );
+                Snackbar.make( view, error, Snackbar.LENGTH_LONG ).show();
+            }
+        }
+        catch( Exception e )
+        {
+            View view = findViewById( getContentRootLayoutResId() );
+            Snackbar.make( view, getSaveErrorMessage(), Snackbar.LENGTH_LONG).show();
         }
     }
 
@@ -186,13 +231,16 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
     {
         return BehaviorIsSelected.put( b, v );
     }
-
     protected void toggleBehavior( Behavior behavior )
     {
+        setBehaviorIsSelected( behavior, !getBehaviorIsSelected( behavior ) );
+        updateBehaviorUI( behavior );
+    }
+
+    protected void updateBehaviorUI( Behavior behavior )
+    {
         ImageView imageView;
-        boolean isSelected = getBehaviorIsSelected( behavior );
-        setBehaviorIsSelected( behavior, !isSelected );
-        int color = !isSelected ? SELECTED_COLOR : NOT_SELECTED_COLOR;
+        int color = getBehaviorIsSelected( behavior ) ? SELECTED_COLOR : NOT_SELECTED_COLOR;
 
         switch( behavior )
         {
@@ -218,6 +266,17 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
     public void onDateSet( DatePicker view, int year, int monthOfYear, int dayOfMonth)
     {
         actionDate = year + "-" + monthOfYear + "-" + dayOfMonth;
+        setDateTextView();
+    }
+
+    protected void setDateTextView()
+    {
+        TextView dates = findViewById( R.id.plan_dates );
+        if( 0 == actionDate.trim().length() )
+        {
+            dates.setText( R.string.select_plan_dates );
+            return;
+        }
 
         DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd");
         final Calendar calendar = Calendar.getInstance();
@@ -230,9 +289,9 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
         {
             e.printStackTrace();
         }
-        TextView dates = findViewById( R.id.plan_dates );
+
         DateFormatSymbols dfs = new DateFormatSymbols();
-        dates.setText( dfs.getShortWeekdays()[ calendar.get( Calendar.DAY_OF_WEEK ) ]+ " " + dayOfMonth + " " +
-                       dfs.getMonths()[ calendar.get( Calendar.MONTH ) ] + " " + year );
+        dates.setText( dfs.getShortWeekdays()[ calendar.get( Calendar.DAY_OF_WEEK ) ]+ " " + calendar.get( Calendar.DAY_OF_MONTH ) + " " +
+                       dfs.getMonths()[ calendar.get( Calendar.MONTH ) ] + " " + calendar.get( Calendar.YEAR ));
     }
 }

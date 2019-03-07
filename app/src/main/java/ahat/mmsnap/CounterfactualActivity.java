@@ -1,5 +1,6 @@
 package ahat.mmsnap;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 public class CounterfactualActivity extends IfThenListActivity
@@ -52,5 +53,4 @@ public class CounterfactualActivity extends IfThenListActivity
     {
         return CounterfactualDetailActivity.class;
     }
-
 }

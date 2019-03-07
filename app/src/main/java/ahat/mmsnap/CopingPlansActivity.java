@@ -15,7 +15,7 @@ public class CopingPlansActivity extends IfThenListActivity
 
     protected IfThenListAdapter createListAdapter()
     {
-        return new CounterfactualListAdapter( this, items, delete );
+        return new CopingPlansListAdapter( this, items, delete );
     }
 
     protected String getFilename()
@@ -45,7 +45,7 @@ public class CopingPlansActivity extends IfThenListActivity
 
     protected Class<?> getDetailActivityClass()
     {
-        return CounterfactualDetailActivity.class;
+        return CopingPlansDetailActivity.class;
     }
 
 }

@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="5dp"
-    android:layout_margin="10dp"
+    android:padding="3dp"
+    android:layout_margin="12dp"
     android:orientation="horizontal"
     android:background="@drawable/rounded_border_white_bkg"
     android:descendantFocusability="blocksDescendants"
@@ -51,23 +51,59 @@
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="1dp"
         >
-        <TextView
-            android:id="@+id/counterfactual_item_if"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="IF"
-            android:textAlignment="center"
-            android:background="@color/if_color"
-            android:textColor="#ffffff"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_column="1"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="2dp"
-            />
+            android:layout_column="1"
+            android:gravity="center"
+            >
+            <ImageView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_if_bkg_alt"
+                android:tint="@color/if_color"
+                android:scaleY="1.4"
+                android:scaleX="2"
+                />
+            <TextView
+                android:id="@+id/counterfactual_item_if"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IF"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_column="1"
+                android:layout_weight="1"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="5dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                />
+        <!--<TextView-->
+            <!--android:id="@+id/counterfactual_item_if"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="IF"-->
+            <!--android:textAlignment="center"-->
+            <!--android:background="@drawable/ic_if_bkg_alt"-->
+            <!--android:backgroundTint="@color/if_color"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:textSize="16sp"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_column="1"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginRight="30dp"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:paddingTop="2dp"-->
+            <!--android:paddingBottom="2dp"-->
+            <!--/>-->
+        </RelativeLayout>
         <TextView
             android:layout_column="2"
             android:layout_weight="30"
@@ -82,23 +118,62 @@
 
     <TableRow
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        >
 
-        <TextView
-            android:layout_weight="1"
-            android:layout_column="1"
-            android:id="@+id/counterfactual_item_then"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/then"
-            android:textColor="#ffffff"
-            android:text="THEN"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_column="1"
             android:layout_marginRight="5dp"
-            />
+            >
+
+            <ImageView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_then_bkg_alt"
+                android:tint="@color/then"
+                android:layout_centerInParent="true"
+                android:scaleY="2"
+                android:scaleX="3"
+                />
+
+            <TextView
+                android:id="@+id/counterfactual_item_then"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:text="THEN"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:layout_centerInParent="true"
+                android:paddingRight="5dp"
+                />
+        </RelativeLayout>
+        <!--<TextView-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_column="1"-->
+            <!--android:id="@+id/counterfactual_item_then"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/ic_then_bkg_alt"-->
+            <!--android:backgroundTint="@color/then"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:text="THEN"-->
+            <!--android:textAlignment="center"-->
+            <!--android:textSize="16sp"-->
+            <!--android:textStyle="bold"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:paddingTop="6dp"-->
+            <!--android:paddingBottom="6dp"-->
+            <!--android:paddingLeft="8dp"-->
+            <!--android:paddingRight="15dp"-->
+            <!--/>-->
         <TextView
             android:layout_column="2"
             android:layout_weight="30"

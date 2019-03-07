@@ -110,11 +110,22 @@ public abstract class IfThenListActivity extends AppCompatActivity
         getSupportActionBar().setTitle( getTitleStringResId() );
         getSupportActionBar().setSubtitle( getSubtitleStringResId() );
 
+        try
+        {
+            items = JSONArrayIOHandler.loadItems( getFilesDir().getPath() + "/" + getFilename() );
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            Snackbar.make( findViewById( getContentRootLayoutResId() ), getLoadItemsErrorMessage(), Snackbar.LENGTH_INDEFINITE )
+                    .setAction( "RETRY", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity( getIntent() );
+                        }
+                    } ).show();
+        }
 
-        items = JSONArrayIOHandler.loadItems( this, findViewById( getContentRootLayoutResId() ),
-                                              getLoadItemsErrorMessage(),
-                                              getFilesDir().getPath() + "/" + getFilename()
-                                              );
         ListView list = findViewById( getListViewResId() );
         adapter = createListAdapter();
         list.setAdapter( adapter );
@@ -185,7 +196,9 @@ public abstract class IfThenListActivity extends AppCompatActivity
         }
         else
         {
-            startActivity( getParentActivityIntent() );
+//            startActivity( getParentActivityIntent() );
+            startActivity( new Intent( this, IfThenActivity.class ) );
+
         }
     }
 

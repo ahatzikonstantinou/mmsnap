@@ -84,7 +84,6 @@ public class TestActivity extends AppCompatActivity
             @Override
             public void onClick( View view )
             {
-                mPlayButton.setVisibility( View.INVISIBLE );
                 loadTest();
                 timeLapsed = 0;
                 lapsedProgressTicks = 0;
@@ -96,7 +95,7 @@ public class TestActivity extends AppCompatActivity
             @Override
             public void onClick( View view )
             {
-                if( finished )
+                if( finished || !running )
                 {
                     return;
                 }
@@ -112,7 +111,7 @@ public class TestActivity extends AppCompatActivity
             @Override
             public void onClick( View view )
             {
-                if( finished )
+                if( finished || !running )
                 {
                     return;
                 }
@@ -242,6 +241,7 @@ public class TestActivity extends AppCompatActivity
         mProgressTextView.setText( Integer.toString( PROGRESS_STEPS - lapsedProgressTicks - 1 ) );
         correctImageView.setVisibility( View.GONE );
         errorImageView.setVisibility( View.GONE );
+        mPlayButton.setVisibility( View.INVISIBLE );
         mProgressBar.setVisibility( View.VISIBLE );
         mProgressTextView.setVisibility( View.VISIBLE );
 

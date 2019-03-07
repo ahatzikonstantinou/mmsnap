@@ -50,4 +50,11 @@ public class IfThenActivity extends AppCompatActivity implements View.OnClickLis
                 break;
         }
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        //ahat: for some unknown reason, unless I explicitly do this, the back button returns to the last visited IfThenDetail activity e.g. CounterfactualDetailActivity
+        startActivity( new Intent( this, MainActivity.class ) );
+    }
 }

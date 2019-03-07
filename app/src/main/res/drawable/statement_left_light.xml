@@ -6,8 +6,8 @@
         <shape android:shape="rectangle">
             <corners android:radius="20dp"/>
             <size
-                android:width="60dp"
-                android:height="30dp" />
+                android:width="40dp"
+                android:height="20dp" />
             <solid android:color="@color/statement_light" />
         </shape>
     </item>
@@ -15,8 +15,18 @@
     <item
         android:height="5dp"
         android:width="5dp"
+        android:left="8dp"
+        android:top="8dp">
+        <shape android:shape="oval">
+            <solid android:color="#ffffff"/>
+        </shape>
+    </item>
+
+    <item
+        android:height="5dp"
+        android:width="5dp"
         android:left="18dp"
-        android:top="14dp">
+        android:top="8dp">
         <shape android:shape="oval">
             <solid android:color="#ffffff"/>
         </shape>
@@ -26,17 +36,7 @@
         android:height="5dp"
         android:width="5dp"
         android:left="28dp"
-        android:top="14dp">
-        <shape android:shape="oval">
-            <solid android:color="#ffffff"/>
-        </shape>
-    </item>
-
-    <item
-        android:height="5dp"
-        android:width="5dp"
-        android:left="38dp"
-        android:top="14dp">
+        android:top="8dp">
         <shape android:shape="oval">
             <solid android:color="#ffffff"/>
         </shape>
