@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background_color"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".TodaysPlansActivity"
+    tools:showIn="@layout/activity_todays_plans"
+    android:id="@+id/todays_root_layout">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fillViewport="true">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/subsection_marginTop"
+    android:layout_marginBottom="@dimen/subsection_marginBottom"
+    android:layout_marginRight="@dimen/subsection_marginSide"
+    android:layout_marginLeft="@dimen/subsection_marginSide"
+    android:padding="15dp"
+    android:background="@drawable/mmsnap_subcategory_border"
+    android:backgroundTint="@color/todays_plans"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/todays_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
+    </ListView>
+</LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="@dimen/subsection_title_width"
+            android:layout_height="@dimen/subsection_title_height"
+            android:layout_centerHorizontal="true"
+            android:background="@color/todays_plans"
+            android:text="@string/today_s_plans"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/subsection_title_textSize"
+            android:textStyle="bold"
+            />
+    </RelativeLayout>
+</FrameLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

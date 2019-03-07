@@ -60,21 +60,10 @@ public class CopingPlansListAdapter extends IfThenListAdapter
 
             thenStatement.setText( item.getString( "then" ) );
 
-            DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd");
-            final Calendar calendar = Calendar.getInstance();
-            try
-            {
-                final Date itemDate = dateFormat.parse( item.getString( "date" ) );
-                calendar.setTime( itemDate );
-            }
-            catch( Exception e )
-            {
-                e.printStackTrace();
-            }
-
+            Calendar calendar = IfThenDetailActivity.getCalendarFromYYYYMMDD( item.getString( "date" )  );
             DateFormatSymbols dfs = new DateFormatSymbols();
             date.setText( dfs.getShortWeekdays()[ calendar.get( Calendar.DAY_OF_WEEK ) ]+ " " + calendar.get( Calendar.DAY_OF_MONTH ) + " " +
-                           dfs.getMonths()[ calendar.get( Calendar.MONTH ) ] + " " + calendar.get( Calendar.YEAR ));
+                          dfs.getMonths()[ calendar.get( Calendar.MONTH ) ] + " " + calendar.get( Calendar.YEAR ));
 
             active.setVisibility( item.getBoolean( "active" ) ? View.VISIBLE : View.GONE );
             inactive.setVisibility( item.getBoolean( "active" ) ? View.GONE: View.VISIBLE );

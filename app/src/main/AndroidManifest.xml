@@ -10,6 +10,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".TodaysPlansActivity"
+            android:label="@string/title_activity_todays_plans"
+            android:parentActivityName=".AgentsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.AgentsActivity"/>
+        </activity>
+        <activity
+            android:name=".AgentsActivity"
+            android:label="@string/title_activity_agents"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.MainActivity"/>
+        </activity>
+        <activity
             android:name=".CopingPlansDetailActivity"
             android:label="@string/title_activity_coping_plans_detail"
             android:parentActivityName=".CopingPlansActivity"

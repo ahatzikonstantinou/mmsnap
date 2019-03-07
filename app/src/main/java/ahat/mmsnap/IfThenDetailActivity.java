@@ -139,12 +139,15 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
                 toggleBehavior( Behavior.SMOKING );
                 break;
             case R.id.date_selector_layout:
+
+                final Calendar calendar = getCalendarFromYYYYMMDD( actionDate );
+
                 //TODO: for multiple date selection use http://codesfor.in/android-multi-datepicker-calendar-example/
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                     this, this,
-                    Calendar.getInstance().get( Calendar.YEAR ),
-                    Calendar.getInstance().get( Calendar.MONTH ),
-                    Calendar.getInstance().get( Calendar.DAY_OF_MONTH ) );
+                    calendar.get( Calendar.YEAR ),
+                    calendar.get( Calendar.MONTH ),
+                    calendar.get( Calendar.DAY_OF_MONTH ) );
                 datePickerDialog.show();
                 break;
             case R.id.save:
@@ -278,20 +281,28 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
             return;
         }
 
-        DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd");
-        final Calendar calendar = Calendar.getInstance();
-        try
-        {
-            final Date date = dateFormat.parse( actionDate );
-            calendar.setTime( date );
-        }
-        catch( Exception e )
-        {
-            e.printStackTrace();
-        }
-
+        Calendar cal = getCalendarFromYYYYMMDD( actionDate );
         DateFormatSymbols dfs = new DateFormatSymbols();
-        dates.setText( dfs.getShortWeekdays()[ calendar.get( Calendar.DAY_OF_WEEK ) ]+ " " + calendar.get( Calendar.DAY_OF_MONTH ) + " " +
-                       dfs.getMonths()[ calendar.get( Calendar.MONTH ) ] + " " + calendar.get( Calendar.YEAR ));
+        dates.setText( dfs.getShortWeekdays()[ cal.get( Calendar.DAY_OF_WEEK ) ]+ " " + cal.get( Calendar.DAY_OF_MONTH ) + " " +
+                       dfs.getMonths()[ cal.get( Calendar.MONTH ) ] + " " + cal.get( Calendar.YEAR ));
+    }
+
+    /*
+     * date must be in the form yyyy-mm-dd where mm is the 0 based month and dd the 1 based day-of-month
+     */
+    public static Calendar getCalendarFromYYYYMMDD( String date )
+    {
+        //ahat: DO NOT USE SimpleDateFormat because the strings it understands have 1 based months, while calendar widget and Calendar have 0 based months
+        final Calendar cal = Calendar.getInstance();
+        String[] dateParts = date.split( "-" );
+        cal.set( Calendar.YEAR, Integer.parseInt( dateParts[0] ) );
+        cal.set( Calendar.MONTH, Integer.parseInt( dateParts[1] ) );
+        cal.set( Calendar.DAY_OF_MONTH, Integer.parseInt( dateParts[2] ) );
+        cal.set( Calendar.HOUR_OF_DAY, 0 );
+        cal.set( Calendar.MINUTE, 0 );
+        cal.set( Calendar.SECOND, 0 );
+        cal.set( Calendar.MILLISECOND, 0 );
+
+        return cal;
     }
 }

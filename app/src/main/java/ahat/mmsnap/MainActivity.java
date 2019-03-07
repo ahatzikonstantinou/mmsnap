@@ -25,28 +25,28 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_main );
-        Toolbar toolbar = (Toolbar) findViewById( R.id.toolbar );
+        Toolbar toolbar = findViewById( R.id.toolbar );
         setSupportActionBar( toolbar );
 
-        DrawerLayout drawer = (DrawerLayout) findViewById( R.id.drawer_layout );
+        DrawerLayout drawer = findViewById( R.id.drawer_layout );
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
             this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close );
         drawer.addDrawerListener( toggle );
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById( R.id.nav_view );
+        NavigationView navigationView = findViewById( R.id.nav_view );
         navigationView.setNavigationItemSelectedListener( this );
 
         //buttons events
-        Button mmsnapButton = ( Button ) findViewById( R.id.mmsnap_btn );
+        Button mmsnapButton = findViewById( R.id.mmsnap_btn );
         mmsnapButton.setOnClickListener( this );
-        Button assessmentsButton = ( Button ) findViewById( R.id.assessments_btn );
+        Button assessmentsButton = findViewById( R.id.assessments_btn );
         assessmentsButton.setOnClickListener( this );
-        Button educationButton = ( Button ) findViewById( R.id.education_btn );
+        Button educationButton = findViewById( R.id.education_btn );
         educationButton.setOnClickListener( this );
-        Button ifThenButton = ( Button ) findViewById( R.id.if_then_btn );
+        Button ifThenButton = findViewById( R.id.if_then_btn );
         ifThenButton.setOnClickListener( this );
-        Button agentsButton = ( Button ) findViewById( R.id.agents_btn );
+        Button agentsButton = findViewById( R.id.agents_btn );
         agentsButton.setOnClickListener( this );
     }
 
@@ -69,6 +69,10 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.if_then_btn:
                 intent = new Intent(this, IfThenActivity.class);
+                startActivity( intent );
+                break;
+                case R.id.agents_btn:
+                intent = new Intent(this, AgentsActivity.class);
                 startActivity( intent );
                 break;
             default:

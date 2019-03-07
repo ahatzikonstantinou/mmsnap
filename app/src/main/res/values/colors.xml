@@ -31,4 +31,9 @@
     <color name="counterfactual">#7F639F</color>
     <color name="action_plan">#F49547</color>
     <color name="coping_plan">#4AACC5</color>
+    <color name="agents">#FA000A</color>
+    <color name="todays_plans">#9BBB58</color>
+    <color name="weekly_plans">#8064A1</color>
+    <color name="attention">#4AACC5</color>
+    <color name="achievements">#F79647</color>
 </resources>

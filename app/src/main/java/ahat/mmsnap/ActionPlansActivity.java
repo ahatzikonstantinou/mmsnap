@@ -5,7 +5,7 @@ import android.os.Bundle;
 public class ActionPlansActivity extends IfThenListActivity
 {
 
-    public final String FILENAME = "action_plans.json";
+    public static final String FILENAME = "action_plans.json";
 
     @Override
     protected void onCreate( Bundle savedInstanceState )

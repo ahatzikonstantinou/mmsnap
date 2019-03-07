@@ -25,14 +25,10 @@ public class EduActivity extends AppCompatActivity
         getSupportActionBar().setIcon( getResources().getDrawable( R.drawable.edu_section_logo) );
 
         //buttons events
-        Button wButton = ( Button ) findViewById( R.id.edu_what_btn );
-        wButton.setOnClickListener( this );
-        Button iButton = ( Button ) findViewById( R.id.edu_if_btn );
-        iButton.setOnClickListener( this );
-        Button nButton = ( Button ) findViewById( R.id.edu_then_btn );
-        nButton.setOnClickListener( this );
-        Button tButton = ( Button ) findViewById( R.id.edu_test_btn );
-        tButton.setOnClickListener( this );
+        findViewById( R.id.edu_what_btn ).setOnClickListener( this );
+        findViewById( R.id.edu_if_btn ).setOnClickListener( this );
+        findViewById( R.id.edu_then_btn ).setOnClickListener( this );
+        findViewById( R.id.edu_test_btn ).setOnClickListener( this );
     }
 
     @Override

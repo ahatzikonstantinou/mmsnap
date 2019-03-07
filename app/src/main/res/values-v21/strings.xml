@@ -91,4 +91,8 @@
     <string name="title_activity_action_plans">ACTION PLANS</string>
     <string name="title_activity_coping_plans">COPING PLANS</string>
     <string name="select_plan_dates">Please select the date to activate your action plan</string>
+    <string name="today_s_plans">TODAY\'S PLANS</string>
+    <string name="weekly_plans">WEEKLY PLANS</string>
+    <string name="attention">ATTENTION</string>
+    <string name="achievements">ACHIEVEMENTS</string>
 </resources>
