@@ -24,6 +24,12 @@ import java.util.Date;
  */
 public class ApplicationStatus
 {
+    public boolean weeklyEvaluationPending()
+    {
+        // TODO
+        return false;
+    }
+
     enum Assessment { ILLNESS_PERCEPTION, HEALTH_RISK, SELF_EFFICACY, INTENTIONS, SELF_RATED_HEALTH };
 
     enum Behavior { EATING, ACTIVITY, ALCOHOL, SMOKING }
@@ -33,17 +39,17 @@ public class ApplicationStatus
         NOT_LOGGED_IN,              // the user has not performed the initial login
         NO_INITIAL_EVALUATIONS,     // the user has not submitted the initial evaluations
         IN_ORDER,                   // everything is in order, the user has no pending issues
-        WEEKLY_EVALUATION_PENDING,  // the user has not submitted a weekly evaluation
-        DAILY_EVALUATION_PENDING,   // the user has not submitted a daily evaluation
+//        WEEKLY_EVALUATION_PENDING,  // the user has not submitted a weekly evaluation
+//        DAILY_EVALUATION_PENDING,   // the user has not submitted a daily evaluation
         NO_FINAL_EVALUATIONS,       // the user has not submitted the final evaluations
         FINISHED                    // the duration of the program has finished and the user has submitted the final evaluations
     }
 
     public class SelfEfficacy
     {
-        public boolean lifestyle;   // I am confident that I can adjust my life to a healthier lifestyle
-        public boolean weekly_goals;   // I am confident that I can complete at least four health behaviour goals per week
-        public boolean multimorbidity;   // I am confident that I can complete as many behaviour goals as necessary in order to manage my Multimorbidity
+        public boolean lifestyle = false;   // I am confident that I can adjust my life to a healthier lifestyle
+        public boolean weekly_goals = false;   // I am confident that I can complete at least four health behaviour goals per week
+        public boolean multimorbidity = false;   // I am confident that I can complete as many behaviour goals as necessary in order to manage my Multimorbidity
     }
 
     public Date startDate;
@@ -57,11 +63,16 @@ public class ApplicationStatus
 
     private static final String FILENAME = "application_status.json";
 
+    private ApplicationStatus()
+    {
+        state = State.NOT_LOGGED_IN;
+        startDate = new Date();
+        selfEfficacy = new SelfEfficacy();
+    }
+
     public static ApplicationStatus loadApplicationStatus( Context context ) throws IOException, JSONException
     {
         ApplicationStatus as = new ApplicationStatus();
-        as.state = State.NOT_LOGGED_IN;
-        as.startDate = new Date();
 
         String filePath = context.getFilesDir().getPath() + "/" + FILENAME;
         File file = new File( filePath );
@@ -144,9 +155,9 @@ public class ApplicationStatus
 
         FileOutputStream fos = context.openFileOutput( file.getName(), Context.MODE_PRIVATE );
         JSONObject o = new JSONObject();
-        o.put( "state", state.name() );
 
-        final Calendar cal = Calendar.getInstance();
+        startDate = new Date(); // the help program starts NOW that all initial assessments are submitted
+        Calendar cal = Calendar.getInstance();
         cal.setTime( startDate );
         o.put( "start_date", cal.get( Calendar.YEAR ) + "-" + cal.get( Calendar.MONTH ) + "-" + cal.get( Calendar.DAY_OF_MONTH ) );
 
@@ -181,6 +192,10 @@ public class ApplicationStatus
             if( allInitialAssessmentsSubmitted )
             {
                 state = State.IN_ORDER;
+                startDate = new Date(); // the help program starts NOW that all initial assessments are submitted
+                cal = Calendar.getInstance();
+                cal.setTime( startDate );
+                o.put( "start_date", cal.get( Calendar.YEAR ) + "-" + cal.get( Calendar.MONTH ) + "-" + cal.get( Calendar.DAY_OF_MONTH ) );
             }
         }
 
@@ -210,6 +225,7 @@ public class ApplicationStatus
             }
         }
 
+        o.put( "state", state.name() );
 
 
         o.put( "eqvas", eqvas );

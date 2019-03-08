@@ -59,6 +59,19 @@ public class HealthRiskActivity extends AppCompatActivity
                         {
                             as.problematicBehaviors.add( ApplicationStatus.Behavior.ALCOHOL );
                         }
+
+                        if( ApplicationStatus.State.NO_INITIAL_EVALUATIONS == as.state &&
+                            !as.initialAssessments.contains( ApplicationStatus.Assessment.HEALTH_RISK )
+                        )
+                        {
+                            as.initialAssessments.add( ApplicationStatus.Assessment.HEALTH_RISK );
+                        }
+                        if( ApplicationStatus.State.NO_FINAL_EVALUATIONS == as.state &&
+                            !as.finalAssessments.contains( ApplicationStatus.Assessment.HEALTH_RISK )
+                        )
+                        {
+                            as.finalAssessments.add( ApplicationStatus.Assessment.HEALTH_RISK );
+                        }
                         as.saveApplicationStatus( view.getContext() );
 
                         //TODO SEND_TO_SERVER

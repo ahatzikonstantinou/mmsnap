@@ -48,6 +48,7 @@ public class EfficacyActivity extends AppCompatActivity
                         as.finalAssessments.add( ApplicationStatus.Assessment.SELF_EFFICACY );
                     }
                     as.saveApplicationStatus( view.getContext() );
+                    startActivity( getParentActivityIntent() );
                 }
                 catch( Exception e )
                 {

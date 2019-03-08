@@ -50,6 +50,7 @@ public class PlansActivity extends AppCompatActivity
                         as.finalAssessments.add( ApplicationStatus.Assessment.INTENTIONS );
                     }
                     as.saveApplicationStatus( view.getContext() );
+                    startActivity( getParentActivityIntent() );
                 }
                 catch( Exception e )
                 {

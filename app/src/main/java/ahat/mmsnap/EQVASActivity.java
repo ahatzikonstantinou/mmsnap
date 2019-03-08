@@ -96,6 +96,7 @@ public class EQVASActivity extends AppCompatActivity
                         as.initialAssessments.add( ApplicationStatus.Assessment.ILLNESS_PERCEPTION );
                     }
                     as.saveApplicationStatus( view.getContext() );
+                    startActivity( getParentActivityIntent() );
                 }
                 catch( Exception e )
                 {

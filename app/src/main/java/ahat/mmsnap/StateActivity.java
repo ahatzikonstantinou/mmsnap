@@ -37,7 +37,7 @@ public class StateActivity extends AppCompatActivity
             {
                 startActivity( new Intent( this, AssessmentsActivity.class ) );
             }
-            else if( ApplicationStatus.State.WEEKLY_EVALUATION_PENDING == status.state )
+            else if( status.weeklyEvaluationPending() )
             {
                 startActivity( new Intent( this, WeeklyEvaluationActivity.class ) );
             }

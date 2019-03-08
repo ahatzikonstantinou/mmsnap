@@ -1,6 +1,7 @@
 package ahat.mmsnap;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,13 @@ import android.widget.Toast;
 
 public class AssessmentsActivity extends AppCompatActivity implements View.OnClickListener
 {
+
+    private Button effButton;
+    private Button hButton;
+    private Button iButton;
+    private Button pButton;
+    private Button rButton;
+    private Button wButton;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -25,17 +33,17 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
         getSupportActionBar().setIcon( getResources().getDrawable( R.drawable.assessments_section_logo) );
 
         //buttons events
-        Button effButton = ( Button ) findViewById( R.id.assessments_efficacy_btn );
+        effButton = findViewById( R.id.assessments_efficacy_btn );
         effButton.setOnClickListener( this );
-        Button hButton = ( Button ) findViewById( R.id.assessments_health_btn );
+        hButton = findViewById( R.id.assessments_health_btn );
         hButton.setOnClickListener( this );
-        Button iButton = ( Button ) findViewById( R.id.assessments_illness_btn );
+        iButton = findViewById( R.id.assessments_illness_btn );
         iButton.setOnClickListener( this );
-        Button pButton = ( Button ) findViewById( R.id.assessments_plans_btn );
+        pButton = findViewById( R.id.assessments_plans_btn );
         pButton.setOnClickListener( this );
-        Button rButton = ( Button ) findViewById( R.id.assessments_risk_btn );
+        rButton = findViewById( R.id.assessments_risk_btn );
         rButton.setOnClickListener( this );
-        Button wButton = ( Button ) findViewById( R.id.assessments_weekly_btn );
+        wButton = findViewById( R.id.assessments_weekly_btn );
         wButton.setOnClickListener( this );
 
         applyLocalStatePolicy();
@@ -51,15 +59,36 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
             {
                 messageView.setText( "Please complete the initial assessments to proceed." );
                 messageView.setVisibility( View.VISIBLE );
+
+                Drawable done = getResources().getDrawable( R.drawable.ic_check_24dp, null );
+                Drawable pending = getResources().getDrawable( android.R.drawable.ic_dialog_alert, null );
+                Drawable arrow = getResources().getDrawable( R.drawable.subcategory_btn_img, null );
+                effButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessments.contains( ApplicationStatus.Assessment.SELF_EFFICACY ) ? done : pending, null, arrow, null );
+                hButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessments.contains( ApplicationStatus.Assessment.SELF_RATED_HEALTH ) ? done : pending, null, arrow, null );
+                iButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessments.contains( ApplicationStatus.Assessment.ILLNESS_PERCEPTION ) ? done : pending, null, arrow, null );
+                pButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessments.contains( ApplicationStatus.Assessment.INTENTIONS ) ? done : pending, null, arrow, null );
+                rButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessments.contains( ApplicationStatus.Assessment.HEALTH_RISK ) ? done : pending, null, arrow, null );
             }
             else if( ApplicationStatus.State.NO_FINAL_EVALUATIONS == as.state )
             {
                 messageView.setText( "Please complete the final assessments to proceed." );
                 messageView.setVisibility( View.VISIBLE );
+
+                Drawable done = getResources().getDrawable( R.drawable.ic_check_24dp, null );
+                Drawable pending = getResources().getDrawable( android.R.drawable.ic_dialog_alert, null );
+                Drawable arrow = getResources().getDrawable( R.drawable.subcategory_btn_img, null );
+                effButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessments.contains( ApplicationStatus.Assessment.SELF_EFFICACY ) ? done : pending, null, arrow, null );
+                hButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessments.contains( ApplicationStatus.Assessment.SELF_RATED_HEALTH ) ? done : pending, null, arrow, null );
+                iButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessments.contains( ApplicationStatus.Assessment.ILLNESS_PERCEPTION ) ? done : pending, null, arrow, null );
+                pButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessments.contains( ApplicationStatus.Assessment.INTENTIONS ) ? done : pending, null, arrow, null );
+                rButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessments.contains( ApplicationStatus.Assessment.HEALTH_RISK ) ? done : pending, null, arrow, null );
             }
             else
             {
                 messageView.setVisibility( View.GONE );
+                effButton.setVisibility( View.GONE );
+                pButton.setVisibility( View.GONE );
+                hButton.setVisibility( View.GONE );
             }
         }
         catch( Exception e )

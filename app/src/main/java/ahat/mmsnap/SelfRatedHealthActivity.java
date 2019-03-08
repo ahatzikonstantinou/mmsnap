@@ -49,6 +49,7 @@ public class SelfRatedHealthActivity extends AppCompatActivity
                         as.finalAssessments.add( ApplicationStatus.Assessment.SELF_RATED_HEALTH );
                     }
                     as.saveApplicationStatus( view.getContext() );
+                    startActivity( getParentActivityIntent() );
                 }
                 catch( Exception e )
                 {
