@@ -78,6 +78,32 @@ public class EQVASActivity extends AppCompatActivity
                 } catch(Exception ex) {}
             }
         });
+
+        findViewById( R.id.eqvas_submit_btn ).setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View view )
+            {
+                try
+                {
+                    //TODO send to server
+                    ApplicationStatus as = ApplicationStatus.loadApplicationStatus( view.getContext() );
+                    as.eqvas = Integer.parseInt( mEditText.getText().toString() );
+
+                    if( ApplicationStatus.State.NO_INITIAL_EVALUATIONS == as.state &&
+                        !as.initialAssessments.contains( ApplicationStatus.Assessment.ILLNESS_PERCEPTION )
+                    )
+                    {
+                        as.initialAssessments.add( ApplicationStatus.Assessment.ILLNESS_PERCEPTION );
+                    }
+                    as.saveApplicationStatus( view.getContext() );
+                }
+                catch( Exception e )
+                {
+                    e.printStackTrace();
+                    Toast.makeText( EQVASActivity.this, "An error occured while saving your answer. Please try again.", Toast.LENGTH_SHORT ).show();
+                }
+            }
+        } );
     }
 
 }

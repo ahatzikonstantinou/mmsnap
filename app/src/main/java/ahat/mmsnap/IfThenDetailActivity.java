@@ -16,11 +16,8 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.DateFormatSymbols;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 
 public abstract class IfThenDetailActivity extends AppCompatActivity
@@ -29,9 +26,8 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
     private static final int SELECTED_COLOR = Color.rgb( 255, 255, 0 );
     private static final int NOT_SELECTED_COLOR = Color.rgb( 255, 255, 255 );
 
-    enum Behavior { EATING, ACTIVITY, ALCOHOL, SMOKING }
-    protected HashMap<Behavior, Boolean> BehaviorIsSelected;
-    protected String actionDate = "";
+    protected HashMap<ApplicationStatus.Behavior, Boolean> BehaviorIsSelected;
+    protected String                                       actionDate = "";
     protected abstract int getActivityResLayout();
     protected abstract int getContentRootLayoutResId();
     protected abstract JSONObject getIfThenItem();
@@ -89,10 +85,10 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
         activeSwitch = findViewById( R.id.active_switch );
 
         BehaviorIsSelected = new HashMap<>();
-        BehaviorIsSelected.put( Behavior.EATING, false );
-        BehaviorIsSelected.put( Behavior.ACTIVITY, false );
-        BehaviorIsSelected.put( Behavior.ALCOHOL, false );
-        BehaviorIsSelected.put( Behavior.SMOKING, false );
+        BehaviorIsSelected.put( ApplicationStatus.Behavior.EATING, false );
+        BehaviorIsSelected.put( ApplicationStatus.Behavior.ACTIVITY, false );
+        BehaviorIsSelected.put( ApplicationStatus.Behavior.ALCOHOL, false );
+        BehaviorIsSelected.put( ApplicationStatus.Behavior.SMOKING, false );
 
         try
         {
@@ -102,10 +98,10 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
             actionDate = item.getString( "date" );
             setDateTextView();
 
-            setBehaviorIsSelected( Behavior.EATING, item.getBoolean( "EATING" ) );
-            setBehaviorIsSelected( Behavior.ACTIVITY, item.getBoolean( "ACTIVITY" ) );
-            setBehaviorIsSelected( Behavior.ALCOHOL, item.getBoolean( "ALCOHOL" ) );
-            setBehaviorIsSelected( Behavior.SMOKING, item.getBoolean( "SMOKING" ) );
+            setBehaviorIsSelected( ApplicationStatus.Behavior.EATING, item.getBoolean( "EATING" ) );
+            setBehaviorIsSelected( ApplicationStatus.Behavior.ACTIVITY, item.getBoolean( "ACTIVITY" ) );
+            setBehaviorIsSelected( ApplicationStatus.Behavior.ALCOHOL, item.getBoolean( "ALCOHOL" ) );
+            setBehaviorIsSelected( ApplicationStatus.Behavior.SMOKING, item.getBoolean( "SMOKING" ) );
         }
         catch( Exception e )
         {
@@ -114,10 +110,10 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
             Snackbar.make( view, "Could not parse IF THEN item!", Snackbar.LENGTH_LONG).show();
         }
 
-        updateBehaviorUI( Behavior.EATING );
-        updateBehaviorUI( Behavior.ACTIVITY );
-        updateBehaviorUI( Behavior.ALCOHOL );
-        updateBehaviorUI( Behavior.SMOKING );
+        updateBehaviorUI( ApplicationStatus.Behavior.EATING );
+        updateBehaviorUI( ApplicationStatus.Behavior.ACTIVITY );
+        updateBehaviorUI( ApplicationStatus.Behavior.ALCOHOL );
+        updateBehaviorUI( ApplicationStatus.Behavior.SMOKING );
     }
 
     @Override
@@ -127,16 +123,16 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
         switch (view.getId())
         {
             case R.id.eating_image:
-                toggleBehavior( Behavior.EATING );
+                toggleBehavior( ApplicationStatus.Behavior.EATING );
                 break;
             case R.id.activity_image:
-                toggleBehavior( Behavior.ACTIVITY );
+                toggleBehavior( ApplicationStatus.Behavior.ACTIVITY );
                 break;
             case R.id.alcohol_image:
-                toggleBehavior( Behavior.ALCOHOL );
+                toggleBehavior( ApplicationStatus.Behavior.ALCOHOL );
                 break;
             case R.id.smoking_image:
-                toggleBehavior( Behavior.SMOKING );
+                toggleBehavior( ApplicationStatus.Behavior.SMOKING );
                 break;
             case R.id.date_selector_layout:
 
@@ -175,10 +171,10 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
         {
             error += ( error.length() > 0 ? " and " : "" ) + "select a DATE";
         }
-        if( !getBehaviorIsSelected( Behavior.EATING ) &&
-            !getBehaviorIsSelected( Behavior.ACTIVITY ) &&
-            !getBehaviorIsSelected( Behavior.ALCOHOL ) &&
-            !getBehaviorIsSelected( Behavior.SMOKING )
+        if( !getBehaviorIsSelected( ApplicationStatus.Behavior.EATING ) &&
+            !getBehaviorIsSelected( ApplicationStatus.Behavior.ACTIVITY ) &&
+            !getBehaviorIsSelected( ApplicationStatus.Behavior.ALCOHOL ) &&
+            !getBehaviorIsSelected( ApplicationStatus.Behavior.SMOKING )
         )
         {
             error += ( error.length() > 0 ? " and " : "" ) + "select at least one HEALTH behavior";
@@ -194,10 +190,10 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
         item.put( "then", thenStatement );
         item.put( "active", activeSwitch.isChecked() );
         item.put( "date", actionDate );
-        item.put( "EATING", getBehaviorIsSelected( Behavior.EATING ) );
-        item.put( "ACTIVITY", getBehaviorIsSelected( Behavior.ACTIVITY ) );
-        item.put( "ALCOHOL", getBehaviorIsSelected( Behavior.ALCOHOL ) );
-        item.put( "SMOKING", getBehaviorIsSelected( Behavior.SMOKING ) );
+        item.put( "EATING", getBehaviorIsSelected( ApplicationStatus.Behavior.EATING ) );
+        item.put( "ACTIVITY", getBehaviorIsSelected( ApplicationStatus.Behavior.ACTIVITY ) );
+        item.put( "ALCOHOL", getBehaviorIsSelected( ApplicationStatus.Behavior.ALCOHOL ) );
+        item.put( "SMOKING", getBehaviorIsSelected( ApplicationStatus.Behavior.SMOKING ) );
 
         return "";
     }
@@ -226,21 +222,21 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
         }
     }
 
-    protected boolean getBehaviorIsSelected( Behavior b )
+    protected boolean getBehaviorIsSelected( ApplicationStatus.Behavior b )
     {
         return BehaviorIsSelected.get( b );
     }
-    protected boolean setBehaviorIsSelected( Behavior b, Boolean v )
+    protected boolean setBehaviorIsSelected( ApplicationStatus.Behavior b, Boolean v )
     {
         return BehaviorIsSelected.put( b, v );
     }
-    protected void toggleBehavior( Behavior behavior )
+    protected void toggleBehavior( ApplicationStatus.Behavior behavior )
     {
         setBehaviorIsSelected( behavior, !getBehaviorIsSelected( behavior ) );
         updateBehaviorUI( behavior );
     }
 
-    protected void updateBehaviorUI( Behavior behavior )
+    protected void updateBehaviorUI( ApplicationStatus.Behavior behavior )
     {
         ImageView imageView;
         int color = getBehaviorIsSelected( behavior ) ? SELECTED_COLOR : NOT_SELECTED_COLOR;

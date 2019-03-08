@@ -1,11 +1,14 @@
 package ahat.mmsnap;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class AssessmentsActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -34,6 +37,43 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
         rButton.setOnClickListener( this );
         Button wButton = ( Button ) findViewById( R.id.assessments_weekly_btn );
         wButton.setOnClickListener( this );
+
+        applyLocalStatePolicy();
+    }
+
+    private void applyLocalStatePolicy()
+    {
+        try
+        {
+            ApplicationStatus as = ApplicationStatus.loadApplicationStatus( this );
+            TextView messageView = findViewById( R.id.message );
+            if( ApplicationStatus.State.NO_INITIAL_EVALUATIONS == as.state )
+            {
+                messageView.setText( "Please complete the initial assessments to proceed." );
+                messageView.setVisibility( View.VISIBLE );
+            }
+            else if( ApplicationStatus.State.NO_FINAL_EVALUATIONS == as.state )
+            {
+                messageView.setText( "Please complete the final assessments to proceed." );
+                messageView.setVisibility( View.VISIBLE );
+            }
+            else
+            {
+                messageView.setVisibility( View.GONE );
+            }
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            Toast.makeText( this, "An error occurred retrieving the application status", Toast.LENGTH_SHORT ).show();
+        }
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        applyLocalStatePolicy();
     }
 
     @Override

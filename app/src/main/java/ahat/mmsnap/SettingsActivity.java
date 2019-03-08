@@ -93,8 +93,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity
                 if (preference.getKey().equals("key_username")) {
                     preference.setSummary(stringValue);
                 }
-            } else if (preference instanceof EditTextPreference) {
-                if (preference.getKey().equals("key_password")) {
+                else if (preference.getKey().equals("key_password")) {
                     preference.setSummary("*********");
                 }
             } else {
