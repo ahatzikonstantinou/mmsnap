@@ -1,9 +1,11 @@
 package ahat.mmsnap;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -36,6 +38,7 @@ public class HealthRiskActivity extends AppCompatActivity
                 {
                     try
                     {
+                        ArrayList<String> targetBehaviors = new ArrayList<>( 4 );
                         ApplicationStatus as = ApplicationStatus.loadApplicationStatus( view.getContext() );
                         as.problematicBehaviors = new ArrayList<>( 4 );
                         CheckBox c;
@@ -43,39 +46,43 @@ public class HealthRiskActivity extends AppCompatActivity
                         if( c.isChecked() )
                         {
                             as.problematicBehaviors.add( ApplicationStatus.Behavior.SMOKING );
+                            targetBehaviors.add( "Smoking" );
                         }
                         c = findViewById( R.id.risk_exercise_cbx );
                         if( c.isChecked() )
                         {
                             as.problematicBehaviors.add( ApplicationStatus.Behavior.ACTIVITY );
+                            targetBehaviors.add( "Physical Activity" );
                         }
                         c = findViewById( R.id.risk_food_cbx );
                         if( c.isChecked() )
                         {
                             as.problematicBehaviors.add( ApplicationStatus.Behavior.EATING );
+                            targetBehaviors.add( "Healthy Diet" );
                         }
                         c = findViewById( R.id.risk_alcohol_cbx );
                         if( c.isChecked() )
                         {
                             as.problematicBehaviors.add( ApplicationStatus.Behavior.ALCOHOL );
+                            targetBehaviors.add( "Alcohol consumption" );
                         }
 
-                        if( ApplicationStatus.State.NO_INITIAL_EVALUATIONS == as.state &&
-                            !as.initialAssessments.contains( ApplicationStatus.Assessment.HEALTH_RISK )
-                        )
-                        {
-                            as.initialAssessments.add( ApplicationStatus.Assessment.HEALTH_RISK );
-                        }
-                        if( ApplicationStatus.State.NO_FINAL_EVALUATIONS == as.state &&
-                            !as.finalAssessments.contains( ApplicationStatus.Assessment.HEALTH_RISK )
-                        )
-                        {
-                            as.finalAssessments.add( ApplicationStatus.Assessment.HEALTH_RISK );
-                        }
-                        as.saveApplicationStatus( view.getContext() );
+                        as.addAssessment( ApplicationStatus.Assessment.HEALTH_RISK );
 
                         //TODO SEND_TO_SERVER
-                        startActivity( getParentActivityIntent() );
+
+                        AlertDialog alertDialog = new AlertDialog.Builder(HealthRiskActivity.this).create();
+                        alertDialog.setTitle("Alert");
+                        alertDialog.setMessage("Based on your answers your target Health Behaviors are " + android.text.TextUtils.join(", ", targetBehaviors ) + ". This application will focus on these behaviors for your plans and evaluations." );
+                        alertDialog.setButton( AlertDialog.BUTTON_NEUTRAL, "OK",
+                                               new DialogInterface.OnClickListener() {
+                                                  public void onClick( DialogInterface dialog, int which) {
+                                                      dialog.dismiss();
+                                                      startActivity( getParentActivityIntent() );
+                                                  }
+                                              });
+                        alertDialog.show();
+
                     }
                     catch( Exception e )
                     {

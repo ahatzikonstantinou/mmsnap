@@ -35,19 +35,9 @@ public class EfficacyActivity extends AppCompatActivity
                     as.selfEfficacy.weekly_goals = ( ( CheckBox ) findViewById( R.id.efficacy_goals_cbx ) ).isChecked();
                     as.selfEfficacy.multimorbidity = ( ( CheckBox ) findViewById( R.id.efficacy_mm_cbx ) ).isChecked();
 
-                    if( ApplicationStatus.State.NO_INITIAL_EVALUATIONS == as.state &&
-                        !as.initialAssessments.contains( ApplicationStatus.Assessment.SELF_EFFICACY )
-                    )
-                    {
-                        as.initialAssessments.add( ApplicationStatus.Assessment.SELF_EFFICACY );
-                    }
-                    if( ApplicationStatus.State.NO_FINAL_EVALUATIONS == as.state &&
-                        !as.finalAssessments.contains( ApplicationStatus.Assessment.SELF_EFFICACY )
-                    )
-                    {
-                        as.finalAssessments.add( ApplicationStatus.Assessment.SELF_EFFICACY );
-                    }
-                    as.saveApplicationStatus( view.getContext() );
+                    as.addAssessment( ApplicationStatus.Assessment.SELF_EFFICACY );
+
+                    //TODO SEND_TO_SERVER
                     startActivity( getParentActivityIntent() );
                 }
                 catch( Exception e )

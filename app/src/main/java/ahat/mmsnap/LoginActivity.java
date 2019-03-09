@@ -413,8 +413,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         try
         {
             ApplicationStatus as = ApplicationStatus.loadApplicationStatus( this );
-            as.state = ApplicationStatus.State.NO_INITIAL_EVALUATIONS;
-            as.saveApplicationStatus( this );
+            as.userLoggedIn();
         }
         catch( Exception e )
         {

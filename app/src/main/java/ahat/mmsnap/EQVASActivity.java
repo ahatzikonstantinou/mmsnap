@@ -85,17 +85,12 @@ public class EQVASActivity extends AppCompatActivity
             {
                 try
                 {
-                    //TODO send to server
                     ApplicationStatus as = ApplicationStatus.loadApplicationStatus( view.getContext() );
                     as.eqvas = Integer.parseInt( mEditText.getText().toString() );
+                    as.addAssessment( ApplicationStatus.Assessment.ILLNESS_PERCEPTION );
 
-                    if( ApplicationStatus.State.NO_INITIAL_EVALUATIONS == as.state &&
-                        !as.initialAssessments.contains( ApplicationStatus.Assessment.ILLNESS_PERCEPTION )
-                    )
-                    {
-                        as.initialAssessments.add( ApplicationStatus.Assessment.ILLNESS_PERCEPTION );
-                    }
-                    as.saveApplicationStatus( view.getContext() );
+                    //TODO SEND_TO_SERVER
+
                     startActivity( getParentActivityIntent() );
                 }
                 catch( Exception e )

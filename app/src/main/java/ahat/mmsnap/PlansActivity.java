@@ -32,24 +32,14 @@ public class PlansActivity extends AppCompatActivity
             {
                 try
                 {
-                    //TODO send to server
                     ApplicationStatus as = ApplicationStatus.loadApplicationStatus( view.getContext() );
 
-                    //TODO Add to Application status
+                    //TODO Add plans and intention data to Application status
 
-                    if( ApplicationStatus.State.NO_INITIAL_EVALUATIONS == as.state &&
-                        !as.initialAssessments.contains( ApplicationStatus.Assessment.INTENTIONS )
-                    )
-                    {
-                        as.initialAssessments.add( ApplicationStatus.Assessment.INTENTIONS );
-                    }
-                    if( ApplicationStatus.State.NO_FINAL_EVALUATIONS == as.state &&
-                        !as.finalAssessments.contains( ApplicationStatus.Assessment.INTENTIONS )
-                    )
-                    {
-                        as.finalAssessments.add( ApplicationStatus.Assessment.INTENTIONS );
-                    }
-                    as.saveApplicationStatus( view.getContext() );
+                    as.addAssessment( ApplicationStatus.Assessment.INTENTIONS );
+
+                    //TODO SEND_TO_SERVER
+
                     startActivity( getParentActivityIntent() );
                 }
                 catch( Exception e )

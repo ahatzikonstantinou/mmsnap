@@ -31,24 +31,14 @@ public class SelfRatedHealthActivity extends AppCompatActivity
             {
                 try
                 {
-                    //TODO send to server
                     ApplicationStatus as = ApplicationStatus.loadApplicationStatus( view.getContext() );
 
-                    //TODO Add to Application status
+                    //TODO Add self rated health answers to Application status
 
-                    if( ApplicationStatus.State.NO_INITIAL_EVALUATIONS == as.state &&
-                        !as.initialAssessments.contains( ApplicationStatus.Assessment.SELF_RATED_HEALTH )
-                    )
-                    {
-                        as.initialAssessments.add( ApplicationStatus.Assessment.SELF_RATED_HEALTH );
-                    }
-                    if( ApplicationStatus.State.NO_FINAL_EVALUATIONS == as.state &&
-                        !as.finalAssessments.contains( ApplicationStatus.Assessment.SELF_RATED_HEALTH )
-                    )
-                    {
-                        as.finalAssessments.add( ApplicationStatus.Assessment.SELF_RATED_HEALTH );
-                    }
-                    as.saveApplicationStatus( view.getContext() );
+                    as.addAssessment( ApplicationStatus.Assessment.SELF_RATED_HEALTH );
+
+                    //TODO SEND_TO_SERVER
+
                     startActivity( getParentActivityIntent() );
                 }
                 catch( Exception e )

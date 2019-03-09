@@ -55,7 +55,7 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
         {
             ApplicationStatus as = ApplicationStatus.loadApplicationStatus( this );
             TextView messageView = findViewById( R.id.message );
-            if( ApplicationStatus.State.NO_INITIAL_EVALUATIONS == as.state )
+            if( ApplicationStatus.State.NO_INITIAL_EVALUATIONS == as.getState() )
             {
                 messageView.setText( "Please complete the initial assessments to proceed." );
                 messageView.setVisibility( View.VISIBLE );
@@ -63,13 +63,13 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
                 Drawable done = getResources().getDrawable( R.drawable.ic_check_24dp, null );
                 Drawable pending = getResources().getDrawable( android.R.drawable.ic_dialog_alert, null );
                 Drawable arrow = getResources().getDrawable( R.drawable.subcategory_btn_img, null );
-                effButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessments.contains( ApplicationStatus.Assessment.SELF_EFFICACY ) ? done : pending, null, arrow, null );
-                hButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessments.contains( ApplicationStatus.Assessment.SELF_RATED_HEALTH ) ? done : pending, null, arrow, null );
-                iButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessments.contains( ApplicationStatus.Assessment.ILLNESS_PERCEPTION ) ? done : pending, null, arrow, null );
-                pButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessments.contains( ApplicationStatus.Assessment.INTENTIONS ) ? done : pending, null, arrow, null );
-                rButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessments.contains( ApplicationStatus.Assessment.HEALTH_RISK ) ? done : pending, null, arrow, null );
+                effButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessmentsContain( ApplicationStatus.Assessment.SELF_EFFICACY ) ? done : pending, null, arrow, null );
+                hButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessmentsContain( ApplicationStatus.Assessment.SELF_RATED_HEALTH ) ? done : pending, null, arrow, null );
+                iButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessmentsContain( ApplicationStatus.Assessment.ILLNESS_PERCEPTION ) ? done : pending, null, arrow, null );
+                pButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessmentsContain( ApplicationStatus.Assessment.INTENTIONS ) ? done : pending, null, arrow, null );
+                rButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessmentsContain( ApplicationStatus.Assessment.HEALTH_RISK ) ? done : pending, null, arrow, null );
             }
-            else if( ApplicationStatus.State.NO_FINAL_EVALUATIONS == as.state )
+            else if( ApplicationStatus.State.NO_FINAL_EVALUATIONS == as.getState() )
             {
                 messageView.setText( "Please complete the final assessments to proceed." );
                 messageView.setVisibility( View.VISIBLE );
@@ -77,11 +77,11 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
                 Drawable done = getResources().getDrawable( R.drawable.ic_check_24dp, null );
                 Drawable pending = getResources().getDrawable( android.R.drawable.ic_dialog_alert, null );
                 Drawable arrow = getResources().getDrawable( R.drawable.subcategory_btn_img, null );
-                effButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessments.contains( ApplicationStatus.Assessment.SELF_EFFICACY ) ? done : pending, null, arrow, null );
-                hButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessments.contains( ApplicationStatus.Assessment.SELF_RATED_HEALTH ) ? done : pending, null, arrow, null );
-                iButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessments.contains( ApplicationStatus.Assessment.ILLNESS_PERCEPTION ) ? done : pending, null, arrow, null );
-                pButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessments.contains( ApplicationStatus.Assessment.INTENTIONS ) ? done : pending, null, arrow, null );
-                rButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessments.contains( ApplicationStatus.Assessment.HEALTH_RISK ) ? done : pending, null, arrow, null );
+                effButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessmentsContain( ApplicationStatus.Assessment.SELF_EFFICACY ) ? done : pending, null, arrow, null );
+                hButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessmentsContain( ApplicationStatus.Assessment.SELF_RATED_HEALTH ) ? done : pending, null, arrow, null );
+                iButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessmentsContain( ApplicationStatus.Assessment.ILLNESS_PERCEPTION ) ? done : pending, null, arrow, null );
+                pButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessmentsContain( ApplicationStatus.Assessment.INTENTIONS ) ? done : pending, null, arrow, null );
+                rButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessmentsContain( ApplicationStatus.Assessment.HEALTH_RISK ) ? done : pending, null, arrow, null );
             }
             else
             {

@@ -27,12 +27,12 @@ public class StateActivity extends AppCompatActivity
         try
         {
             ApplicationStatus status = ApplicationStatus.loadApplicationStatus( this );
-            if( ApplicationStatus.State.NOT_LOGGED_IN == status.state )
+            if( ApplicationStatus.State.NOT_LOGGED_IN == status.getState() )
             {
                 startActivity( new Intent( this, LoginActivity.class ) );
             }
-            else if( ApplicationStatus.State.NO_INITIAL_EVALUATIONS == status.state ||
-                     ApplicationStatus.State.NO_FINAL_EVALUATIONS == status.state
+            else if( ApplicationStatus.State.NO_INITIAL_EVALUATIONS == status.getState() ||
+                     ApplicationStatus.State.NO_FINAL_EVALUATIONS == status.getState()
             )
             {
                 startActivity( new Intent( this, AssessmentsActivity.class ) );
