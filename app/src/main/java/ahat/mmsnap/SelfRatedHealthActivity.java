@@ -44,7 +44,7 @@ public class SelfRatedHealthActivity extends AppCompatActivity
                 catch( Exception e )
                 {
                     e.printStackTrace();
-                    Toast.makeText( SelfRatedHealthActivity.this, "An error occured while saving your answers. Please try again.", Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( SelfRatedHealthActivity.this, "An error occurred while saving your answers. Please try again.", Toast.LENGTH_SHORT ).show();
                 }
             }
         } );

@@ -32,17 +32,22 @@ public class ApplicationStatus
         // TODO
         return false;
     }
-
-    enum State
+    private boolean dailyEvaluationPending()
     {
-        NOT_LOGGED_IN,              // the user has not performed the initial login
-        NO_INITIAL_EVALUATIONS,     // the user has not submitted the initial evaluations
-        IN_ORDER,                   // everything is in order, the user has no pending issues
-        //        WEEKLY_EVALUATION_PENDING,  // the user has not submitted a weekly evaluation
-//        DAILY_EVALUATION_PENDING,   // the user has not submitted a daily evaluation
-        NO_FINAL_EVALUATIONS,       // the user has not submitted the final evaluations
-        FINISHED                    // the duration of the program has finished and the user has submitted the final evaluations
+        // TODO
+        return false;
     }
+
+//    enum State
+//    {
+//        NOT_LOGGED_IN,              // the user has not performed the initial login
+//        NO_INITIAL_EVALUATIONS,     // the user has not submitted the initial evaluations
+//        IN_ORDER,                   // everything is in order, the user has no pending issues
+//        //        WEEKLY_EVALUATION_PENDING,  // the user has not submitted a weekly evaluation
+////        DAILY_EVALUATION_PENDING,   // the user has not submitted a daily evaluation
+//        NO_FINAL_EVALUATIONS,       // the user has not submitted the final evaluations
+//        FINISHED                    // the duration of the program has finished and the user has submitted the final evaluations
+//    }
 
     enum Assessment { ILLNESS_PERCEPTION, HEALTH_RISK, SELF_EFFICACY, INTENTIONS, SELF_RATED_HEALTH }
 
@@ -58,8 +63,7 @@ public class ApplicationStatus
     private Context context;
     private Date startDate;
     public Date getStartDate() { return startDate; }
-    private ApplicationStateMachine stateMachine;
-    public State getState() { return stateMachine.getState(); }
+    public State getState() { return state; }
     public ArrayList<Behavior> problematicBehaviors = new ArrayList<>( 4 );
     private ArrayList<Assessment> initialAssessments= new ArrayList<>( Assessment.values().length );
     private ArrayList<Assessment> finalAssessments = new ArrayList<>( Assessment.values().length );
@@ -70,12 +74,12 @@ public class ApplicationStatus
     public void addAssessment( Assessment assessment, boolean save ) throws IOException, JSONException
     {
         ArrayList<Assessment> assessments = null;
-        State previous = stateMachine.getState();
-        if( State.NO_INITIAL_EVALUATIONS == previous )
+        State previous = getState();
+        if( NoInitialAssessments.NAME == previous.name() )
         {
             assessments = initialAssessments;
         }
-        else if( State.NO_FINAL_EVALUATIONS == previous  )
+        else if( NoFinalAssessments.NAME == previous.name()  )
         {
             assessments = finalAssessments;
         }
@@ -89,13 +93,8 @@ public class ApplicationStatus
             assessments.add( assessment );
         }
 
-        if( stateMachine.moveNext() )
-        {
-            if( State.NO_INITIAL_EVALUATIONS == previous && State.IN_ORDER == stateMachine.getState() )
-            {
-                startDate = new Date(); // the research program starts when all initial evaluations are submitted
-            }
-        }
+        state.moveNext();
+
         if( save )
         {
             saveApplicationStatus();
@@ -112,7 +111,7 @@ public class ApplicationStatus
 
     public void userLoggedIn() throws IOException, JSONException
     {
-        if( stateMachine.moveNext() )
+        if( state.moveNext() )
         {
             saveApplicationStatus();
         }
@@ -123,23 +122,25 @@ public class ApplicationStatus
 
     private static final String FILENAME = "application_status.json";
 
-    private ApplicationStatus( Context context )
+    private ApplicationStatus( Context context ) throws Exception
     {
         this.context = context;
         startDate = new Date();
         selfEfficacy = new SelfEfficacy();
-        stateMachine = new ApplicationStateMachine( State.NOT_LOGGED_IN, this );
+        StateFactory f = new StateFactory( this );
+        state = f.create( NotLoggedIn.NAME );
     }
 
-    private ApplicationStatus( Context context, State state )
+    private ApplicationStatus( Context context, String stateNAME ) throws Exception
     {
         this.context = context;
         startDate = new Date();
         selfEfficacy = new SelfEfficacy();
-        stateMachine = new ApplicationStateMachine( state, this );
+        StateFactory f = new StateFactory( this );
+        this.state = f.create( stateNAME );
     }
 
-    public static ApplicationStatus loadApplicationStatus( Context context ) throws IOException, JSONException
+    public static ApplicationStatus loadApplicationStatus( Context context ) throws Exception
     {
         ApplicationStatus as = new ApplicationStatus( context );
 
@@ -167,7 +168,7 @@ public class ApplicationStatus
             String jsonString = writer.toString();
             JSONObject jsonState = new JSONObject( jsonString  );
 
-            as = new ApplicationStatus( context, State.valueOf( jsonState.getString( "state" ) )  );
+            as = new ApplicationStatus( context, jsonState.getString( "state" ) );
 
             String[] dateParts =  jsonState.getString( "start_date" ).split( "-" );
 
@@ -272,80 +273,59 @@ public class ApplicationStatus
         }
     }
 
+    State state;
+    public void setState( State state ) { this.state = state ;}
 
-
-
-
-
-    public class ApplicationStateMachine
+    public class StateFactory
     {
-        private State             state;
         private ApplicationStatus applicationStatus;
 
-        public State getState() { return state; }
+        public StateFactory( ApplicationStatus applicationStatus ){this.applicationStatus = applicationStatus;}
 
-        public ApplicationStateMachine( State state, ApplicationStatus applicationStatus )
+        public State create( String stateNAME ) throws Exception
         {
-            this.state = state;
+            switch( stateNAME )
+            {
+                case NotLoggedIn.NAME:
+                    return new NotLoggedIn( this.applicationStatus );
+                case NoInitialAssessments.NAME:
+                    return new NoInitialAssessments( applicationStatus );
+                case InOrder.NAME:
+                    return new InOrder( applicationStatus );
+                case NoFinalAssessments.NAME:
+                    return new NoFinalAssessments( applicationStatus );
+                case Finished.NAME:
+                    return new Finished( applicationStatus );
+                default:
+                    throw new Exception( "Unknown Application state " + stateNAME );
+            }
+        }
+    }
+
+    public abstract class State
+    {
+        protected ApplicationStatus applicationStatus;
+        State( ApplicationStatus applicationStatus )
+        {
             this.applicationStatus = applicationStatus;
         }
 
-        /*
-         * return true if the state has changed, false if the state remains the same
-         */
-        public boolean moveNext()
-        {
+        public abstract  boolean moveNext();
+        public abstract String name();
+    }
 
-            State previous = state;
-            switch( state )
-            {
-                case NOT_LOGGED_IN:
-                    state = State.NO_INITIAL_EVALUATIONS;
-                    break;
-                case NO_INITIAL_EVALUATIONS:
-                    if( allInitialAssessmentsSubmitted() )
-                    {
-                        state = State.IN_ORDER;
-                    }
-                    break;
-                case IN_ORDER:
-                    if( programDurationExpired() )
-                    {
-                        state = State.NO_FINAL_EVALUATIONS;
-                    }
-                    break;
-                case NO_FINAL_EVALUATIONS:
-                    if( allFinalEvaluationsSubmitted() )
-                    {
-                        state = State.FINISHED;
-                    }
-                    break;
-                case FINISHED:
-                    break;
-            }
+    public class NotLoggedIn extends State
+    {
+        static final String NAME = "NotLoggedIn";
+        public String name() { return NAME; }
+        NotLoggedIn( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
+        public boolean moveNext() { applicationStatus.setState( new NoInitialAssessments( applicationStatus ) ); return true; }
+    }
 
-            return previous != state;
-        }
-
-        private boolean allFinalEvaluationsSubmitted()
-        {
-            return allAssessmentsSubmitted( finalAssessments );
-        }
-
-        private boolean programDurationExpired()
-        {
-            Calendar c = Calendar.getInstance();
-            c.setTime( startDate );
-            c.add( Calendar.DATE, DurationDays );
-            return c.after( new Date() );
-        }
-
-        private boolean allInitialAssessmentsSubmitted()
-        {
-            return allAssessmentsSubmitted( initialAssessments );
-        }
-
-        private boolean allAssessmentsSubmitted( ArrayList<ApplicationStatus.Assessment> assessments )
+    public abstract class NoAssessments extends State
+    {
+        NoAssessments( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
+        protected boolean allAssessmentsSubmitted( ArrayList<ApplicationStatus.Assessment> assessments )
         {
             boolean allAssessmentsSubmitted = true;
 
@@ -361,5 +341,200 @@ public class ApplicationStatus
             return allAssessmentsSubmitted;
         }
     }
+    public class NoInitialAssessments extends NoAssessments
+    {
+        static final String NAME = "NoInitialAssessments";
+        public String name() { return NAME; }
+        NoInitialAssessments( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
+        public boolean moveNext()
+        {
+            if( allAssessmentsSubmitted( applicationStatus.initialAssessments ) )
+            {
+                applicationStatus.setState( new InOrder( applicationStatus ) );
+                applicationStatus.startDate = new Date(); // the research program starts when all initial evaluations are submitted
+                return true;
+            }
+            return false;
+        }
+    }
+    public class InOrder extends State
+    {
+        static final String NAME = "InOrder";
+        public String name() { return NAME; }
+        InOrder( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
+        public boolean moveNext()
+        {
+            if( weeklyEvaluationPending() )
+            {
+                applicationStatus.setState( new WeeklyEvaluationPending( applicationStatus ) );
+                return true;
+            }
+            else if( dailyEvaluationPending() )
+            {
+                applicationStatus.setState( new DailyEvaluationPending( applicationStatus ) );
+                return true;
+            }
+            else if( programDurationExpired() )
+            {
+                applicationStatus.setState( new NoFinalAssessments( applicationStatus ) );
+                return true;
+            }
+            return false;
+        }
+
+        protected boolean programDurationExpired()
+        {
+            Calendar c = Calendar.getInstance();
+            c.setTime( startDate );
+            c.add( Calendar.DATE, DurationDays );
+            return c.after( new Date() );
+        }
+    }
+    public class WeeklyEvaluationPending extends InOrder
+    {
+        static final String NAME = "WeeklyEvaluationPending";
+        public String name() { return NAME; }
+        WeeklyEvaluationPending( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
+        public boolean moveNext()
+        {
+            if( weeklyEvaluationPending() )
+            {
+                return false;
+            }
+            else if( dailyEvaluationPending() )
+            {
+                applicationStatus.setState( new DailyEvaluationPending( applicationStatus ) );
+                return true;
+            }
+            else if( programDurationExpired() )
+            {
+                applicationStatus.setState( new NoFinalAssessments( applicationStatus ) );
+                return true;
+            }
+
+            applicationStatus.setState( new InOrder( applicationStatus ) );
+            return true;
+        }
+    }
+    public class DailyEvaluationPending extends InOrder
+    {
+        static final String NAME = "DaillyEvaluationPending";
+        public String name() { return NAME; }
+        DailyEvaluationPending( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
+        public boolean moveNext()
+        {
+            if( dailyEvaluationPending() )
+            {
+                return false;
+            }
+            else if( weeklyEvaluationPending() )
+            {
+                applicationStatus.setState( new WeeklyEvaluationPending( applicationStatus ) );
+                return true;
+            }
+            else if( programDurationExpired() )
+            {
+                applicationStatus.setState( new NoFinalAssessments( applicationStatus ) );
+                return true;
+            }
+
+            applicationStatus.setState( new InOrder( applicationStatus ) );
+            return true;
+        }
+    }
+    public class NoFinalAssessments extends NoAssessments
+    {
+        static final String NAME = "NoFinalAssessments";
+        public String name() { return NAME; }
+        NoFinalAssessments( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
+        public boolean moveNext()
+        {
+            if( allAssessmentsSubmitted( applicationStatus.finalAssessments ) )
+            {
+                applicationStatus.setState( new Finished( applicationStatus ) );
+                return true;
+            }
+            return false;
+        }
+    }
+    public class Finished extends State
+    {
+        static final String NAME = "Finished";
+        public String name() { return NAME; }
+        Finished( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
+        public boolean moveNext() { return false; }
+    }
+
+
+//    public class ApplicationStateMachine
+//    {
+//        private State             state;
+//        private ApplicationStatus applicationStatus;
+//
+//        public State getState() { return state; }
+//
+//        public ApplicationStateMachine( State state, ApplicationStatus applicationStatus )
+//        {
+//            this.state = state;
+//            this.applicationStatus = applicationStatus;
+//        }
+//
+//        /*
+//         * return true if the state has changed, false if the state remains the same
+//         */
+//        public boolean moveNext()
+//        {
+//
+//            State previous = state;
+//            switch( state )
+//            {
+//                case NOT_LOGGED_IN:
+//                    state = State.NO_INITIAL_EVALUATIONS;
+//                    break;
+//                case NO_INITIAL_EVALUATIONS:
+//                    if( allInitialAssessmentsSubmitted() )
+//                    {
+//                        state = State.IN_ORDER;
+//                    }
+//                    break;
+//                case IN_ORDER:
+//                    if( programDurationExpired() )
+//                    {
+//                        state = State.NO_FINAL_EVALUATIONS;
+//                    }
+//                    break;
+//                case NO_FINAL_EVALUATIONS:
+//                    if( allFinalEvaluationsSubmitted() )
+//                    {
+//                        state = State.FINISHED;
+//                    }
+//                    break;
+//                case FINISHED:
+//                    break;
+//            }
+//
+//            return previous != state;
+//        }
+//
+//        private boolean allFinalEvaluationsSubmitted()
+//        {
+//            return allAssessmentsSubmitted( finalAssessments );
+//        }
+//
+//        private boolean programDurationExpired()
+//        {
+//            Calendar c = Calendar.getInstance();
+//            c.setTime( startDate );
+//            c.add( Calendar.DATE, DurationDays );
+//            return c.after( new Date() );
+//        }
+//
+//        private boolean allInitialAssessmentsSubmitted()
+//        {
+//            return allAssessmentsSubmitted( initialAssessments );
+//        }
+//
+//
+//    }
 
 }

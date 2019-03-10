@@ -55,7 +55,7 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
         {
             ApplicationStatus as = ApplicationStatus.loadApplicationStatus( this );
             TextView messageView = findViewById( R.id.message );
-            if( ApplicationStatus.State.NO_INITIAL_EVALUATIONS == as.getState() )
+            if( ApplicationStatus.NoInitialAssessments.NAME == as.getState().name() )
             {
                 messageView.setText( "Please complete the initial assessments to proceed." );
                 messageView.setVisibility( View.VISIBLE );
@@ -69,7 +69,7 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
                 pButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessmentsContain( ApplicationStatus.Assessment.INTENTIONS ) ? done : pending, null, arrow, null );
                 rButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessmentsContain( ApplicationStatus.Assessment.HEALTH_RISK ) ? done : pending, null, arrow, null );
             }
-            else if( ApplicationStatus.State.NO_FINAL_EVALUATIONS == as.getState() )
+            else if( ApplicationStatus.NoFinalAssessments.NAME == as.getState().name() )
             {
                 messageView.setText( "Please complete the final assessments to proceed." );
                 messageView.setVisibility( View.VISIBLE );

@@ -87,7 +87,7 @@ public class HealthRiskActivity extends AppCompatActivity
                     catch( Exception e )
                     {
                         e.printStackTrace();
-                        Toast.makeText( HealthRiskActivity.this, "An error occured while saving your answers. Please try again.", Toast.LENGTH_SHORT ).show();
+                        Toast.makeText( HealthRiskActivity.this, "An error occurred while saving your answers. Please try again.", Toast.LENGTH_SHORT ).show();
                     }
                 }
             }
