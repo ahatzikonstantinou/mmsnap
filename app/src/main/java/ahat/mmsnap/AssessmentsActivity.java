@@ -2,7 +2,6 @@ package ahat.mmsnap;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +13,7 @@ import android.widget.Toast;
 public class AssessmentsActivity extends AppCompatActivity implements View.OnClickListener
 {
 
-    private Button effButton;
+    private Button eButton;
     private Button hButton;
     private Button iButton;
     private Button pButton;
@@ -33,8 +32,8 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
         getSupportActionBar().setIcon( getResources().getDrawable( R.drawable.assessments_section_logo) );
 
         //buttons events
-        effButton = findViewById( R.id.assessments_efficacy_btn );
-        effButton.setOnClickListener( this );
+        eButton = findViewById( R.id.assessments_efficacy_btn );
+        eButton.setOnClickListener( this );
         hButton = findViewById( R.id.assessments_health_btn );
         hButton.setOnClickListener( this );
         iButton = findViewById( R.id.assessments_illness_btn );
@@ -53,8 +52,9 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
     {
         try
         {
-            ApplicationStatus as = ApplicationStatus.loadApplicationStatus( this );
+            ApplicationStatus as = ApplicationStatus.getInstance( this );
             TextView messageView = findViewById( R.id.message );
+            Drawable arrow = getResources().getDrawable( R.drawable.subcategory_btn_img, null );
             if( ApplicationStatus.NoInitialAssessments.NAME == as.getState().name() )
             {
                 messageView.setText( "Please complete the initial assessments to proceed." );
@@ -62,8 +62,8 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
 
                 Drawable done = getResources().getDrawable( R.drawable.ic_check_24dp, null );
                 Drawable pending = getResources().getDrawable( android.R.drawable.ic_dialog_alert, null );
-                Drawable arrow = getResources().getDrawable( R.drawable.subcategory_btn_img, null );
-                effButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessmentsContain( ApplicationStatus.Assessment.SELF_EFFICACY ) ? done : pending, null, arrow, null );
+                eButton
+                    .setCompoundDrawablesWithIntrinsicBounds( as.initialAssessmentsContain( ApplicationStatus.Assessment.SELF_EFFICACY ) ? done : pending, null, arrow, null );
                 hButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessmentsContain( ApplicationStatus.Assessment.SELF_RATED_HEALTH ) ? done : pending, null, arrow, null );
                 iButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessmentsContain( ApplicationStatus.Assessment.ILLNESS_PERCEPTION ) ? done : pending, null, arrow, null );
                 pButton.setCompoundDrawablesWithIntrinsicBounds( as.initialAssessmentsContain( ApplicationStatus.Assessment.INTENTIONS ) ? done : pending, null, arrow, null );
@@ -76,8 +76,7 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
 
                 Drawable done = getResources().getDrawable( R.drawable.ic_check_24dp, null );
                 Drawable pending = getResources().getDrawable( android.R.drawable.ic_dialog_alert, null );
-                Drawable arrow = getResources().getDrawable( R.drawable.subcategory_btn_img, null );
-                effButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessmentsContain( ApplicationStatus.Assessment.SELF_EFFICACY ) ? done : pending, null, arrow, null );
+                eButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessmentsContain( ApplicationStatus.Assessment.SELF_EFFICACY ) ? done : pending, null, arrow, null );
                 hButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessmentsContain( ApplicationStatus.Assessment.SELF_RATED_HEALTH ) ? done : pending, null, arrow, null );
                 iButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessmentsContain( ApplicationStatus.Assessment.ILLNESS_PERCEPTION ) ? done : pending, null, arrow, null );
                 pButton.setCompoundDrawablesWithIntrinsicBounds( as.finalAssessmentsContain( ApplicationStatus.Assessment.INTENTIONS ) ? done : pending, null, arrow, null );
@@ -85,10 +84,11 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
             }
             else
             {
-                messageView.setVisibility( View.GONE );
-                effButton.setVisibility( View.GONE );
-                pButton.setVisibility( View.GONE );
-                hButton.setVisibility( View.GONE );
+                findViewById( R.id.message_layout ).setVisibility( View.GONE );
+                Drawable locked = getResources().getDrawable( android.R.drawable.ic_lock_lock, null );
+                eButton.setCompoundDrawablesWithIntrinsicBounds( locked, null, arrow, null );
+                hButton.setCompoundDrawablesWithIntrinsicBounds( locked, null, arrow, null );
+                pButton.setCompoundDrawablesWithIntrinsicBounds( locked, null, arrow, null );
             }
         }
         catch( Exception e )
@@ -131,7 +131,7 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
                 startActivity( intent );
                 break;
             case R.id.assessments_weekly_btn:
-                intent = new Intent( this, WeeklyEvaluationActivity.class);
+                intent = new Intent( this, WeeklyEvaluationsListActivity.class);
                 startActivity( intent );
                 break;
             default:

@@ -1,5 +1,6 @@
 package ahat.mmsnap;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -7,7 +8,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-public class EfficacyActivity extends AppCompatActivity
+public class EfficacyActivity extends MassDisableActivity // AppCompatActivity
 {
 
     @Override
@@ -30,7 +31,7 @@ public class EfficacyActivity extends AppCompatActivity
                 try
                 {
                     //TODO send to server
-                    ApplicationStatus as = ApplicationStatus.loadApplicationStatus( view.getContext() );
+                    ApplicationStatus as = ApplicationStatus.getInstance( view.getContext() );
                     as.selfEfficacy.lifestyle = ( ( CheckBox ) findViewById( R.id.efficacy_lifestyle_cbx ) ).isChecked();
                     as.selfEfficacy.weekly_goals = ( ( CheckBox ) findViewById( R.id.efficacy_goals_cbx ) ).isChecked();
                     as.selfEfficacy.multimorbidity = ( ( CheckBox ) findViewById( R.id.efficacy_mm_cbx ) ).isChecked();
@@ -47,6 +48,33 @@ public class EfficacyActivity extends AppCompatActivity
                 }
             }
         } );
+
+        try
+        {
+            ApplicationStatus as = ApplicationStatus.getInstance( this );
+            if( ApplicationStatus.NoInitialAssessments.NAME != as.getState().name() &&
+                ApplicationStatus.NoFinalAssessments.NAME != as.getState().name()
+            )
+            {
+                findViewById( R.id.efficacy_submit_btn ).setVisibility( View.GONE );
+                disableAllControls();
+            }
+
+            ( ( CheckBox ) findViewById( R.id.efficacy_lifestyle_cbx ) ).setChecked( as.selfEfficacy.lifestyle );
+            ( ( CheckBox ) findViewById( R.id.efficacy_goals_cbx ) ).setChecked( as.selfEfficacy.weekly_goals );
+            ( ( CheckBox ) findViewById( R.id.efficacy_mm_cbx ) ).setChecked( as.selfEfficacy.multimorbidity );
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            Toast.makeText( this, "An error occurred retrieving the application status", Toast.LENGTH_SHORT ).show();
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        startActivity( new Intent( this, AssessmentsActivity.class ) );
     }
 
 }

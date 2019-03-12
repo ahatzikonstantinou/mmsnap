@@ -1,5 +1,6 @@
 package ahat.mmsnap;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,7 +10,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-public class PlansActivity extends AppCompatActivity
+public class PlansActivity extends MassDisableActivity // AppCompatActivity
 {
 
     @Override
@@ -32,7 +33,7 @@ public class PlansActivity extends AppCompatActivity
             {
                 try
                 {
-                    ApplicationStatus as = ApplicationStatus.loadApplicationStatus( view.getContext() );
+                    ApplicationStatus as = ApplicationStatus.getInstance( view.getContext() );
 
                     //TODO Add plans and intention data to Application status
 
@@ -49,6 +50,31 @@ public class PlansActivity extends AppCompatActivity
                 }
             }
         } );
+
+        try
+        {
+            ApplicationStatus as = ApplicationStatus.getInstance( this );
+            if( ApplicationStatus.NoInitialAssessments.NAME != as.getState().name() &&
+                ApplicationStatus.NoFinalAssessments.NAME != as.getState().name()
+            )
+            {
+                findViewById( R.id.plan_submit_btn ).setVisibility( View.GONE );
+                disableAllControls();
+            }
+
+            //TODO set controls according to intentions an plans stored
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            Toast.makeText( this, "An error occurred retrieving the application status", Toast.LENGTH_SHORT ).show();
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        startActivity( new Intent( this, AssessmentsActivity.class ) );
     }
 
 }

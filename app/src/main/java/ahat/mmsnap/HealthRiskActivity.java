@@ -3,8 +3,6 @@ package ahat.mmsnap;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -39,7 +37,7 @@ public class HealthRiskActivity extends AppCompatActivity
                     try
                     {
                         ArrayList<String> targetBehaviors = new ArrayList<>( 4 );
-                        ApplicationStatus as = ApplicationStatus.loadApplicationStatus( view.getContext() );
+                        ApplicationStatus as = ApplicationStatus.getInstance( view.getContext() );
                         as.problematicBehaviors = new ArrayList<>( 4 );
                         CheckBox c;
                         c = findViewById( R.id.risk_smoke_cbx );
@@ -57,7 +55,7 @@ public class HealthRiskActivity extends AppCompatActivity
                         c = findViewById( R.id.risk_food_cbx );
                         if( c.isChecked() )
                         {
-                            as.problematicBehaviors.add( ApplicationStatus.Behavior.EATING );
+                            as.problematicBehaviors.add( ApplicationStatus.Behavior.DIET );
                             targetBehaviors.add( "Healthy Diet" );
                         }
                         c = findViewById( R.id.risk_alcohol_cbx );
@@ -93,6 +91,26 @@ public class HealthRiskActivity extends AppCompatActivity
             }
         );
 
+        try
+        {
+            ApplicationStatus as = ApplicationStatus.getInstance( this );
+
+            ( (CheckBox) findViewById( R.id.risk_smoke_cbx ) ).setChecked( as.problematicBehaviors.contains( ApplicationStatus.Behavior.SMOKING ) );
+            ( (CheckBox) findViewById( R.id.risk_exercise_cbx ) ).setChecked( as.problematicBehaviors.contains( ApplicationStatus.Behavior.ACTIVITY ) );
+            ( (CheckBox) findViewById( R.id.risk_food_cbx ) ).setChecked( as.problematicBehaviors.contains( ApplicationStatus.Behavior.DIET ) );
+            ( (CheckBox) findViewById( R.id.risk_alcohol_cbx ) ).setChecked( as.problematicBehaviors.contains( ApplicationStatus.Behavior.ALCOHOL ) );
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            Toast.makeText( this, "An error occurred retrieving the application status", Toast.LENGTH_SHORT ).show();
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        startActivity( new Intent( this, AssessmentsActivity.class ) );
     }
 
 }

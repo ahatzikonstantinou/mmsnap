@@ -27,11 +27,6 @@ public class ApplicationStatus
 
     int DurationDays = 40;
 
-    public boolean weeklyEvaluationPending()
-    {
-        // TODO
-        return false;
-    }
     private boolean dailyEvaluationPending()
     {
         // TODO
@@ -51,7 +46,7 @@ public class ApplicationStatus
 
     enum Assessment { ILLNESS_PERCEPTION, HEALTH_RISK, SELF_EFFICACY, INTENTIONS, SELF_RATED_HEALTH }
 
-    enum Behavior { EATING, ACTIVITY, ALCOHOL, SMOKING }
+    enum Behavior {DIET, ACTIVITY, ALCOHOL, SMOKING }
 
     public class SelfEfficacy
     {
@@ -63,7 +58,7 @@ public class ApplicationStatus
     private Context context;
     private Date startDate;
     public Date getStartDate() { return startDate; }
-    public State getState() { return state; }
+
     public ArrayList<Behavior> problematicBehaviors = new ArrayList<>( 4 );
     private ArrayList<Assessment> initialAssessments= new ArrayList<>( Assessment.values().length );
     private ArrayList<Assessment> finalAssessments = new ArrayList<>( Assessment.values().length );
@@ -129,6 +124,7 @@ public class ApplicationStatus
         selfEfficacy = new SelfEfficacy();
         StateFactory f = new StateFactory( this );
         state = f.create( NotLoggedIn.NAME );
+        weeklyEvaluations = new ArrayList<>();
     }
 
     private ApplicationStatus( Context context, String stateNAME ) throws Exception
@@ -138,9 +134,70 @@ public class ApplicationStatus
         selfEfficacy = new SelfEfficacy();
         StateFactory f = new StateFactory( this );
         this.state = f.create( stateNAME );
+        weeklyEvaluations = new ArrayList<>();
     }
 
-    public static ApplicationStatus loadApplicationStatus( Context context ) throws Exception
+    // ApplicationStatus is a singleton
+    private static ApplicationStatus instance = null;
+
+    // synchronized is necessary for thread safety
+    public static synchronized ApplicationStatus getInstance( Context context ) throws Exception
+    {
+        if( null == instance )
+        {
+            instance = loadApplicationStatus( context );
+        }
+
+        return instance;
+    }
+
+    public ArrayList<WeeklyEvaluation> weeklyEvaluations;
+
+    public boolean pendingWeeklyEvaluationsExist() throws IOException, JSONException
+    {
+        int before = weeklyEvaluations.size();
+
+        weeklyEvaluations = WeeklyEvaluation.createMissing(
+            startDate,
+            new Date(),
+            weeklyEvaluations,
+            problematicBehaviors.contains( Behavior.DIET ),
+            problematicBehaviors.contains( Behavior.SMOKING ),
+            problematicBehaviors.contains( Behavior.ACTIVITY ),
+            problematicBehaviors.contains( Behavior.ALCOHOL )
+        );
+
+        if( before != weeklyEvaluations.size() )
+        {
+            WeeklyEvaluationsStorage wes = new WeeklyEvaluationsStorage( context );
+            wes.write( weeklyEvaluations );
+        }
+
+        return WeeklyEvaluation.pendingExist( weeklyEvaluations );
+    }
+
+    public void scoreWeeklyEvaluation( int weekOfYear, int year, int dietScore, int physicalActivityScore, int alcoholScore, int smokingScore )
+        throws Exception
+    {
+        for( int i = 0 ; i < weeklyEvaluations.size() ; i++ )
+        {
+            WeeklyEvaluation evaluation = weeklyEvaluations.get( i );
+            if( evaluation.getWeekOfYear() == weekOfYear && evaluation.getYear() == year )
+            {
+                evaluation.score( dietScore, physicalActivityScore, alcoholScore, smokingScore );
+                WeeklyEvaluationsStorage wes = new WeeklyEvaluationsStorage( context );
+                wes.write( weeklyEvaluations );
+
+                state.moveNext();
+                return;
+            }
+        }
+
+        throw new Exception( "Weekly evaluation for week " + String.valueOf( weekOfYear ) + ", and year " + String.valueOf( weekOfYear ) + " not found." );
+    }
+
+
+    private static ApplicationStatus loadApplicationStatus( Context context ) throws Exception
     {
         ApplicationStatus as = new ApplicationStatus( context );
 
@@ -207,6 +264,9 @@ public class ApplicationStatus
             as.selfEfficacy.multimorbidity = jsonState.getBoolean( "selfEfficacy.multimorbidity" );
             as.selfEfficacy.lifestyle = jsonState.getBoolean( "selfEfficacy.lifestyle" );
             as.selfEfficacy.weekly_goals = jsonState.getBoolean( "selfEfficacy.weekly_goals" );
+
+            WeeklyEvaluationsStorage wes = new WeeklyEvaluationsStorage( context );
+            as.weeklyEvaluations = wes.read();
         }
         finally
         {
@@ -271,10 +331,17 @@ public class ApplicationStatus
         {
             fos.close();
         }
+
+        WeeklyEvaluationsStorage wes = new WeeklyEvaluationsStorage( context );
+        wes.write( weeklyEvaluations );
     }
 
+
+    // The state of the applicationstatus follows the GoF state pattern
+    // States are inner class to be able to access the private members of applicationstatus
     State state;
     public void setState( State state ) { this.state = state ;}
+    public State getState() { return state; }
 
     public class StateFactory
     {
@@ -364,22 +431,30 @@ public class ApplicationStatus
         InOrder( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
         public boolean moveNext()
         {
-            if( weeklyEvaluationPending() )
+            try
             {
-                applicationStatus.setState( new WeeklyEvaluationPending( applicationStatus ) );
-                return true;
+                if( pendingWeeklyEvaluationsExist() )
+                {
+                    applicationStatus.setState( new WeeklyEvaluationPending( applicationStatus ) );
+                    return true;
+                }
+                else if( dailyEvaluationPending() )
+                {
+                    applicationStatus.setState( new DailyEvaluationPending( applicationStatus ) );
+                    return true;
+                }
+                else if( programDurationExpired() )
+                {
+                    applicationStatus.setState( new NoFinalAssessments( applicationStatus ) );
+                    return true;
+                }
+
+                return false;
             }
-            else if( dailyEvaluationPending() )
+            catch( Exception e )
             {
-                applicationStatus.setState( new DailyEvaluationPending( applicationStatus ) );
-                return true;
+                return false;
             }
-            else if( programDurationExpired() )
-            {
-                applicationStatus.setState( new NoFinalAssessments( applicationStatus ) );
-                return true;
-            }
-            return false;
         }
 
         protected boolean programDurationExpired()
@@ -397,23 +472,30 @@ public class ApplicationStatus
         WeeklyEvaluationPending( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
         public boolean moveNext()
         {
-            if( weeklyEvaluationPending() )
+            try
+            {
+                if( pendingWeeklyEvaluationsExist() )
+                {
+                    return false;
+                }
+                else if( dailyEvaluationPending() )
+                {
+                    applicationStatus.setState( new DailyEvaluationPending( applicationStatus ) );
+                    return true;
+                }
+                else if( programDurationExpired() )
+                {
+                    applicationStatus.setState( new NoFinalAssessments( applicationStatus ) );
+                    return true;
+                }
+
+                applicationStatus.setState( new InOrder( applicationStatus ) );
+                return true;
+            }
+            catch( Exception e )
             {
                 return false;
             }
-            else if( dailyEvaluationPending() )
-            {
-                applicationStatus.setState( new DailyEvaluationPending( applicationStatus ) );
-                return true;
-            }
-            else if( programDurationExpired() )
-            {
-                applicationStatus.setState( new NoFinalAssessments( applicationStatus ) );
-                return true;
-            }
-
-            applicationStatus.setState( new InOrder( applicationStatus ) );
-            return true;
         }
     }
     public class DailyEvaluationPending extends InOrder
@@ -423,23 +505,30 @@ public class ApplicationStatus
         DailyEvaluationPending( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
         public boolean moveNext()
         {
-            if( dailyEvaluationPending() )
+            try
+            {
+                if( dailyEvaluationPending() )
+                {
+                    return false;
+                }
+                else if( pendingWeeklyEvaluationsExist() )
+                {
+                    applicationStatus.setState( new WeeklyEvaluationPending( applicationStatus ) );
+                    return true;
+                }
+                else if( programDurationExpired() )
+                {
+                    applicationStatus.setState( new NoFinalAssessments( applicationStatus ) );
+                    return true;
+                }
+
+                applicationStatus.setState( new InOrder( applicationStatus ) );
+                return true;
+            }
+            catch( Exception e )
             {
                 return false;
             }
-            else if( weeklyEvaluationPending() )
-            {
-                applicationStatus.setState( new WeeklyEvaluationPending( applicationStatus ) );
-                return true;
-            }
-            else if( programDurationExpired() )
-            {
-                applicationStatus.setState( new NoFinalAssessments( applicationStatus ) );
-                return true;
-            }
-
-            applicationStatus.setState( new InOrder( applicationStatus ) );
-            return true;
         }
     }
     public class NoFinalAssessments extends NoAssessments
@@ -465,76 +554,5 @@ public class ApplicationStatus
         public boolean moveNext() { return false; }
     }
 
-
-//    public class ApplicationStateMachine
-//    {
-//        private State             state;
-//        private ApplicationStatus applicationStatus;
-//
-//        public State getState() { return state; }
-//
-//        public ApplicationStateMachine( State state, ApplicationStatus applicationStatus )
-//        {
-//            this.state = state;
-//            this.applicationStatus = applicationStatus;
-//        }
-//
-//        /*
-//         * return true if the state has changed, false if the state remains the same
-//         */
-//        public boolean moveNext()
-//        {
-//
-//            State previous = state;
-//            switch( state )
-//            {
-//                case NOT_LOGGED_IN:
-//                    state = State.NO_INITIAL_EVALUATIONS;
-//                    break;
-//                case NO_INITIAL_EVALUATIONS:
-//                    if( allInitialAssessmentsSubmitted() )
-//                    {
-//                        state = State.IN_ORDER;
-//                    }
-//                    break;
-//                case IN_ORDER:
-//                    if( programDurationExpired() )
-//                    {
-//                        state = State.NO_FINAL_EVALUATIONS;
-//                    }
-//                    break;
-//                case NO_FINAL_EVALUATIONS:
-//                    if( allFinalEvaluationsSubmitted() )
-//                    {
-//                        state = State.FINISHED;
-//                    }
-//                    break;
-//                case FINISHED:
-//                    break;
-//            }
-//
-//            return previous != state;
-//        }
-//
-//        private boolean allFinalEvaluationsSubmitted()
-//        {
-//            return allAssessmentsSubmitted( finalAssessments );
-//        }
-//
-//        private boolean programDurationExpired()
-//        {
-//            Calendar c = Calendar.getInstance();
-//            c.setTime( startDate );
-//            c.add( Calendar.DATE, DurationDays );
-//            return c.after( new Date() );
-//        }
-//
-//        private boolean allInitialAssessmentsSubmitted()
-//        {
-//            return allAssessmentsSubmitted( initialAssessments );
-//        }
-//
-//
-//    }
 
 }

@@ -57,7 +57,7 @@ public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatA
                 item.put( "then", "I will only have non-alcoholic drinks" );
                 item.put( "active", true );
                 item.put( "date", "" );
-                item.put( "EATING", false );
+                item.put( "DIET", false );
                 item.put( "ACTIVITY", false );
                 item.put( "ALCOHOL", false );
                 item.put( "SMOKING", false );

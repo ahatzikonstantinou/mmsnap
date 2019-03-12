@@ -75,7 +75,7 @@ public class ActionPlansListAdapter extends IfThenListAdapter
             chk.setVisibility( deleteAction ? View.VISIBLE : View.GONE );
             chk.setImageResource( deleteIndex.contains( position ) ? R.drawable.ic_check_box_black_24dp : R.drawable.ic_check_box_outline_blank_black_24dp );
 
-            eating.setVisibility( item.getBoolean( "EATING" ) ? View.VISIBLE: View.GONE );
+            eating.setVisibility( item.getBoolean( "DIET" ) ? View.VISIBLE: View.GONE );
             activity.setVisibility( item.getBoolean( "ACTIVITY" ) ? View.VISIBLE: View.GONE );
             alcohol.setVisibility( item.getBoolean( "ALCOHOL" ) ? View.VISIBLE: View.GONE );
             smoking.setVisibility( item.getBoolean( "SMOKING" ) ? View.VISIBLE: View.GONE );

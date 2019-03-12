@@ -85,7 +85,7 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
         activeSwitch = findViewById( R.id.active_switch );
 
         BehaviorIsSelected = new HashMap<>();
-        BehaviorIsSelected.put( ApplicationStatus.Behavior.EATING, false );
+        BehaviorIsSelected.put( ApplicationStatus.Behavior.DIET, false );
         BehaviorIsSelected.put( ApplicationStatus.Behavior.ACTIVITY, false );
         BehaviorIsSelected.put( ApplicationStatus.Behavior.ALCOHOL, false );
         BehaviorIsSelected.put( ApplicationStatus.Behavior.SMOKING, false );
@@ -98,7 +98,7 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
             actionDate = item.getString( "date" );
             setDateTextView();
 
-            setBehaviorIsSelected( ApplicationStatus.Behavior.EATING, item.getBoolean( "EATING" ) );
+            setBehaviorIsSelected( ApplicationStatus.Behavior.DIET, item.getBoolean( "DIET" ) );
             setBehaviorIsSelected( ApplicationStatus.Behavior.ACTIVITY, item.getBoolean( "ACTIVITY" ) );
             setBehaviorIsSelected( ApplicationStatus.Behavior.ALCOHOL, item.getBoolean( "ALCOHOL" ) );
             setBehaviorIsSelected( ApplicationStatus.Behavior.SMOKING, item.getBoolean( "SMOKING" ) );
@@ -110,7 +110,7 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
             Snackbar.make( view, "Could not parse IF THEN item!", Snackbar.LENGTH_LONG).show();
         }
 
-        updateBehaviorUI( ApplicationStatus.Behavior.EATING );
+        updateBehaviorUI( ApplicationStatus.Behavior.DIET );
         updateBehaviorUI( ApplicationStatus.Behavior.ACTIVITY );
         updateBehaviorUI( ApplicationStatus.Behavior.ALCOHOL );
         updateBehaviorUI( ApplicationStatus.Behavior.SMOKING );
@@ -123,7 +123,7 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
         switch (view.getId())
         {
             case R.id.eating_image:
-                toggleBehavior( ApplicationStatus.Behavior.EATING );
+                toggleBehavior( ApplicationStatus.Behavior.DIET );
                 break;
             case R.id.activity_image:
                 toggleBehavior( ApplicationStatus.Behavior.ACTIVITY );
@@ -171,7 +171,7 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
         {
             error += ( error.length() > 0 ? " and " : "" ) + "select a DATE";
         }
-        if( !getBehaviorIsSelected( ApplicationStatus.Behavior.EATING ) &&
+        if( !getBehaviorIsSelected( ApplicationStatus.Behavior.DIET ) &&
             !getBehaviorIsSelected( ApplicationStatus.Behavior.ACTIVITY ) &&
             !getBehaviorIsSelected( ApplicationStatus.Behavior.ALCOHOL ) &&
             !getBehaviorIsSelected( ApplicationStatus.Behavior.SMOKING )
@@ -190,7 +190,7 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
         item.put( "then", thenStatement );
         item.put( "active", activeSwitch.isChecked() );
         item.put( "date", actionDate );
-        item.put( "EATING", getBehaviorIsSelected( ApplicationStatus.Behavior.EATING ) );
+        item.put( "DIET", getBehaviorIsSelected( ApplicationStatus.Behavior.DIET ) );
         item.put( "ACTIVITY", getBehaviorIsSelected( ApplicationStatus.Behavior.ACTIVITY ) );
         item.put( "ALCOHOL", getBehaviorIsSelected( ApplicationStatus.Behavior.ALCOHOL ) );
         item.put( "SMOKING", getBehaviorIsSelected( ApplicationStatus.Behavior.SMOKING ) );
@@ -243,7 +243,7 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
 
         switch( behavior )
         {
-            case EATING:
+            case DIET:
                 imageView = findViewById( R.id.eating_image );
                 imageView.setColorFilter( color );
                 break;

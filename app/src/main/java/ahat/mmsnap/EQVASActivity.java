@@ -1,5 +1,6 @@
 package ahat.mmsnap;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -85,7 +86,7 @@ public class EQVASActivity extends AppCompatActivity
             {
                 try
                 {
-                    ApplicationStatus as = ApplicationStatus.loadApplicationStatus( view.getContext() );
+                    ApplicationStatus as = ApplicationStatus.getInstance( view.getContext() );
                     as.eqvas = Integer.parseInt( mEditText.getText().toString() );
                     as.addAssessment( ApplicationStatus.Assessment.ILLNESS_PERCEPTION );
 
@@ -100,6 +101,25 @@ public class EQVASActivity extends AppCompatActivity
                 }
             }
         } );
+
+
+        try
+        {
+            ApplicationStatus as = ApplicationStatus.getInstance( this );
+            mEditText.setText( String.valueOf( as.eqvas ) );
+            mSeekBar.setProgress( as.eqvas );
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            Toast.makeText( this, "An error occurred retrieving the application status", Toast.LENGTH_SHORT ).show();
+        }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        startActivity( new Intent( this, AssessmentsActivity.class ) );
     }
 
 }

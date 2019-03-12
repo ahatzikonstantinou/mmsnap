@@ -26,7 +26,7 @@ public class StateActivity extends AppCompatActivity
     {
         try
         {
-            ApplicationStatus status = ApplicationStatus.loadApplicationStatus( this );
+            ApplicationStatus status = ApplicationStatus.getInstance( this );
             if( ApplicationStatus.NotLoggedIn.NAME == status.getState().name() )
             {
                 startActivity( new Intent( this, LoginActivity.class ) );
@@ -37,9 +37,9 @@ public class StateActivity extends AppCompatActivity
             {
                 startActivity( new Intent( this, AssessmentsActivity.class ) );
             }
-            else if( status.weeklyEvaluationPending() )
+            else if( status.pendingWeeklyEvaluationsExist() )
             {
-                startActivity( new Intent( this, WeeklyEvaluationActivity.class ) );
+                startActivity( new Intent( this, WeeklyEvaluationsListActivity.class ) );
             }
         }
         catch( Exception e )

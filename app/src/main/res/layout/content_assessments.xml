@@ -11,14 +11,21 @@
     tools:showIn="@layout/activity_assessments">
 
 
-    <TextView
-        android:id="@+id/message"
+    <FrameLayout
+        android:id="@+id/message_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#ffffff"
-        android:background="#000000"
         app:layout_constraintTop_toTopOf="parent"
-        android:padding="10dp"/>
+        app:layout_constraintStart_toStartOf="parent">
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:background="#000000"
+            app:layout_constraintTop_toTopOf="parent"
+            android:padding="10dp"/>
+    </FrameLayout>
 
     <Button
         android:id="@+id/assessments_illness_btn"
@@ -39,7 +46,7 @@
         app:layout_constraintBottom_toTopOf="@+id/assessments_risk_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/message"
+        app:layout_constraintTop_toBottomOf="@+id/message_layout"
         app:layout_constraintHeight_default="wrap"
         app:layout_constraintVertical_chainStyle="spread"/>
 

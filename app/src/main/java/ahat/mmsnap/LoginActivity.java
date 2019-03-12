@@ -412,7 +412,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         finish();
         try
         {
-            ApplicationStatus as = ApplicationStatus.loadApplicationStatus( this );
+            ApplicationStatus as = ApplicationStatus.getInstance( this );
             as.userLoggedIn();
         }
         catch( Exception e )
