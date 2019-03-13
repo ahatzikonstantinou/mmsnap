@@ -22,4 +22,9 @@
     <dimen name="subsection_title_textSize">18sp</dimen>
     <dimen name="behavior_icon_size_big">60dp</dimen>
     <dimen name="behavior_image_scale_big">2</dimen>
+    <dimen name="plan_day_button_size">38dp</dimen>
+    <dimen name="plan_day_button_margin">6dp</dimen>
+    <dimen name="day_success_icon_size">24dp</dimen>
+    <dimen name="day_success_icon_marginTop">15dp</dimen>
+    <dimen name="day_success_icon_marginStart">17dp</dimen>
 </resources>

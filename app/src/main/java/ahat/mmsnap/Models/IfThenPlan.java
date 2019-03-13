@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import ahat.mmsnap.ApplicationStatus;
 
-public abstract class IfThenPlan implements Serializable
+public abstract class IfThenPlan implements Serializable, Cloneable
 {
     public IfThenPlan(){}
 
@@ -75,5 +75,68 @@ public abstract class IfThenPlan implements Serializable
     public boolean isTarget( ApplicationStatus.Behavior behavior )
     {
         return targetBehaviors.contains( behavior );
+    }
+
+    public boolean isEvaluated()
+    {
+        for( int i = 0; i < days.size(); i++ )
+        {
+            Day d = days.get( i );
+            if( !d.isEvaluated() )
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public boolean isEvaluated( Day day )
+    {
+        if( days.contains( day ) )
+        {
+            for( int i = 0; i < days.size(); i++ )
+            {
+                Day d = days.get( i );
+                if( d == day )
+                {
+                    return d.isEvaluated();
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isSuccessful( Day day )
+    {
+        if( days.contains( day ) )
+        {
+            for( int i = 0; i < days.size(); i++ )
+            {
+                Day d = days.get( i );
+                if( d == day )
+                {
+                    return d.isSuccessful();
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean evaluate( Day day, boolean success )
+    {
+        for( int i = 0 ; i < days.size() ; i++ )
+        {
+            Day d = days.get( i );
+            if( d == day )
+            {
+                d.evaluate( success );
+                return true;
+            }
+        }
+
+        return false;
     }
 }

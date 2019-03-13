@@ -19,14 +19,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_check_24dp"
-            android:tint="#008800"
+            android:tint="@color/green_check"
             android:visibility="gone"/>
         <ImageView
             android:id="@+id/pending"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_dialog_alert"
-            android:tint="#dddd00"
+            android:tint="@color/yellow_warning"
             android:visibility="visible"
             android:scaleX="0.7"
             android:scaleY="0.7"/>

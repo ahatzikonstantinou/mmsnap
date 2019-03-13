@@ -4,10 +4,11 @@ import android.drm.DrmStore;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import ahat.mmsnap.ApplicationStatus;
 
-public class ActionPlan extends IfThenPlan implements Serializable
+public class ActionPlan extends IfThenPlan implements Serializable, Cloneable
 {
     public String copingIfStatement = "";
     public String copingThenStatement = "";
@@ -35,7 +36,11 @@ public class ActionPlan extends IfThenPlan implements Serializable
     {
         ActionPlan plan = new ActionPlan();
         plan.id = -1;
+        Calendar c = Calendar.getInstance();
+        plan.year = c.get( Calendar.YEAR );
+        plan.weekOfYear = c.get( Calendar.WEEK_OF_YEAR );
         return plan;
 
     }
+
 }

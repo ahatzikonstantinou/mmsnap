@@ -19,6 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import ahat.mmsnap.Models.ActionPlan;
+import ahat.mmsnap.Models.IfThenPlan;
 
 import static ahat.mmsnap.ApplicationStatus.Behavior.ACTIVITY;
 import static ahat.mmsnap.ApplicationStatus.Behavior.ALCOHOL;
@@ -72,47 +73,80 @@ public class ActionPlansListAdapter extends IfThenListAdapter
         ImageView smoking = view.findViewById( R.id.smoking_image );
 
         //this code sets the values of the objects to values from the arrays
-        try
+        ActionPlan item = items.get( position );
+
+        ifStatement.setText( item.ifStatement );
+
+        thenStatement.setText( item.thenStatement );
+
+         active.setVisibility( item.active ? View.VISIBLE : View.GONE );
+        inactive.setVisibility( item.active ? View.GONE: View.VISIBLE );
+
+        ImageView chk = view.findViewById( R.id.counterfactual_list_item_chk );
+        chk.setVisibility( deleteAction ? View.VISIBLE : View.GONE );
+        chk.setImageResource( deleteIndex.contains( position ) ? R.drawable.ic_check_box_black_24dp : R.drawable.ic_check_box_outline_blank_black_24dp );
+
+        eating.setVisibility( item.isTarget( DIET ) ? View.VISIBLE : View.GONE );
+        activity.setVisibility( item.isTarget( ACTIVITY ) ? View.VISIBLE: View.GONE );
+        alcohol.setVisibility( item.isTarget( ALCOHOL ) ? View.VISIBLE: View.GONE );
+        smoking.setVisibility( item.isTarget( SMOKING ) ? View.VISIBLE: View.GONE );
+
+        DateFormatSymbols dfs = new DateFormatSymbols();
+
+        Calendar startCal = Calendar.getInstance();
+        startCal.set( Calendar.YEAR, item.year );
+        startCal.set( Calendar.WEEK_OF_YEAR, item.weekOfYear );
+
+        Calendar c = Calendar.getInstance();
+        c.set( Calendar.YEAR, startCal.get( Calendar.YEAR ) );
+        c.set( Calendar.WEEK_OF_YEAR, startCal.get( Calendar.WEEK_OF_YEAR ) );
+        c.set( Calendar.DAY_OF_WEEK, c.getFirstDayOfWeek() );   // go to the first day of this week
+
+        TextView start = view.findViewById( R.id.startdate );
+        start.setText( dfs.getShortWeekdays()[ c.get( Calendar.DAY_OF_WEEK ) ]+ " " + c.get( Calendar.DAY_OF_MONTH ) + " " +
+                       dfs.getShortMonths()[ c.get( Calendar.MONTH ) ] + " " + c.get( Calendar.YEAR ) );
+
+        c.add( Calendar.DATE, 6);
+        TextView end = view.findViewById( R.id.endDate );
+        end.setText( dfs.getShortWeekdays()[ c.get( Calendar.DAY_OF_WEEK ) ]+ " " + c.get( Calendar.DAY_OF_MONTH ) + " " +
+                     dfs.getShortMonths()[ c.get( Calendar.MONTH ) ] + " " + c.get( Calendar.YEAR ) );
+
+        if( item.copingIfStatement.trim().length() == 0 && item.copingThenStatement.trim().length() == 0 )
         {
-            ActionPlan item = items.get( position );
-
-            ifStatement.setText( item.ifStatement );
-
-            thenStatement.setText( item.thenStatement );
-
-//            Calendar calendar = IfThenDetailActivity.getCalendarFromYYYYMMDD( item.getString( "date" )  );
-//            DateFormatSymbols dfs = new DateFormatSymbols();
-//            date.setText( dfs.getShortWeekdays()[ calendar.get( Calendar.DAY_OF_WEEK ) ]+ " " + calendar.get( Calendar.DAY_OF_MONTH ) + " " +
-//                           dfs.getMonths()[ calendar.get( Calendar.MONTH ) ] + " " + calendar.get( Calendar.YEAR ));
-
-            active.setVisibility( item.active ? View.VISIBLE : View.GONE );
-            inactive.setVisibility( item.active ? View.GONE: View.VISIBLE );
-
-            ImageView chk = view.findViewById( R.id.counterfactual_list_item_chk );
-            chk.setVisibility( deleteAction ? View.VISIBLE : View.GONE );
-            chk.setImageResource( deleteIndex.contains( position ) ? R.drawable.ic_check_box_black_24dp : R.drawable.ic_check_box_outline_blank_black_24dp );
-
-            eating.setVisibility( item.isTarget( DIET ) ? View.VISIBLE : View.GONE );
-            activity.setVisibility( item.isTarget( ACTIVITY ) ? View.VISIBLE: View.GONE );
-            alcohol.setVisibility( item.isTarget( ALCOHOL ) ? View.VISIBLE: View.GONE );
-            smoking.setVisibility( item.isTarget( SMOKING ) ? View.VISIBLE: View.GONE );
-
-            if( item.copingIfStatement.trim().length() == 0 && item.copingThenStatement.trim().length() == 0 )
-            {
-                view.findViewById( R.id.coping_plan_layout ).setVisibility( View.GONE );
-            }
-            else
-            {
-                copingIfStatement.setText(  item.copingIfStatement.trim() );
-                copingThenStatement.setText(  item.copingThenStatement.trim() );
-                view.findViewById( R.id.coping_plan_layout ).setVisibility( View.VISIBLE );
-            }
+            view.findViewById( R.id.coping_plan_layout ).setVisibility( View.GONE );
         }
-        catch( Exception e )
+        else
         {
-            e.printStackTrace();
+            copingIfStatement.setText(  item.copingIfStatement.trim() );
+            copingThenStatement.setText(  item.copingThenStatement.trim() );
+            view.findViewById( R.id.coping_plan_layout ).setVisibility( View.VISIBLE );
         }
 
+        view.findViewById( R.id.mon_layout ).setVisibility( item.days.contains( IfThenPlan.Day.MONDAY ) ? View.VISIBLE : View.GONE );
+        view.findViewById( R.id.tue_layout ).setVisibility( item.days.contains( IfThenPlan.Day.TUESDAY ) ? View.VISIBLE : View.GONE );
+        view.findViewById( R.id.wed_layout ).setVisibility( item.days.contains( IfThenPlan.Day.WEDNESDAY ) ? View.VISIBLE : View.GONE );
+        view.findViewById( R.id.thu_layout ).setVisibility( item.days.contains( IfThenPlan.Day.THURSDAY ) ? View.VISIBLE : View.GONE );
+        view.findViewById( R.id.fri_layout ).setVisibility( item.days.contains( IfThenPlan.Day.FRIDAY ) ? View.VISIBLE : View.GONE );
+        view.findViewById( R.id.sat_layout ).setVisibility( item.days.contains( IfThenPlan.Day.SATURDAY ) ? View.VISIBLE : View.GONE );
+        view.findViewById( R.id.sun_layout ).setVisibility( item.days.contains( IfThenPlan.Day.SUNDAY ) ? View.VISIBLE : View.GONE );
+
+        if( item.isEvaluated() )
+        {
+            view.findViewById( R.id.day_mon_check_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.MONDAY ) && item.isSuccessful( IfThenPlan.Day.MONDAY ) ? View.VISIBLE : View.GONE );
+            view.findViewById( R.id.day_tue_check_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.TUESDAY ) && item.isSuccessful( IfThenPlan.Day.TUESDAY ) ? View.VISIBLE : View.GONE );
+            view.findViewById( R.id.day_wed_check_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.WEDNESDAY ) && item.isSuccessful( IfThenPlan.Day.WEDNESDAY ) ? View.VISIBLE : View.GONE );
+            view.findViewById( R.id.day_thu_check_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.THURSDAY ) && item.isSuccessful( IfThenPlan.Day.THURSDAY ) ? View.VISIBLE : View.GONE );
+            view.findViewById( R.id.day_fri_check_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.FRIDAY ) && item.isSuccessful( IfThenPlan.Day.FRIDAY ) ? View.VISIBLE : View.GONE );
+            view.findViewById( R.id.day_sat_check_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.SATURDAY ) && item.isSuccessful( IfThenPlan.Day.SATURDAY ) ? View.VISIBLE : View.GONE );
+            view.findViewById( R.id.day_sun_check_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.SUNDAY ) && item.isSuccessful( IfThenPlan.Day.SUNDAY ) ? View.VISIBLE : View.GONE );
+            view.findViewById( R.id.day_mon_fail_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.MONDAY ) && !item.isSuccessful( IfThenPlan.Day.MONDAY ) ? View.VISIBLE : View.GONE );
+            view.findViewById( R.id.day_tue_fail_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.TUESDAY ) && !item.isSuccessful( IfThenPlan.Day.TUESDAY ) ? View.VISIBLE : View.GONE );
+            view.findViewById( R.id.day_wed_fail_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.WEDNESDAY ) && !item.isSuccessful( IfThenPlan.Day.WEDNESDAY ) ? View.VISIBLE : View.GONE );
+            view.findViewById( R.id.day_thu_fail_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.THURSDAY ) && !item.isSuccessful( IfThenPlan.Day.THURSDAY ) ? View.VISIBLE : View.GONE );
+            view.findViewById( R.id.day_fri_fail_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.FRIDAY ) && !item.isSuccessful( IfThenPlan.Day.FRIDAY ) ? View.VISIBLE : View.GONE );
+            view.findViewById( R.id.day_sat_fail_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.SATURDAY ) && !item.isSuccessful( IfThenPlan.Day.SATURDAY ) ? View.VISIBLE : View.GONE );
+            view.findViewById( R.id.day_sun_fail_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.SUNDAY ) && !item.isSuccessful( IfThenPlan.Day.SUNDAY ) ? View.VISIBLE : View.GONE );
+        }
         return view;
 
     }

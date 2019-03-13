@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
     <!--ahat: add the following line to the above layout to re-activate itemOnClick-->
@@ -46,14 +47,57 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <TextView
+            <LinearLayout
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Wed 12 April 2019"
-                android:textSize="13sp"
-                android:textColor="#555555"
-                android:layout_gravity="center_vertical"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/status"
+                android:layout_margin="4dp">
+
+                <TextView
+                    android:id="@+id/startdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12 April 2019"
+                    android:textSize="13sp"
+                    android:textColor="#555555"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_margin="0dp"/>
+
+                <TextView
+                    android:id="@+id/dateSpacer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textSize="13sp"
+                    android:textColor="#555555"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintStart_toEndOf="@+id/startdate"
+                    app:layout_constraintTop_toTopOf="@+id/startdate"/>
+
+                <TextView
+                    android:id="@+id/endDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="19 April 2019"
+                    android:textSize="13sp"
+                    android:textColor="#555555"
+                    app:layout_constraintStart_toEndOf="@+id/dateSpacer"
+                    app:layout_constraintTop_toTopOf="@+id/startdate"
+                    android:layout_margin="0dp"/>
+
+            </LinearLayout>
+            <!--<TextView-->
+                <!--android:id="@+id/date"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Wed 12 April 2019"-->
+                <!--android:textSize="13sp"-->
+                <!--android:textColor="#555555"-->
+                <!--android:layout_gravity="center_vertical"/>-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -104,6 +148,271 @@
                     android:scaleY="0.8"/>
             </LinearLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal"
+            android:gravity="left"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="4dp">
+            <RelativeLayout
+                android:id="@+id/mon_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/day_mon_chk"
+                    android:layout_width="@dimen/plan_day_button_size"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:button="@null"
+                    android:background="@drawable/custom_radio"
+                    android:text="Mon"
+                    android:textAlignment="center"
+                    android:layout_marginRight="@dimen/plan_day_button_margin"
+                    />
+                <ImageView
+                    android:id="@+id/day_mon_check_img"
+                    android:layout_width="@dimen/day_success_icon_size"
+                    android:layout_height="@dimen/day_success_icon_size"
+                    android:src="@drawable/ic_check_24dp"
+                    android:tint="@color/green_check"
+                    android:layout_marginTop="@dimen/day_success_icon_marginTop"
+                    android:layout_marginStart="@dimen/day_success_icon_marginStart"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/day_mon_fail_img"
+                    android:layout_width="@dimen/day_success_icon_size"
+                    android:layout_height="@dimen/day_success_icon_size"
+                    android:src="@drawable/ic_error"
+                    android:tint="@color/green_check"
+                    android:layout_marginTop="@dimen/day_success_icon_marginTop"
+                    android:layout_marginStart="@dimen/day_success_icon_marginStart"
+                    android:visibility="gone"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/tue_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/day_tue_chk"
+                    android:layout_width="@dimen/plan_day_button_size"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:button="@null"
+                    android:background="@drawable/custom_radio"
+                    android:text="Tue"
+                    android:textAlignment="center"
+                    android:layout_marginRight="@dimen/plan_day_button_margin"
+                    />
+                <ImageView
+                    android:id="@+id/day_tue_check_img"
+                    android:layout_width="@dimen/day_success_icon_size"
+                    android:layout_height="@dimen/day_success_icon_size"
+                    android:src="@drawable/ic_check_24dp"
+                    android:tint="@color/green_check"
+                    android:layout_marginTop="@dimen/day_success_icon_marginTop"
+                    android:layout_marginStart="@dimen/day_success_icon_marginStart"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/day_tue_fail_img"
+                    android:layout_width="@dimen/day_success_icon_size"
+                    android:layout_height="@dimen/day_success_icon_size"
+                    android:src="@drawable/ic_error"
+                    android:tint="@color/green_check"
+                    android:layout_marginTop="@dimen/day_success_icon_marginTop"
+                    android:layout_marginStart="@dimen/day_success_icon_marginStart"
+                    android:visibility="gone"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/wed_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/day_wed_chk"
+                    android:layout_width="@dimen/plan_day_button_size"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:button="@null"
+                    android:background="@drawable/custom_radio"
+                    android:text="Wed"
+                    android:textAlignment="center"
+                    android:layout_marginRight="@dimen/plan_day_button_margin"
+                    />
+                <ImageView
+                    android:id="@+id/day_wed_check_img"
+                    android:layout_width="@dimen/day_success_icon_size"
+                    android:layout_height="@dimen/day_success_icon_size"
+                    android:src="@drawable/ic_check_24dp"
+                    android:tint="@color/green_check"
+                    android:layout_marginTop="@dimen/day_success_icon_marginTop"
+                    android:layout_marginStart="@dimen/day_success_icon_marginStart"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/day_wed_fail_img"
+                    android:layout_width="@dimen/day_success_icon_size"
+                    android:layout_height="@dimen/day_success_icon_size"
+                    android:src="@drawable/ic_error"
+                    android:tint="@color/green_check"
+                    android:layout_marginTop="@dimen/day_success_icon_marginTop"
+                    android:layout_marginStart="@dimen/day_success_icon_marginStart"
+                    android:visibility="gone"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/thu_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/day_thu_chk"
+                    android:layout_width="@dimen/plan_day_button_size"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:button="@null"
+                    android:background="@drawable/custom_radio"
+                    android:text="Thu"
+                    android:textAlignment="center"
+                    android:layout_marginRight="@dimen/plan_day_button_margin"
+                    />
+                <ImageView
+                    android:id="@+id/day_thu_check_img"
+                    android:layout_width="@dimen/day_success_icon_size"
+                    android:layout_height="@dimen/day_success_icon_size"
+                    android:src="@drawable/ic_check_24dp"
+                    android:tint="@color/green_check"
+                    android:layout_marginTop="@dimen/day_success_icon_marginTop"
+                    android:layout_marginStart="@dimen/day_success_icon_marginStart"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/day_thu_fail_img"
+                    android:layout_width="@dimen/day_success_icon_size"
+                    android:layout_height="@dimen/day_success_icon_size"
+                    android:src="@drawable/ic_error"
+                    android:tint="@color/green_check"
+                    android:layout_marginTop="@dimen/day_success_icon_marginTop"
+                    android:layout_marginStart="@dimen/day_success_icon_marginStart"
+                    android:visibility="gone"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/fri_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/day_fri_chk"
+                    android:layout_width="@dimen/plan_day_button_size"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:button="@null"
+                    android:background="@drawable/custom_radio"
+                    android:text="Fri"
+                    android:textAlignment="center"
+                    android:layout_marginRight="@dimen/plan_day_button_margin"
+                    />
+                <ImageView
+                    android:id="@+id/day_fri_check_img"
+                    android:layout_width="@dimen/day_success_icon_size"
+                    android:layout_height="@dimen/day_success_icon_size"
+                    android:src="@drawable/ic_check_24dp"
+                    android:tint="@color/green_check"
+                    android:layout_marginTop="@dimen/day_success_icon_marginTop"
+                    android:layout_marginStart="@dimen/day_success_icon_marginStart"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/day_fri_fail_img"
+                    android:layout_width="@dimen/day_success_icon_size"
+                    android:layout_height="@dimen/day_success_icon_size"
+                    android:src="@drawable/ic_error"
+                    android:tint="@color/green_check"
+                    android:layout_marginTop="@dimen/day_success_icon_marginTop"
+                    android:layout_marginStart="@dimen/day_success_icon_marginStart"
+                    android:visibility="gone"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/sat_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:id="@+id/day_sat_chk"
+                    android:layout_width="@dimen/plan_day_button_size"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:button="@null"
+                    android:background="@drawable/custom_radio"
+                    android:text="Sat"
+                    android:textAlignment="center"
+                    android:layout_marginRight="@dimen/plan_day_button_margin"
+                    />
+                <ImageView
+                    android:id="@+id/day_sat_check_img"
+                    android:layout_width="@dimen/day_success_icon_size"
+                    android:layout_height="@dimen/day_success_icon_size"
+                    android:src="@drawable/ic_check_24dp"
+                    android:tint="@color/green_check"
+                    android:layout_marginTop="@dimen/day_success_icon_marginTop"
+                    android:layout_marginStart="@dimen/day_success_icon_marginStart"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/day_sat_fail_img"
+                    android:layout_width="@dimen/day_success_icon_size"
+                    android:layout_height="@dimen/day_success_icon_size"
+                    android:src="@drawable/ic_error"
+                    android:tint="@color/green_check"
+                    android:layout_marginTop="@dimen/day_success_icon_marginTop"
+                    android:layout_marginStart="@dimen/day_success_icon_marginStart"
+                    android:visibility="gone"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/sun_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:id="@+id/day_sun_chk"
+                    android:layout_width="@dimen/plan_day_button_size"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    android:button="@null"
+                    android:background="@drawable/custom_radio"
+                    android:text="Sun"
+                    android:textAlignment="center"
+                    />
+                <ImageView
+                    android:id="@+id/day_sun_check_img"
+                    android:layout_width="@dimen/day_success_icon_size"
+                    android:layout_height="@dimen/day_success_icon_size"
+                    android:src="@drawable/ic_check_24dp"
+                    android:tint="@color/green_check"
+                    android:layout_marginTop="@dimen/day_success_icon_marginTop"
+                    android:layout_marginStart="@dimen/day_success_icon_marginStart"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/day_sun_fail_img"
+                    android:layout_width="@dimen/day_success_icon_size"
+                    android:layout_height="@dimen/day_success_icon_size"
+                    android:src="@drawable/ic_error"
+                    android:tint="@color/green_check"
+                    android:layout_marginTop="@dimen/day_success_icon_marginTop"
+                    android:layout_marginStart="@dimen/day_success_icon_marginStart"
+                    android:visibility="gone"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+
         <TableLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"

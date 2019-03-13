@@ -36,4 +36,6 @@
     <color name="weekly_plans">#8064A1</color>
     <color name="attention">#4AACC5</color>
     <color name="achievements">#F79647</color>
+    <color name="green_check">#008800</color>
+    <color name="yellow_warning">#dddd00</color>
 </resources>

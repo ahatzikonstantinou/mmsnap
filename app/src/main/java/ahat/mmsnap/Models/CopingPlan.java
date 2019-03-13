@@ -2,10 +2,11 @@ package ahat.mmsnap.Models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import ahat.mmsnap.ApplicationStatus;
 
-public class CopingPlan extends IfThenPlan implements Serializable
+public class CopingPlan extends IfThenPlan implements Serializable, Cloneable
 {
     public CopingPlan( int id, String ifStatement, String thenStatement, Boolean active, int year, int weekOfYear,
                        ArrayList<ApplicationStatus.Behavior> targetBehaviors, ArrayList<Day> days )
@@ -27,6 +28,10 @@ public class CopingPlan extends IfThenPlan implements Serializable
     {
         CopingPlan plan = new CopingPlan();
         plan.id = -1;
+        Calendar c = Calendar.getInstance();
+        plan.year = c.get( Calendar.YEAR );
+        plan.weekOfYear = c.get( Calendar.WEEK_OF_YEAR );
+
         return plan;
     }
 }

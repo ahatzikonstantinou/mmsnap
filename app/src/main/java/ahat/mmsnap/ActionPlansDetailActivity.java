@@ -8,6 +8,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import ahat.mmsnap.JSON.ActionPlansStorage;
 import ahat.mmsnap.JSON.JSONArrayConverterActionPlan;
@@ -52,16 +53,15 @@ public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatA
         copingIfStatementTextView = findViewById( R.id.item_coping_plan_if_statement );
         copingThenStatementTextView = findViewById( R.id.item_coping_plan_then_statement );
 
-        try
+        copingIfStatementTextView.setText( item.copingIfStatement );
+        copingThenStatementTextView.setText( item.copingThenStatement );
+
+        // if the plan is passed it's week it can only be evaluated
+        Calendar now = Calendar.getInstance();
+        if( now.get( Calendar.WEEK_OF_YEAR ) != item.weekOfYear || now.get( Calendar.YEAR ) != item.year )
         {
-            copingIfStatementTextView.setText( item.copingIfStatement );
-            copingThenStatementTextView.setText( item.copingThenStatement );
-        }
-        catch( Exception e )
-        {
-            e.printStackTrace();
-            View view = findViewById( getContentRootLayoutResId() );
-            Snackbar.make( view, "Could not parse action plan!", Snackbar.LENGTH_LONG).show();
+            copingIfStatementTextView.setEnabled( false );
+            copingThenStatementTextView.setEnabled( false );
         }
     }
 
@@ -77,54 +77,17 @@ public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatA
         return item;
     }
 
-//    protected JSONObject getIfThenItem()
-//    {
-//        JSONObject item = new JSONObject();
-//
-//        try
-//        {
-//            JSONArray items = JSONArrayIOHandler.loadItems( getFilesDir().getPath() + "/" + getFILENAME() );
-//
-//            int itemId = getItemId();
-//            if( -1 == itemId )
-//            {
-//                itemId = items.length();
-//                item.put( "id", String.valueOf( itemId ) );
-//                item.put( "if", "I return from work before 8 o'clock" );
-//                item.put( "then", "I will go to the gym" );
-//                item.put( "active", true );
-//                item.put( "date", "" );
-//                item.put( "DIET", false );
-//                item.put( "ACTIVITY", false );
-//                item.put( "ALCOHOL", false );
-//                item.put( "SMOKING", false );
-//                item.put( "coping_if", "I am very tired" );
-//                item.put( "coping_then", "I will go for 40 minutes of brisk walk" );
-//
-//            }
-//            else if( itemId < items.length() )
-//            {
-//                item = (JSONObject) items.get( itemId );
-//            }
-//        }
-//        catch( Exception e )
-//        {
-//            e.printStackTrace();
-//            Snackbar.make( findViewById( getContentRootLayoutResId() ), "Could not get action plan", Snackbar.LENGTH_INDEFINITE )
-//                    .setAction( "Retry", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            startActivity( getIntent() );
-//                        }
-//                    } ).show();
-//        }
-//        return item;
-//    }
-
     @Override
     protected String fillItemFromUI() throws JSONException
     {
         String error = super.fillItemFromUI();
+
+        Calendar now = Calendar.getInstance();
+        // if the plan is passed it's week it can only be evaluated
+        if( now.get( Calendar.WEEK_OF_YEAR ) != item.weekOfYear || now.get( Calendar.YEAR ) != item.year )
+        {
+            return error;
+        }
 
         String copingIfStatement = copingIfStatementTextView.getText().toString().trim();
         String copingThenStatement = copingThenStatementTextView.getText().toString().trim();
