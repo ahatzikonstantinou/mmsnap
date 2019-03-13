@@ -1,7 +1,6 @@
 package ahat.mmsnap;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,10 +10,11 @@ import android.widget.ListView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import ahat.mmsnap.JSON.ActionPlansStorage;
+import ahat.mmsnap.JSON.JSONArrayIOHandler;
 
 public class TodaysPlansActivity extends AppCompatActivity
 {
@@ -35,7 +35,7 @@ public class TodaysPlansActivity extends AppCompatActivity
 
         try
         {
-            items = JSONArrayIOHandler.loadItems( getFilesDir().getPath() + "/" + ActionPlansActivity.FILENAME );
+            items = JSONArrayIOHandler.loadItems( getFilesDir().getPath() + "/" + ActionPlansStorage.FILENAME );
 
             final Calendar tc = Calendar.getInstance();
             tc.setTime( new Date() );

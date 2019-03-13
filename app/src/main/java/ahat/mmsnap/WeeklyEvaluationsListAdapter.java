@@ -12,9 +12,11 @@ import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import ahat.mmsnap.Models.WeeklyEvaluation;
+
 public class WeeklyEvaluationsListAdapter extends ArrayAdapter
 {
-    private Activity context;
+    private Activity                          context;
     private final ArrayList<WeeklyEvaluation> evaluations;
 
     public WeeklyEvaluationsListAdapter( @NonNull Activity context, ArrayList<WeeklyEvaluation> evaluations, int resource )

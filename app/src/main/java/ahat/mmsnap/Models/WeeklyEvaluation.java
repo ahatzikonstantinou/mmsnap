@@ -1,6 +1,4 @@
-package ahat.mmsnap;
-
-import android.provider.CalendarContract;
+package ahat.mmsnap.Models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -149,18 +147,6 @@ public class WeeklyEvaluation implements Serializable
      */
     public static ArrayList<WeeklyEvaluation> createMissing( Date startDate, Date endDate, ArrayList<WeeklyEvaluation> existing, boolean targetDiet, boolean targetSmoking, boolean targetPhysicalActivity, boolean targetAlcohol )
     {
-//        String[] startParts = startDate.split( "-" );
-//        Calendar start = Calendar.getInstance();
-//        start.set( Calendar.YEAR, Integer.parseInt( startParts[0] ) );
-//        start.set( Calendar.MONTH, Integer.parseInt( startParts[1] ) );
-//        start.set( Calendar.DAY_OF_MONTH, Integer.parseInt( startParts[2] ) );
-//
-//        String[] endParts = endDate.split( "-" );
-//        Calendar end = Calendar.getInstance();
-//        end.set( Calendar.YEAR, Integer.parseInt( endParts[0] ) );
-//        end.set( Calendar.MONTH, Integer.parseInt( endParts[1] ) );
-//        end.set( Calendar.DAY_OF_MONTH, Integer.parseInt( endParts[2] ) );
-
         Calendar start = Calendar.getInstance();
         start.setTime( startDate );
         Calendar end = Calendar.getInstance();
@@ -170,6 +156,7 @@ public class WeeklyEvaluation implements Serializable
         c.set( Calendar.YEAR, start.get( Calendar.YEAR ) );
         c.set( Calendar.WEEK_OF_YEAR, start.get( Calendar.WEEK_OF_YEAR ) );
         c.set( Calendar.DAY_OF_WEEK, c.getFirstDayOfWeek() );   // go to a monday in this week
+        c.add( Calendar.DATE, 7 );
 
         ArrayList<WeeklyEvaluation> evaluations = new ArrayList<>();
         while( end.after( c ) )
@@ -210,4 +197,5 @@ public class WeeklyEvaluation implements Serializable
 
         return false;
     }
+
 }

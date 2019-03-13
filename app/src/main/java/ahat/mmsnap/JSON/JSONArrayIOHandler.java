@@ -1,9 +1,6 @@
-package ahat.mmsnap;
+package ahat.mmsnap.JSON;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,13 +9,11 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
 public class JSONArrayIOHandler

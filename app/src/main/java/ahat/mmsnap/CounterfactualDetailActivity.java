@@ -1,7 +1,5 @@
 package ahat.mmsnap;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -10,23 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
-import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 public class CounterfactualDetailActivity extends AppCompatActivity
 {
-    private String FILENAME;
-    int itemId = -1;
-
-    private Switch activeSwitch;
     private EditText thenText;
     private EditText ifText;
 
@@ -44,30 +31,18 @@ public class CounterfactualDetailActivity extends AppCompatActivity
 
         ifText = (EditText) findViewById( R.id.counterfactual_detail_if_statement );
         thenText = (EditText) findViewById( R.id.counterfactual_detail_then_statement );
-        activeSwitch = (Switch) findViewById( R.id.counterfactual_detail_switch );
 
-        Bundle b = getIntent().getExtras();
-        FILENAME = b.getString( "FILENAME" );
-
-        if( null != b && b.containsKey( "itemId" ) )
+        try
         {
-            itemId = b.getInt( "itemId" );
-            try
-            {
-                JSONObject item = JSONArrayIOHandler.loadItem( getFilesDir().getPath() + "/" + FILENAME, itemId  );
-                if( null == item )
-                {
-                    item = createEmptyItem();
-                }
-                ifText.setText( item.getString( "if" ) );
-                thenText.setText( item.getString( "then" ) );
-                activeSwitch.setChecked( item.getBoolean( "active" ) );
-            }
-            catch( Exception e )
-            {
-                e.printStackTrace();
-                showErrorSnackBar( "Could not load counterfactual thought" );
-            }
+            ApplicationStatus as = ApplicationStatus.getInstance( this );
+
+            ifText.setText( as.counterfactualThought.ifStatement );
+            thenText.setText( as.counterfactualThought.thenStatement );
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            showErrorSnackBar( "Could not load counterfactual thought" );
         }
 
         Button save = (Button) findViewById( R.id.counterfactual_detail_save );
@@ -95,50 +70,28 @@ public class CounterfactualDetailActivity extends AppCompatActivity
 
                 try
                 {
-                    JSONObject o = new JSONObject();
-                    o.put( "id", String.valueOf( itemId ) );
-                    o.put( "if", ifStatement );
-                    o.put( "then", thenStatement );
-                    o.put( "active", activeSwitch.isChecked() );
-
-                    JSONArrayIOHandler.saveItem( getBaseContext(), o, getFilesDir().getPath() + "/" + FILENAME );
+                    ApplicationStatus as = ApplicationStatus.getInstance( view.getContext() );
+                    as.counterfactualThought.ifStatement = ifStatement;
+                    as.counterfactualThought.thenStatement = thenStatement;
+                    as.save();
+                    startActivity( new Intent( CounterfactualDetailActivity.this, IfThenActivity.class ) );
                 }
                 catch( Exception e )
                 {
                     showErrorSnackBar( "Could not save counterfactual thought!" );
                 }
-
-                startActivity( new Intent( getBaseContext(), CounterfactualActivity.class ) );
             }
         } );
     }
-
-    private JSONObject createEmptyItem()
-    {
-        JSONObject o = new JSONObject();
-        try
-        {
-            o.put( "id", 0 );
-            o.put( "if", "" );
-            o.put( "then", "" );
-            o.put( "active", true );
-        }
-        catch( JSONException e )
-        {
-            e.printStackTrace();
-        }
-        return o;
-    }
-
 
     protected void showErrorSnackBar( String message )
     {
         View view = findViewById( R.id.counterfactual_detail_main_layout );
         Snackbar.make( view, message, Snackbar.LENGTH_INDEFINITE )
-                .setAction( "DISMISS", new View.OnClickListener() {
+                .setAction( "RETRY", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity( getParentActivityIntent() );
+                        startActivity( getIntent() );
                     }
                 } ).show();
 

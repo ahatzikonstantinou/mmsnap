@@ -19,6 +19,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import ahat.mmsnap.JSON.JSONArrayConverterWeeklyEvaluation;
+import ahat.mmsnap.JSON.WeeklyEvaluationsStorage;
+import ahat.mmsnap.Models.ConversionException;
+import ahat.mmsnap.Models.CounterfactualThought;
+import ahat.mmsnap.Models.WeeklyEvaluation;
+
 /*
  * Like a configuration class, stores data regarding application state, start date, etc
  */
@@ -46,7 +52,7 @@ public class ApplicationStatus
 
     enum Assessment { ILLNESS_PERCEPTION, HEALTH_RISK, SELF_EFFICACY, INTENTIONS, SELF_RATED_HEALTH }
 
-    enum Behavior {DIET, ACTIVITY, ALCOHOL, SMOKING }
+    public enum Behavior {DIET, ACTIVITY, ALCOHOL, SMOKING }
 
     public class SelfEfficacy
     {
@@ -62,11 +68,11 @@ public class ApplicationStatus
     public ArrayList<Behavior> problematicBehaviors = new ArrayList<>( 4 );
     private ArrayList<Assessment> initialAssessments= new ArrayList<>( Assessment.values().length );
     private ArrayList<Assessment> finalAssessments = new ArrayList<>( Assessment.values().length );
-    public void addAssessment( Assessment assessment ) throws IOException, JSONException
+    public void addAssessment( Assessment assessment ) throws IOException, JSONException, ConversionException
     {
         addAssessment( assessment, true );
     }
-    public void addAssessment( Assessment assessment, boolean save ) throws IOException, JSONException
+    public void addAssessment( Assessment assessment, boolean save ) throws IOException, JSONException, ConversionException
     {
         ArrayList<Assessment> assessments = null;
         State previous = getState();
@@ -92,7 +98,7 @@ public class ApplicationStatus
 
         if( save )
         {
-            saveApplicationStatus();
+            save();
         }
     }
     public boolean initialAssessmentsContain( Assessment assessment )
@@ -104,16 +110,17 @@ public class ApplicationStatus
         return finalAssessments.contains( assessment );
     }
 
-    public void userLoggedIn() throws IOException, JSONException
+    public void userLoggedIn() throws IOException, JSONException, ConversionException
     {
         if( state.moveNext() )
         {
-            saveApplicationStatus();
+            save();
         }
     }
 
     public int eqvas;
     public SelfEfficacy selfEfficacy;
+    public CounterfactualThought counterfactualThought;
 
     private static final String FILENAME = "application_status.json";
 
@@ -125,6 +132,7 @@ public class ApplicationStatus
         StateFactory f = new StateFactory( this );
         state = f.create( NotLoggedIn.NAME );
         weeklyEvaluations = new ArrayList<>();
+        counterfactualThought = new CounterfactualThought();
     }
 
     private ApplicationStatus( Context context, String stateNAME ) throws Exception
@@ -135,6 +143,7 @@ public class ApplicationStatus
         StateFactory f = new StateFactory( this );
         this.state = f.create( stateNAME );
         weeklyEvaluations = new ArrayList<>();
+        counterfactualThought = new CounterfactualThought();
     }
 
     // ApplicationStatus is a singleton
@@ -153,7 +162,7 @@ public class ApplicationStatus
 
     public ArrayList<WeeklyEvaluation> weeklyEvaluations;
 
-    public boolean pendingWeeklyEvaluationsExist() throws IOException, JSONException
+    public boolean pendingWeeklyEvaluationsExist() throws IOException, ConversionException
     {
         int before = weeklyEvaluations.size();
 
@@ -170,7 +179,8 @@ public class ApplicationStatus
         if( before != weeklyEvaluations.size() )
         {
             WeeklyEvaluationsStorage wes = new WeeklyEvaluationsStorage( context );
-            wes.write( weeklyEvaluations );
+//            wes.write( weeklyEvaluations );
+            wes.write( new JSONArrayConverterWeeklyEvaluation( weeklyEvaluations ) );
         }
 
         return WeeklyEvaluation.pendingExist( weeklyEvaluations );
@@ -186,7 +196,8 @@ public class ApplicationStatus
             {
                 evaluation.score( dietScore, physicalActivityScore, alcoholScore, smokingScore );
                 WeeklyEvaluationsStorage wes = new WeeklyEvaluationsStorage( context );
-                wes.write( weeklyEvaluations );
+//                wes.write( weeklyEvaluations );
+                wes.write( new JSONArrayConverterWeeklyEvaluation( weeklyEvaluations ) );
 
                 state.moveNext();
                 return;
@@ -205,7 +216,7 @@ public class ApplicationStatus
         File file = new File( filePath );
         if( !file.exists() )
         {
-            as.saveApplicationStatus();
+            as.save();
             return as;
         }
 
@@ -266,7 +277,14 @@ public class ApplicationStatus
             as.selfEfficacy.weekly_goals = jsonState.getBoolean( "selfEfficacy.weekly_goals" );
 
             WeeklyEvaluationsStorage wes = new WeeklyEvaluationsStorage( context );
-            as.weeklyEvaluations = wes.read();
+//            as.weeklyEvaluations = wes.read();
+            JSONArrayConverterWeeklyEvaluation jc = new JSONArrayConverterWeeklyEvaluation();
+            wes.read( jc );
+            as.weeklyEvaluations = jc.getWeeklyEvaluations();
+
+            JSONObject jsonCounterfactual = jsonState.getJSONObject( "counterfactual" );
+            as.counterfactualThought.ifStatement = jsonCounterfactual.getString( "if" );
+            as.counterfactualThought.thenStatement = jsonCounterfactual.getString( "then" );
         }
         finally
         {
@@ -275,7 +293,7 @@ public class ApplicationStatus
         return as;
     }
 
-    public void saveApplicationStatus() throws IOException, JSONException
+    public void save() throws IOException, JSONException, ConversionException
     {
         String filePath = context.getFilesDir().getPath() + "/" + FILENAME;
         File file = new File( filePath );
@@ -322,6 +340,10 @@ public class ApplicationStatus
         o.put( "selfEfficacy.lifestyle", selfEfficacy.lifestyle );
         o.put( "selfEfficacy.weekly_goals", selfEfficacy.weekly_goals );
 
+        JSONObject jsonCounterfactual = new JSONObject();
+        jsonCounterfactual.put( "if", counterfactualThought.ifStatement );
+        jsonCounterfactual.put( "then", counterfactualThought.thenStatement );
+        o.put( "counterfactual", jsonCounterfactual );
 
         try
         {
@@ -333,7 +355,8 @@ public class ApplicationStatus
         }
 
         WeeklyEvaluationsStorage wes = new WeeklyEvaluationsStorage( context );
-        wes.write( weeklyEvaluations );
+//        wes.write( weeklyEvaluations );
+        wes.write( new JSONArrayConverterWeeklyEvaluation( weeklyEvaluations ) );
     }
 
 

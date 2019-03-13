@@ -11,6 +11,14 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import ahat.mmsnap.JSON.JSONArrayIOHandler;
+import ahat.mmsnap.Models.ConversionException;
+import ahat.mmsnap.Models.IfThenPlan;
 
 // Override the abstract methods to create activities that
 // - display a list of items,
@@ -25,14 +33,14 @@ import org.json.JSONArray;
 public abstract class IfThenListActivity extends AppCompatActivity
 {
 
-    protected boolean delete;
-    protected FloatingActionButton fab;
-    protected JSONArray items;
-    protected IfThenListAdapter adapter;
+    protected boolean               delete;
+    protected FloatingActionButton  fab;
+//    protected ArrayList<IfThenPlan> items;
+    protected IfThenListAdapter     adapter;
 
     protected abstract IfThenListAdapter createListAdapter();
 
-    protected abstract String getFilename();
+//    protected abstract String getFilename();
 
     protected abstract String getLoadItemsErrorMessage();
 
@@ -43,6 +51,14 @@ public abstract class IfThenListActivity extends AppCompatActivity
     protected abstract int getLogoDrawableResId();
 
     protected abstract Class<?> getDetailActivityClass();
+
+    protected abstract void loadItems() throws IOException, JSONException, ConversionException;
+
+    protected abstract void saveItems() throws IOException, ConversionException;
+
+    protected abstract void deleteItems( ArrayList<Integer> deleteIndex );
+
+    protected abstract void putItemInIntent( Intent intent, int itemIndex );
 
     protected int getTitleStringResId()
     {
@@ -97,22 +113,23 @@ public abstract class IfThenListActivity extends AppCompatActivity
                 }
                 else
                 {
-                    Bundle b = new Bundle();
-                    b.putString( "FILENAME", getFilename() );
+//                    Bundle b = new Bundle();
+//                    b.putString( "FILENAME", getFilename() );
                     Intent intent = new Intent( getBaseContext(), getDetailActivityClass() );
-                    intent.putExtras( b );
+//                    intent.putExtras( b );
                     startActivity( intent );
                 }
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
-        getSupportActionBar().setIcon( getResources().getDrawable( getLogoDrawableResId() ) );
+        getSupportActionBar().setIcon( getResources().getDrawable( getLogoDrawableResId(), null ) );
         getSupportActionBar().setTitle( getTitleStringResId() );
         getSupportActionBar().setSubtitle( getSubtitleStringResId() );
 
         try
         {
-            items = JSONArrayIOHandler.loadItems( getFilesDir().getPath() + "/" + getFilename() );
+//            items = JSONArrayIOHandler.loadItems( getFilesDir().getPath() + "/" + getFilename() );
+            loadItems();
         }
         catch( Exception e )
         {
@@ -148,10 +165,11 @@ public abstract class IfThenListActivity extends AppCompatActivity
                 else
                 {
                     Intent intent = new Intent( getBaseContext(), getDetailActivityClass() );
-                    Bundle b = new Bundle();
-                    b.putInt( "itemId", i );
-                    b.putString( "FILENAME", getFilename() );
-                    intent.putExtras( b );
+//                    Bundle b = new Bundle();
+//                    b.putInt( "itemId", i );
+//                    b.putString( "FILENAME", getFilename() );
+//                    intent.putExtras( b );
+                    putItemInIntent( intent, i );
                     startActivity( intent );
                 }
             }
@@ -183,6 +201,8 @@ public abstract class IfThenListActivity extends AppCompatActivity
 
     }
 
+
+
     @Override
     public void onBackPressed()
     {
@@ -206,15 +226,17 @@ public abstract class IfThenListActivity extends AppCompatActivity
     {
         try
         {
-            for( int i = items.length() ; i >= 0  ; i-- )
-            {
-                if( adapter.deleteIndex.contains( i ) )
-                {
-                    items.remove( i );
-                }
-            }
+//            for( int i = items.length() ; i >= 0  ; i-- )
+//            {
+//                if( adapter.deleteIndex.contains( i ) )
+//                {
+//                    items.remove( i );
+//                }
+//            }
+            deleteItems( adapter.deleteIndex );
 
-            JSONArrayIOHandler.saveItems( getBaseContext(), items, getFilesDir().getPath() + "/" + getFilename() );
+//            JSONArrayIOHandler.saveItems( getBaseContext(), items, getFilesDir().getPath() + "/" + getFilename() );
+            saveItems();
             delete = false;
             fab.setImageResource( R.drawable.ic_add_white_24dp );
             adapter.deleteAction = false;

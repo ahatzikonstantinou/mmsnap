@@ -1,14 +1,16 @@
 package ahat.mmsnap;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.JSONException;
+
+import java.io.IOException;
+
+import ahat.mmsnap.JSON.CopingPlansStorage;
+import ahat.mmsnap.JSON.JSONArrayConverterCopingPlan;
+import ahat.mmsnap.Models.ConversionException;
+import ahat.mmsnap.Models.CopingPlan;
+import ahat.mmsnap.Models.IfThenPlan;
 
 public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatActivity
 {
@@ -31,6 +33,8 @@ public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatA
         return "Could not save coping plan";
     }
 
+    private CopingPlan item;
+
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
@@ -40,45 +44,81 @@ public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatA
     }
 
     @Override
-    protected JSONObject getIfThenItem()
+    protected IfThenPlan getIfThenItem()
     {
-        JSONObject item = new JSONObject();
-
-        try
+        item = CopingPlan.createNew();
+        if( getIntent().hasExtra( "coping_plan" ) )
         {
-            JSONArray items = JSONArrayIOHandler.loadItems( getFilesDir().getPath() + "/" + getFILENAME() );
-
-            int itemId = getItemId();
-            if( -1 == itemId )
-            {
-                itemId = items.length();
-                item.put( "id", String.valueOf( itemId ) );
-                item.put( "if", "My friends ask me to go out for beers" );
-                item.put( "then", "I will only have non-alcoholic drinks" );
-                item.put( "active", true );
-                item.put( "date", "" );
-                item.put( "DIET", false );
-                item.put( "ACTIVITY", false );
-                item.put( "ALCOHOL", false );
-                item.put( "SMOKING", false );
-
-            }
-            else if( itemId < items.length() )
-            {
-                item = (JSONObject) items.get( itemId );
-            }
+            item = (CopingPlan) getIntent().getSerializableExtra( "coping_plan" );
         }
-        catch( Exception e )
-        {
-            e.printStackTrace();
-            Snackbar.make( findViewById( getContentRootLayoutResId() ), "Could not get coping plan", Snackbar.LENGTH_INDEFINITE )
-                    .setAction( "Retry", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            startActivity( getIntent() );
-                        }
-                    } ).show();
-        }
+
         return item;
+    }
+
+//    protected JSONObject getIfThenItem()
+//    {
+//        JSONObject item = new JSONObject();
+//
+//        try
+//        {
+//            JSONArray items = JSONArrayIOHandler.loadItems( getFilesDir().getPath() + "/" + getFILENAME() );
+//
+//            int itemId = getItemId();
+//            if( -1 == itemId )
+//            {
+//                itemId = items.length();
+//                item.put( "id", String.valueOf( itemId ) );
+//                item.put( "if", "My friends ask me to go out for beers" );
+//                item.put( "then", "I will only have non-alcoholic drinks" );
+//                item.put( "active", true );
+//                item.put( "date", "" );
+//                item.put( "DIET", false );
+//                item.put( "ACTIVITY", false );
+//                item.put( "ALCOHOL", false );
+//                item.put( "SMOKING", false );
+//
+//            }
+//            else if( itemId < items.length() )
+//            {
+//                item = (JSONObject) items.get( itemId );
+//            }
+//        }
+//        catch( Exception e )
+//        {
+//            e.printStackTrace();
+//            Snackbar.make( findViewById( getContentRootLayoutResId() ), "Could not get coping plan", Snackbar.LENGTH_INDEFINITE )
+//                    .setAction( "Retry", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            startActivity( getIntent() );
+//                        }
+//                    } ).show();
+//        }
+//        return item;
+//    }
+
+    @Override
+    protected void saveItem() throws IOException, JSONException, ConversionException
+    {
+        CopingPlansStorage s = new CopingPlansStorage( this );
+        JSONArrayConverterCopingPlan jc = new JSONArrayConverterCopingPlan();
+        s.read( jc );
+
+        int itemId = item.id;
+        if( -1 == itemId )
+        {
+            itemId =  jc.getCopingPlans().size();
+        }
+
+        if( itemId < jc.getCopingPlans().size() )
+        {
+            jc.getCopingPlans().set( itemId, item );
+        }
+        else if( itemId == jc.getCopingPlans().size() )
+        {
+            jc.getCopingPlans().add( item );
+        }
+
+        s.write( jc );
     }
 }

@@ -38,7 +38,7 @@ public class IfThenActivity extends AppCompatActivity implements View.OnClickLis
     {
         switch (view.getId()){
             case R.id.if_then_counterfactual_btn:
-                 startActivity( new Intent( this, CounterfactualActivity.class) );
+                 startActivity( new Intent( this, CounterfactualDetailActivity.class) );
                 break;
             case R.id.if_then_action_btn:
                 startActivity( new Intent( this, ActionPlansActivity.class) );

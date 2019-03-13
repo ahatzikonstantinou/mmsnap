@@ -1,11 +1,24 @@
 package ahat.mmsnap;
 
+import android.content.Intent;
 import android.os.Bundle;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import ahat.mmsnap.JSON.CopingPlansStorage;
+import ahat.mmsnap.JSON.JSONArrayConverterCopingPlan;
+import ahat.mmsnap.Models.ConversionException;
+import ahat.mmsnap.Models.CopingPlan;
 
 public class CopingPlansActivity extends IfThenListActivity
 {
 
-    public final String FILENAME = "coping_plans.json";
+//    public final String FILENAME = "coping_plans.json";
+
+    protected ArrayList<CopingPlan> items = new ArrayList<CopingPlan>();
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -18,10 +31,10 @@ public class CopingPlansActivity extends IfThenListActivity
         return new CopingPlansListAdapter( this, items, delete );
     }
 
-    protected String getFilename()
-    {
-        return FILENAME;
-    }
+//    protected String getFilename()
+//    {
+//        return FILENAME;
+//    }
 
     protected String getLoadItemsErrorMessage()
     {
@@ -46,6 +59,41 @@ public class CopingPlansActivity extends IfThenListActivity
     protected Class<?> getDetailActivityClass()
     {
         return CopingPlansDetailActivity.class;
+    }
+
+    @Override
+    protected void loadItems() throws IOException, JSONException, ConversionException
+    {
+        CopingPlansStorage s = new CopingPlansStorage( this );
+        JSONArrayConverterCopingPlan jc = new JSONArrayConverterCopingPlan();
+        s.read( jc );
+        items = jc.getCopingPlans();
+    }
+
+    @Override
+    protected void saveItems() throws IOException, ConversionException
+    {
+        CopingPlansStorage s = new CopingPlansStorage( this );
+        JSONArrayConverterCopingPlan jc = new JSONArrayConverterCopingPlan( items );
+        s.write( jc );
+    }
+
+    @Override
+    protected void deleteItems( ArrayList<Integer> deleteIndex )
+    {
+        for( int i = items.size() ; i >= 0  ; i-- )
+        {
+            if( deleteIndex.contains( i ) )
+            {
+                items.remove( i );
+            }
+        }
+    }
+
+    @Override
+    protected void putItemInIntent( Intent intent, int itemIndex )
+    {
+        intent.putExtra( "coping_plan", items.get( itemIndex ) );
     }
 
 }
