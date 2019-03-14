@@ -52,6 +52,7 @@
         android:orientation="vertical">
 
         <include layout="@layout/if_then_list_fragment"/>
+
         <TableLayout
             android:id="@+id/coping_plan_layout"
             android:layout_height="wrap_content"

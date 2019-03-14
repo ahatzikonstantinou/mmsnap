@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,10 +60,19 @@ public class IfThenListAdapter extends ArrayAdapter
 
         // Check if an existing view is being reused, otherwise inflate the view
 
-        if( null == view )
-        {
-            view = inflater.inflate( R.layout.action_plans_list_item, null,true );
-        }
+        //ahat: NOTE. DO NOT use the following code because it introduces a weird bug. The list of items includes action plans and coping plans.
+        //It is expected that the list will include action plans that have the same id as some coping plans. In such a case, as soon as
+        //the coping plan is rendered (e.g. scrolled into view in case of a long list), the corresponding action plan will have its
+        //similar days rendered with the same highlighted background. E.g. action plan id:8 non-evaluated days MONDAY SUNDAY but SUNDAY is in the future
+        //so it should not be highligthed. coping plan id:8 non-evaluated days MONDAY SUNDAY but both should be evaluated. As soon as coping plan id:8
+        //is rendered , SUNDAY in action plan id:8 will also be (wrongly) highlighted. While coping plan id:8 is not rendered (is outside of the screen
+        //because this is a long list with many items) action plan id:8 is rendered correctly.
+        //To fix, inflate the view EVERY time, not just when it is null
+//        if( null == view )
+//        {
+//            view = inflater.inflate( R.layout.action_plans_list_item, null,true );
+//        }
+        view = inflater.inflate( R.layout.action_plans_list_item, null,true );
 
         //this code gets references to objects in the counterfactual_list_item.xml file
         TextView ifStatement = view.findViewById( R.id.item_if_statement );
