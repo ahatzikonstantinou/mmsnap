@@ -5,9 +5,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import ahat.mmsnap.Models.ConversionException;
 import ahat.mmsnap.Models.CopingPlan;
+import ahat.mmsnap.Models.IfThenPlan;
 
 public class JSONArrayConverterCopingPlan extends JSONArrayConverter
 {
@@ -30,6 +33,7 @@ public class JSONArrayConverterCopingPlan extends JSONArrayConverter
                 jc.from();
                 copingPlans.add( jc.getPlan() );
             }
+            Collections.sort( copingPlans, IfThenPlan.comparator );
         }
         catch( JSONException e )
         {

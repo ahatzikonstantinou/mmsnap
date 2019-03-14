@@ -3,12 +3,22 @@ package ahat.mmsnap.Models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 
 import ahat.mmsnap.ApplicationStatus;
 
 public abstract class IfThenPlan implements Serializable, Cloneable
 {
+    public static final Comparator<IfThenPlan> comparator = new Comparator<IfThenPlan>()
+    {
+        @Override
+        public int compare( IfThenPlan p1, IfThenPlan p2 )
+        {
+            return ( p1.year - p2.year )*52 + ( p1.weekOfYear - p2.weekOfYear );
+        }
+    };
+
     public IfThenPlan(){}
 
     public IfThenPlan( int id, String ifStatement, String thenStatement, Boolean active, int year, int weekOfYear,

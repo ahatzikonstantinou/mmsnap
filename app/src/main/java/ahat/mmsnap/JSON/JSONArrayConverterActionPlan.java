@@ -5,9 +5,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 
 import ahat.mmsnap.Models.ActionPlan;
 import ahat.mmsnap.Models.ConversionException;
+import ahat.mmsnap.Models.IfThenPlan;
 
 public class JSONArrayConverterActionPlan extends JSONArrayConverter
 {
@@ -30,6 +34,7 @@ public class JSONArrayConverterActionPlan extends JSONArrayConverter
                 jc.from();
                 actionPlans.add( jc.getPlan() );
             }
+            Collections.sort( actionPlans, IfThenPlan.comparator );
         }
         catch( JSONException e )
         {

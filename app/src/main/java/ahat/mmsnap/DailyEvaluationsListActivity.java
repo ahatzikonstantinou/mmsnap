@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import ahat.mmsnap.JSON.ActionPlansStorage;
 import ahat.mmsnap.JSON.CopingPlansStorage;
@@ -75,6 +77,9 @@ public class DailyEvaluationsListActivity extends AppCompatActivity
                     items.add( p );
                 }
             }
+
+            Collections.sort( items, IfThenPlan.comparator );
+
 
             ListView list = findViewById( R.id.daily_evaluations_list );
             IfThenListAdapter adapter = new IfThenListAdapter( this, items, false );
