@@ -82,7 +82,15 @@ public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatA
 
         if( item.id < jc.getCopingPlans().size() )
         {
-            jc.getCopingPlans().set( item.id, item );
+            for( int i = 0 ; i < jc.getCopingPlans().size() ; i++ )
+            {
+                if( jc.getCopingPlans().get( i ).id == item.id )
+                {
+                    jc.getCopingPlans().set( i, item );
+                    break;
+                }
+                throw new ConversionException( new Exception( "Error saving coping plan. Coping plan with id " + String.valueOf( item.id ) + " not found in existing list." ) );
+            }
         }
         else if( item.id == jc.getCopingPlans().size() )
         {

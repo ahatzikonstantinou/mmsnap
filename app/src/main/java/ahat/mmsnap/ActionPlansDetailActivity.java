@@ -133,7 +133,16 @@ public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatA
 
         if( item.id < jc.getActionPlans().size() )
         {
-            jc.getActionPlans().set( item.id, item );
+            for( int i = 0 ; i < jc.getActionPlans().size() ; i++ )
+            {
+                if( jc.getActionPlans().get( i ).id == item.id )
+                {
+                    jc.getActionPlans().set( item.id, item );
+                    break;
+                }
+                throw new ConversionException( new Exception( "Error saving action plan. Action plan with id " + String.valueOf( item.id ) + " not found in existing list." ) );
+            }
+
         }
         else if( item.id == jc.getActionPlans().size() )
         {

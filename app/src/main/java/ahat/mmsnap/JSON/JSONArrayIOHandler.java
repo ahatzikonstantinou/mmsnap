@@ -63,17 +63,6 @@ public class JSONArrayIOHandler
         return items;
     }
 
-    public static JSONObject loadItem( String filePath, int itemId ) throws IOException, JSONException
-    {
-        JSONArray items = loadItems( filePath );
-        if( 0 <= itemId &&itemId < items.length() )
-        {
-            return (JSONObject) items.get( itemId );
-        }
-
-        return null;
-    }
-
     public static void saveItems( Context context, JSONArray items, String filePath ) throws IOException, JSONException
     {
         File file = new File( filePath );
@@ -91,27 +80,5 @@ public class JSONArrayIOHandler
         {
             fos.close();
         }
-    }
-
-    public static void saveItem( Context context, JSONObject item, String filePath ) throws IOException, JSONException
-    {
-        JSONArray items = loadItems( filePath );
-
-        int itemId = item.getInt( "id" );
-        if( -1 == itemId )
-        {
-            itemId =  items.length();
-        }
-
-        if( itemId < items.length() )
-        {
-            items.put( itemId, item );
-        }
-        else if( itemId == items.length() )
-        {
-            items.put( item );
-        }
-
-        JSONArrayIOHandler.saveItems( context, items, filePath );
     }
 }
