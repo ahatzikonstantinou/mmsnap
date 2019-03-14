@@ -25,7 +25,7 @@ public class JSONStorage
         jsonArrayConverter.from();
     }
 
-    public void write( JSONArrayConverter jsonArrayConverter ) throws IOException, ConversionException
+    public void write( JSONArrayConverter jsonArrayConverter ) throws IOException, JSONException, ConversionException
     {
         jsonArrayConverter.to();
         JSONArrayIOHandler.saveItems( this.context, jsonArrayConverter.getJsonArray(), filePath );

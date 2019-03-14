@@ -13,6 +13,8 @@ import android.widget.Toast;
 public class PlansActivity extends MassDisableActivity // AppCompatActivity
 {
 
+    protected int getActivityResLayout(){ return R.layout.activity_plans; }
+
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {

@@ -1,5 +1,6 @@
 package ahat.mmsnap;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -30,7 +31,7 @@ public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatA
     {
         return R.id.action_plans_root_layout;
     }
-    @Override protected Class<?> getListActivityClass() { return ActionPlansActivity.class; }
+    @Override protected Class<?> getListActivityClass() { return evaluationMode ? DailyEvaluationsListActivity.class : ActionPlansActivity.class; }
 
     @Override
     protected String getSaveErrorMessage()
@@ -56,15 +57,24 @@ public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatA
         copingIfStatementTextView.setText( item.copingIfStatement );
         copingThenStatementTextView.setText( item.copingThenStatement );
 
-        // if the plan is passed it's week it can only be evaluated
-        Calendar now = Calendar.getInstance();
-        if( now.get( Calendar.WEEK_OF_YEAR ) != item.weekOfYear || now.get( Calendar.YEAR ) != item.year )
+        if( planIsExpired || evaluationMode )
         {
             copingIfStatementTextView.setEnabled( false );
             copingThenStatementTextView.setEnabled( false );
         }
     }
 
+    public void onBackPressed()
+    {
+        if( evaluationMode )
+        {
+            startActivity( new Intent( this, DailyEvaluationsListActivity.class ) );
+        }
+        else
+        {
+            startActivity( new Intent( this, ActionPlansActivity.class ) );
+        }
+    }
 
     protected IfThenPlan getIfThenItem()
     {

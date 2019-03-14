@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 
-public abstract class MassDisableActivity extends AppCompatActivity
+public abstract class MassDisableActivity extends AssessmentSubSectionActivity //AppCompatActivity
 {
     protected void enableControls(boolean enable, ViewGroup vg)
     {

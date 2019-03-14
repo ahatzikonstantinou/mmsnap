@@ -36,7 +36,7 @@ public class JSONConverterCopingPlan extends JSONObjectConverter
             for( int i = 0 ; i < jsonDays.length() ; i++ )
             {
                 JSONObject jsonDay = (JSONObject) jsonDays.get( i );
-                IfThenPlan.Day d = IfThenPlan.Day.valueOf( jsonDay.getString( "name" ) );
+                IfThenPlan.Day d = new CopingPlan().new Day ( IfThenPlan.WeekDay.valueOf( jsonDay.getString( "name" ) ) );
                 d.setEvaluated( jsonDay.getBoolean( "evaluated" ) );
                 d.setSuccessful( jsonDay.getBoolean( "successful" ) );
                 days.add( d );
@@ -84,7 +84,7 @@ public class JSONConverterCopingPlan extends JSONObjectConverter
             for( int i = 0 ; i < plan.days.size() ; i++ )
             {
                 JSONObject jsonDay = new JSONObject();
-                jsonDay.put( "name", plan.days.get( i ).name() );
+                jsonDay.put( "name", plan.days.get( i ).getWeekDay().name() );
                 jsonDay.put( "evaluated", plan.days.get( i ).isEvaluated() );
                 jsonDay.put( "successful", plan.days.get( i ).isSuccessful() );
                 jsonDays.put( jsonDay );

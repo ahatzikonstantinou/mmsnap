@@ -38,4 +38,5 @@
     <color name="achievements">#F79647</color>
     <color name="green_check">#008800</color>
     <color name="yellow_warning">#dddd00</color>
+    <color name="daily_evaluations">#C0504E</color>
 </resources>

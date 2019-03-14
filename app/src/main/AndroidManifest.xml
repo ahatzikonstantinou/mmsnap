@@ -14,6 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".DailyEvaluationsListActivity"
+            android:label="@string/title_activity_daily_evaluations_list"
+            android:parentActivityName=".IfThenActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.IfThenActivity"/>
+        </activity>
+        <activity
             android:name=".WeeklyEvaluationsListActivity"
             android:label="@string/title_activity_weekly_evaluations_list"
             android:parentActivityName=".AssessmentsActivity"
@@ -48,7 +57,8 @@
             android:name=".CopingPlansDetailActivity"
             android:label="@string/title_activity_coping_plans_detail"
             android:parentActivityName=".CopingPlansActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ahat.mmsnap.CopingPlansActivity"/>
@@ -57,7 +67,8 @@
             android:name=".ActionPlansDetailActivity"
             android:label="@string/title_activity_action_plans_detail"
             android:parentActivityName=".ActionPlansActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ahat.mmsnap.ActionPlansActivity"/>
@@ -173,11 +184,11 @@
         <activity
             android:name=".AssessmentsActivity"
             android:label="@string/title_activity_assessments"
-            android:parentActivityName=".MMSNAPActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ahat.mmsnap.MMSNAPActivity"/>
+                android:value="ahat.mmsnap.MainActivity"/>
         </activity>
         <activity
             android:name=".MMSNAPSubCategoryActivity"

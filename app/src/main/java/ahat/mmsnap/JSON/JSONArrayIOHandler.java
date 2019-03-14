@@ -74,7 +74,7 @@ public class JSONArrayIOHandler
         return null;
     }
 
-    public static void saveItems( Context context, JSONArray items, String filePath ) throws IOException
+    public static void saveItems( Context context, JSONArray items, String filePath ) throws IOException, JSONException
     {
         File file = new File( filePath );
         if(!file.exists())
@@ -85,7 +85,7 @@ public class JSONArrayIOHandler
         FileOutputStream fos = context.openFileOutput( file.getName(), Context.MODE_PRIVATE );
         try
         {
-            fos.write( items.toString().getBytes() );
+            fos.write( items.toString( 2 ).getBytes() );
         }
         finally
         {

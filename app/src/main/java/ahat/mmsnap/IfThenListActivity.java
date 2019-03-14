@@ -54,7 +54,7 @@ public abstract class IfThenListActivity extends AppCompatActivity
 
     protected abstract void loadItems() throws IOException, JSONException, ConversionException;
 
-    protected abstract void saveItems() throws IOException, ConversionException;
+    protected abstract void saveItems() throws IOException, JSONException, ConversionException;
 
     protected abstract void deleteItems( ArrayList<Integer> deleteIndex );
 
@@ -113,10 +113,7 @@ public abstract class IfThenListActivity extends AppCompatActivity
                 }
                 else
                 {
-//                    Bundle b = new Bundle();
-//                    b.putString( "FILENAME", getFilename() );
                     Intent intent = new Intent( getBaseContext(), getDetailActivityClass() );
-//                    intent.putExtras( b );
                     startActivity( intent );
                 }
             }
@@ -128,7 +125,6 @@ public abstract class IfThenListActivity extends AppCompatActivity
 
         try
         {
-//            items = JSONArrayIOHandler.loadItems( getFilesDir().getPath() + "/" + getFilename() );
             loadItems();
         }
         catch( Exception e )
@@ -165,10 +161,6 @@ public abstract class IfThenListActivity extends AppCompatActivity
                 else
                 {
                     Intent intent = new Intent( getBaseContext(), getDetailActivityClass() );
-//                    Bundle b = new Bundle();
-//                    b.putInt( "itemId", i );
-//                    b.putString( "FILENAME", getFilename() );
-//                    intent.putExtras( b );
                     putItemInIntent( intent, i );
                     startActivity( intent );
                 }

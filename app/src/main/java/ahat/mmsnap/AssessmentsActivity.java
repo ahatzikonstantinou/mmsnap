@@ -10,7 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AssessmentsActivity extends AppCompatActivity implements View.OnClickListener
+public class AssessmentsActivity extends StateActivity //AppCompatActivity
+    implements View.OnClickListener
 {
 
     private Button eButton;
@@ -29,7 +30,16 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
         setSupportActionBar( toolbar );
 
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
-        getSupportActionBar().setIcon( getResources().getDrawable( R.drawable.assessments_section_logo) );
+        getSupportActionBar().setIcon( getResources().getDrawable( R.drawable.assessments_section_logo, null) );
+
+        toolbar.setNavigationOnClickListener( new View.OnClickListener()
+        {
+            @Override
+            public void onClick( View v )
+            {
+                onBackPressed();
+            }
+        });
 
         //buttons events
         eButton = findViewById( R.id.assessments_efficacy_btn );
@@ -137,5 +147,11 @@ public class AssessmentsActivity extends AppCompatActivity implements View.OnCli
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        startActivity( getParentActivityIntent() );
     }
 }

@@ -118,4 +118,5 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="title_activity_weekly_evaluations_list">Weekly Evaluations</string>
+    <string name="title_activity_daily_evaluations_list">DAILY EVALUATIONS</string>
 </resources>

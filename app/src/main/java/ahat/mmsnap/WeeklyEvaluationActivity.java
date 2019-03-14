@@ -21,6 +21,8 @@ public class WeeklyEvaluationActivity extends MassDisableActivity // AppCompatAc
 
     private WeeklyEvaluation evaluation;
 
+    protected int getActivityResLayout(){ return R.layout.activity_weekly_evaluation; }
+
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {

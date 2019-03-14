@@ -9,7 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
-public class IfThenActivity extends AppCompatActivity implements View.OnClickListener
+public class IfThenActivity extends StateActivity   //StateActivity is required in case the user presses the back button while in dailyevaluations. Navigating away is allowed only if there are no more pending evaluations
+    implements View.OnClickListener
 {
 
     @Override
@@ -30,6 +31,8 @@ public class IfThenActivity extends AppCompatActivity implements View.OnClickLis
         aButton.setOnClickListener( this );
         Button cButton = ( Button ) findViewById( R.id.if_then_coping_btn );
         cButton.setOnClickListener( this );
+        Button eButton = ( Button ) findViewById( R.id.daily_evaluations_btn );
+        eButton.setOnClickListener( this );
 
     }
 
@@ -45,6 +48,9 @@ public class IfThenActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.if_then_coping_btn:
                 startActivity( new Intent( this, CopingPlansActivity.class) );
+                break;
+            case R.id.daily_evaluations_btn:
+                startActivity( new Intent( this, DailyEvaluationsListActivity.class) );
                 break;
             default:
                 break;

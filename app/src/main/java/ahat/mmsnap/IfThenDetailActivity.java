@@ -1,13 +1,14 @@
 package ahat.mmsnap;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Switch;
@@ -27,13 +28,14 @@ import static ahat.mmsnap.ApplicationStatus.Behavior.ACTIVITY;
 import static ahat.mmsnap.ApplicationStatus.Behavior.ALCOHOL;
 import static ahat.mmsnap.ApplicationStatus.Behavior.DIET;
 import static ahat.mmsnap.ApplicationStatus.Behavior.SMOKING;
-import static ahat.mmsnap.Models.IfThenPlan.Day.FRIDAY;
-import static ahat.mmsnap.Models.IfThenPlan.Day.MONDAY;
-import static ahat.mmsnap.Models.IfThenPlan.Day.SATURDAY;
-import static ahat.mmsnap.Models.IfThenPlan.Day.SUNDAY;
-import static ahat.mmsnap.Models.IfThenPlan.Day.THURSDAY;
-import static ahat.mmsnap.Models.IfThenPlan.Day.TUESDAY;
-import static ahat.mmsnap.Models.IfThenPlan.Day.WEDNESDAY;
+import static ahat.mmsnap.Models.IfThenPlan.WeekDay.FRIDAY;
+import static ahat.mmsnap.Models.IfThenPlan.WeekDay.MONDAY;
+import static ahat.mmsnap.Models.IfThenPlan.WeekDay.SATURDAY;
+import static ahat.mmsnap.Models.IfThenPlan.WeekDay.SUNDAY;
+import static ahat.mmsnap.Models.IfThenPlan.WeekDay.THURSDAY;
+import static ahat.mmsnap.Models.IfThenPlan.WeekDay.TUESDAY;
+import static ahat.mmsnap.Models.IfThenPlan.WeekDay.WEDNESDAY;
+
 
 public abstract class IfThenDetailActivity extends AppCompatActivity
     implements View.OnClickListener //, DatePickerDialog.OnDateSetListener
@@ -42,7 +44,9 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
     private static final int NOT_SELECTED_COLOR = Color.rgb( 255, 255, 255 );
 
     protected HashMap<ApplicationStatus.Behavior, Boolean> BehaviorIsSelected;
-//    protected String                                       actionDate = "";
+    protected boolean planIsExpired;
+
+    //    protected String                                       actionDate = "";
     protected abstract int getActivityResLayout();
     protected abstract int getContentRootLayoutResId();
 //    protected abstract JSONObject getIfThenItem();
@@ -68,6 +72,7 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
     private TextView ifStatementTextView;
     private TextView thenStatementTextView;
     private Switch   activeSwitch;
+    protected boolean  evaluationMode = false;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -80,13 +85,17 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
         getSupportActionBar().setIcon( getResources().getDrawable( R.drawable.if_then_section_logo, null ) );
         getSupportActionBar().setTitle( R.string.title_activity_if_then );
 
-//        Bundle b = getIntent().getExtras();
-//        FILENAME = b.getString( "FILENAME" );
-//        itemId = -1;
-//        if( b.containsKey( "itemId" ) )
-//        {
-//            itemId = b.getInt( "itemId" );
-//        }
+        toolbar.setNavigationOnClickListener( new View.OnClickListener()
+        {
+            @Override
+            public void onClick( View v )
+            {
+                onBackPressed();
+            }
+        });
+
+        // in evaluation mode, the user only evaluates the days and does not edit any other fields
+        evaluationMode = getIntent().getBooleanExtra( "evaluation_mode", false );
 
         item = getIfThenItem();
 
@@ -118,75 +127,31 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
 
         // if the plan is passed it's week it can only be evaluated
         Calendar now = Calendar.getInstance();
-        if( now.get( Calendar.WEEK_OF_YEAR ) != item.weekOfYear || now.get( Calendar.YEAR ) != item.year )
+        Calendar pc = Calendar.getInstance();
+        pc.set( Calendar.YEAR, item.year );
+        pc.set( Calendar.WEEK_OF_YEAR, item.weekOfYear );
+        pc.set( Calendar.DAY_OF_WEEK, pc.getFirstDayOfWeek() + 6 );
+
+        planIsExpired = now.get( Calendar.WEEK_OF_YEAR ) != item.weekOfYear || now.get( Calendar.YEAR ) != item.year;
+
+        if( planIsExpired || evaluationMode )
         {
+            //stop the soft keyboard from displaying, the user will only evaluate the days
+            this.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN );
+
             ifStatementTextView.setEnabled( false );
             thenStatementTextView.setEnabled( false );
             activeSwitch.setEnabled( false );
-
-            findViewById( R.id.day_mon_chk ).setEnabled( item.days.contains( MONDAY ) );
-            findViewById( R.id.day_tue_chk ).setEnabled( item.days.contains( TUESDAY ) );
-            findViewById( R.id.day_wed_chk ).setEnabled( item.days.contains( WEDNESDAY ) );
-            findViewById( R.id.day_thu_chk ).setEnabled( item.days.contains( THURSDAY ) );
-            findViewById( R.id.day_fri_chk ).setEnabled( item.days.contains( FRIDAY) );
-            findViewById( R.id.day_sat_chk ).setEnabled( item.days.contains( SATURDAY ) );
-            findViewById( R.id.day_sun_chk ).setEnabled( item.days.contains( SUNDAY ) );
-
-            findViewById( R.id.day_mon_chk ).setOnClickListener( this );
-            findViewById( R.id.day_tue_chk ).setOnClickListener( this );
-            findViewById( R.id.day_wed_chk ).setOnClickListener( this );
-            findViewById( R.id.day_thu_chk ).setOnClickListener( this );
-            findViewById( R.id.day_fri_chk ).setOnClickListener( this );
-            findViewById( R.id.day_sat_chk ).setOnClickListener( this );
-            findViewById( R.id.day_sun_chk ).setOnClickListener( this );
-            
-            if( !item.isEvaluated() )
-            {
-                Calendar c = Calendar.getInstance();
-                c.set( Calendar.YEAR, item.year );
-                c.set( Calendar.WEEK_OF_YEAR, item.weekOfYear );
-
-                c.set( Calendar.DAY_OF_WEEK, Calendar.MONDAY );
-                if( now.after( c ) && item.days.contains( MONDAY ) ){ findViewById( R.id.mon_layout ).setOnClickListener( this ); }
-
-                c.set( Calendar.DAY_OF_WEEK, Calendar.TUESDAY );
-                if( now.after( c ) && item.days.contains( TUESDAY ) ){ findViewById( R.id.tue_layout ).setOnClickListener( this ); }
-
-                c.set( Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY );
-                if( now.after( c ) && item.days.contains( WEDNESDAY ) ){ findViewById( R.id.wed_layout ).setOnClickListener( this ); }
-
-                c.set( Calendar.DAY_OF_WEEK, Calendar.THURSDAY );
-                if( now.after( c ) && item.days.contains( THURSDAY ) ){ findViewById( R.id.thu_layout ).setOnClickListener( this ); }
-
-                c.set( Calendar.DAY_OF_WEEK, Calendar.FRIDAY );
-                if( now.after( c ) && item.days.contains( FRIDAY ) ){ findViewById( R.id.fri_layout ).setOnClickListener( this ); }
-
-                c.set( Calendar.DAY_OF_WEEK, Calendar.SATURDAY );
-                if( now.after( c ) && item.days.contains( SATURDAY ) ){ findViewById( R.id.sat_layout ).setOnClickListener( this ); }
-
-                c.set( Calendar.DAY_OF_WEEK, Calendar.SUNDAY );
-                if( now.after( c ) && item.days.contains( SUNDAY ) ){ findViewById( R.id.sun_layout ).setOnClickListener( this ); }
-            }
-
-            findViewById( R.id.day_mon_check_img ).setVisibility( item.isEvaluated( MONDAY ) && item.isSuccessful( MONDAY ) ? View.VISIBLE : View.INVISIBLE );
-            findViewById( R.id.day_tue_check_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.TUESDAY ) && item.isSuccessful( IfThenPlan.Day.TUESDAY ) ? View.VISIBLE : View.INVISIBLE );
-            findViewById( R.id.day_wed_check_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.WEDNESDAY ) && item.isSuccessful( IfThenPlan.Day.WEDNESDAY ) ? View.VISIBLE : View.INVISIBLE );
-            findViewById( R.id.day_thu_check_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.THURSDAY ) && item.isSuccessful( IfThenPlan.Day.THURSDAY ) ? View.VISIBLE : View.INVISIBLE );
-            findViewById( R.id.day_fri_check_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.FRIDAY ) && item.isSuccessful( IfThenPlan.Day.FRIDAY ) ? View.VISIBLE : View.INVISIBLE );
-            findViewById( R.id.day_sat_check_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.SATURDAY ) && item.isSuccessful( IfThenPlan.Day.SATURDAY ) ? View.VISIBLE : View.INVISIBLE );
-            findViewById( R.id.day_sun_check_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.SUNDAY ) && item.isSuccessful( IfThenPlan.Day.SUNDAY ) ? View.VISIBLE : View.INVISIBLE );
-            findViewById( R.id.day_mon_fail_img ).setVisibility( item.isEvaluated( MONDAY ) && !item.isSuccessful( MONDAY ) ? View.VISIBLE : View.INVISIBLE );
-            findViewById( R.id.day_tue_fail_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.TUESDAY ) && !item.isSuccessful( IfThenPlan.Day.TUESDAY ) ? View.VISIBLE : View.INVISIBLE );
-            findViewById( R.id.day_wed_fail_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.WEDNESDAY ) && !item.isSuccessful( IfThenPlan.Day.WEDNESDAY ) ? View.VISIBLE : View.INVISIBLE );
-            findViewById( R.id.day_thu_fail_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.THURSDAY ) && !item.isSuccessful( IfThenPlan.Day.THURSDAY ) ? View.VISIBLE : View.INVISIBLE );
-            findViewById( R.id.day_fri_fail_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.FRIDAY ) && !item.isSuccessful( IfThenPlan.Day.FRIDAY ) ? View.VISIBLE : View.INVISIBLE );
-            findViewById( R.id.day_sat_fail_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.SATURDAY ) && !item.isSuccessful( IfThenPlan.Day.SATURDAY ) ? View.VISIBLE : View.INVISIBLE );
-            findViewById( R.id.day_sun_fail_img ).setVisibility( item.isEvaluated( IfThenPlan.Day.SUNDAY ) && !item.isSuccessful( IfThenPlan.Day.SUNDAY ) ? View.VISIBLE : View.INVISIBLE );
-
-            findViewById( R.id.save ).requestFocus();
-
         }
-        else
+
+        // user cannot edit expired plans outside evaluation mode
+        if( planIsExpired && !evaluationMode )
+        {
+            findViewById( R.id.save ).setVisibility( View.GONE );
+        }
+
+        // health behaviors are editable only when not expired and not in evaluation mode
+        if( !planIsExpired && !evaluationMode )
         {
             //behavior layout events
             findViewById( R.id.eating_image ).setOnClickListener( this );
@@ -195,13 +160,116 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
             findViewById( R.id.smoking_image ).setOnClickListener( this );
         }
 
-        ( (CheckBox) findViewById( R.id.day_mon_chk ) ).setChecked( item.days.contains( MONDAY ) );
-        ( (CheckBox) findViewById( R.id.day_tue_chk ) ).setChecked( item.days.contains( IfThenPlan.Day.TUESDAY ) );
-        ( (CheckBox) findViewById( R.id.day_wed_chk ) ).setChecked( item.days.contains( IfThenPlan.Day.WEDNESDAY ) );
-        ( (CheckBox) findViewById( R.id.day_thu_chk ) ).setChecked( item.days.contains( IfThenPlan.Day.THURSDAY ) );
-        ( (CheckBox) findViewById( R.id.day_fri_chk ) ).setChecked( item.days.contains( IfThenPlan.Day.FRIDAY ) );
-        ( (CheckBox) findViewById( R.id.day_sat_chk ) ).setChecked( item.days.contains( IfThenPlan.Day.SATURDAY ) );
-        ( (CheckBox) findViewById( R.id.day_sun_chk ) ).setChecked( item.days.contains( IfThenPlan.Day.SUNDAY ) );
+        // days behave like proper checkboxes in any other mode except evaluation
+        if( !evaluationMode )
+        {
+            ( (CheckBox) findViewById( R.id.day_mon_chk ) ).setChecked( item.hasDay( MONDAY ) );
+            ( (CheckBox) findViewById( R.id.day_tue_chk ) ).setChecked( item.hasDay( TUESDAY ) );
+            ( (CheckBox) findViewById( R.id.day_wed_chk ) ).setChecked( item.hasDay( WEDNESDAY ) );
+            ( (CheckBox) findViewById( R.id.day_thu_chk ) ).setChecked( item.hasDay( THURSDAY ) );
+            ( (CheckBox) findViewById( R.id.day_fri_chk ) ).setChecked( item.hasDay( FRIDAY ) );
+            ( (CheckBox) findViewById( R.id.day_sat_chk ) ).setChecked( item.hasDay( SATURDAY ) );
+            ( (CheckBox) findViewById( R.id.day_sun_chk ) ).setChecked( item.hasDay( SUNDAY ) );
+
+            if( planIsExpired )
+            {
+                //When the plan is expired the user cannot edit the days
+                findViewById( R.id.day_mon_chk ).setEnabled( false );
+                findViewById( R.id.day_tue_chk ).setEnabled( false );
+                findViewById( R.id.day_wed_chk ).setEnabled( false );
+                findViewById( R.id.day_thu_chk ).setEnabled( false );
+                findViewById( R.id.day_fri_chk ).setEnabled( false );
+                findViewById( R.id.day_sat_chk ).setEnabled( false );
+                findViewById( R.id.day_sun_chk ).setEnabled( false );
+            }
+            else
+            {
+                // while the plan is not expired, the user can edit only the days that have not passed yet
+                findViewById( R.id.day_mon_chk ).setEnabled( !item.dayHasPassed( MONDAY ) );
+                findViewById( R.id.day_tue_chk ).setEnabled( !item.dayHasPassed( TUESDAY ) );
+                findViewById( R.id.day_wed_chk ).setEnabled( !item.dayHasPassed( WEDNESDAY ) );
+                findViewById( R.id.day_thu_chk ).setEnabled( !item.dayHasPassed( THURSDAY ) );
+                findViewById( R.id.day_fri_chk ).setEnabled( !item.dayHasPassed( FRIDAY ) );
+                findViewById( R.id.day_sat_chk ).setEnabled( !item.dayHasPassed( SATURDAY ) );
+                findViewById( R.id.day_sun_chk ).setEnabled( !item.dayHasPassed( SUNDAY ) );
+            }
+        }
+        else
+        {
+            // in evaluation mode selected days only previous non-evaluated days are enabled
+            findViewById( R.id.day_mon_chk ).setEnabled( item.hasDay( MONDAY ) && item.dayHasPassed( MONDAY ) && !item.isEvaluated( MONDAY ) );
+            findViewById( R.id.day_tue_chk ).setEnabled( item.hasDay( TUESDAY ) && item.dayHasPassed( TUESDAY ) && !item.isEvaluated( TUESDAY ) );
+            findViewById( R.id.day_wed_chk ).setEnabled( item.hasDay( WEDNESDAY ) && item.dayHasPassed( WEDNESDAY ) && !item.isEvaluated( WEDNESDAY ) );
+            findViewById( R.id.day_thu_chk ).setEnabled( item.hasDay( THURSDAY ) && item.dayHasPassed( THURSDAY ) && !item.isEvaluated( THURSDAY ) );
+            findViewById( R.id.day_fri_chk ).setEnabled( item.hasDay( FRIDAY ) && item.dayHasPassed( FRIDAY ) && !item.isEvaluated( FRIDAY ) );
+            findViewById( R.id.day_sat_chk ).setEnabled( item.hasDay( SATURDAY ) && item.dayHasPassed( SATURDAY ) && !item.isEvaluated( SATURDAY ) );
+            findViewById( R.id.day_sun_chk ).setEnabled( item.hasDay( SUNDAY ) && item.dayHasPassed( SUNDAY ) && !item.isEvaluated( SUNDAY ) );
+
+            findViewById( R.id.day_mon_chk ).setOnClickListener( this );
+            findViewById( R.id.day_tue_chk ).setOnClickListener( this );
+            findViewById( R.id.day_wed_chk ).setOnClickListener( this );
+            findViewById( R.id.day_thu_chk ).setOnClickListener( this );
+            findViewById( R.id.day_fri_chk ).setOnClickListener( this );
+            findViewById( R.id.day_sat_chk ).setOnClickListener( this );
+            findViewById( R.id.day_sun_chk ).setOnClickListener( this );
+
+            Drawable highlightBkg = getResources().getDrawable( R.drawable.custom_radio_highglight, null );
+            if( item.hasDay( MONDAY ) && item.dayHasPassed( MONDAY ) && !item.isEvaluated( MONDAY ) ) { findViewById( R.id.day_mon_chk ).setBackground( highlightBkg  ); }
+            if( item.hasDay( TUESDAY ) && item.dayHasPassed( TUESDAY ) && !item.isEvaluated( TUESDAY ) ) { findViewById( R.id.day_tue_chk ).setBackground( highlightBkg  ); }
+            if( item.hasDay( WEDNESDAY ) && item.dayHasPassed( WEDNESDAY ) && !item.isEvaluated( WEDNESDAY ) ) { findViewById( R.id.day_wed_chk ).setBackground( highlightBkg  ); }
+            if( item.hasDay( THURSDAY ) && item.dayHasPassed( THURSDAY ) && !item.isEvaluated( THURSDAY ) ) { findViewById( R.id.day_thu_chk ).setBackground( highlightBkg  ); }
+            if( item.hasDay( FRIDAY ) && item.dayHasPassed( FRIDAY ) && !item.isEvaluated( FRIDAY ) ) { findViewById( R.id.day_fri_chk ).setBackground( highlightBkg  ); }
+            if( item.hasDay( SATURDAY ) && item.dayHasPassed( SATURDAY ) && !item.isEvaluated( SATURDAY ) ) { findViewById( R.id.day_sat_chk ).setBackground( highlightBkg  ); }
+            if( item.hasDay( SUNDAY ) && item.dayHasPassed( SUNDAY ) && !item.isEvaluated( SUNDAY ) ) { findViewById( R.id.day_sun_chk ).setBackground( highlightBkg  ); }
+
+
+//            if( !item.isEvaluated() )
+//            {
+//                Calendar c = Calendar.getInstance();
+//                c.set( Calendar.YEAR, item.year );
+//                c.set( Calendar.WEEK_OF_YEAR, item.weekOfYear );
+//
+//                c.set( Calendar.DAY_OF_WEEK, Calendar.MONDAY );
+//                if( now.after( c ) && item.hasDay( MONDAY ) ){ findViewById( R.id.mon_layout ).setOnClickListener( this ); }
+//
+//                c.set( Calendar.DAY_OF_WEEK, Calendar.TUESDAY );
+//                if( now.after( c ) && item.hasDay( TUESDAY ) ){ findViewById( R.id.tue_layout ).setOnClickListener( this ); }
+//
+//                c.set( Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY );
+//                if( now.after( c ) && item.hasDay( WEDNESDAY ) ){ findViewById( R.id.wed_layout ).setOnClickListener( this ); }
+//
+//                c.set( Calendar.DAY_OF_WEEK, Calendar.THURSDAY );
+//                if( now.after( c ) && item.hasDay( THURSDAY ) ){ findViewById( R.id.thu_layout ).setOnClickListener( this ); }
+//
+//                c.set( Calendar.DAY_OF_WEEK, Calendar.FRIDAY );
+//                if( now.after( c ) && item.hasDay( FRIDAY ) ){ findViewById( R.id.fri_layout ).setOnClickListener( this ); }
+//
+//                c.set( Calendar.DAY_OF_WEEK, Calendar.SATURDAY );
+//                if( now.after( c ) && item.hasDay( SATURDAY ) ){ findViewById( R.id.sat_layout ).setOnClickListener( this ); }
+//
+//                c.set( Calendar.DAY_OF_WEEK, Calendar.SUNDAY );
+//                if( now.after( c ) && item.hasDay( SUNDAY ) ){ findViewById( R.id.sun_layout ).setOnClickListener( this ); }
+//            }
+        }
+
+        // success (/check) and fail images are displayed only if a plan is expired or in evaluation mode
+//        if( planIsExpired || evaluationMode )
+//        {
+            findViewById( R.id.day_mon_check_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( MONDAY ) ) && item.isEvaluated( MONDAY ) && item.isSuccessful( MONDAY ) ? View.VISIBLE : View.INVISIBLE );
+            findViewById( R.id.day_tue_check_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( TUESDAY ) ) && item.isEvaluated( TUESDAY ) && item.isSuccessful( TUESDAY ) ? View.VISIBLE : View.INVISIBLE );
+            findViewById( R.id.day_wed_check_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( WEDNESDAY ) ) && item.isEvaluated( WEDNESDAY ) && item.isSuccessful( WEDNESDAY ) ? View.VISIBLE : View.INVISIBLE );
+            findViewById( R.id.day_thu_check_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( THURSDAY ) ) && item.isEvaluated( THURSDAY ) && item.isSuccessful( THURSDAY ) ? View.VISIBLE : View.INVISIBLE );
+            findViewById( R.id.day_fri_check_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( FRIDAY ) ) && item.isEvaluated( FRIDAY ) && item.isSuccessful( FRIDAY ) ? View.VISIBLE : View.INVISIBLE );
+            findViewById( R.id.day_sat_check_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( SATURDAY ) ) && item.isEvaluated( SATURDAY ) && item.isSuccessful( SATURDAY ) ? View.VISIBLE : View.INVISIBLE );
+            findViewById( R.id.day_sun_check_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( SUNDAY ) ) && item.isEvaluated( SUNDAY ) && item.isSuccessful( SUNDAY ) ? View.VISIBLE : View.INVISIBLE );
+            findViewById( R.id.day_mon_fail_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( MONDAY ) ) && item.isEvaluated( MONDAY ) && !item.isSuccessful( MONDAY ) ? View.VISIBLE : View.INVISIBLE );
+            findViewById( R.id.day_tue_fail_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( TUESDAY ) ) && item.isEvaluated( TUESDAY ) && !item.isSuccessful( TUESDAY ) ? View.VISIBLE : View.INVISIBLE );
+            findViewById( R.id.day_wed_fail_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( WEDNESDAY ) ) && item.isEvaluated( WEDNESDAY ) && !item.isSuccessful( WEDNESDAY ) ? View.VISIBLE : View.INVISIBLE );
+            findViewById( R.id.day_thu_fail_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( THURSDAY ) ) && item.isEvaluated( THURSDAY ) && !item.isSuccessful( THURSDAY ) ? View.VISIBLE : View.INVISIBLE );
+            findViewById( R.id.day_fri_fail_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( FRIDAY ) ) && item.isEvaluated( FRIDAY ) && !item.isSuccessful( FRIDAY ) ? View.VISIBLE : View.INVISIBLE );
+            findViewById( R.id.day_sat_fail_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( SATURDAY ) ) && item.isEvaluated( SATURDAY ) && !item.isSuccessful( SATURDAY ) ? View.VISIBLE : View.INVISIBLE );
+            findViewById( R.id.day_sun_fail_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( SUNDAY ) ) && item.isEvaluated( SUNDAY ) && !item.isSuccessful( SUNDAY ) ? View.VISIBLE : View.INVISIBLE );
+//        }
 
 
         DateFormatSymbols dfs = new DateFormatSymbols();
@@ -226,6 +294,9 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
     }
 
     @Override
+    public abstract void onBackPressed();
+
+    @Override
     public void onClick( View view )
     {
 
@@ -246,55 +317,34 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
             case R.id.save:
                 save();
                 break;
-//            case R.id.mon_layout:
-//                toggleSuccess( R.id.day_mon_check_img, R.id.day_mon_fail_img );
-//                break;
-//            case R.id.tue_layout:
-//                toggleSuccess( R.id.day_tue_check_img, R.id.day_tue_fail_img );
-//                break;
-//            case R.id.wed_layout:
-//                toggleSuccess( R.id.day_wed_check_img, R.id.day_wed_fail_img );
-//                break;
-//            case R.id.thu_layout:
-//                toggleSuccess( R.id.day_thu_check_img, R.id.day_thu_fail_img );
-//                break;
-//            case R.id.fri_layout:
-//                toggleSuccess( R.id.day_fri_check_img, R.id.day_fri_fail_img );
-//                break;
-//            case R.id.sat_layout:
-//                toggleSuccess( R.id.day_sat_check_img, R.id.day_sat_fail_img );
-//                break;
-//            case R.id.sun_layout:
-//                toggleSuccess( R.id.day_sun_check_img, R.id.day_sun_fail_img );
-//                break;
-//
+
             case R.id.day_mon_chk:
                 toggleSuccess( R.id.day_mon_check_img, R.id.day_mon_fail_img );
-                ( (CheckBox) findViewById( R.id.day_mon_chk ) ).setChecked( true );
+                ( (CheckBox) findViewById( R.id.day_mon_chk ) ).setChecked( false );    //false makes it look nice, we don't care about checked or not
                 break;
             case R.id.day_tue_chk:
                 toggleSuccess( R.id.day_tue_check_img, R.id.day_tue_fail_img );
-                ( (CheckBox) findViewById( R.id.day_tue_chk ) ).setChecked( true );
+                ( (CheckBox) findViewById( R.id.day_tue_chk ) ).setChecked( false );
                 break;
             case R.id.day_wed_chk:
                 toggleSuccess( R.id.day_wed_check_img, R.id.day_wed_fail_img );
-                ( (CheckBox) findViewById( R.id.day_wed_chk ) ).setChecked( true );
+                ( (CheckBox) findViewById( R.id.day_wed_chk ) ).setChecked( false );
                 break;
             case R.id.day_thu_chk:
                 toggleSuccess( R.id.day_thu_check_img, R.id.day_thu_fail_img );
-                ( (CheckBox) findViewById( R.id.day_thu_chk ) ).setChecked( true );
+                ( (CheckBox) findViewById( R.id.day_thu_chk ) ).setChecked( false );
                 break;
             case R.id.day_fri_chk:
                 toggleSuccess( R.id.day_fri_check_img, R.id.day_fri_fail_img );
-                ( (CheckBox) findViewById( R.id.day_fri_chk ) ).setChecked( true );
+                ( (CheckBox) findViewById( R.id.day_fri_chk ) ).setChecked( false );
                 break;
             case R.id.day_sat_chk:
                 toggleSuccess( R.id.day_sat_check_img, R.id.day_sat_fail_img );
-                ( (CheckBox) findViewById( R.id.day_sat_chk ) ).setChecked( true );
+                ( (CheckBox) findViewById( R.id.day_sat_chk ) ).setChecked( false );
                 break;
             case R.id.day_sun_chk:
                 toggleSuccess( R.id.day_sun_check_img, R.id.day_sun_fail_img );
-                ( (CheckBox) findViewById( R.id.day_sun_chk ) ).setChecked( true );
+                ( (CheckBox) findViewById( R.id.day_sun_chk ) ).setChecked( false );
                 break;
 
 
@@ -349,7 +399,7 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
             for( int i = 0 ; i < item.days.size() ; i++ )
             {
                 Boolean check = null;
-                switch( item.days.get( i ) )
+                switch( item.days.get( i ).getWeekDay() )
                 {
                     case MONDAY:
                         ic.set( Calendar.DAY_OF_WEEK, Calendar.MONDAY );
@@ -409,10 +459,7 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
         {
             error += ( error.length() > 0 ? " and " : "enter " ) + "a THEN statement";
         }
-//        if( 0 == actionDate.trim().length() )
-//        {
-//            error += ( error.length() > 0 ? " and " : "" ) + "select a DATE";
-//        }
+
         if( !getBehaviorIsSelected( DIET ) &&
             !getBehaviorIsSelected( ACTIVITY ) &&
             !getBehaviorIsSelected( ALCOHOL ) &&
@@ -427,16 +474,6 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
             return error;
         }
 
-//        item.put( "id", String.valueOf( itemId ) );
-//        item.put( "if", ifStatement );
-//        item.put( "then", thenStatement );
-//        item.put( "active", activeSwitch.isChecked() );
-//        item.put( "date", actionDate );
-//        item.put( "DIET", getBehaviorIsSelected( DIET ) );
-//        item.put( "ACTIVITY", getBehaviorIsSelected( ACTIVITY ) );
-//        item.put( "ALCOHOL", getBehaviorIsSelected( ALCOHOL ) );
-//        item.put( "SMOKING", getBehaviorIsSelected( SMOKING ) );
-
         item.ifStatement = ifStatement;
         item.thenStatement = thenStatement;
         item.active = activeSwitch.isChecked();
@@ -447,15 +484,15 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
         if( getBehaviorIsSelected( ALCOHOL ) ) { item.targetBehaviors.add( ALCOHOL ); }
         if( getBehaviorIsSelected( SMOKING ) ) { item.targetBehaviors.add( SMOKING ); }
 
-        item.days.clear();
+        item.clearDays();
 
-        if( ( (CheckBox) findViewById( R.id.day_mon_chk ) ).isChecked() ) { item.days.add( MONDAY ); }
-        if( ( (CheckBox) findViewById( R.id.day_tue_chk ) ).isChecked() ) { item.days.add( IfThenPlan.Day.TUESDAY ); }
-        if( ( (CheckBox) findViewById( R.id.day_wed_chk ) ).isChecked() ) { item.days.add( IfThenPlan.Day.WEDNESDAY ); }
-        if( ( (CheckBox) findViewById( R.id.day_thu_chk ) ).isChecked() ) { item.days.add( IfThenPlan.Day.THURSDAY ); }
-        if( ( (CheckBox) findViewById( R.id.day_fri_chk ) ).isChecked() ) { item.days.add( IfThenPlan.Day.FRIDAY ); }
-        if( ( (CheckBox) findViewById( R.id.day_sat_chk ) ).isChecked() ) { item.days.add( IfThenPlan.Day.SATURDAY ); }
-        if( ( (CheckBox) findViewById( R.id.day_sun_chk ) ).isChecked() ) { item.days.add( IfThenPlan.Day.SUNDAY ); }
+        if( ( (CheckBox) findViewById( R.id.day_mon_chk ) ).isChecked() ) { item.addDay( MONDAY ); }
+        if( ( (CheckBox) findViewById( R.id.day_tue_chk ) ).isChecked() ) { item.addDay( TUESDAY ); }
+        if( ( (CheckBox) findViewById( R.id.day_wed_chk ) ).isChecked() ) { item.addDay( WEDNESDAY ); }
+        if( ( (CheckBox) findViewById( R.id.day_thu_chk ) ).isChecked() ) { item.addDay( THURSDAY ); }
+        if( ( (CheckBox) findViewById( R.id.day_fri_chk ) ).isChecked() ) { item.addDay( FRIDAY ); }
+        if( ( (CheckBox) findViewById( R.id.day_sat_chk ) ).isChecked() ) { item.addDay( SATURDAY ); }
+        if( ( (CheckBox) findViewById( R.id.day_sun_chk ) ).isChecked() ) { item.addDay( SUNDAY ); }
         return "";
     }
 

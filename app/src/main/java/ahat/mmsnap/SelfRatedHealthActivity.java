@@ -13,6 +13,8 @@ import android.widget.Toast;
 public class SelfRatedHealthActivity extends MassDisableActivity // AppCompatActivity
 {
 
+    protected int getActivityResLayout(){ return R.layout.activity_self_rated_health; }
+
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {

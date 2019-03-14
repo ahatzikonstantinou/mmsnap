@@ -11,6 +11,8 @@ import android.widget.Toast;
 public class EfficacyActivity extends MassDisableActivity // AppCompatActivity
 {
 
+    protected int getActivityResLayout(){ return R.layout.activity_efficacy; }
+
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {

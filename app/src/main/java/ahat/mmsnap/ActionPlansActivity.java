@@ -28,7 +28,7 @@ public class ActionPlansActivity extends IfThenListActivity
 
     protected IfThenListAdapter createListAdapter()
     {
-        return new ActionPlansListAdapter( this, items, delete );
+        return new IfThenListAdapter( this, items, delete );
     }
 
 //    protected String getFilename()
@@ -68,12 +68,10 @@ public class ActionPlansActivity extends IfThenListActivity
         JSONArrayConverterActionPlan jc = new JSONArrayConverterActionPlan();
         aps.read( jc );
         items = jc.getActionPlans();
-
-//        JSONArrayIOHandler.loadItems( getFilesDir().getPath() + "/" + getFilename() );
     }
 
     @Override
-    protected void saveItems() throws IOException, ConversionException
+    protected void saveItems() throws IOException, JSONException, ConversionException
     {
         ActionPlansStorage aps = new ActionPlansStorage( this );
         JSONArrayConverterActionPlan jc = new JSONArrayConverterActionPlan( items );

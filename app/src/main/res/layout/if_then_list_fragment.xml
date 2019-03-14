@@ -60,7 +60,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="12 April 2019"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     android:textColor="#555555"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -73,8 +73,8 @@
                     android:text="-"
                     android:textSize="13sp"
                     android:textColor="#555555"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
                     app:layout_constraintStart_toEndOf="@+id/startdate"
                     app:layout_constraintTop_toTopOf="@+id/startdate"/>
 
@@ -83,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="19 April 2019"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     android:textColor="#555555"
                     app:layout_constraintStart_toEndOf="@+id/dateSpacer"
                     app:layout_constraintTop_toTopOf="@+id/startdate"

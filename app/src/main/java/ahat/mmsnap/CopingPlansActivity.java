@@ -28,7 +28,7 @@ public class CopingPlansActivity extends IfThenListActivity
 
     protected IfThenListAdapter createListAdapter()
     {
-        return new CopingPlansListAdapter( this, items, delete );
+        return new IfThenListAdapter( this, items, delete );
     }
 
 //    protected String getFilename()
@@ -71,7 +71,7 @@ public class CopingPlansActivity extends IfThenListActivity
     }
 
     @Override
-    protected void saveItems() throws IOException, ConversionException
+    protected void saveItems() throws IOException, JSONException, ConversionException
     {
         CopingPlansStorage s = new CopingPlansStorage( this );
         JSONArrayConverterCopingPlan jc = new JSONArrayConverterCopingPlan( items );

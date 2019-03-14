@@ -19,9 +19,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import ahat.mmsnap.JSON.ActionPlansStorage;
+import ahat.mmsnap.JSON.CopingPlansStorage;
+import ahat.mmsnap.JSON.JSONArrayConverterActionPlan;
+import ahat.mmsnap.JSON.JSONArrayConverterCopingPlan;
 import ahat.mmsnap.JSON.JSONArrayConverterWeeklyEvaluation;
 import ahat.mmsnap.JSON.WeeklyEvaluationsStorage;
+import ahat.mmsnap.Models.ActionPlan;
 import ahat.mmsnap.Models.ConversionException;
+import ahat.mmsnap.Models.CopingPlan;
 import ahat.mmsnap.Models.CounterfactualThought;
 import ahat.mmsnap.Models.WeeklyEvaluation;
 
@@ -32,23 +38,6 @@ public class ApplicationStatus
 {
 
     int DurationDays = 40;
-
-    private boolean dailyEvaluationPending()
-    {
-        // TODO
-        return false;
-    }
-
-//    enum State
-//    {
-//        NOT_LOGGED_IN,              // the user has not performed the initial login
-//        NO_INITIAL_EVALUATIONS,     // the user has not submitted the initial evaluations
-//        IN_ORDER,                   // everything is in order, the user has no pending issues
-//        //        WEEKLY_EVALUATION_PENDING,  // the user has not submitted a weekly evaluation
-////        DAILY_EVALUATION_PENDING,   // the user has not submitted a daily evaluation
-//        NO_FINAL_EVALUATIONS,       // the user has not submitted the final evaluations
-//        FINISHED                    // the duration of the program has finished and the user has submitted the final evaluations
-//    }
 
     enum Assessment { ILLNESS_PERCEPTION, HEALTH_RISK, SELF_EFFICACY, INTENTIONS, SELF_RATED_HEALTH }
 
@@ -160,9 +149,38 @@ public class ApplicationStatus
         return instance;
     }
 
+    public boolean pendingDailyEvaluationsExist() throws IOException, JSONException, ConversionException
+    {
+        ActionPlansStorage aps = new ActionPlansStorage( context );
+        JSONArrayConverterActionPlan jacap = new JSONArrayConverterActionPlan();
+        aps.read( jacap );
+        for( int i = 0 ; i < jacap.getActionPlans().size() ; i++ )
+        {
+            ActionPlan p = jacap.getActionPlans().get( i );
+            if( p.needsEvaluation() )
+            {
+                return true;
+            }
+        }
+
+        //load all coping plans
+        CopingPlansStorage cps = new CopingPlansStorage( context );
+        JSONArrayConverterCopingPlan jaccp = new JSONArrayConverterCopingPlan();
+        cps.read( jaccp );
+        for( int i = 0 ; i < jaccp.getCopingPlans().size() ; i++ )
+        {
+            CopingPlan p = jaccp.getCopingPlans().get( i );
+            if( p.needsEvaluation() )
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public ArrayList<WeeklyEvaluation> weeklyEvaluations;
 
-    public boolean pendingWeeklyEvaluationsExist() throws IOException, ConversionException
+    public boolean pendingWeeklyEvaluationsExist() throws IOException, JSONException, ConversionException
     {
         int before = weeklyEvaluations.size();
 
@@ -347,7 +365,7 @@ public class ApplicationStatus
 
         try
         {
-            fos.write( o.toString().getBytes() );
+            fos.write( o.toString( 2 ).getBytes() );
         }
         finally
         {
@@ -461,7 +479,7 @@ public class ApplicationStatus
                     applicationStatus.setState( new WeeklyEvaluationPending( applicationStatus ) );
                     return true;
                 }
-                else if( dailyEvaluationPending() )
+                else if( pendingDailyEvaluationsExist() )
                 {
                     applicationStatus.setState( new DailyEvaluationPending( applicationStatus ) );
                     return true;
@@ -501,7 +519,7 @@ public class ApplicationStatus
                 {
                     return false;
                 }
-                else if( dailyEvaluationPending() )
+                else if( pendingDailyEvaluationsExist() )
                 {
                     applicationStatus.setState( new DailyEvaluationPending( applicationStatus ) );
                     return true;
@@ -530,7 +548,7 @@ public class ApplicationStatus
         {
             try
             {
-                if( dailyEvaluationPending() )
+                if( pendingDailyEvaluationsExist() )
                 {
                     return false;
                 }

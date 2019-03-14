@@ -2,8 +2,11 @@ package ahat.mmsnap.Models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import ahat.mmsnap.ApplicationStatus;
+import ahat.mmsnap.IfThenDetailActivity;
 
 public abstract class IfThenPlan implements Serializable, Cloneable
 {
@@ -22,9 +25,54 @@ public abstract class IfThenPlan implements Serializable, Cloneable
         this.weekOfYear = weekOfYear;
     }
 
-    public enum Day { MONDAY, TUESDAY, THURSDAY, WEDNESDAY, FRIDAY, SATURDAY, SUNDAY;
-        private boolean evaluated  = false;
-        private boolean successful = false;
+    public boolean dayHasPassed( WeekDay day )
+    {
+        Calendar now = Calendar.getInstance();
+        now.setTime( new Date() );
+        now.set( Calendar.MINUTE, 0 );
+        now.set( Calendar.HOUR, 0 );
+        now.set( Calendar.SECOND, 0 );
+        Calendar c = Calendar.getInstance();
+        c.set( Calendar.YEAR, year );
+        c.set( Calendar.WEEK_OF_YEAR, weekOfYear );
+        c.set( Calendar.MINUTE, 0 );
+        c.set( Calendar.HOUR, 0 );
+        c.set( Calendar.SECOND, 0 );
+        switch( day )
+        {
+            case MONDAY:
+                c.set( Calendar.DAY_OF_WEEK, Calendar.MONDAY );
+                break;
+            case TUESDAY:
+                c.set( Calendar.DAY_OF_WEEK, Calendar.TUESDAY );
+                break;
+            case WEDNESDAY:
+                c.set( Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY );
+                break;
+            case THURSDAY:
+                c.set( Calendar.DAY_OF_WEEK, Calendar.THURSDAY );
+                break;
+            case FRIDAY:
+                c.set( Calendar.DAY_OF_WEEK, Calendar.FRIDAY );
+                break;
+            case SATURDAY:
+                c.set( Calendar.DAY_OF_WEEK, Calendar.SATURDAY );
+                break;
+            case SUNDAY:
+                c.set( Calendar.DAY_OF_WEEK, Calendar.SUNDAY );
+                break;
+        }
+
+        return now.after( c );
+    }
+
+    public enum WeekDay { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY }
+
+    public class Day implements Serializable
+    {
+        private WeekDay weekDay;
+        private boolean evaluated;
+        private boolean successful;
 
         public boolean isEvaluated()
         {
@@ -49,7 +97,20 @@ public abstract class IfThenPlan implements Serializable, Cloneable
             evaluated = true;
             this.successful = successfull;
         }
-    };
+
+        public WeekDay getWeekDay()
+        {
+            return weekDay;
+        }
+
+        public Day( WeekDay weekDay )
+        {
+            boolean evaluated  = false;
+            boolean successful = false;
+            this.weekDay = weekDay;
+        }
+    }
+
     public int id = -1;
     public String ifStatement = "";
     public String thenStatement = "";
@@ -59,22 +120,38 @@ public abstract class IfThenPlan implements Serializable, Cloneable
     public int year = 0;
     public int weekOfYear = 0;
 
-    public boolean pendingExist()
-    {
-        for( int i = 0 ; i < days.size() ; i++ )
-        {
-            if( !days.get( i ).isEvaluated() )
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public boolean isTarget( ApplicationStatus.Behavior behavior )
     {
         return targetBehaviors.contains( behavior );
+    }
+
+    public void clearDays()
+    {
+        days.clear();
+    }
+
+    public void addDay( WeekDay weekDay )
+    {
+        days.add( new Day( weekDay ) );
+    }
+
+    public boolean hasDay( WeekDay weekDay )
+    {
+        return null != getDay( weekDay );
+    }
+
+    private Day getDay( WeekDay weekDay )
+    {
+        for( int i = 0 ; i < days.size() ; i++ )
+        {
+            Day d = days.get( i );
+            if( d.weekDay == weekDay )
+            {
+                return d;
+            }
+        }
+
+        return null;
     }
 
     public boolean isEvaluated()
@@ -91,48 +168,76 @@ public abstract class IfThenPlan implements Serializable, Cloneable
         return true;
     }
 
-    public boolean isEvaluated( Day day )
+    public boolean isEvaluated( WeekDay weekDay )
     {
-        if( days.contains( day ) )
+        Day d = getDay( weekDay );
+        if( null != d )
         {
-            for( int i = 0; i < days.size(); i++ )
-            {
-                Day d = days.get( i );
-                if( d == day )
-                {
-                    return d.isEvaluated();
-                }
-            }
+            return d.isEvaluated();
         }
 
         return false;
     }
 
-    public boolean isSuccessful( Day day )
+    public boolean isSuccessful( WeekDay weekDay )
     {
-        if( days.contains( day ) )
+        Day d = getDay( weekDay );
+        if( null != d )
         {
-            for( int i = 0; i < days.size(); i++ )
-            {
-                Day d = days.get( i );
-                if( d == day )
-                {
-                    return d.isSuccessful();
-                }
-            }
+            return d.isSuccessful();
         }
 
         return false;
     }
 
-    public boolean evaluate( Day day, boolean success )
+    public boolean evaluate( WeekDay weekDay, boolean success )
     {
+        Day d = getDay( weekDay );
+        if( null != d )
+        {
+            d.evaluate( success );
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean needsEvaluation()
+    {
+        Calendar now = Calendar.getInstance();
+        Calendar ic = Calendar.getInstance();
+        ic.set( Calendar.YEAR, year );
+        ic.set( Calendar.WEEK_OF_YEAR, weekOfYear );
         for( int i = 0 ; i < days.size() ; i++ )
         {
             Day d = days.get( i );
-            if( d == day )
+            switch( d.weekDay )
             {
-                d.evaluate( success );
+                case MONDAY:
+                    ic.set( Calendar.DAY_OF_WEEK, Calendar.MONDAY );
+                    break;
+                case TUESDAY:
+                    ic.set( Calendar.DAY_OF_WEEK, Calendar.TUESDAY );
+                    break;
+                case WEDNESDAY:
+                    ic.set( Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY );
+                    break;
+                case THURSDAY:
+                    ic.set( Calendar.DAY_OF_WEEK, Calendar.THURSDAY );
+                    break;
+                case FRIDAY:
+                    ic.set( Calendar.DAY_OF_WEEK, Calendar.FRIDAY );
+                    break;
+                case SATURDAY:
+                    ic.set( Calendar.DAY_OF_WEEK, Calendar.SATURDAY );
+                    break;
+                case SUNDAY:
+                    ic.set( Calendar.DAY_OF_WEEK, Calendar.SUNDAY );
+                    break;
+            }
+
+            if( now.after( ic ) && !d.isEvaluated() )
+            {
                 return true;
             }
         }
