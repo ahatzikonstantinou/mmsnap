@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import ahat.mmsnap.ApplicationStatus;
-import ahat.mmsnap.IfThenDetailActivity;
 
 public abstract class IfThenPlan implements Serializable, Cloneable
 {

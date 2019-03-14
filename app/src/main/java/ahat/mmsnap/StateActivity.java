@@ -41,10 +41,10 @@ public class StateActivity extends AppCompatActivity
             {
                 startActivity( new Intent( this, WeeklyEvaluationsListActivity.class ) );
             }
-//            else if( status.pendingDailyEvaluationsExist() )
-//            {
-//                startActivity( new Intent( this, DailyEvaluationsListActivity.class ) );
-//            }
+            else if( status.pendingDailyEvaluationsExist() )
+            {
+                startActivity( new Intent( this, DailyEvaluationsListActivity.class ) );
+            }
         }
         catch( Exception e )
         {
