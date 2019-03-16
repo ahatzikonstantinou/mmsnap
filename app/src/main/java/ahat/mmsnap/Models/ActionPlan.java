@@ -27,6 +27,11 @@ public class ActionPlan extends IfThenPlan implements Serializable, Cloneable
         copingThenStatement = copingThen;
     }
 
+    public ActionPlan( ActionPlan plan )
+    {
+        this( plan, plan.copingIfStatement, plan.copingThenStatement );
+    }
+
     public ActionPlan()
     {
         super();
@@ -41,6 +46,18 @@ public class ActionPlan extends IfThenPlan implements Serializable, Cloneable
         plan.weekOfYear = c.get( Calendar.WEEK_OF_YEAR );
         return plan;
 
+    }
+
+    public ActionPlan createCopyInCurrentWeek( int newId )
+    {
+        ActionPlan plan = new ActionPlan( this );
+        plan.id = newId;
+        Calendar c = Calendar.getInstance();
+        plan.year = c.get( Calendar.YEAR );
+        plan.weekOfYear = c.get( Calendar.WEEK_OF_YEAR );
+        plan.days.clear();
+        plan.active = false;
+        return plan;
     }
 
 }

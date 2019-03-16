@@ -2,18 +2,12 @@ package ahat.mmsnap;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
@@ -36,18 +30,18 @@ import static ahat.mmsnap.Models.IfThenPlan.WeekDay.WEDNESDAY;
 
 public class IfThenListAdapter extends ArrayAdapter
 {
-    protected final Activity              context;   //to reference the Activity
+    protected final Activity                        context;   //to reference the Activity
     protected final ArrayList<? extends IfThenPlan> items;
-    public          boolean               deleteAction;
-    public          ArrayList<Integer>    deleteIndex = new ArrayList();
+    public          boolean                         menuAction;
+    public          ArrayList<Integer>              menuActionItemIndex = new ArrayList();
 
-    public IfThenListAdapter( Activity context, ArrayList<? extends IfThenPlan> items, boolean deleteAction )
+    public IfThenListAdapter( Activity context, ArrayList<? extends IfThenPlan> items, boolean menuAction )
     {
         super( context, R.layout.counterfactual_list_item );
 
         this.context = context;
         this.items   = items;
-        this.deleteAction = deleteAction;
+        this.menuAction = menuAction;
     }
 
     @Override
@@ -95,8 +89,8 @@ public class IfThenListAdapter extends ArrayAdapter
         inactive.setVisibility( item.active ? View.GONE: View.VISIBLE );
 
         ImageView chk = view.findViewById( R.id.counterfactual_list_item_chk );
-        chk.setVisibility( deleteAction ? View.VISIBLE : View.GONE );
-        chk.setImageResource( deleteIndex.contains( position ) ? R.drawable.ic_check_box_black_24dp : R.drawable.ic_check_box_outline_blank_black_24dp );
+        chk.setVisibility( menuAction ? View.VISIBLE : View.GONE );
+        chk.setImageResource( menuActionItemIndex.contains( position ) ? R.drawable.ic_check_box_black_24dp : R.drawable.ic_check_box_outline_blank_black_24dp );
 
         eating.setVisibility( item.isTarget( DIET ) ? View.VISIBLE : View.GONE );
         activity.setVisibility( item.isTarget( ACTIVITY ) ? View.VISIBLE: View.GONE );

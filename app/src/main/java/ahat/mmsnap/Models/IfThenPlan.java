@@ -29,7 +29,7 @@ public abstract class IfThenPlan implements Serializable, Cloneable
         this.thenStatement = thenStatement;
         this.active = active;
         this.targetBehaviors = targetBehaviors;
-        this.days = days;
+        this.days = new ArrayList<>( days );
         this.year = year;
         this.weekOfYear = weekOfYear;
     }
@@ -74,6 +74,8 @@ public abstract class IfThenPlan implements Serializable, Cloneable
 
         return now.after( c );
     }
+
+    public abstract IfThenPlan createCopyInCurrentWeek( int newId );
 
     public enum WeekDay { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY }
 
@@ -252,5 +254,15 @@ public abstract class IfThenPlan implements Serializable, Cloneable
         }
 
         return false;
+    }
+
+    public void resetEvaluations()
+    {
+        for( int i = 0 ; i < days.size() ; i++ )
+        {
+            Day d = days.get( i );
+            d.setEvaluated( false );
+            d.setSuccessful( false );
+        }
     }
 }

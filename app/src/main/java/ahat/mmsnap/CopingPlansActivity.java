@@ -12,13 +12,12 @@ import ahat.mmsnap.JSON.CopingPlansStorage;
 import ahat.mmsnap.JSON.JSONArrayConverterCopingPlan;
 import ahat.mmsnap.Models.ConversionException;
 import ahat.mmsnap.Models.CopingPlan;
+import ahat.mmsnap.Models.IfThenPlan;
 
 public class CopingPlansActivity extends IfThenListActivity
 {
 
 //    public final String FILENAME = "coping_plans.json";
-
-    protected ArrayList<CopingPlan> items = new ArrayList<CopingPlan>();
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -28,7 +27,7 @@ public class CopingPlansActivity extends IfThenListActivity
 
     protected IfThenListAdapter createListAdapter()
     {
-        return new IfThenListAdapter( this, items, delete );
+        return new IfThenListAdapter( this, items, selectItemsMode );
     }
 
 //    protected String getFilename()
@@ -62,33 +61,64 @@ public class CopingPlansActivity extends IfThenListActivity
     }
 
     @Override
-    protected void loadItems() throws IOException, JSONException, ConversionException
+    protected ArrayList<IfThenPlan> loadItems() throws IOException, JSONException, ConversionException
     {
         CopingPlansStorage s = new CopingPlansStorage( this );
         JSONArrayConverterCopingPlan jc = new JSONArrayConverterCopingPlan();
         s.read( jc );
-        items = jc.getCopingPlans();
+        ArrayList<CopingPlan> items = jc.getCopingPlans();
+
+        ArrayList<IfThenPlan> returnArray = new ArrayList<>( items.size() );
+        for( CopingPlan p : items )
+        {
+            returnArray.add( p );
+        }
+        return returnArray;
     }
 
     @Override
     protected void saveItems() throws IOException, JSONException, ConversionException
     {
+        ArrayList<CopingPlan> plans = new ArrayList<>( items.size() );
+        for( IfThenPlan p : items )
+        {
+            plans.add( (CopingPlan) p );
+        }
         CopingPlansStorage s = new CopingPlansStorage( this );
-        JSONArrayConverterCopingPlan jc = new JSONArrayConverterCopingPlan( items );
+        JSONArrayConverterCopingPlan jc = new JSONArrayConverterCopingPlan( plans );
         s.write( jc );
     }
 
-    @Override
-    protected void deleteItems( ArrayList<Integer> deleteIndex )
-    {
-        for( int i = items.size() ; i >= 0  ; i-- )
-        {
-            if( deleteIndex.contains( i ) )
-            {
-                items.remove( i );
-            }
-        }
-    }
+//    @Override
+//    protected void copyItems( ArrayList<Integer> selectedItemsIndex )
+//    {
+//        ArrayList<CopingPlan> copies = new ArrayList<>();
+//        int existingSize = items.size();
+//        for( int i = 0; i < existingSize; i++ )
+//        {
+//            if( selectedItemsIndex.contains( i ) )
+//            {
+//                copies.add( items.get( i ).createCopyInCurrentWeek( existingSize + copies.size() ) );
+//            }
+//        }
+//        for( int i = 0 ; i < copies.size() ; i++ )
+//        {
+//            items.add( copies.get( i ) );
+//        }
+//
+//    }
+//
+//    @Override
+//    protected void deleteItems( ArrayList<Integer> deleteIndex )
+//    {
+//        for( int i = items.size() ; i >= 0  ; i-- )
+//        {
+//            if( deleteIndex.contains( i ) )
+//            {
+//                items.remove( i );
+//            }
+//        }
+//    }
 
     @Override
     protected void putItemInIntent( Intent intent, int itemIndex )

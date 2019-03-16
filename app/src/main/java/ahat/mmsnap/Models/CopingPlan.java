@@ -34,4 +34,17 @@ public class CopingPlan extends IfThenPlan implements Serializable, Cloneable
 
         return plan;
     }
+
+    public CopingPlan createCopyInCurrentWeek( int newId )
+    {
+        CopingPlan plan = new CopingPlan( this );
+        plan.id = newId;
+        Calendar c = Calendar.getInstance();
+        plan.year = c.get( Calendar.YEAR );
+        plan.weekOfYear = c.get( Calendar.WEEK_OF_YEAR );
+        plan.days.clear();
+        plan.active = false;
+        return plan;
+
+    }
 }

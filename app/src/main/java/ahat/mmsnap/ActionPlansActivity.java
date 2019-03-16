@@ -12,13 +12,12 @@ import ahat.mmsnap.JSON.ActionPlansStorage;
 import ahat.mmsnap.JSON.JSONArrayConverterActionPlan;
 import ahat.mmsnap.Models.ActionPlan;
 import ahat.mmsnap.Models.ConversionException;
+import ahat.mmsnap.Models.IfThenPlan;
 
 public class ActionPlansActivity extends IfThenListActivity
 {
 
 //    public static final String FILENAME = "action_plans.json";
-
-    protected ArrayList<ActionPlan> items = new ArrayList<ActionPlan>();
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -28,13 +27,8 @@ public class ActionPlansActivity extends IfThenListActivity
 
     protected IfThenListAdapter createListAdapter()
     {
-        return new IfThenListAdapter( this, items, delete );
+        return new IfThenListAdapter( this, items, selectItemsMode );
     }
-
-//    protected String getFilename()
-//    {
-//        return FILENAME;
-//    }
 
     protected String getLoadItemsErrorMessage()
     {
@@ -62,33 +56,63 @@ public class ActionPlansActivity extends IfThenListActivity
     }
 
     @Override
-    protected void loadItems() throws IOException, JSONException, ConversionException
+    protected ArrayList<IfThenPlan> loadItems() throws IOException, JSONException, ConversionException
     {
         ActionPlansStorage aps = new ActionPlansStorage( this );
         JSONArrayConverterActionPlan jc = new JSONArrayConverterActionPlan();
         aps.read( jc );
-        items = jc.getActionPlans();
+        ArrayList<ActionPlan> items = jc.getActionPlans();
+
+        ArrayList<IfThenPlan> returnArray = new ArrayList<>( items.size() );
+        for( ActionPlan p : items )
+        {
+            returnArray.add( p );
+        }
+        return returnArray;
     }
 
     @Override
     protected void saveItems() throws IOException, JSONException, ConversionException
     {
+        ArrayList<ActionPlan> plans = new ArrayList<>( items.size() );
+        for( IfThenPlan p : items )
+        {
+            plans.add( (ActionPlan) p );
+        }
         ActionPlansStorage aps = new ActionPlansStorage( this );
-        JSONArrayConverterActionPlan jc = new JSONArrayConverterActionPlan( items );
+        JSONArrayConverterActionPlan jc = new JSONArrayConverterActionPlan( plans );
         aps.write( jc );
     }
 
-    @Override
-    protected void deleteItems( ArrayList<Integer> deleteIndex )
-    {
-        for( int i = items.size() ; i >= 0  ; i-- )
-        {
-            if( deleteIndex.contains( i ) )
-            {
-                items.remove( i );
-            }
-        }
-    }
+//    @Override
+//    protected void copyItems( ArrayList<Integer> selectedItemsIndex )
+//    {
+//        ArrayList<ActionPlan> copies = new ArrayList<>();
+//        int existingSize = items.size();
+//        for( int i = 0; i < existingSize; i++ )
+//        {
+//            if( selectedItemsIndex.contains( i ) )
+//            {
+//                copies.add( items.get( i ).createCopyInCurrentWeek( existingSize + copies.size() ) );
+//            }
+//        }
+//        for( int i = 0 ; i < copies.size() ; i++ )
+//        {
+//            items.add( copies.get( i ) );
+//        }
+//    }
+//
+//    @Override
+//    protected void deleteItems( ArrayList<Integer> deleteIndex )
+//    {
+//        for( int i = items.size() ; i >= 0  ; i-- )
+//        {
+//            if( deleteIndex.contains( i ) )
+//            {
+//                items.remove( i );
+//            }
+//        }
+//    }
 
     @Override
     protected void putItemInIntent( Intent intent, int itemIndex )

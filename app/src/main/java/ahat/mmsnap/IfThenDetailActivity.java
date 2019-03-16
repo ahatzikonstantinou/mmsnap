@@ -493,7 +493,12 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
         if( ( (CheckBox) findViewById( R.id.day_fri_chk ) ).isChecked() ) { item.addDay( FRIDAY ); }
         if( ( (CheckBox) findViewById( R.id.day_sat_chk ) ).isChecked() ) { item.addDay( SATURDAY ); }
         if( ( (CheckBox) findViewById( R.id.day_sun_chk ) ).isChecked() ) { item.addDay( SUNDAY ); }
-        return "";
+
+        if( 0 == item.days.size() )
+        {
+            error += ( error.length() > 0 ? " and " : "" ) + "select at least one day to apply your plan";
+        }
+        return error;
     }
 
     private void save()
