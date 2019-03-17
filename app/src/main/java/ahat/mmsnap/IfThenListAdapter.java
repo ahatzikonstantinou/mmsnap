@@ -37,7 +37,7 @@ public class IfThenListAdapter extends ArrayAdapter
 
     public IfThenListAdapter( Activity context, ArrayList<? extends IfThenPlan> items, boolean menuAction )
     {
-        super( context, R.layout.counterfactual_list_item );
+        super( context, R.layout.action_plans_list_item );
 
         this.context = context;
         this.items   = items;
@@ -73,6 +73,7 @@ public class IfThenListAdapter extends ArrayAdapter
         TextView thenStatement = view.findViewById( R.id.item_then_statement );
         ImageView active = view.findViewById( R.id.counterfactual_list_item_active );
         ImageView inactive = view.findViewById( R.id.counterfactual_list_item_inactive );
+        ImageView expiredIcon = view.findViewById( R.id.counterfactual_list_item_expired );
         ImageView eating = view.findViewById( R.id.eating_image );
         ImageView activity = view.findViewById( R.id.activity_image );
         ImageView alcohol = view.findViewById( R.id.alcohol_image );
@@ -85,8 +86,11 @@ public class IfThenListAdapter extends ArrayAdapter
 
         thenStatement.setText( item.thenStatement );
 
-        active.setVisibility( item.active ? View.VISIBLE : View.GONE );
-        inactive.setVisibility( item.active ? View.GONE: View.VISIBLE );
+        Calendar expCal = Calendar.getInstance();
+        boolean expired = item.year < expCal.get( Calendar.YEAR ) || ( item.year == expCal.get( Calendar.YEAR ) && item.weekOfYear < expCal.get( Calendar.WEEK_OF_YEAR ) );
+        active.setVisibility( !expired && item.active ? View.VISIBLE : View.GONE );
+        inactive.setVisibility( !expired && item.active ? View.GONE: View.VISIBLE );
+        expiredIcon.setVisibility( expired ? View.VISIBLE : View.GONE );
 
         ImageView chk = view.findViewById( R.id.counterfactual_list_item_chk );
         chk.setVisibility( menuAction ? View.VISIBLE : View.GONE );

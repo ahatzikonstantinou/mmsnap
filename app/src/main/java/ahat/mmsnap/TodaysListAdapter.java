@@ -66,7 +66,7 @@ public class TodaysListAdapter extends ArrayAdapter
                 ( ( (ActionPlan) item ).copingIfStatement.trim().length() != 0 || ( (ActionPlan) item ).copingThenStatement.trim().length() != 0 )
             )
             {
-                text += " Also, <strong>IF</strong>&nbsp; " + ( (ActionPlan) item ).copingIfStatement.trim() + "&nbsp;<strong>THEN</strong>&nbsp;" +
+                text += "<br>Also, <strong>IF</strong>&nbsp; " + ( (ActionPlan) item ).copingIfStatement.trim() + "&nbsp;<strong>THEN</strong>&nbsp;" +
                         ( (ActionPlan) item ).copingThenStatement.trim() + ".";
             }
 

@@ -17,8 +17,6 @@ import ahat.mmsnap.Models.IfThenPlan;
 public class ActionPlansActivity extends IfThenListActivity
 {
 
-//    public static final String FILENAME = "action_plans.json";
-
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
@@ -83,36 +81,6 @@ public class ActionPlansActivity extends IfThenListActivity
         JSONArrayConverterActionPlan jc = new JSONArrayConverterActionPlan( plans );
         aps.write( jc );
     }
-
-//    @Override
-//    protected void copyItems( ArrayList<Integer> selectedItemsIndex )
-//    {
-//        ArrayList<ActionPlan> copies = new ArrayList<>();
-//        int existingSize = items.size();
-//        for( int i = 0; i < existingSize; i++ )
-//        {
-//            if( selectedItemsIndex.contains( i ) )
-//            {
-//                copies.add( items.get( i ).createCopyInCurrentWeek( existingSize + copies.size() ) );
-//            }
-//        }
-//        for( int i = 0 ; i < copies.size() ; i++ )
-//        {
-//            items.add( copies.get( i ) );
-//        }
-//    }
-//
-//    @Override
-//    protected void deleteItems( ArrayList<Integer> deleteIndex )
-//    {
-//        for( int i = items.size() ; i >= 0  ; i-- )
-//        {
-//            if( deleteIndex.contains( i ) )
-//            {
-//                items.remove( i );
-//            }
-//        }
-//    }
 
     @Override
     protected void putItemInIntent( Intent intent, int itemIndex )

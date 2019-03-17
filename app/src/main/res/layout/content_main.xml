@@ -87,7 +87,7 @@
         android:id="@+id/horizontal_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/holo_blue_dark"
+        android:background="@android:color/darker_gray"
         app:layout_constraintBottom_toTopOf="@+id/main_buttons_layout"
         app:layout_constraintStart_toStartOf="parent"/>
 
@@ -103,8 +103,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_main_today_24dp"
-            android:drawableTint="@android:color/holo_blue_dark"
-            android:textColor="@android:color/holo_blue_dark"
+            android:drawableTint="@android:color/primary_text_light"
+            android:textColor="@android:color/primary_text_light"
             android:background="@android:color/transparent"
             android:layout_weight="1"
             android:layout_margin="4dp"
@@ -113,15 +113,15 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@android:color/holo_blue_dark"/>
+            android:background="@android:color/darker_gray"/>
 
         <Button
             android:id="@+id/main_attention_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_main_attention_24dp"
-            android:drawableTint="@android:color/holo_blue_dark"
-            android:textColor="@android:color/holo_blue_dark"
+            android:drawableTint="@android:color/primary_text_light"
+            android:textColor="@android:color/primary_text_light"
             android:background="@android:color/transparent"
             android:layout_weight="1"
             android:layout_margin="4dp"
@@ -129,14 +129,14 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@android:color/holo_blue_dark"/>
+            android:background="@android:color/darker_gray"/>
         <Button
             android:id="@+id/main_sections_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_main_sections_24dp"
-            android:drawableTint="@android:color/holo_blue_dark"
-            android:textColor="@android:color/holo_blue_dark"
+            android:drawableTint="@android:color/primary_text_light"
+            android:textColor="@android:color/primary_text_light"
             android:background="@android:color/transparent"
             android:layout_weight="1"
             android:layout_margin="4dp"
