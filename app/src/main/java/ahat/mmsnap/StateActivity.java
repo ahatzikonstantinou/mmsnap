@@ -29,21 +29,33 @@ public class StateActivity extends AppCompatActivity
             ApplicationStatus status = ApplicationStatus.getInstance( this );
             if( ApplicationStatus.NotLoggedIn.NAME == status.getState().name() )
             {
-                startActivity( new Intent( this, LoginActivity.class ) );
+                if( 0 != getIntent().getComponent().getClassName().compareTo( LoginActivity.class.getName() ) )    // ahat: == does not work here, I don't know why
+                {
+                    startActivity( new Intent( this, LoginActivity.class ) );
+                }
             }
             else if( ApplicationStatus.NoInitialAssessments.NAME == status.getState().name() ||
                      ApplicationStatus.NoFinalAssessments.NAME == status.getState().name()
             )
             {
-                startActivity( new Intent( this, AssessmentsActivity.class ) );
+                if( 0 != getIntent().getComponent().getClassName().compareTo( AssessmentsActivity.class.getName() ) )    // ahat: == does not work here, I don't know why
+                {
+                    startActivity( new Intent( this, AssessmentsActivity.class ) );
+                }
             }
             else if( status.pendingWeeklyEvaluationsExist() )
             {
-                startActivity( new Intent( this, WeeklyEvaluationsListActivity.class ) );
+                if( 0 != getIntent().getComponent().getClassName().compareTo( WeeklyEvaluationsListActivity.class.getName() ) )    // ahat: == does not work here, I don't know why
+                {
+                    startActivity( new Intent( this, WeeklyEvaluationsListActivity.class ) );
+                }
             }
             else if( status.pendingDailyEvaluationsExist() )
             {
-                startActivity( new Intent( this, DailyEvaluationsListActivity.class ) );
+                if( 0 != getIntent().getComponent().getClassName().compareTo( DailyEvaluationsListActivity.class.getName() ) )    // ahat: == does not work here, I don't know why
+                {
+                    startActivity( new Intent( this, DailyEvaluationsListActivity.class ) );
+                }
             }
         }
         catch( Exception e )
