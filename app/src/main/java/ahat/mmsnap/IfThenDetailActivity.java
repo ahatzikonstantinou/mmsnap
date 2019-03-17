@@ -390,7 +390,8 @@ public abstract class IfThenDetailActivity extends AppCompatActivity
 
         Calendar now = Calendar.getInstance();
         // if the plan is passed it's week it can only be evaluated
-        if( now.get( Calendar.WEEK_OF_YEAR ) != item.weekOfYear || now.get( Calendar.YEAR ) != item.year )
+//        if( now.get( Calendar.WEEK_OF_YEAR ) != item.weekOfYear || now.get( Calendar.YEAR ) != item.year )
+        if( evaluationMode )
         {
             Calendar ic = Calendar.getInstance();
             ic.set( Calendar.YEAR, item.year );

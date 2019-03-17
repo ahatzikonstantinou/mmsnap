@@ -77,6 +77,18 @@ public abstract class IfThenPlan implements Serializable, Cloneable
 
     public abstract IfThenPlan createCopyInCurrentWeek( int newId );
 
+    public boolean hasDaysAfter( WeekDay weekDay )
+    {
+        for( Day day : days )
+        {
+            if( day.weekDay.ordinal() > weekDay.ordinal() )
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public enum WeekDay { MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY }
 
     public class Day implements Serializable

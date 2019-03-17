@@ -37,7 +37,8 @@ import ahat.mmsnap.Models.WeeklyEvaluation;
 public class ApplicationStatus
 {
 
-    int DurationDays = 40;
+    public static final int MIN_ACTIVE_PLANS_PER_WEEK = 5;
+    public static final int DURATION_DAYS = 40;
 
     enum Assessment { ILLNESS_PERCEPTION, HEALTH_RISK, SELF_EFFICACY, INTENTIONS, SELF_RATED_HEALTH }
 
@@ -502,7 +503,7 @@ public class ApplicationStatus
         {
             Calendar c = Calendar.getInstance();
             c.setTime( startDate );
-            c.add( Calendar.DATE, DurationDays );
+            c.add( Calendar.DATE, DURATION_DAYS );
             return c.after( new Date() );
         }
     }

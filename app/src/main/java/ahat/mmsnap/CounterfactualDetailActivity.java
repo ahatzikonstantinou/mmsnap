@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +17,7 @@ public class CounterfactualDetailActivity extends AppCompatActivity
 {
     private EditText thenText;
     private EditText ifText;
+    private Switch   activeSwitch;
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -25,12 +27,13 @@ public class CounterfactualDetailActivity extends AppCompatActivity
         Toolbar toolbar = findViewById( R.id.toolbar );
         setSupportActionBar( toolbar );
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
-        getSupportActionBar().setIcon( getResources().getDrawable( R.drawable.if_then_section_logo) );
+        getSupportActionBar().setIcon( getResources().getDrawable( R.drawable.if_then_section_logo, null ) );
         getSupportActionBar().setTitle( R.string.title_activity_if_then );
         getSupportActionBar().setSubtitle( R.string.title_activity_counterfactual );
 
         ifText = (EditText) findViewById( R.id.counterfactual_detail_if_statement );
         thenText = (EditText) findViewById( R.id.counterfactual_detail_then_statement );
+        activeSwitch = findViewById( R.id.counterfactual_detail_switch );
 
         try
         {
@@ -38,6 +41,7 @@ public class CounterfactualDetailActivity extends AppCompatActivity
 
             ifText.setText( as.counterfactualThought.ifStatement );
             thenText.setText( as.counterfactualThought.thenStatement );
+            activeSwitch.setChecked( as.counterfactualThought.active );
         }
         catch( Exception e )
         {
@@ -73,6 +77,7 @@ public class CounterfactualDetailActivity extends AppCompatActivity
                     ApplicationStatus as = ApplicationStatus.getInstance( view.getContext() );
                     as.counterfactualThought.ifStatement = ifStatement;
                     as.counterfactualThought.thenStatement = thenStatement;
+                    as.counterfactualThought.active = activeSwitch.isChecked();
                     as.save();
                     startActivity( new Intent( CounterfactualDetailActivity.this, IfThenActivity.class ) );
                 }

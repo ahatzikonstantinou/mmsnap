@@ -2,7 +2,12 @@ package ahat.mmsnap;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.SpannedString;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +21,20 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import ahat.mmsnap.Models.ActionPlan;
+import ahat.mmsnap.Models.IfThenPlan;
 
 public class TodaysListAdapter extends ArrayAdapter
 {
     @NonNull
     private final Activity context;
-    private final JSONArray items;
+    private final ArrayList<IfThenPlan> items;
 
-    public TodaysListAdapter( @NonNull Activity context, JSONArray items )
+    public TodaysListAdapter( @NonNull Activity context, ArrayList<IfThenPlan> items )
     {
         super( context, R.layout.todays_list_item );
         this.context = context;
@@ -35,7 +44,7 @@ public class TodaysListAdapter extends ArrayAdapter
     @Override
     public int getCount()
     {
-        return items.length();
+        return items.size();
     }
 
     @Override
@@ -43,29 +52,32 @@ public class TodaysListAdapter extends ArrayAdapter
     {
         LayoutInflater inflater = context.getLayoutInflater();
 
-        // Check if an existing view is being reused, otherwise inflate the view
-        if( null == view )
-        {
-            view = inflater.inflate( R.layout.todays_list_item, null,true );
-        }
+        view = inflater.inflate( R.layout.todays_list_item, null,true );
 
         TextView textView = view.findViewById( R.id.todays_list_item_text );
 
         //this code sets the values of the objects to values from the arrays
-        String text = "";
+
         try
         {
-            JSONObject item = ( JSONObject) items.get( position );
-
-            text = "IF " + item.getString( "if" ) +
-                   " THEN " + item.getString( "then" ) + ".";
-
-            if( item.getString( "coping_if" ).trim().length() != 0 || item.getString( "coping_then" ).trim().length() != 0 )
+            IfThenPlan item = items.get( position );
+            String text = "<strong>IF</strong>&nbsp;" + item.ifStatement + "&nbsp;<strong>THEN</strong>&nbsp;" + item.thenStatement + ".";
+            if( item instanceof ActionPlan &&
+                ( ( (ActionPlan) item ).copingIfStatement.trim().length() != 0 || ( (ActionPlan) item ).copingThenStatement.trim().length() != 0 )
+            )
             {
-                text += " Also, IF " + item.getString( "coping_if" ).trim() +
-                        " THEN " + item.getString( "coping_then" ).trim() + ".";
+                text += " Also, <strong>IF</strong>&nbsp; " + ( (ActionPlan) item ).copingIfStatement.trim() + "&nbsp;<strong>THEN</strong>&nbsp;" +
+                        ( (ActionPlan) item ).copingThenStatement.trim() + ".";
             }
-            textView.setText( text );
+
+            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            {
+                textView.setText( Html.fromHtml( text, Html.FROM_HTML_MODE_COMPACT ) );
+            }
+            else
+            {
+                textView.setText( Html.fromHtml( text ) );
+            }
         }
         catch( Exception e )
         {

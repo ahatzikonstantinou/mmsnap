@@ -1,128 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<FrameLayout-->
-    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--&gt;-->
-    <!--<ScrollView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/main_background_color"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    >
 
-    <Button
-        android:id="@+id/mmsnap_btn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginStart="30dp"
-        android:background="@drawable/mmsnap_btn_bkg"
-        android:drawableLeft="@drawable/mmsnap_btn_img"
-        android:drawableTint="#EFE4B0"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="@string/mm_snap_btn_text"
-        android:textColor="#EFE4B0"
-        android:textSize="35dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/assessments_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+    <FrameLayout
+        android:id="@+id/main_counterfactual_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHeight_default="wrap"
-        app:layout_constraintVertical_chainStyle="spread"/>
+        app:layout_constraintStart_toStartOf="parent">
+        <TextView
+                android:id="@+id/main_counterfactual"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/holo_blue_dark"
+                android:textColor="@android:color/primary_text_dark"
+                android:textSize="15sp"
+                android:text="If I had followed a healthier lifestyle I would have avoided the health problems I have"/>
+    </FrameLayout>
 
-    <Button
-        android:id="@+id/assessments_btn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/assessments_btn_bkg"
-        android:drawableLeft="@drawable/assessments_btn_img"
-        android:drawableTint="#EFE4B0"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="@string/assessments_btn_txt"
-        android:textColor="#EFE4B0"
-        android:textSize="35dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/education_btn"
-        app:layout_constraintEnd_toEndOf="@+id/mmsnap_btn"
-        app:layout_constraintHeight_default="wrap"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/mmsnap_btn"
-        app:layout_constraintTop_toBottomOf="@+id/mmsnap_btn"/>
+    <FrameLayout
+        android:id="@+id/main_message_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/main_counterfactual_layout"
+        app:layout_constraintStart_toStartOf="parent">
+        <TextView
+            android:id="@+id/main_message"
+            android:drawableLeft="@android:drawable/ic_dialog_alert"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/yellow_warning"
+            android:padding="8dp"
+            android:background="@android:color/black"
+            android:textColor="@android:color/primary_text_dark_nodisable"
+            android:text="Please ensure that there are at least 5 active plans in each week to maximize efficiency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
 
-    <Button
-        android:id="@+id/education_btn"
-        android:layout_width="0dp"
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/education_btn_bkg"
-        android:drawableLeft="@drawable/education_btn_img"
-        android:drawableTint="#EFE4B0"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="@string/education_btn_txt"
-        android:textColor="#EFE4B0"
-        android:textSize="35dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/if_then_btn"
-        app:layout_constraintEnd_toEndOf="@+id/assessments_btn"
-        app:layout_constraintHeight_default="wrap"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/assessments_btn"
-        app:layout_constraintTop_toBottomOf="@+id/assessments_btn"/>
+        android:fillViewport="true"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@+id/main_message_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/horizontal_divider">
 
-    <Button
-        android:id="@+id/if_then_btn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/if_then_btn_bkg"
-        android:drawableLeft="@drawable/if_then_btn_img"
-        android:drawableTint="#22B14C"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="@string/if_then_btn_txt"
-        android:textColor="#22B14C"
-        android:textSize="35dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/agents_btn"
-        app:layout_constraintEnd_toEndOf="@+id/education_btn"
-        app:layout_constraintHeight_default="wrap"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/education_btn"
-        app:layout_constraintTop_toBottomOf="@+id/education_btn"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/agents_btn"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/agents_btn_bkg"
-        android:drawableLeft="@drawable/agents_btn_img"
-        android:drawableTint="#EFE4B0"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="@string/agents_btn_txt"
-        android:textColor="#EFE4B0"
-        android:textSize="35dp"
-        android:textStyle="bold"
+            <include
+                android:id="@+id/main_today_layout"
+                layout="@layout/content_main_todays_plans"
+                android:visibility="gone"/>
+
+            <include
+                android:id="@+id/main_attention_layout"
+                layout="@layout/content_main_attention"
+                android:visibility="gone"/>
+
+            <include
+                android:id="@+id/main_sections_layout"
+                layout="@layout/content_main_sections"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <View
+        android:id="@+id/horizontal_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/holo_blue_dark"
+        app:layout_constraintBottom_toTopOf="@+id/main_buttons_layout"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/main_buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/if_then_btn"
-        app:layout_constraintHeight_default="wrap"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/if_then_btn"
-        app:layout_constraintTop_toBottomOf="@+id/if_then_btn"/>
+        app:layout_constraintStart_toStartOf="parent">
+        <Button
+            android:id="@+id/main_today_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_main_today_24dp"
+            android:drawableTint="@android:color/holo_blue_dark"
+            android:textColor="@android:color/holo_blue_dark"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:text="Today"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_blue_dark"/>
+
+        <Button
+            android:id="@+id/main_attention_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_main_attention_24dp"
+            android:drawableTint="@android:color/holo_blue_dark"
+            android:textColor="@android:color/holo_blue_dark"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:text="Attention"/>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_blue_dark"/>
+        <Button
+            android:id="@+id/main_sections_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_main_sections_24dp"
+            android:drawableTint="@android:color/holo_blue_dark"
+            android:textColor="@android:color/holo_blue_dark"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            android:layout_margin="4dp"
+            android:text="Sections"
+            />
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
-
-    <!--</ScrollView>-->
-<!--</FrameLayout>-->

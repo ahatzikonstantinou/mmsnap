@@ -60,7 +60,7 @@
                         android:id="@+id/end_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Mon 4 March 2019"
+                        android:text="Sunn 3 March 2019"
                         android:textColor="@android:color/primary_text_light"
                         android:textSize="15sp"/>
                 </LinearLayout>
