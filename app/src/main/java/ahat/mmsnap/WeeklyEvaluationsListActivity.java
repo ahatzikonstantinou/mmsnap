@@ -24,6 +24,13 @@ public class WeeklyEvaluationsListActivity extends AppCompatActivity
         Toolbar toolbar = findViewById( R.id.toolbar );
         setSupportActionBar( toolbar );
 
+        toolbar.setNavigationOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View view )
+            {
+                onBackPressed();
+            }
+        } );
         getSupportActionBar().setDisplayHomeAsUpEnabled( true );
 
         getSupportActionBar().setIcon( getResources().getDrawable( R.drawable.assessments_section_logo, null ) );

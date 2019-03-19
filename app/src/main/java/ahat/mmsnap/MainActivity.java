@@ -56,7 +56,7 @@ public class MainActivity extends StateActivity //AppCompatActivity
     private TextView counterfactualTextView;
     private Button educationButton;
     private Button ifThenButton;
-    private Button agentsButton;
+    private Button achievementsButton;
 
     private enum Display { TODAY, ATTENTION, SECTIONS };
 
@@ -116,8 +116,8 @@ public class MainActivity extends StateActivity //AppCompatActivity
         educationButton.setOnClickListener( this );
         ifThenButton = findViewById( R.id.if_then_btn );
         ifThenButton.setOnClickListener( this );
-        agentsButton = findViewById( R.id.agents_btn );
-        agentsButton.setOnClickListener( this );
+        achievementsButton = findViewById( R.id.achievements_btn );
+        achievementsButton.setOnClickListener( this );
 
         // the application starts with TODAY's plans in view
         show( Display.TODAY );
@@ -214,9 +214,9 @@ public class MainActivity extends StateActivity //AppCompatActivity
             {
                 show( Display.SECTIONS );
                 counterfactualTextView.setVisibility( View.GONE );
-                educationButton.setVisibility( View.GONE );
-                ifThenButton.setVisibility( View.GONE );
-                agentsButton.setVisibility( View.GONE );
+                educationButton.setVisibility( View.INVISIBLE );
+                ifThenButton.setVisibility( View.INVISIBLE );
+                achievementsButton.setVisibility( View.INVISIBLE );
                 findViewById( R.id.bottom_navigation ).setVisibility( View.GONE );
                 findViewById( R.id.main_message ).setVisibility( View.GONE );
             }
@@ -491,8 +491,8 @@ public class MainActivity extends StateActivity //AppCompatActivity
                 intent = new Intent(this, IfThenActivity.class);
                 startActivity( intent );
                 break;
-            case R.id.agents_btn:
-                intent = new Intent(this, AgentsActivity.class);
+            case R.id.achievements_btn:
+                intent = new Intent(this, AchievementsActivity.class);
                 startActivity( intent );
                 break;
             default:

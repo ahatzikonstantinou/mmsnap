@@ -97,4 +97,5 @@
     <string name="achievements">ACHIEVEMENTS</string>
     <string name="attention_frame_title">ATTENTION</string>
     <string name="main_subtitle_sections">SECTIONS</string>
+    <string name="achievements_btn_txt">ACHIEVEMENTS</string>
 </resources>

@@ -14,6 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".AchievementsActivity"
+            android:label="@string/title_activity_achievements"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.MainActivity"/>
+        </activity>
+        <activity
             android:name=".DailyEvaluationsDetailActivity"
             android:label="@string/title_activity_daily_evaluations_detail"
             android:parentActivityName=".DailyEvaluationsListActivity"
