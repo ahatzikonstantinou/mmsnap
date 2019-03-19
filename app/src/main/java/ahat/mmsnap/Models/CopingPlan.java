@@ -9,7 +9,8 @@ import ahat.mmsnap.ApplicationStatus;
 public class CopingPlan extends IfThenPlan implements Serializable, Cloneable
 {
     public CopingPlan( int id, String ifStatement, String thenStatement, Boolean active, int year, int weekOfYear,
-                       ArrayList<ApplicationStatus.Behavior> targetBehaviors, ArrayList<Day> days )
+//                       ArrayList<ApplicationStatus.Behavior> targetBehaviors, ArrayList<Day> days )
+                       ArrayList<ApplicationStatus.Behavior> targetBehaviors, ArrayList<WeekDay> days )
     {
         super( id, ifStatement, thenStatement, active, year, weekOfYear, targetBehaviors, days );
     }

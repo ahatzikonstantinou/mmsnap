@@ -5,12 +5,13 @@ import org.json.JSONObject;
 
 import ahat.mmsnap.Models.ActionPlan;
 import ahat.mmsnap.Models.ConversionException;
+import ahat.mmsnap.Models.IfThenPlan;
 
-public class JSONConverterActionPlan extends JSONObjectConverter
+public class JSONConverterActionPlan extends JSONIfThenPlanConverter
 {
 
     private ActionPlan plan;
-    public ActionPlan getPlan()
+    public IfThenPlan getPlan()
     {
         return plan;
     }

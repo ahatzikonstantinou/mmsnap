@@ -44,6 +44,15 @@ public class IfThenListAdapter extends ArrayAdapter
         this.menuAction = menuAction;
     }
 
+    public IfThenListAdapter( Activity context )
+    {
+        super( context, R.layout.action_plans_list_item );
+
+        this.context = context;
+        this.items   = new ArrayList<>(0);
+        this.menuAction = false;
+    }
+
     @Override
     public int getCount(){ return items.size(); }
 
@@ -80,7 +89,7 @@ public class IfThenListAdapter extends ArrayAdapter
         ImageView smoking = view.findViewById( R.id.smoking_image );
 
         //this code sets the values of the objects to values from the arrays
-        IfThenPlan item = items.get( position );
+        IfThenPlan item = getIfThenPlan( position );
 
         ifStatement.setText( item.ifStatement );
 
@@ -129,32 +138,32 @@ public class IfThenListAdapter extends ArrayAdapter
         view.findViewById( R.id.sat_layout ).setVisibility( item.hasDay( SATURDAY ) ? View.VISIBLE : View.GONE );
         view.findViewById( R.id.sun_layout ).setVisibility( item.hasDay( SUNDAY ) ? View.VISIBLE : View.GONE );
 
-        if( item.isEvaluated() )
-        {
-            view.findViewById( R.id.day_mon_check_img ).setVisibility( item.isEvaluated( MONDAY ) && item.isSuccessful( MONDAY ) ? View.VISIBLE : View.GONE );
-            view.findViewById( R.id.day_tue_check_img ).setVisibility( item.isEvaluated( TUESDAY ) && item.isSuccessful( TUESDAY ) ? View.VISIBLE : View.GONE );
-            view.findViewById( R.id.day_wed_check_img ).setVisibility( item.isEvaluated( WEDNESDAY ) && item.isSuccessful( WEDNESDAY ) ? View.VISIBLE : View.GONE );
-            view.findViewById( R.id.day_thu_check_img ).setVisibility( item.isEvaluated( THURSDAY ) && item.isSuccessful( THURSDAY ) ? View.VISIBLE : View.GONE );
-            view.findViewById( R.id.day_fri_check_img ).setVisibility( item.isEvaluated( FRIDAY ) && item.isSuccessful( FRIDAY ) ? View.VISIBLE : View.GONE );
-            view.findViewById( R.id.day_sat_check_img ).setVisibility( item.isEvaluated( SATURDAY ) && item.isSuccessful( SATURDAY ) ? View.VISIBLE : View.GONE );
-            view.findViewById( R.id.day_sun_check_img ).setVisibility( item.isEvaluated( SUNDAY ) && item.isSuccessful( SUNDAY ) ? View.VISIBLE : View.GONE );
-            view.findViewById( R.id.day_mon_fail_img ).setVisibility( item.isEvaluated( MONDAY ) && !item.isSuccessful( MONDAY ) ? View.VISIBLE : View.GONE );
-            view.findViewById( R.id.day_tue_fail_img ).setVisibility( item.isEvaluated( TUESDAY ) && !item.isSuccessful( TUESDAY ) ? View.VISIBLE : View.GONE );
-            view.findViewById( R.id.day_wed_fail_img ).setVisibility( item.isEvaluated( WEDNESDAY ) && !item.isSuccessful( WEDNESDAY ) ? View.VISIBLE : View.GONE );
-            view.findViewById( R.id.day_thu_fail_img ).setVisibility( item.isEvaluated( THURSDAY ) && !item.isSuccessful( THURSDAY ) ? View.VISIBLE : View.GONE );
-            view.findViewById( R.id.day_fri_fail_img ).setVisibility( item.isEvaluated( FRIDAY ) && !item.isSuccessful( FRIDAY ) ? View.VISIBLE : View.GONE );
-            view.findViewById( R.id.day_sat_fail_img ).setVisibility( item.isEvaluated( SATURDAY ) && !item.isSuccessful( SATURDAY ) ? View.VISIBLE : View.GONE );
-            view.findViewById( R.id.day_sun_fail_img ).setVisibility( item.isEvaluated( SUNDAY ) && !item.isSuccessful( SUNDAY ) ? View.VISIBLE : View.GONE );
-        }
-
-        Drawable highlightBkg = view.getResources().getDrawable( R.drawable.custom_radio_highglight, null );
-        if( item.hasDay( MONDAY ) && item.dayHasPassed( MONDAY ) && !item.isEvaluated( MONDAY ) ) { view.findViewById( R.id.day_mon_chk ).setBackground( highlightBkg  ); }
-        if( item.hasDay( TUESDAY ) && item.dayHasPassed( TUESDAY ) && !item.isEvaluated( TUESDAY ) ) { view.findViewById( R.id.day_tue_chk ).setBackground( highlightBkg  ); }
-        if( item.hasDay( WEDNESDAY ) && item.dayHasPassed( WEDNESDAY ) && !item.isEvaluated( WEDNESDAY ) ) { view.findViewById( R.id.day_wed_chk ).setBackground( highlightBkg  ); }
-        if( item.hasDay( THURSDAY ) && item.dayHasPassed( THURSDAY ) && !item.isEvaluated( THURSDAY ) ) { view.findViewById( R.id.day_thu_chk ).setBackground( highlightBkg  ); }
-        if( item.hasDay( FRIDAY ) && item.dayHasPassed( FRIDAY ) && !item.isEvaluated( FRIDAY ) ) { view.findViewById( R.id.day_fri_chk ).setBackground( highlightBkg  ); }
-        if( item.hasDay( SATURDAY ) && item.dayHasPassed( SATURDAY ) && !item.isEvaluated( SATURDAY ) ) { view.findViewById( R.id.day_sat_chk ).setBackground( highlightBkg  ); }
-        if( item.hasDay( SUNDAY ) && item.dayHasPassed( SUNDAY ) && !item.isEvaluated( SUNDAY ) ) { view.findViewById( R.id.day_sun_chk ).setBackground( highlightBkg  ); }
+//        if( item.isEvaluated() )
+//        {
+//            view.findViewById( R.id.day_mon_check_img ).setVisibility( item.isEvaluated( MONDAY ) && item.isSuccessful( MONDAY ) ? View.VISIBLE : View.GONE );
+//            view.findViewById( R.id.day_tue_check_img ).setVisibility( item.isEvaluated( TUESDAY ) && item.isSuccessful( TUESDAY ) ? View.VISIBLE : View.GONE );
+//            view.findViewById( R.id.day_wed_check_img ).setVisibility( item.isEvaluated( WEDNESDAY ) && item.isSuccessful( WEDNESDAY ) ? View.VISIBLE : View.GONE );
+//            view.findViewById( R.id.day_thu_check_img ).setVisibility( item.isEvaluated( THURSDAY ) && item.isSuccessful( THURSDAY ) ? View.VISIBLE : View.GONE );
+//            view.findViewById( R.id.day_fri_check_img ).setVisibility( item.isEvaluated( FRIDAY ) && item.isSuccessful( FRIDAY ) ? View.VISIBLE : View.GONE );
+//            view.findViewById( R.id.day_sat_check_img ).setVisibility( item.isEvaluated( SATURDAY ) && item.isSuccessful( SATURDAY ) ? View.VISIBLE : View.GONE );
+//            view.findViewById( R.id.day_sun_check_img ).setVisibility( item.isEvaluated( SUNDAY ) && item.isSuccessful( SUNDAY ) ? View.VISIBLE : View.GONE );
+//            view.findViewById( R.id.day_mon_fail_img ).setVisibility( item.isEvaluated( MONDAY ) && !item.isSuccessful( MONDAY ) ? View.VISIBLE : View.GONE );
+//            view.findViewById( R.id.day_tue_fail_img ).setVisibility( item.isEvaluated( TUESDAY ) && !item.isSuccessful( TUESDAY ) ? View.VISIBLE : View.GONE );
+//            view.findViewById( R.id.day_wed_fail_img ).setVisibility( item.isEvaluated( WEDNESDAY ) && !item.isSuccessful( WEDNESDAY ) ? View.VISIBLE : View.GONE );
+//            view.findViewById( R.id.day_thu_fail_img ).setVisibility( item.isEvaluated( THURSDAY ) && !item.isSuccessful( THURSDAY ) ? View.VISIBLE : View.GONE );
+//            view.findViewById( R.id.day_fri_fail_img ).setVisibility( item.isEvaluated( FRIDAY ) && !item.isSuccessful( FRIDAY ) ? View.VISIBLE : View.GONE );
+//            view.findViewById( R.id.day_sat_fail_img ).setVisibility( item.isEvaluated( SATURDAY ) && !item.isSuccessful( SATURDAY ) ? View.VISIBLE : View.GONE );
+//            view.findViewById( R.id.day_sun_fail_img ).setVisibility( item.isEvaluated( SUNDAY ) && !item.isSuccessful( SUNDAY ) ? View.VISIBLE : View.GONE );
+//        }
+//
+//        Drawable highlightBkg = view.getResources().getDrawable( R.drawable.custom_radio_highglight, null );
+//        if( item.hasDay( MONDAY ) && item.dayHasPassed( MONDAY ) && !item.isEvaluated( MONDAY ) ) { view.findViewById( R.id.day_mon_chk ).setBackground( highlightBkg  ); }
+//        if( item.hasDay( TUESDAY ) && item.dayHasPassed( TUESDAY ) && !item.isEvaluated( TUESDAY ) ) { view.findViewById( R.id.day_tue_chk ).setBackground( highlightBkg  ); }
+//        if( item.hasDay( WEDNESDAY ) && item.dayHasPassed( WEDNESDAY ) && !item.isEvaluated( WEDNESDAY ) ) { view.findViewById( R.id.day_wed_chk ).setBackground( highlightBkg  ); }
+//        if( item.hasDay( THURSDAY ) && item.dayHasPassed( THURSDAY ) && !item.isEvaluated( THURSDAY ) ) { view.findViewById( R.id.day_thu_chk ).setBackground( highlightBkg  ); }
+//        if( item.hasDay( FRIDAY ) && item.dayHasPassed( FRIDAY ) && !item.isEvaluated( FRIDAY ) ) { view.findViewById( R.id.day_fri_chk ).setBackground( highlightBkg  ); }
+//        if( item.hasDay( SATURDAY ) && item.dayHasPassed( SATURDAY ) && !item.isEvaluated( SATURDAY ) ) { view.findViewById( R.id.day_sat_chk ).setBackground( highlightBkg  ); }
+//        if( item.hasDay( SUNDAY ) && item.dayHasPassed( SUNDAY ) && !item.isEvaluated( SUNDAY ) ) { view.findViewById( R.id.day_sun_chk ).setBackground( highlightBkg  ); }
 
         if( item instanceof ActionPlan )
         {
@@ -178,6 +187,11 @@ public class IfThenListAdapter extends ArrayAdapter
             view.findViewById( R.id.coping_plan_layout ).setVisibility( View.GONE );
         }
         return view;
+    }
+
+    protected IfThenPlan getIfThenPlan( int position )
+    {
+        return items.get( position );
     }
 
 }

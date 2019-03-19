@@ -39,7 +39,7 @@
         app:layout_constraintStart_toStartOf="parent">
         <TextView
             android:id="@+id/main_message"
-            android:drawableLeft="@android:drawable/ic_dialog_alert"
+            android:drawableStart="@android:drawable/ic_dialog_alert"
             android:drawablePadding="10dp"
             android:drawableTint="@color/yellow_warning"
             android:padding="8dp"
@@ -57,7 +57,7 @@
         android:layout_marginTop="5dp"
         app:layout_constraintTop_toBottomOf="@+id/main_message_layout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/horizontal_divider">
+        app:layout_constraintBottom_toTopOf="@+id/main_navigation_layout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,66 +83,74 @@
 
     </ScrollView>
 
-    <View
-        android:id="@+id/horizontal_divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintBottom_toTopOf="@+id/main_buttons_layout"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <LinearLayout
-        android:id="@+id/main_buttons_layout"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/main_navigation_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-        <Button
-            android:id="@+id/main_today_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/ic_main_today_24dp"
-            android:drawableTint="@android:color/primary_text_light"
-            android:textColor="@android:color/primary_text_light"
-            android:background="@android:color/transparent"
-            android:layout_weight="1"
-            android:layout_margin="4dp"
-            android:text="Today"/>
-
+        >
         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray"/>
+            android:id="@+id/horizontal_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintBottom_toTopOf="@+id/main_buttons_layout"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-        <Button
-            android:id="@+id/main_attention_btn"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/main_buttons_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableTop="@drawable/ic_main_attention_24dp"
-            android:drawableTint="@android:color/primary_text_light"
-            android:textColor="@android:color/primary_text_light"
-            android:background="@android:color/transparent"
-            android:layout_weight="1"
-            android:layout_margin="4dp"
-            android:text="Attention"/>
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray"/>
-        <Button
-            android:id="@+id/main_sections_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableTop="@drawable/ic_main_sections_24dp"
-            android:drawableTint="@android:color/primary_text_light"
-            android:textColor="@android:color/primary_text_light"
-            android:background="@android:color/transparent"
-            android:layout_weight="1"
-            android:layout_margin="4dp"
-            android:text="Sections"
-            />
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <Button
+                android:id="@+id/main_today_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_main_today_24dp"
+                android:drawableTint="@android:color/primary_text_light"
+                android:textColor="@android:color/primary_text_light"
+                android:background="@android:color/transparent"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:text="Today"/>
 
-    </LinearLayout>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"/>
+
+            <Button
+                android:id="@+id/main_attention_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_main_attention_24dp"
+                android:drawableTint="@android:color/primary_text_light"
+                android:textColor="@android:color/primary_text_light"
+                android:background="@android:color/transparent"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:text="Attention"/>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"/>
+            <Button
+                android:id="@+id/main_sections_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_main_sections_24dp"
+                android:drawableTint="@android:color/primary_text_light"
+                android:textColor="@android:color/primary_text_light"
+                android:background="@android:color/transparent"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:text="Sections"
+                />
+
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

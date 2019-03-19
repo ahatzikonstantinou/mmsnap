@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item>
+        <!--for some unknown reason it seems that putting the ic_dialog icon in a bitmap makes it grey as inactive
+        and then I have to paint it-->
+        <bitmap android:src="@android:drawable/ic_dialog_alert" />
+    </item>
+</layer-list>

@@ -5,7 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Switch;
 
 public abstract class MassDisableActivity extends AssessmentSubSectionActivity //AppCompatActivity
 {
@@ -18,6 +20,10 @@ public abstract class MassDisableActivity extends AssessmentSubSectionActivity /
             {
                 child.setEnabled(enable);
                 ( (Button) child ).setTextColor( getResources().getColor( android.R.color.primary_text_light, null ) ); //maintain dark color instead of grey for checkboxes and radiobuttons
+            }
+            else if( child instanceof EditText || child instanceof Switch )
+            {
+                child.setEnabled( false );
             }
             if( child instanceof ViewGroup )
             {

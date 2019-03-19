@@ -14,6 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".DailyEvaluationsDetailActivity"
+            android:label="@string/title_activity_daily_evaluations_detail"
+            android:parentActivityName=".DailyEvaluationsListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ahat.mmsnap.DailyEvaluationsListActivity"/>
+        </activity>
+        <activity
             android:name=".DailyEvaluationsListActivity"
             android:label="@string/title_activity_daily_evaluations_list"
             android:parentActivityName=".IfThenActivity"
@@ -213,6 +222,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <action android:name="android.intent.action.VIEW"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>

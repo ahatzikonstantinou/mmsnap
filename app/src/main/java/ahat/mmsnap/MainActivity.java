@@ -13,13 +13,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,12 +37,9 @@ import ahat.mmsnap.JSON.JSONArrayConverterCopingPlan;
 import ahat.mmsnap.Models.ActionPlan;
 import ahat.mmsnap.Models.ConversionException;
 import ahat.mmsnap.Models.CopingPlan;
+import ahat.mmsnap.Models.DailyEvaluation;
 import ahat.mmsnap.Models.IfThenPlan;
 
-import static ahat.mmsnap.ApplicationStatus.Behavior.ACTIVITY;
-import static ahat.mmsnap.ApplicationStatus.Behavior.ALCOHOL;
-import static ahat.mmsnap.ApplicationStatus.Behavior.DIET;
-import static ahat.mmsnap.ApplicationStatus.Behavior.SMOKING;
 import static ahat.mmsnap.Models.IfThenPlan.WeekDay.MONDAY;
 import static ahat.mmsnap.Models.IfThenPlan.WeekDay.SATURDAY;
 import static ahat.mmsnap.Models.IfThenPlan.WeekDay.SUNDAY;
@@ -54,6 +50,11 @@ import static ahat.mmsnap.Models.IfThenPlan.WeekDay.WEDNESDAY;
 public class MainActivity extends StateActivity //AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener, android.view.View.OnClickListener
 {
+
+    private TextView counterfactualTextView;
+    private Button educationButton;
+    private Button ifThenButton;
+    private Button agentsButton;
 
     private enum Display { TODAY, ATTENTION, SECTIONS };
 
@@ -66,6 +67,8 @@ public class MainActivity extends StateActivity //AppCompatActivity
         setSupportActionBar( toolbar );
 
         getSupportActionBar().setTitle( R.string.title_activity_mmsnap );
+
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled( true);
 
         DrawerLayout drawer = findViewById( R.id.drawer_layout );
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -81,11 +84,11 @@ public class MainActivity extends StateActivity //AppCompatActivity
         mmsnapButton.setOnClickListener( this );
         Button assessmentsButton = findViewById( R.id.assessments_btn );
         assessmentsButton.setOnClickListener( this );
-        Button educationButton = findViewById( R.id.education_btn );
+        educationButton = findViewById( R.id.education_btn );
         educationButton.setOnClickListener( this );
-        Button ifThenButton = findViewById( R.id.if_then_btn );
+        ifThenButton = findViewById( R.id.if_then_btn );
         ifThenButton.setOnClickListener( this );
-        Button agentsButton = findViewById( R.id.agents_btn );
+        agentsButton = findViewById( R.id.agents_btn );
         agentsButton.setOnClickListener( this );
 
         findViewById( R.id.main_today_btn ).setOnClickListener( this );
@@ -98,8 +101,9 @@ public class MainActivity extends StateActivity //AppCompatActivity
         try
         {
             // setup the counterfactual thought message
-            TextView counterfactualTextView = findViewById( R.id.main_counterfactual );
+            counterfactualTextView = findViewById( R.id.main_counterfactual );
             ApplicationStatus as = ApplicationStatus.getInstance( this );
+
             if( as.counterfactualThought.active && as.counterfactualThought.ifStatement.trim().length() > 0 && as.counterfactualThought.thenStatement.trim().length() > 0 )
             {
                 String text  = "<strong>IF</strong>&nbsp;" + as.counterfactualThought.ifStatement +
@@ -139,6 +143,7 @@ public class MainActivity extends StateActivity //AppCompatActivity
                 list.setAdapter( adapter );
 
                 // setup attention
+                Calendar todayCal = Calendar.getInstance();
                 for( ApplicationStatus.Behavior behavior : ApplicationStatus.Behavior.values() )
                 {
                     if( as.problematicBehaviors.contains( behavior ) )
@@ -146,9 +151,9 @@ public class MainActivity extends StateActivity //AppCompatActivity
                         makeAttentionBehaviorVisible( behavior );
                         int totalPlans = countTotalPlans( weekPlans, behavior );
                         int remainingPlans = countRemainingPlans( weekPlans, behavior );
-                        int completedPlans = countCompletedPlans( weekPlans, behavior );
+                        int successfulPlans = countSuccessfulWeekEvaluations( as.dailyEvaluations, todayCal.get( Calendar.WEEK_OF_YEAR ), behavior );
                         setRemainingText( totalPlans, remainingPlans, behavior );
-                        setTargetText( completedPlans, ApplicationStatus.MIN_ACTIVE_PLANS_PER_WEEK, behavior );
+                        setTargetText( successfulPlans, ApplicationStatus.MIN_ACTIVE_PLANS_PER_WEEK, behavior );
                     }
                 }
             }
@@ -159,6 +164,7 @@ public class MainActivity extends StateActivity //AppCompatActivity
                         .show();
             }
 
+            applyLocalStatePolicy();
         }
         catch( Exception e )
         {
@@ -174,7 +180,37 @@ public class MainActivity extends StateActivity //AppCompatActivity
 
     }
 
-    private void setTargetText( int completedPlans, int targetPlans, ApplicationStatus.Behavior behavior )
+    private void applyLocalStatePolicy()
+    {
+        try
+        {
+            ApplicationStatus as = ApplicationStatus.getInstance( this );
+            if( ApplicationStatus.NoInitialAssessments.NAME.equals( as.getState().name() ) ||
+                ApplicationStatus.NoFinalAssessments.NAME.equals( as.getState().name() ) )
+            {
+                show( Display.SECTIONS );
+                counterfactualTextView.setVisibility( View.GONE );
+                educationButton.setVisibility( View.GONE );
+                ifThenButton.setVisibility( View.GONE );
+                agentsButton.setVisibility( View.GONE );
+                findViewById( R.id.main_navigation_layout ).setVisibility( View.GONE );
+                findViewById( R.id.main_message ).setVisibility( View.GONE );
+            }
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            Snackbar.make( findViewById( android.R.id.content ), "Could not load application status", Snackbar.LENGTH_INDEFINITE )
+                    .setAction( "RETRY", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            startActivity( getIntent() );
+                        }
+                    } ).show();
+        }
+    }
+
+    private void setTargetText( int successfulPlans, int targetPlans, ApplicationStatus.Behavior behavior )
     {
         TextView textView = null;
         switch( behavior )
@@ -193,7 +229,7 @@ public class MainActivity extends StateActivity //AppCompatActivity
                 break;
         }
 
-        int missingPlans = completedPlans > targetPlans ? 0 : targetPlans - completedPlans;
+        int missingPlans = successfulPlans > targetPlans ? 0 : targetPlans - successfulPlans;
         boolean achieved = false;
         String text = "You need to meet " + String.valueOf( missingPlans ) + " more plans to achieve this week's target.";
         if( 0 == missingPlans )
@@ -250,7 +286,7 @@ public class MainActivity extends StateActivity //AppCompatActivity
         boolean complete = false;
         if( 0 == totalPlans )
         {
-            text = "You had <strong>NO</strong> plans in this week!";
+            text = "You have <strong>NO</strong> plans in this week!";
             error = true;
         }
         else if( 0 == remainingPlans )
@@ -278,7 +314,7 @@ public class MainActivity extends StateActivity //AppCompatActivity
         if( error )
         {
             Drawable warning = ContextCompat.getDrawable( this, android.R.drawable.ic_dialog_alert );
-            warning.setColorFilter(new PorterDuffColorFilter( getResources().getColor( R.color.yellow_warning, null ), PorterDuff.Mode.MULTIPLY));
+            warning.setColorFilter(new PorterDuffColorFilter( getResources().getColor( R.color.yellow_warning ), PorterDuff.Mode.MULTIPLY));
             textView.setCompoundDrawablesRelativeWithIntrinsicBounds( warning, null, null, null );
         }
         else if( complete )
@@ -295,26 +331,21 @@ public class MainActivity extends StateActivity //AppCompatActivity
         {
             if( plan.isTarget( behavior ) )
             {
-                for( IfThenPlan.Day day: plan.days )
-                {
-                    count++;
-                }
+                count += plan.days.size();
             }
         }
         return count;
     }
 
-    private int countCompletedPlans( ArrayList<IfThenPlan> weekPlans, ApplicationStatus.Behavior behavior )
+    private int countSuccessfulWeekEvaluations( ArrayList<DailyEvaluation> evaluations, int weekOfYear, ApplicationStatus.Behavior behavior )
     {
         int count = 0;
-        for( IfThenPlan plan : weekPlans )
+
+        for( DailyEvaluation evaluation : evaluations )
         {
-            for( IfThenPlan.Day day : plan.days )
+            if( evaluation.plan.isTarget( behavior ) && evaluation.plan.weekOfYear == weekOfYear && evaluation.isSuccessful() )
             {
-                if( day.isEvaluated() && day.isSuccessful() )
-                {
-                    count++;
-                }
+                count++;
             }
         }
         return count;
@@ -328,9 +359,9 @@ public class MainActivity extends StateActivity //AppCompatActivity
         {
             if( plan.isTarget( behavior ) )
             {
-                for( IfThenPlan.Day day : plan.days )
+                for( IfThenPlan.WeekDay day : plan.days )
                 {
-                    if( day.getWeekDay().ordinal() >= today.ordinal() )
+                    if( day.ordinal() >= today.ordinal() )
                     {
                         count++;
                     }
@@ -347,13 +378,13 @@ public class MainActivity extends StateActivity //AppCompatActivity
             case DIET:
                 findViewById( R.id.diet_layout ).setVisibility( View.VISIBLE );
                 break;
-            case ACTIVITY:
+            case SMOKING:
                 findViewById( R.id.smoking_layout ).setVisibility( View.VISIBLE );
                 break;
-            case ALCOHOL:
+            case ACTIVITY:
                 findViewById( R.id.physical_activity_layout ).setVisibility( View.VISIBLE );
                 break;
-            case SMOKING:
+            case ALCOHOL:
                 findViewById( R.id.alcohol_layout ).setVisibility( View.VISIBLE );
                 break;
         }

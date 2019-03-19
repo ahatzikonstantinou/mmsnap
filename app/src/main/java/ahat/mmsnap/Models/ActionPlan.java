@@ -13,7 +13,9 @@ public class ActionPlan extends IfThenPlan implements Serializable, Cloneable
     public String copingIfStatement = "";
     public String copingThenStatement = "";
 
-    public ActionPlan( int id, String ifStatement, String thenStatement, String copingIf, String copingThen, boolean active, int year, int weekOfYear, ArrayList<ApplicationStatus.Behavior> targetBehaviors, ArrayList<Day> days )
+    public ActionPlan( int id, String ifStatement, String thenStatement, String copingIf, String copingThen, boolean active, int year,
+//                       int weekOfYear, ArrayList<ApplicationStatus.Behavior> targetBehaviors, ArrayList<Day> days )
+                       int weekOfYear, ArrayList<ApplicationStatus.Behavior> targetBehaviors, ArrayList<WeekDay> days )
     {
         super( id, ifStatement, thenStatement, active, year, weekOfYear, targetBehaviors, days );
         copingIfStatement = copingIf;

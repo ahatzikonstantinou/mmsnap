@@ -26,7 +26,7 @@ public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatA
     {
         return R.id.coping_plans_root_layout;
     }
-    @Override protected Class<?> getListActivityClass() { return evaluationMode ? DailyEvaluationsListActivity.class : CopingPlansActivity.class; }
+    @Override protected Class<?> getListActivityClass() { return CopingPlansActivity.class; }
 
     @Override
     protected String getSaveErrorMessage()
@@ -46,14 +46,7 @@ public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatA
 
     public void onBackPressed()
     {
-        if( evaluationMode )
-        {
-            startActivity( new Intent( this, DailyEvaluationsListActivity.class ) );
-        }
-        else
-        {
-            startActivity( new Intent( this, CopingPlansActivity.class ) );
-        }
+        startActivity( new Intent( this, CopingPlansActivity.class ) );
     }
 
     @Override

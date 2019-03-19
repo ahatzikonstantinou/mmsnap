@@ -21,14 +21,19 @@ import java.util.Date;
 
 import ahat.mmsnap.JSON.ActionPlansStorage;
 import ahat.mmsnap.JSON.CopingPlansStorage;
+import ahat.mmsnap.JSON.DailyEvaluationsStorage;
+import ahat.mmsnap.JSON.JSONArrayConverter;
 import ahat.mmsnap.JSON.JSONArrayConverterActionPlan;
 import ahat.mmsnap.JSON.JSONArrayConverterCopingPlan;
+import ahat.mmsnap.JSON.JSONArrayConverterDailyEvaluation;
 import ahat.mmsnap.JSON.JSONArrayConverterWeeklyEvaluation;
 import ahat.mmsnap.JSON.WeeklyEvaluationsStorage;
 import ahat.mmsnap.Models.ActionPlan;
 import ahat.mmsnap.Models.ConversionException;
 import ahat.mmsnap.Models.CopingPlan;
 import ahat.mmsnap.Models.CounterfactualThought;
+import ahat.mmsnap.Models.DailyEvaluation;
+import ahat.mmsnap.Models.IfThenPlan;
 import ahat.mmsnap.Models.WeeklyEvaluation;
 
 /*
@@ -121,6 +126,7 @@ public class ApplicationStatus
         selfEfficacy = new SelfEfficacy();
         StateFactory f = new StateFactory( this );
         state = f.create( NotLoggedIn.NAME );
+        dailyEvaluations = new ArrayList<>();
         weeklyEvaluations = new ArrayList<>();
         counterfactualThought = new CounterfactualThought();
     }
@@ -132,6 +138,7 @@ public class ApplicationStatus
         selfEfficacy = new SelfEfficacy();
         StateFactory f = new StateFactory( this );
         this.state = f.create( stateNAME );
+        dailyEvaluations = new ArrayList<>();
         weeklyEvaluations = new ArrayList<>();
         counterfactualThought = new CounterfactualThought();
     }
@@ -150,33 +157,58 @@ public class ApplicationStatus
         return instance;
     }
 
+    public ArrayList<DailyEvaluation> dailyEvaluations;
+
     public boolean pendingDailyEvaluationsExist() throws IOException, JSONException, ConversionException
     {
-        ActionPlansStorage aps = new ActionPlansStorage( context );
+        int before = dailyEvaluations.size();
+
         JSONArrayConverterActionPlan jacap = new JSONArrayConverterActionPlan();
+        ActionPlansStorage aps = new ActionPlansStorage( context );
         aps.read( jacap );
-        for( int i = 0 ; i < jacap.getActionPlans().size() ; i++ )
+
+        JSONArrayConverterCopingPlan jaccp = new JSONArrayConverterCopingPlan();
+        CopingPlansStorage cps = new CopingPlansStorage( context );
+        cps.read( jaccp );
+
+        ArrayList<IfThenPlan> plans = new ArrayList<>();
+        for( ActionPlan actionPlan : jacap.getActionPlans() )
         {
-            ActionPlan p = jacap.getActionPlans().get( i );
-            if( p.needsEvaluation() )
+            plans.add( actionPlan );
+        }
+        for( CopingPlan copingPlan: jaccp.getCopingPlans() )
+        {
+            plans.add( copingPlan );
+        }
+
+        dailyEvaluations = DailyEvaluation.createMissing( dailyEvaluations, plans );
+
+        if( before != dailyEvaluations.size() )
+        {
+            DailyEvaluationsStorage storage = new DailyEvaluationsStorage( context );
+            storage.write( new JSONArrayConverterDailyEvaluation( dailyEvaluations ) );
+        }
+
+        return DailyEvaluation.pendingExist( dailyEvaluations );
+    }
+
+    public void scoreDailyEvaluation( int id, boolean success )
+        throws Exception
+    {
+        for( int i = 0 ; i < dailyEvaluations.size() ; i++ )
+        {
+            DailyEvaluation evaluation = dailyEvaluations.get( i );
+            if( id == evaluation.id )
             {
-                return true;
+                evaluation.evaluate( success );
+                DailyEvaluationsStorage s = new DailyEvaluationsStorage( context );
+                s.write( new JSONArrayConverterDailyEvaluation( dailyEvaluations ) );
+                state.moveNext();
+                return;
             }
         }
 
-        //load all coping plans
-        CopingPlansStorage cps = new CopingPlansStorage( context );
-        JSONArrayConverterCopingPlan jaccp = new JSONArrayConverterCopingPlan();
-        cps.read( jaccp );
-        for( int i = 0 ; i < jaccp.getCopingPlans().size() ; i++ )
-        {
-            CopingPlan p = jaccp.getCopingPlans().get( i );
-            if( p.needsEvaluation() )
-            {
-                return true;
-            }
-        }
-        return false;
+        throw new Exception( "Daily evaluation id " + String.valueOf( id ) + " not found." );
     }
 
     public ArrayList<WeeklyEvaluation> weeklyEvaluations;
@@ -198,7 +230,6 @@ public class ApplicationStatus
         if( before != weeklyEvaluations.size() )
         {
             WeeklyEvaluationsStorage wes = new WeeklyEvaluationsStorage( context );
-//            wes.write( weeklyEvaluations );
             wes.write( new JSONArrayConverterWeeklyEvaluation( weeklyEvaluations ) );
         }
 
@@ -295,6 +326,11 @@ public class ApplicationStatus
             as.selfEfficacy.lifestyle = jsonState.getBoolean( "selfEfficacy.lifestyle" );
             as.selfEfficacy.weekly_goals = jsonState.getBoolean( "selfEfficacy.weekly_goals" );
 
+            DailyEvaluationsStorage des = new DailyEvaluationsStorage( context );
+            JSONArrayConverterDailyEvaluation jacde = new JSONArrayConverterDailyEvaluation();
+            des.read( jacde );
+            as.dailyEvaluations = jacde.getDailyEvaluations();
+
             WeeklyEvaluationsStorage wes = new WeeklyEvaluationsStorage( context );
 //            as.weeklyEvaluations = wes.read();
             JSONArrayConverterWeeklyEvaluation jc = new JSONArrayConverterWeeklyEvaluation();
@@ -304,6 +340,7 @@ public class ApplicationStatus
             JSONObject jsonCounterfactual = jsonState.getJSONObject( "counterfactual" );
             as.counterfactualThought.ifStatement = jsonCounterfactual.getString( "if" );
             as.counterfactualThought.thenStatement = jsonCounterfactual.getString( "then" );
+            as.counterfactualThought.active = jsonCounterfactual.getBoolean( "active" );
         }
         finally
         {
@@ -362,6 +399,7 @@ public class ApplicationStatus
         JSONObject jsonCounterfactual = new JSONObject();
         jsonCounterfactual.put( "if", counterfactualThought.ifStatement );
         jsonCounterfactual.put( "then", counterfactualThought.thenStatement );
+        jsonCounterfactual.put( "active", counterfactualThought.active );
         o.put( "counterfactual", jsonCounterfactual );
 
         try
@@ -373,8 +411,9 @@ public class ApplicationStatus
             fos.close();
         }
 
+        DailyEvaluationsStorage des = new DailyEvaluationsStorage( context );
+        des.write( new JSONArrayConverterDailyEvaluation( dailyEvaluations ) );
         WeeklyEvaluationsStorage wes = new WeeklyEvaluationsStorage( context );
-//        wes.write( weeklyEvaluations );
         wes.write( new JSONArrayConverterWeeklyEvaluation( weeklyEvaluations ) );
     }
 

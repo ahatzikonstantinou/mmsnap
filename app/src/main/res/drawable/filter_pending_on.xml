@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!--for some unknown reason it seems that putting the ic_dialog icon as a drawable in the item, paints it yellow when displayed in the action bar menu-->
+    <!--<item-->
+        <!--android:drawable="@android:drawable/ic_dialog_alert"-->
+        <!--/>-->
+    <!--however I 'd rather do it explicitly-->
+    <item>
+        <bitmap
+            android:src="@android:drawable/ic_dialog_alert"
+            android:tint="@color/yellow_warning"
+            />
+    </item>
+
+</layer-list>

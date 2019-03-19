@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background_color"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".DailyEvaluationsDetailActivity"
+    tools:showIn="@layout/activity_daily_evaluations_detail">
+
+    <include
+        android:id="@+id/action_plans_layout"
+        layout="@layout/content_action_plans_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <include
+        android:id="@+id/coping_plans_layout"
+        layout="@layout/content_coping_plans_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+</android.support.constraint.ConstraintLayout>

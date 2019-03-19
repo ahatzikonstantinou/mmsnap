@@ -31,7 +31,7 @@ public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatA
     {
         return R.id.action_plans_root_layout;
     }
-    @Override protected Class<?> getListActivityClass() { return evaluationMode ? DailyEvaluationsListActivity.class : ActionPlansActivity.class; }
+    @Override protected Class<?> getListActivityClass() { return ActionPlansActivity.class; }
 
     @Override
     protected String getSaveErrorMessage()
@@ -57,7 +57,7 @@ public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatA
         copingIfStatementTextView.setText( item.copingIfStatement );
         copingThenStatementTextView.setText( item.copingThenStatement );
 
-        if( planIsExpired || evaluationMode )
+        if( planIsExpired )
         {
             copingIfStatementTextView.setEnabled( false );
             copingThenStatementTextView.setEnabled( false );
@@ -66,14 +66,7 @@ public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatA
 
     public void onBackPressed()
     {
-        if( evaluationMode )
-        {
-            startActivity( new Intent( this, DailyEvaluationsListActivity.class ) );
-        }
-        else
-        {
-            startActivity( new Intent( this, ActionPlansActivity.class ) );
-        }
+        startActivity( new Intent( this, ActionPlansActivity.class ) );
     }
 
     protected IfThenPlan getIfThenItem()

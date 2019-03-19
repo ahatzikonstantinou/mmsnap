@@ -11,11 +11,13 @@ import ahat.mmsnap.Models.ConversionException;
 import ahat.mmsnap.Models.CopingPlan;
 import ahat.mmsnap.Models.IfThenPlan;
 
-public class JSONConverterCopingPlan extends JSONObjectConverter
+public class JSONConverterCopingPlan extends JSONIfThenPlanConverter
 {
 
     private CopingPlan plan;
-    public CopingPlan getPlan()
+
+    @Override
+    public IfThenPlan getPlan()
     {
         return plan;
     }
@@ -31,14 +33,16 @@ public class JSONConverterCopingPlan extends JSONObjectConverter
             {
                 targetBehaviors.add( ApplicationStatus.Behavior.valueOf( ( (JSONObject) jsonBehaviors.get( i ) ).getString( "name" ) ) );
             }
-            ArrayList<IfThenPlan.Day> days = new ArrayList<>();
+//            ArrayList<IfThenPlan.Day> days = new ArrayList<>();
+            ArrayList<IfThenPlan.WeekDay> days = new ArrayList<>();
             JSONArray jsonDays = jsonObject.getJSONArray( "days" );
             for( int i = 0 ; i < jsonDays.length() ; i++ )
             {
                 JSONObject jsonDay = (JSONObject) jsonDays.get( i );
-                IfThenPlan.Day d = new CopingPlan().new Day( IfThenPlan.WeekDay.valueOf( jsonDay.getString( "name" ) ) );
-                d.setEvaluated( jsonDay.getBoolean( "evaluated" ) );
-                d.setSuccessful( jsonDay.getBoolean( "successful" ) );
+//                IfThenPlan.Day d = new CopingPlan().new Day( IfThenPlan.WeekDay.valueOf( jsonDay.getString( "name" ) ) );
+                IfThenPlan.WeekDay d = IfThenPlan.WeekDay.valueOf( jsonDay.getString( "name" ) );
+//                d.setEvaluated( jsonDay.getBoolean( "evaluated" ) );
+//                d.setSuccessful( jsonDay.getBoolean( "successful" ) );
                 days.add( d );
             }
             plan = new CopingPlan(
@@ -84,9 +88,11 @@ public class JSONConverterCopingPlan extends JSONObjectConverter
             for( int i = 0 ; i < plan.days.size() ; i++ )
             {
                 JSONObject jsonDay = new JSONObject();
-                jsonDay.put( "name", plan.days.get( i ).getWeekDay().name() );
-                jsonDay.put( "evaluated", plan.days.get( i ).isEvaluated() );
-                jsonDay.put( "successful", plan.days.get( i ).isSuccessful() );
+//                jsonDay.put( "name", plan.days.get( i ).getWeekDay().name() );
+                jsonDay.put( "name", plan.days.get( i ).name() );
+//                jsonDay.put( "evaluated", plan.days.get( i ).isEvaluated() );
+//                jsonDay.put( "successful", plan.days.get( i ).isSuccessful() );
+//                jsonDays.put( jsonDay );
                 jsonDays.put( jsonDay );
             }
             jsonObject.put( "days", jsonDays );

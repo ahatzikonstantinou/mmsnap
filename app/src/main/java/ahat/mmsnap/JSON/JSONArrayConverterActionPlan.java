@@ -32,7 +32,7 @@ public class JSONArrayConverterActionPlan extends JSONArrayConverter
             {
                 JSONConverterActionPlan jc = new JSONConverterActionPlan( (JSONObject) jsonArray.get( i ) );
                 jc.from();
-                actionPlans.add( jc.getPlan() );
+                actionPlans.add( (ActionPlan) jc.getPlan() );
             }
             Collections.sort( actionPlans, IfThenPlan.comparator );
         }

@@ -38,7 +38,9 @@ public class StateActivity extends AppCompatActivity
                      ApplicationStatus.NoFinalAssessments.NAME == status.getState().name()
             )
             {
-                if( 0 != getIntent().getComponent().getClassName().compareTo( AssessmentsActivity.class.getName() ) )    // ahat: == does not work here, I don't know why
+                if( 0 != getIntent().getComponent().getClassName().compareTo( AssessmentsActivity.class.getName() ) &&    // ahat: == does not work here, I don't know why
+                    0 != getIntent().getComponent().getClassName().compareTo( MainActivity.class.getName() )
+                )
                 {
                     startActivity( new Intent( this, AssessmentsActivity.class ) );
                 }

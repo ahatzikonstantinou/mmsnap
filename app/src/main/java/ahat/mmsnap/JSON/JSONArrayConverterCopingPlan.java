@@ -31,7 +31,7 @@ public class JSONArrayConverterCopingPlan extends JSONArrayConverter
             {
                 JSONConverterCopingPlan jc = new JSONConverterCopingPlan( (JSONObject) jsonArray.get( i ) );
                 jc.from();
-                copingPlans.add( jc.getPlan() );
+                copingPlans.add( (CopingPlan) jc.getPlan() );
             }
             Collections.sort( copingPlans, IfThenPlan.comparator );
         }
