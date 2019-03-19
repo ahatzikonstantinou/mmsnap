@@ -7,6 +7,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -58,6 +60,29 @@ public class MainActivity extends StateActivity //AppCompatActivity
 
     private enum Display { TODAY, ATTENTION, SECTIONS };
 
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+        = new BottomNavigationView.OnNavigationItemSelectedListener()
+    {
+
+        @Override
+        public boolean onNavigationItemSelected( @NonNull MenuItem item )
+        {
+            switch( item.getItemId() )
+            {
+                case R.id.navigation_today:
+                    show( Display.TODAY );
+                    return true;
+                case R.id.navigation_attention:
+                    show( Display.ATTENTION );
+                    return true;
+                case R.id.navigation_sections:
+                    show( Display.SECTIONS );
+                    return true;
+            }
+            return false;
+        }
+    };
+
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
@@ -79,6 +104,9 @@ public class MainActivity extends StateActivity //AppCompatActivity
         NavigationView navigationView = findViewById( R.id.nav_view );
         navigationView.setNavigationItemSelectedListener( this );
 
+        BottomNavigationView bottomNavigationView = findViewById( R.id.bottom_navigation );
+        bottomNavigationView.setOnNavigationItemSelectedListener( mOnNavigationItemSelectedListener );
+
         //buttons events
         Button mmsnapButton = findViewById( R.id.mmsnap_btn );
         mmsnapButton.setOnClickListener( this );
@@ -90,10 +118,6 @@ public class MainActivity extends StateActivity //AppCompatActivity
         ifThenButton.setOnClickListener( this );
         agentsButton = findViewById( R.id.agents_btn );
         agentsButton.setOnClickListener( this );
-
-        findViewById( R.id.main_today_btn ).setOnClickListener( this );
-        findViewById( R.id.main_attention_btn ).setOnClickListener( this );
-        findViewById( R.id.main_sections_btn ).setOnClickListener( this );
 
         // the application starts with TODAY's plans in view
         show( Display.TODAY );
@@ -193,7 +217,7 @@ public class MainActivity extends StateActivity //AppCompatActivity
                 educationButton.setVisibility( View.GONE );
                 ifThenButton.setVisibility( View.GONE );
                 agentsButton.setVisibility( View.GONE );
-                findViewById( R.id.main_navigation_layout ).setVisibility( View.GONE );
+                findViewById( R.id.bottom_navigation ).setVisibility( View.GONE );
                 findViewById( R.id.main_message ).setVisibility( View.GONE );
             }
         }
@@ -467,18 +491,9 @@ public class MainActivity extends StateActivity //AppCompatActivity
                 intent = new Intent(this, IfThenActivity.class);
                 startActivity( intent );
                 break;
-                case R.id.agents_btn:
+            case R.id.agents_btn:
                 intent = new Intent(this, AgentsActivity.class);
                 startActivity( intent );
-                break;
-            case R.id.main_today_btn:
-                show( Display.TODAY );
-                break;
-            case R.id.main_attention_btn:
-                show( Display.ATTENTION );
-                break;
-            case R.id.main_sections_btn:
-                show( Display.SECTIONS );
                 break;
             default:
                 break;
@@ -550,7 +565,6 @@ public class MainActivity extends StateActivity //AppCompatActivity
         return super.onOptionsItemSelected( item );
     }
 
-    @SuppressWarnings( "StatementWithEmptyBody" )
     @Override
     public boolean onNavigationItemSelected( MenuItem item )
     {

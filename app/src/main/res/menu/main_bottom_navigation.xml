@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_today"
+        android:icon="@drawable/ic_main_today_24dp"
+        android:title="Today"/>
+
+    <item
+        android:id="@+id/navigation_attention"
+        android:icon="@drawable/ic_main_attention_24dp"
+        android:title="Attention"/>
+
+    <item
+        android:id="@+id/navigation_sections"
+        android:icon="@drawable/ic_main_sections_24dp"
+        android:title="Sections"/>
+
+</menu>

@@ -122,4 +122,8 @@
     <string name="attention_frame_title">ATTENTION</string>
     <string name="main_subtitle_sections">SECTIONS</string>
     <string name="title_activity_daily_evaluations_detail">DAILY EVALUATION</string>
+    <string name="title_activity_test_bottom_nav">TestBottomNavActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
