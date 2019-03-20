@@ -41,6 +41,7 @@ import ahat.mmsnap.Models.ConversionException;
 import ahat.mmsnap.Models.CopingPlan;
 import ahat.mmsnap.Models.DailyEvaluation;
 import ahat.mmsnap.Models.IfThenPlan;
+import ahat.mmsnap.Notifications.PendingEvaluationsAlarmReceiver;
 
 import static ahat.mmsnap.Models.IfThenPlan.WeekDay.MONDAY;
 import static ahat.mmsnap.Models.IfThenPlan.WeekDay.SATURDAY;
@@ -118,6 +119,9 @@ public class MainActivity extends StateActivity //AppCompatActivity
         ifThenButton.setOnClickListener( this );
         achievementsButton = findViewById( R.id.achievements_btn );
         achievementsButton.setOnClickListener( this );
+
+        // start the alarm that will trigger notifications if there are pending daily or weekly evaluations
+        PendingEvaluationsAlarmReceiver.setupAlarm( this );
 
         // the application starts with TODAY's plans in view
         show( Display.TODAY );
