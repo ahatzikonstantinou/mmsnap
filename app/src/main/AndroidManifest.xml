@@ -246,9 +246,21 @@
             android:name=".Notifications.PendingEvaluationNotificationService"
             android:enabled="true"
             android:exported="false" />
+        <service
+            android:name=".Notifications.ReminderNotificationService"
+            android:enabled="true"
+            android:exported="false" />
 
         <receiver android:name=".Notifications.PendingEvaluationsAlarmReceiver" />
+        <receiver android:name=".Notifications.ReminderAlarmReceiver" />
         <receiver android:name=".Notifications.PendingEvaluationNotificationServiceStarterReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".Notifications.ReminderNotificationServiceStarterReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />

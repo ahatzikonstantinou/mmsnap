@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import ahat.mmsnap.Models.ActionPlan;
 import ahat.mmsnap.Models.ConversionException;
 import ahat.mmsnap.Models.IfThenPlan;
+import ahat.mmsnap.Models.Reminder;
+import ahat.mmsnap.Notifications.ReminderAlarmReceiver;
 
 // Override the abstract methods to create activities that
 // - display a list of items,
@@ -350,6 +352,15 @@ public abstract class IfThenListActivity extends AppCompatActivity
             {
                 if( adapter.menuActionItemIndex.contains( i ) )
                 {
+                    IfThenPlan item = items.get( i );
+                    // cancel previous reminders
+                    for( IfThenPlan.WeekDay day : item.days )
+                    {
+                        for( Reminder reminder : item.reminders )
+                        {
+                            ReminderAlarmReceiver.cancelAlarms( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute, "action" );
+                        }
+                    }
                     items.remove( i );
                 }
             }

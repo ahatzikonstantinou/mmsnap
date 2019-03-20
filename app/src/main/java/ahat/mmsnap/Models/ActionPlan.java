@@ -14,17 +14,16 @@ public class ActionPlan extends IfThenPlan implements Serializable, Cloneable
     public String copingThenStatement = "";
 
     public ActionPlan( int id, String ifStatement, String thenStatement, String copingIf, String copingThen, boolean active, int year,
-//                       int weekOfYear, ArrayList<ApplicationStatus.Behavior> targetBehaviors, ArrayList<Day> days )
-                       int weekOfYear, ArrayList<ApplicationStatus.Behavior> targetBehaviors, ArrayList<WeekDay> days )
+                       int weekOfYear, ArrayList<ApplicationStatus.Behavior> targetBehaviors, ArrayList<WeekDay> days, ArrayList<Reminder> reminders )
     {
-        super( id, ifStatement, thenStatement, active, year, weekOfYear, targetBehaviors, days );
+        super( id, ifStatement, thenStatement, active, year, weekOfYear, targetBehaviors, days, reminders );
         copingIfStatement = copingIf;
         copingThenStatement = copingThen;
     }
 
     public ActionPlan( IfThenPlan plan, String copingIf, String copingThen )
     {
-        super( plan.id, plan.ifStatement, plan.thenStatement, plan.active, plan.year, plan.weekOfYear, plan.targetBehaviors, plan.days );
+        super( plan.id, plan.ifStatement, plan.thenStatement, plan.active, plan.year, plan.weekOfYear, plan.targetBehaviors, plan.days, plan.reminders );
         copingIfStatement = copingIf;
         copingThenStatement = copingThen;
     }
@@ -58,6 +57,7 @@ public class ActionPlan extends IfThenPlan implements Serializable, Cloneable
         plan.year = c.get( Calendar.YEAR );
         plan.weekOfYear = c.get( Calendar.WEEK_OF_YEAR );
         plan.days.clear();
+        plan.reminders.clear();
         plan.active = false;
         return plan;
     }

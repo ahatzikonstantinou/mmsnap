@@ -13,6 +13,7 @@
         android:width="@dimen/mmsnap_logo_size"
         >
         <shape android:shape="rectangle">
+            <corners android:radius="3dp"/>
             <solid android:color="@color/assessments_btn"/>
         </shape>
     </item>

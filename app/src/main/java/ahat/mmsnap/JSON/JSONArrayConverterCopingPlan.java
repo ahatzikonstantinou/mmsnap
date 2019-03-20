@@ -12,7 +12,7 @@ import ahat.mmsnap.Models.ConversionException;
 import ahat.mmsnap.Models.CopingPlan;
 import ahat.mmsnap.Models.IfThenPlan;
 
-public class JSONArrayConverterCopingPlan extends JSONArrayConverter
+public class JSONArrayConverterCopingPlan extends JSONArrayConverterIfThenPlan
 {
 
     private ArrayList<CopingPlan> copingPlans;
@@ -71,4 +71,9 @@ public class JSONArrayConverterCopingPlan extends JSONArrayConverter
         this.copingPlans = copingPlans;
     }
 
+    @Override
+    public ArrayList<? extends IfThenPlan> getPlans()
+    {
+        return copingPlans;
+    }
 }

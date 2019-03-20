@@ -6,12 +6,15 @@ import android.os.Bundle;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import ahat.mmsnap.JSON.CopingPlansStorage;
 import ahat.mmsnap.JSON.JSONArrayConverterCopingPlan;
 import ahat.mmsnap.Models.ConversionException;
 import ahat.mmsnap.Models.CopingPlan;
 import ahat.mmsnap.Models.IfThenPlan;
+import ahat.mmsnap.Models.Reminder;
+import ahat.mmsnap.Notifications.ReminderAlarmReceiver;
 
 public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatActivity
 {
@@ -62,8 +65,29 @@ public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatA
     }
 
     @Override
-    protected void saveItem() throws IOException, JSONException, ConversionException
+    protected void saveItem( ArrayList<IfThenPlan.WeekDay> days, ArrayList<Reminder> reminders ) throws IOException, JSONException, ConversionException
     {
+        // cancel previous reminders
+        for( IfThenPlan.WeekDay day : item.days )
+        {
+            for( Reminder reminder : item.reminders )
+            {
+                ReminderAlarmReceiver.cancelAlarms( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute, "coping" );
+            }
+        }
+
+        // start new reminders
+        for( IfThenPlan.WeekDay day : days )
+        {
+            for( Reminder reminder : reminders )
+            {
+                ReminderAlarmReceiver.setupAlarm( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute, "coping" );
+            }
+        }
+
+        item.days = days;
+        item.reminders = reminders;
+
         CopingPlansStorage s = new CopingPlansStorage( this );
         JSONArrayConverterCopingPlan jc = new JSONArrayConverterCopingPlan();
         s.read( jc );

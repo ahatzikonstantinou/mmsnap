@@ -89,36 +89,6 @@ public class CopingPlansActivity extends IfThenListActivity
         s.write( jc );
     }
 
-//    @Override
-//    protected void copyItems( ArrayList<Integer> selectedItemsIndex )
-//    {
-//        ArrayList<CopingPlan> copies = new ArrayList<>();
-//        int existingSize = items.size();
-//        for( int i = 0; i < existingSize; i++ )
-//        {
-//            if( selectedItemsIndex.contains( i ) )
-//            {
-//                copies.add( items.get( i ).createCopyInCurrentWeek( existingSize + copies.size() ) );
-//            }
-//        }
-//        for( int i = 0 ; i < copies.size() ; i++ )
-//        {
-//            items.add( copies.get( i ) );
-//        }
-//
-//    }
-//
-//    @Override
-//    protected void deleteItems( ArrayList<Integer> deleteIndex )
-//    {
-//        for( int i = items.size() ; i >= 0  ; i-- )
-//        {
-//            if( deleteIndex.contains( i ) )
-//            {
-//                items.remove( i );
-//            }
-//        }
-//    }
 
     @Override
     protected void putItemInIntent( Intent intent, int itemIndex )

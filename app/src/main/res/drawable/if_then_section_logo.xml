@@ -10,10 +10,10 @@
 
     <!--this is the background color of the logo-->
     <item
-        android:width="15dp"
-        android:height="12dp"
-        android:left="11dp"
-        android:top="11dp"
+        android:width="20dp"
+        android:height="18dp"
+        android:left="13dp"
+        android:top="13dp"
         >
         <shape android:shape="rectangle">
             <solid android:color="@color/if_then_bkg"/>
@@ -23,8 +23,8 @@
     <!--this is the actual icon used for the logo-->
     <item
         android:drawable="@drawable/ic_if_then_light"
-        android:width="@dimen/mmsnap_logo_size"
-        android:height="@dimen/mmsnap_logo_size"
+        android:width="45dp"
+        android:height="45dp"
         />
 
 </layer-list >

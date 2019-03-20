@@ -10,6 +10,38 @@ import ahat.mmsnap.ApplicationStatus;
 
 public abstract class IfThenPlan implements Serializable, Cloneable
 {
+    public enum WeekDay
+    {
+        MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
+
+        public int toCalendarDayOfWeek()
+        {
+            return toCalendarDayOfWeek( this );
+        }
+
+        public static int toCalendarDayOfWeek( WeekDay day )
+        {
+            switch( day )
+            {
+                case MONDAY:
+                    return Calendar.MONDAY;
+                case TUESDAY:
+                    return Calendar.TUESDAY;
+                case WEDNESDAY:
+                    return Calendar.WEDNESDAY;
+                case THURSDAY:
+                    return Calendar.THURSDAY;
+                case FRIDAY:
+                    return Calendar.FRIDAY;
+                case SATURDAY:
+                    return Calendar.SATURDAY;
+                case SUNDAY:
+                    return Calendar.SUNDAY;
+            }
+            return -1;
+        }
+    }
+
     public static final Comparator<IfThenPlan> comparator = new Comparator<IfThenPlan>()
     {
         @Override
@@ -19,11 +51,20 @@ public abstract class IfThenPlan implements Serializable, Cloneable
         }
     };
 
+    public int id = -1;
+    public String ifStatement = "";
+    public String thenStatement = "";
+    public Boolean active = false;
+    public ArrayList<ApplicationStatus.Behavior> targetBehaviors = new ArrayList<>();
+    public ArrayList<WeekDay> days = new ArrayList<>();
+    public ArrayList<Reminder> reminders = new ArrayList<>();
+    public int year = 0;
+    public int weekOfYear = 0;
+
     public IfThenPlan(){}
 
     public IfThenPlan( int id, String ifStatement, String thenStatement, Boolean active, int year, int weekOfYear,
-//                       ArrayList<ApplicationStatus.Behavior> targetBehaviors, ArrayList<Day> days )
-                       ArrayList<ApplicationStatus.Behavior> targetBehaviors, ArrayList<WeekDay> days )
+                       ArrayList<ApplicationStatus.Behavior> targetBehaviors, ArrayList<WeekDay> days, ArrayList<Reminder> reminders )
     {
         this.id = id;
         this.ifStatement = ifStatement;
@@ -33,6 +74,7 @@ public abstract class IfThenPlan implements Serializable, Cloneable
         this.days = new ArrayList<>( days );
         this.year = year;
         this.weekOfYear = weekOfYear;
+        this.reminders = reminders;
     }
 
     public boolean dayHasPassed( WeekDay day )
@@ -92,91 +134,6 @@ public abstract class IfThenPlan implements Serializable, Cloneable
         return false;
     }
 
-    public enum WeekDay
-    {
-        MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY;
-
-        public int toCalendarDayOfWeek()
-        {
-            return toCalendarDayOfWeek( this );
-        }
-
-        public static int toCalendarDayOfWeek( WeekDay day )
-        {
-            switch( day )
-            {
-                case MONDAY:
-                    return Calendar.MONDAY;
-                case TUESDAY:
-                    return Calendar.TUESDAY;
-                case WEDNESDAY:
-                    return Calendar.WEDNESDAY;
-                case THURSDAY:
-                    return Calendar.THURSDAY;
-                case FRIDAY:
-                    return Calendar.FRIDAY;
-                case SATURDAY:
-                    return Calendar.SATURDAY;
-                case SUNDAY:
-                    return Calendar.SUNDAY;
-            }
-            return -1;
-        }
-    }
-
-//    public class Day implements Serializable
-//    {
-//        private WeekDay weekDay;
-//        private boolean evaluated;
-//        private boolean successful;
-//
-//        public boolean isEvaluated()
-//        {
-//            return evaluated;
-//        }
-//        public void setEvaluated( boolean evaluated )
-//        {
-//            this.evaluated = evaluated;
-//        }
-//
-//        public boolean isSuccessful()
-//        {
-//            return successful;
-//        }
-//        public void setSuccessful( boolean successful )
-//        {
-//            this.successful = successful;
-//        }
-//
-//        public void evaluate( boolean successfull )
-//        {
-//            evaluated = true;
-//            this.successful = successfull;
-//        }
-//
-//        public WeekDay getWeekDay()
-//        {
-//            return weekDay;
-//        }
-//
-//        public Day( WeekDay weekDay )
-//        {
-//            boolean evaluated  = false;
-//            boolean successful = false;
-//            this.weekDay = weekDay;
-//        }
-//    }
-
-    public int id = -1;
-    public String ifStatement = "";
-    public String thenStatement = "";
-    public Boolean active = false;
-    public ArrayList<ApplicationStatus.Behavior> targetBehaviors = new ArrayList<>();
-//    public ArrayList<Day> days = new ArrayList<>();
-    public ArrayList<WeekDay> days = new ArrayList<>();
-    public int year = 0;
-    public int weekOfYear = 0;
-
     public boolean isTarget( ApplicationStatus.Behavior behavior )
     {
         return targetBehaviors.contains( behavior );
@@ -187,127 +144,19 @@ public abstract class IfThenPlan implements Serializable, Cloneable
         days.clear();
     }
 
-//    public void addDay( WeekDay weekDay )
-//    {
-//        days.add( new Day( weekDay ) );
-//    }
     public void addDay( WeekDay weekDay ) { days.add( weekDay ); }
 
-//    public boolean hasDay( WeekDay weekDay ) { return null != getDay( weekDay ); }
     public boolean hasDay( WeekDay weekDay ) { return days.contains( weekDay ); }
 
-//    private Day getDay( WeekDay weekDay )
-//    {
-//        for( int i = 0 ; i < days.size() ; i++ )
-//        {
-//            Day d = days.get( i );
-//            if( d.weekDay == weekDay )
-//            {
-//                return d;
-//            }
-//        }
-//
-//        return null;
-//    }
-//
-//    public boolean isEvaluated()
-//    {
-//        for( int i = 0; i < days.size(); i++ )
-//        {
-//            Day d = days.get( i );
-//            if( !d.isEvaluated() )
-//            {
-//                return false;
-//            }
-//        }
-//
-//        return true;
-//    }
-//
-//    public boolean isEvaluated( WeekDay weekDay )
-//    {
-//        Day d = getDay( weekDay );
-//        if( null != d )
-//        {
-//            return d.isEvaluated();
-//        }
-//
-//        return false;
-//    }
-//
-//    public boolean isSuccessful( WeekDay weekDay )
-//    {
-//        Day d = getDay( weekDay );
-//        if( null != d )
-//        {
-//            return d.isSuccessful();
-//        }
-//
-//        return false;
-//    }
-//
-//    public boolean evaluate( WeekDay weekDay, boolean success )
-//    {
-//        Day d = getDay( weekDay );
-//        if( null != d )
-//        {
-//            d.evaluate( success );
-//            return true;
-//        }
-//
-//        return false;
-//    }
-//
-//    public boolean needsEvaluation()
-//    {
-//        Calendar now = Calendar.getInstance();
-//        Calendar ic = Calendar.getInstance();
-//        ic.set( Calendar.YEAR, year );
-//        ic.set( Calendar.WEEK_OF_YEAR, weekOfYear );
-//        for( int i = 0 ; i < days.size() ; i++ )
-//        {
-//            Day d = days.get( i );
-//            switch( d.weekDay )
-//            {
-//                case MONDAY:
-//                    ic.set( Calendar.DAY_OF_WEEK, Calendar.MONDAY );
-//                    break;
-//                case TUESDAY:
-//                    ic.set( Calendar.DAY_OF_WEEK, Calendar.TUESDAY );
-//                    break;
-//                case WEDNESDAY:
-//                    ic.set( Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY );
-//                    break;
-//                case THURSDAY:
-//                    ic.set( Calendar.DAY_OF_WEEK, Calendar.THURSDAY );
-//                    break;
-//                case FRIDAY:
-//                    ic.set( Calendar.DAY_OF_WEEK, Calendar.FRIDAY );
-//                    break;
-//                case SATURDAY:
-//                    ic.set( Calendar.DAY_OF_WEEK, Calendar.SATURDAY );
-//                    break;
-//                case SUNDAY:
-//                    ic.set( Calendar.DAY_OF_WEEK, Calendar.SUNDAY );
-//                    break;
-//            }
-//
-//            if( now.after( ic ) && !d.isEvaluated() )
-//            {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
-//
-//    public void resetEvaluations()
-//    {
-//        for( int i = 0 ; i < days.size() ; i++ )
-//        {
-//            Day d = days.get( i );
-//            d.setEvaluated( false );
-//            d.setSuccessful( false );
-//        }
-//    }
+    public boolean hasReminder( int hour, int minute )
+    {
+        for( Reminder reminder : reminders )
+        {
+            if( reminder.hour == hour && reminder.minute == minute )
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

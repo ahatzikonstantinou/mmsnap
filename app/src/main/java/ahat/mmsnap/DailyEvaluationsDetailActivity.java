@@ -1,12 +1,7 @@
 package ahat.mmsnap;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,6 +10,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.text.DateFormatSymbols;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import ahat.mmsnap.Models.ActionPlan;
@@ -22,14 +18,7 @@ import ahat.mmsnap.Models.ConversionException;
 import ahat.mmsnap.Models.CopingPlan;
 import ahat.mmsnap.Models.DailyEvaluation;
 import ahat.mmsnap.Models.IfThenPlan;
-
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.FRIDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.MONDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.SATURDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.SUNDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.THURSDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.TUESDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.WEDNESDAY;
+import ahat.mmsnap.Models.Reminder;
 
 public class DailyEvaluationsDetailActivity extends IfThenDetailActivity
 {
@@ -66,7 +55,7 @@ public class DailyEvaluationsDetailActivity extends IfThenDetailActivity
     }
 
     @Override
-    protected void saveItem() throws IOException, JSONException, ConversionException
+    protected void saveItem( ArrayList<IfThenPlan.WeekDay> days, ArrayList<Reminder> reminders ) throws IOException, JSONException, ConversionException
     {
         // just ignore this. We have other buttons that directly score the evaluation.
     }

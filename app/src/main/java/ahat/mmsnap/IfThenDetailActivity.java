@@ -1,28 +1,38 @@
 package ahat.mmsnap;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
+
+import com.google.android.flexbox.FlexboxLayout;
 
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.text.DateFormatSymbols;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 
 import ahat.mmsnap.Models.ConversionException;
 import ahat.mmsnap.Models.IfThenPlan;
+import ahat.mmsnap.Models.Reminder;
 
 import static ahat.mmsnap.ApplicationStatus.Behavior.ACTIVITY;
 import static ahat.mmsnap.ApplicationStatus.Behavior.ALCOHOL;
@@ -46,29 +56,16 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
     protected HashMap<ApplicationStatus.Behavior, Boolean> BehaviorIsSelected;
     protected boolean planIsExpired;
 
-    //    protected String                                       actionDate = "";
     protected abstract int getActivityResLayout();
     protected abstract int getContentRootLayoutResId();
-//    protected abstract JSONObject getIfThenItem();
     protected abstract IfThenPlan getIfThenItem();
     protected abstract Class<?> getListActivityClass();
     protected abstract String getSaveErrorMessage();
-    protected abstract void saveItem() throws IOException, JSONException, ConversionException;
+    protected abstract void saveItem( ArrayList<IfThenPlan.WeekDay> days, ArrayList<Reminder> reminders ) throws IOException, JSONException, ConversionException;
 
-//    protected JSONObject item;
     protected IfThenPlan item;
-//    private String FILENAME;
-//    protected String getFILENAME()
-//    {
-//        return FILENAME;
-//    }
-//    private int itemId;
-//    protected int getItemId()
-//    {
-//        return itemId;
-//    }
-
-
+    protected ArrayList<Reminder> reminders;
+    ArrayList<IfThenPlan.WeekDay> days = new ArrayList<>();
     private TextView ifStatementTextView;
     private TextView thenStatementTextView;
     private Switch   activeSwitch;
@@ -131,15 +128,6 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
                 Snackbar.make( findViewById( android.R.id.content ), "Could not load the application status", Snackbar.LENGTH_LONG ).show();
             }
         }
-//        setBehaviorIsSelected( DIET, item.isTarget( DIET ) );
-//        setBehaviorIsSelected( ACTIVITY, item.isTarget( ACTIVITY ) );
-//        setBehaviorIsSelected( ALCOHOL, item.isTarget( ALCOHOL ) );
-//        setBehaviorIsSelected( SMOKING, item.isTarget( SMOKING ) );
-//
-//        updateBehaviorUI( DIET );
-//        updateBehaviorUI( ACTIVITY );
-//        updateBehaviorUI( ALCOHOL );
-//        updateBehaviorUI( SMOKING );
 
         // if the plan is passed it's week it is disabled
         Calendar now = Calendar.getInstance();
@@ -159,6 +147,9 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
 
             // user cannot edit expired plans
             findViewById( R.id.save ).setVisibility( View.GONE );
+
+            // user cannot add reminders
+            findViewById( R.id.reminder_btn ).setVisibility( View.GONE );
         }
 
         // health behaviors are editable only when not expired
@@ -208,6 +199,8 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
             findViewById( R.id.day_fri_chk ).setOnClickListener( this );
             findViewById( R.id.day_sat_chk ).setOnClickListener( this );
             findViewById( R.id.day_sun_chk ).setOnClickListener( this );
+
+            findViewById( R.id.reminder_btn ).setOnClickListener( this );
         }
 
 
@@ -282,6 +275,10 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
         TextView end = findViewById( R.id.end_date );
         end.setText( dfs.getShortWeekdays()[ c.get( Calendar.DAY_OF_WEEK ) ]+ " " + c.get( Calendar.DAY_OF_MONTH ) + " " +
                      dfs.getShortMonths()[ c.get( Calendar.MONTH ) ] + " " + c.get( Calendar.YEAR ) );
+
+        reminders = item.reminders;
+        Collections.sort( reminders, Reminder.comparator );
+        showReminders( reminders );
     }
 
     @Override
@@ -308,139 +305,152 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
             case R.id.save:
                 save();
                 break;
-
-                // evaluation code
-//            case R.id.day_mon_chk:
-//                toggleSuccess( R.id.day_mon_check_img, R.id.day_mon_fail_img );
-//                ( (CheckBox) findViewById( R.id.day_mon_chk ) ).setChecked( false );    //false makes it look nice, we don't care about checked or not
-//                break;
-//            case R.id.day_tue_chk:
-//                toggleSuccess( R.id.day_tue_check_img, R.id.day_tue_fail_img );
-//                ( (CheckBox) findViewById( R.id.day_tue_chk ) ).setChecked( false );
-//                break;
-//            case R.id.day_wed_chk:
-//                toggleSuccess( R.id.day_wed_check_img, R.id.day_wed_fail_img );
-//                ( (CheckBox) findViewById( R.id.day_wed_chk ) ).setChecked( false );
-//                break;
-//            case R.id.day_thu_chk:
-//                toggleSuccess( R.id.day_thu_check_img, R.id.day_thu_fail_img );
-//                ( (CheckBox) findViewById( R.id.day_thu_chk ) ).setChecked( false );
-//                break;
-//            case R.id.day_fri_chk:
-//                toggleSuccess( R.id.day_fri_check_img, R.id.day_fri_fail_img );
-//                ( (CheckBox) findViewById( R.id.day_fri_chk ) ).setChecked( false );
-//                break;
-//            case R.id.day_sat_chk:
-//                toggleSuccess( R.id.day_sat_check_img, R.id.day_sat_fail_img );
-//                ( (CheckBox) findViewById( R.id.day_sat_chk ) ).setChecked( false );
-//                break;
-//            case R.id.day_sun_chk:
-//                toggleSuccess( R.id.day_sun_check_img, R.id.day_sun_fail_img );
-//                ( (CheckBox) findViewById( R.id.day_sun_chk ) ).setChecked( false );
-//                break;
-
-
+            case R.id.reminder_btn:
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get( Calendar.HOUR_OF_DAY );
+                int minute = mcurrentTime.get( Calendar.MINUTE );
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(IfThenDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet( TimePicker timePicker, int selectedHour, int selectedMinute)
+                    {
+                        addReminder( selectedHour, selectedMinute );
+                    }
+                }, hour, minute, true);//Yes 24 hour time
+                mTimePicker.setTitle( "Select Reminder Time" );
+                mTimePicker.show();
+                break;
             default:
                 break;
         }
     }
 
-//    private void toggleSuccess( int checkImgResId, int failImgResId )
-//    {
-//        ImageView check = findViewById( checkImgResId );
-//        ImageView fail = findViewById( failImgResId );
-//        if( check.getVisibility() == View.VISIBLE )
-//        {
-//            fail.setVisibility( View.VISIBLE );
-//            check.setVisibility( View.GONE );
-//        }
-//        else
-//        {
-//            fail.setVisibility( View.GONE );
-//            check.setVisibility( View.VISIBLE );
-//        }
-//    }
-//
-//    private Boolean getDayEvaluationFromUI( int checkImgResId, int failImgResId )
-//    {
-//        if( findViewById( checkImgResId ).getVisibility() == View.VISIBLE )
-//        {
-//            return true;
-//        }
-//
-//        if( findViewById( failImgResId).getVisibility() == View.VISIBLE )
-//        {
-//            return false;
-//        }
-//
-//        return null;
-//    }
+    private void addReminder( int hour, int minute )
+    {
+        boolean found = false;
+        for( Reminder reminder : reminders )
+        {
+            if( reminder.hour == hour && reminder.minute == minute )
+            {
+                found = true;
+                break;
+            }
+        }
+
+        if( !found )
+        {
+            reminders.add( new Reminder( hour, minute ) );
+            Collections.sort( reminders, Reminder.comparator );
+            showReminders( reminders );
+        }
+    }
+
+    private void removeReminder( Reminder reminder )
+    {
+        for( Reminder r : reminders )
+        {
+            if( r.equals( reminder ) )
+            {
+                reminders.remove( r );
+                showReminders( reminders );
+                break;
+            }
+        }
+    }
+
+    private void showReminders( ArrayList<Reminder> reminders )
+    {
+        ( (FlexboxLayout) findViewById( R.id.reminder_layout ) ).removeAllViews();
+        for( Reminder reminder : reminders )
+        {
+            addUIReminder( reminder.hour, reminder.minute );
+        }
+    }
+
+    private void addUIReminder( int hour, int minute )
+    {
+        FlexboxLayout reminderLayout = findViewById( R.id.reminder_layout );
+        LinearLayout timeLayout = new LinearLayout( this );
+        timeLayout.setLayoutParams( new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT ) );
+        timeLayout.setOrientation( LinearLayout.HORIZONTAL );
+        timeLayout.setBackground( getDrawable( R.drawable.rounded_border_trnsp_bkg ) );
+        timeLayout.setGravity( Gravity.CENTER_VERTICAL );
+        setMargins( timeLayout, 4, 4, 4, 4 );
+        setPadding( timeLayout, 4, 4, 4, 4 );
+//        timeLayout.setBackgroundColor( Color.parseColor( "#888888" )  );
+        timeLayout.getBackground().setColorFilter( Color.parseColor("#888888" ), PorterDuff.Mode.SRC_ATOP);
+
+        TextView time = new TextView( this );
+        time.setLayoutParams( new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT ) );
+        time.setText( ( hour < 10 ? "0": "" ) + String.valueOf( hour ) + ":" + ( minute < 10 ? "0" : "" ) + String.valueOf( minute ) );
+        timeLayout.addView( time );
+
+        ImageButton del = new ImageButton( this );
+        setSize( del, 15, 15 );
+        setMargins( del, 4 , 4, 4, 4 );
+        del.setImageResource( android.R.drawable. ic_menu_close_clear_cancel );
+        del.setColorFilter( getResources().getColor( android.R.color.holo_red_dark ) );
+        del.setTag( new Reminder( hour, minute ) );
+        del.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View view )
+            {
+                Reminder reminder = (Reminder) view.getTag();
+                removeReminder( reminder );
+            }
+        } );
+        timeLayout.addView( del );
+
+        reminderLayout.addView( timeLayout );
+    }
+
+    //set width height in dp
+    private void setSize( View view, int width, int height )
+    {
+        final float scale = getBaseContext().getResources().getDisplayMetrics().density;
+        // convert the DP into pixel
+        int w =  (int)(width * scale + 0.5f);
+        int h =  (int)(height * scale + 0.5f);
+
+        view.setLayoutParams( new LinearLayout.LayoutParams( w, h ) );
+        view.requestLayout();
+    }
+
+    //set margins in dp
+    private void setMargins( View view, int left, int top, int right, int bottom )
+    {
+        if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+
+            final float scale = getBaseContext().getResources().getDisplayMetrics().density;
+            // convert the DP into pixel
+            int l =  (int)(left * scale + 0.5f);
+            int r =  (int)(right * scale + 0.5f);
+            int t =  (int)(top * scale + 0.5f);
+            int b =  (int)(bottom * scale + 0.5f);
+
+            p.setMargins(l, t, r, b);
+            view.requestLayout();
+        }
+    }
+
+    //set padding in dp
+    private void setPadding( View view, int left, int top, int right, int bottom )
+    {
+        final float scale = getBaseContext().getResources().getDisplayMetrics().density;
+        // convert the DP into pixel
+        int l =  (int)(left * scale + 0.5f);
+        int r =  (int)(right * scale + 0.5f);
+        int t =  (int)(top * scale + 0.5f);
+        int b =  (int)(bottom * scale + 0.5f);
+
+        view.setPadding(l, t, r, b);
+        view.requestLayout();
+    }
 
     protected String fillItemFromUI() throws JSONException
     {
         String error = "";
-
-//        Calendar now = Calendar.getInstance();
-        // if the plan is passed it's week it can only be evaluated
-////        if( now.get( Calendar.WEEK_OF_YEAR ) != item.weekOfYear || now.get( Calendar.YEAR ) != item.year )
-//        if( evaluationMode )
-//        {
-//            Calendar ic = Calendar.getInstance();
-//            ic.set( Calendar.YEAR, item.year );
-//            ic.set( Calendar.WEEK_OF_YEAR, item.weekOfYear );
-//
-//            for( int i = 0 ; i < item.days.size() ; i++ )
-//            {
-//                Boolean check = null;
-//                switch( item.days.get( i ).getWeekDay() )
-//                {
-//                    case MONDAY:
-//                        ic.set( Calendar.DAY_OF_WEEK, Calendar.MONDAY );
-//                        if( ic.after( now ) ){ break; }
-//                        check = getDayEvaluationFromUI( R.id.day_mon_check_img, R.id.day_mon_fail_img );
-//                        if( null == check ){ error = "evaluate all past days"; } else { item.evaluate( MONDAY, check ); }
-//                        break;
-//                    case TUESDAY:
-//                        ic.set( Calendar.DAY_OF_WEEK, Calendar.TUESDAY );
-//                        if( ic.after( now ) ){ break; }
-//                        check = getDayEvaluationFromUI( R.id.day_tue_check_img, R.id.day_tue_fail_img );
-//                        if( null == check ){ error = "evaluate all past days"; } else { item.evaluate( TUESDAY, check ); }
-//                        break;
-//                    case WEDNESDAY:
-//                        ic.set( Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY );
-//                        if( ic.after( now ) ){ break; }
-//                        check = getDayEvaluationFromUI( R.id.day_wed_check_img, R.id.day_wed_fail_img );
-//                        if( null == check ){ error = "evaluate all past days"; } else { item.evaluate( WEDNESDAY, check ); }
-//                        break;
-//                    case THURSDAY:
-//                        ic.set( Calendar.DAY_OF_WEEK, Calendar.THURSDAY );
-//                        if( ic.after( now ) ){ break; }
-//                        check = getDayEvaluationFromUI( R.id.day_thu_check_img, R.id.day_thu_fail_img );
-//                        if( null == check ){ error = "evaluate all past days"; } else { item.evaluate( THURSDAY, check ); }
-//                        break;
-//                    case FRIDAY:
-//                        ic.set( Calendar.DAY_OF_WEEK, Calendar.FRIDAY );
-//                        if( ic.after( now ) ){ break; }
-//                        check = getDayEvaluationFromUI( R.id.day_fri_check_img, R.id.day_fri_fail_img );
-//                        if( null == check ){ error = "evaluate all past days"; } else { item.evaluate( FRIDAY, check ); }
-//                        break;
-//                    case SATURDAY:
-//                        ic.set( Calendar.DAY_OF_WEEK, Calendar.SATURDAY );
-//                        if( ic.after( now ) ){ break; }
-//                        check = getDayEvaluationFromUI( R.id.day_sat_check_img, R.id.day_sat_fail_img );
-//                        if( null == check ){ error = "evaluate all past days"; } else { item.evaluate( SATURDAY, check ); }
-//                        break;
-//                    case SUNDAY:
-//                        ic.set( Calendar.DAY_OF_WEEK, Calendar.SUNDAY );
-//                        if( ic.after( now ) ){ break; }
-//                        check = getDayEvaluationFromUI( R.id.day_sun_check_img, R.id.day_sun_fail_img );
-//                        if( null == check ){ error = "evaluate all past days"; } else { item.evaluate( SUNDAY, check ); }
-//                        break;
-//                }
-//            }
-//            return error;
-//        }
-
 
         String ifStatement = ifStatementTextView.getText().toString().trim();
         String thenStatement = thenStatementTextView.getText().toString().trim();
@@ -477,17 +487,17 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
         if( getBehaviorIsSelected( ALCOHOL ) ) { item.targetBehaviors.add( ALCOHOL ); }
         if( getBehaviorIsSelected( SMOKING ) ) { item.targetBehaviors.add( SMOKING ); }
 
-        item.clearDays();
+        days.clear();
 
-        if( ( (CheckBox) findViewById( R.id.day_mon_chk ) ).isChecked() ) { item.addDay( MONDAY ); }
-        if( ( (CheckBox) findViewById( R.id.day_tue_chk ) ).isChecked() ) { item.addDay( TUESDAY ); }
-        if( ( (CheckBox) findViewById( R.id.day_wed_chk ) ).isChecked() ) { item.addDay( WEDNESDAY ); }
-        if( ( (CheckBox) findViewById( R.id.day_thu_chk ) ).isChecked() ) { item.addDay( THURSDAY ); }
-        if( ( (CheckBox) findViewById( R.id.day_fri_chk ) ).isChecked() ) { item.addDay( FRIDAY ); }
-        if( ( (CheckBox) findViewById( R.id.day_sat_chk ) ).isChecked() ) { item.addDay( SATURDAY ); }
-        if( ( (CheckBox) findViewById( R.id.day_sun_chk ) ).isChecked() ) { item.addDay( SUNDAY ); }
+        if( ( (CheckBox) findViewById( R.id.day_mon_chk ) ).isChecked() ) { days.add( MONDAY ); }
+        if( ( (CheckBox) findViewById( R.id.day_tue_chk ) ).isChecked() ) { days.add( TUESDAY ); }
+        if( ( (CheckBox) findViewById( R.id.day_wed_chk ) ).isChecked() ) { days.add( WEDNESDAY ); }
+        if( ( (CheckBox) findViewById( R.id.day_thu_chk ) ).isChecked() ) { days.add( THURSDAY ); }
+        if( ( (CheckBox) findViewById( R.id.day_fri_chk ) ).isChecked() ) { days.add( FRIDAY ); }
+        if( ( (CheckBox) findViewById( R.id.day_sat_chk ) ).isChecked() ) { days.add( SATURDAY ); }
+        if( ( (CheckBox) findViewById( R.id.day_sun_chk ) ).isChecked() ) { days.add( SUNDAY ); }
 
-        if( 0 == item.days.size() )
+        if( 0 == days.size() )
         {
             error += ( error.length() > 0 ? " and " : "" ) + "select at least one day to apply your plan";
         }
@@ -502,7 +512,7 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
             if( 0 == error.length() )
             {
 //                JSONArrayIOHandler.saveItem( getBaseContext(), item, getFilesDir().getPath() + "/" + FILENAME );
-                saveItem();
+                saveItem( days, reminders );
                 startActivity( new Intent( getBaseContext(), getListActivityClass() ) );
             }
             else

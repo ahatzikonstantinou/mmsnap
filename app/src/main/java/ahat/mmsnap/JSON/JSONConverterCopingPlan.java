@@ -1,5 +1,7 @@
 package ahat.mmsnap.JSON;
 
+import android.provider.CalendarContract;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,6 +12,7 @@ import ahat.mmsnap.ApplicationStatus;
 import ahat.mmsnap.Models.ConversionException;
 import ahat.mmsnap.Models.CopingPlan;
 import ahat.mmsnap.Models.IfThenPlan;
+import ahat.mmsnap.Models.Reminder;
 
 public class JSONConverterCopingPlan extends JSONIfThenPlanConverter
 {
@@ -33,17 +36,22 @@ public class JSONConverterCopingPlan extends JSONIfThenPlanConverter
             {
                 targetBehaviors.add( ApplicationStatus.Behavior.valueOf( ( (JSONObject) jsonBehaviors.get( i ) ).getString( "name" ) ) );
             }
-//            ArrayList<IfThenPlan.Day> days = new ArrayList<>();
+
             ArrayList<IfThenPlan.WeekDay> days = new ArrayList<>();
             JSONArray jsonDays = jsonObject.getJSONArray( "days" );
             for( int i = 0 ; i < jsonDays.length() ; i++ )
             {
                 JSONObject jsonDay = (JSONObject) jsonDays.get( i );
-//                IfThenPlan.Day d = new CopingPlan().new Day( IfThenPlan.WeekDay.valueOf( jsonDay.getString( "name" ) ) );
                 IfThenPlan.WeekDay d = IfThenPlan.WeekDay.valueOf( jsonDay.getString( "name" ) );
-//                d.setEvaluated( jsonDay.getBoolean( "evaluated" ) );
-//                d.setSuccessful( jsonDay.getBoolean( "successful" ) );
                 days.add( d );
+            }
+
+            ArrayList<Reminder> reminders = new ArrayList<>();
+            JSONArray jsonReminders = jsonObject.getJSONArray( "reminders" );
+            for( int i = 0 ; i < jsonReminders.length() ; i++ )
+            {
+                JSONObject jsonReminder = jsonReminders.getJSONObject( i );
+                reminders.add( new Reminder( jsonReminder.getInt( "hour" ), jsonReminder.getInt( "minute" ) ) );
             }
             plan = new CopingPlan(
                 jsonObject.getInt( "id" ),
@@ -53,7 +61,8 @@ public class JSONConverterCopingPlan extends JSONIfThenPlanConverter
                 jsonObject.getInt( "year" ),
                 jsonObject.getInt( "weekOfYear" ),
                 targetBehaviors,
-                days
+                days,
+                reminders
             );
 
         }
@@ -88,14 +97,21 @@ public class JSONConverterCopingPlan extends JSONIfThenPlanConverter
             for( int i = 0 ; i < plan.days.size() ; i++ )
             {
                 JSONObject jsonDay = new JSONObject();
-//                jsonDay.put( "name", plan.days.get( i ).getWeekDay().name() );
                 jsonDay.put( "name", plan.days.get( i ).name() );
-//                jsonDay.put( "evaluated", plan.days.get( i ).isEvaluated() );
-//                jsonDay.put( "successful", plan.days.get( i ).isSuccessful() );
-//                jsonDays.put( jsonDay );
                 jsonDays.put( jsonDay );
             }
             jsonObject.put( "days", jsonDays );
+
+            JSONArray jsonReminders = new JSONArray();
+            for( Reminder reminder : plan.reminders )
+            {
+                JSONObject jsonReminder = new JSONObject();
+                jsonReminder.put( "hour", reminder.hour );
+                jsonReminder.put( "minute", reminder.minute );
+
+                jsonReminders.put( jsonReminder );
+            }
+            jsonObject.put( "reminders", jsonReminders );
         }
         catch( JSONException e )
         {

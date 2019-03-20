@@ -2,21 +2,21 @@ package ahat.mmsnap;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.widget.TextView;
 
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import ahat.mmsnap.JSON.ActionPlansStorage;
 import ahat.mmsnap.JSON.JSONArrayConverterActionPlan;
-import ahat.mmsnap.JSON.JSONConverterActionPlan;
 import ahat.mmsnap.Models.ActionPlan;
 import ahat.mmsnap.Models.ConversionException;
 import ahat.mmsnap.Models.IfThenPlan;
+import ahat.mmsnap.Models.Reminder;
+import ahat.mmsnap.Notifications.ReminderAlarmReceiver;
 
 public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatActivity
 {
@@ -113,8 +113,29 @@ public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatA
     }
 
     @Override
-    protected void saveItem() throws IOException, JSONException, ConversionException
+    protected void saveItem( ArrayList<IfThenPlan.WeekDay> days, ArrayList<Reminder> reminders ) throws IOException, JSONException, ConversionException
     {
+        // cancel previous reminders
+        for( IfThenPlan.WeekDay day : item.days )
+        {
+            for( Reminder reminder : item.reminders )
+            {
+                ReminderAlarmReceiver.cancelAlarms( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute, "action" );
+            }
+        }
+
+        // start new reminders
+        for( IfThenPlan.WeekDay day : days )
+        {
+            for( Reminder reminder : reminders )
+            {
+                ReminderAlarmReceiver.setupAlarm( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute, "action" );
+            }
+        }
+
+        item.days = days;
+        item.reminders = reminders;
+
         ActionPlansStorage s = new ActionPlansStorage( this );
         JSONArrayConverterActionPlan jc = new JSONArrayConverterActionPlan();
         s.read( jc );
@@ -131,7 +152,7 @@ public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatA
             {
                 if( jc.getActionPlans().get( i ).id == item.id )
                 {
-                    jc.getActionPlans().set( item.id, item );
+                    jc.getActionPlans().set( i, item );
                     break;
                 }
             }
