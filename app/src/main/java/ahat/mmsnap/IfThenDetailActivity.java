@@ -393,7 +393,8 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
         {
             ImageButton del = new ImageButton( this );
             setSize( del, 15, 15 );
-            setMargins( del, 4, 4, 4, 4 );
+            setMargins( del, 4, -10, 0, -10 );  //negative margins and excessive padding are used to increase the clickable area
+            setPadding( del, 24, 14, 24, 14 );
             del.setImageResource( android.R.drawable.ic_menu_close_clear_cancel );
             del.setColorFilter( getResources().getColor( android.R.color.holo_red_dark ) );
             del.setTag( new Reminder( hour, minute ) );
