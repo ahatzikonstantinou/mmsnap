@@ -413,7 +413,57 @@
                     />
             </RelativeLayout>
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/reminders_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
+                android:id="@+id/reminder_btn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_alarm_black_24dp"
+                android:padding="2dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_gravity="center_vertical"
+                android:tint="#555555"
+                />
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/reminder_layout"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                app:flexWrap="wrap"
+                android:orientation="horizontal">
 
+
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="08:00"-->
+                <!--android:layout_marginEnd="4dp"-->
+                <!--android:padding="2dp"-->
+                <!--/>-->
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="18:00"-->
+                <!--android:layout_marginEnd="4dp"-->
+                <!--android:padding="2dp"-->
+                <!--/>-->
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="21:05"-->
+                <!--android:layout_marginEnd="4dp"-->
+                <!--android:padding="2dp"-->
+                <!--/>-->
+
+
+            </com.google.android.flexbox.FlexboxLayout>
+        </LinearLayout>
         <TableLayout
             android:layout_height="wrap_content"
             android:layout_width="match_parent"

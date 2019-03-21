@@ -19,7 +19,6 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import ahat.mmsnap.Models.ActionPlan;
 import ahat.mmsnap.Models.ConversionException;
 import ahat.mmsnap.Models.IfThenPlan;
 import ahat.mmsnap.Models.Reminder;
@@ -358,7 +357,7 @@ public abstract class IfThenListActivity extends AppCompatActivity
                     {
                         for( Reminder reminder : item.reminders )
                         {
-                            ReminderAlarmReceiver.cancelAlarms( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute, "action" );
+                            ReminderAlarmReceiver.cancelAlarm( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute );
                         }
                     }
                     items.remove( i );

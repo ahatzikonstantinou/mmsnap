@@ -40,7 +40,7 @@ public class ReminderNotificationService extends IntentService
         initChannels( this );
     }
 
-    public static Intent createIntentStart( Context context, int year, int weekOfYear, WeekDay day, int hour, int minute, String planType )
+    public static Intent createIntentStart( Context context, int year, int weekOfYear, WeekDay day, int hour, int minute )
     {
         Intent intent = new Intent( context, ReminderNotificationService.class );
         intent.setAction( ACTION_START );
@@ -49,7 +49,6 @@ public class ReminderNotificationService extends IntentService
         intent.putExtra( "weekDay", day.name() );
         intent.putExtra( "hour", hour );
         intent.putExtra( "minute", minute );
-        intent.putExtra( "planType", planType );
         return intent;
     }
 
@@ -109,24 +108,26 @@ public class ReminderNotificationService extends IntentService
             WeekDay day = WeekDay.valueOf( intent.getStringExtra( "weekDay" ) );
             int hour = intent.getIntExtra( "hour", 0 );
             int minute = intent.getIntExtra( "minute", 0 );
-            String planType = intent.getStringExtra( "planType" );
 
-            JSONStorage storage;
-            JSONArrayConverterIfThenPlan jc;
-            ArrayList<? extends IfThenPlan> plans;
-            if( "action".equals( planType ) )   // == does NOT work
-            {
-                storage = new ActionPlansStorage( this );
-                jc = new JSONArrayConverterActionPlan();
-            }
-            else //if( "coping" == planType )
-            {
-                storage = new CopingPlansStorage( this );
-                jc = new JSONArrayConverterCopingPlan();
-            }
-            storage.read( jc );
-            plans = jc.getPlans();
+            ActionPlansStorage aps = new ActionPlansStorage( this );
+            JSONArrayConverterActionPlan jacap = new JSONArrayConverterActionPlan();
+            aps.read( jacap );
+            sendNotifications( jacap.getActionPlans(), year, weekOfYear, day, hour, minute );
 
+            CopingPlansStorage cps = new CopingPlansStorage( this );
+            JSONArrayConverterCopingPlan jaccp = new JSONArrayConverterCopingPlan();
+            cps.read( jaccp );
+            sendNotifications( jaccp.getCopingPlans(), year, weekOfYear, day, hour, minute );
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            Log.e( "MMSNAP:", "Failed generating notification for plan reminder. Error: " + e.getMessage() );
+        }
+    }
+
+    private void sendNotifications( ArrayList<? extends IfThenPlan> plans, int year, int weekOfYear, IfThenPlan.WeekDay day, int hour, int minute )
+    {
             IfThenPlan plan = null;
             for( IfThenPlan p : plans )
             {
@@ -166,11 +167,6 @@ public class ReminderNotificationService extends IntentService
 
             final NotificationManager manager = (NotificationManager) this.getSystemService( Context.NOTIFICATION_SERVICE );
             manager.notify( NOTIFICATION_ID, builder.build() );
-        }
-        catch( Exception e )
-        {
-            e.printStackTrace();
-            Log.e( "MMSNAP:", "Failed generating notification for plan reminder. Error: " + e.getMessage() );
-        }
+
     }
 }

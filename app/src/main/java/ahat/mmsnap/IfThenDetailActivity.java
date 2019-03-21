@@ -64,7 +64,7 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
     protected abstract void saveItem( ArrayList<IfThenPlan.WeekDay> days, ArrayList<Reminder> reminders ) throws IOException, JSONException, ConversionException;
 
     protected IfThenPlan item;
-    protected ArrayList<Reminder> reminders;
+    protected ArrayList<Reminder> reminders = new ArrayList<>();
     ArrayList<IfThenPlan.WeekDay> days = new ArrayList<>();
     private TextView ifStatementTextView;
     private TextView thenStatementTextView;
@@ -148,8 +148,8 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
             // user cannot edit expired plans
             findViewById( R.id.save ).setVisibility( View.GONE );
 
-            // user cannot add reminders
-            findViewById( R.id.reminder_btn ).setVisibility( View.GONE );
+//            // user cannot add reminders
+//            findViewById( R.id.reminder_btn ).setVisibility( View.GONE );
         }
 
         // health behaviors are editable only when not expired
@@ -276,7 +276,11 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
         end.setText( dfs.getShortWeekdays()[ c.get( Calendar.DAY_OF_WEEK ) ]+ " " + c.get( Calendar.DAY_OF_MONTH ) + " " +
                      dfs.getShortMonths()[ c.get( Calendar.MONTH ) ] + " " + c.get( Calendar.YEAR ) );
 
-        reminders = item.reminders;
+        // create a copy of the reminders so that additions and removals will not affect the original item before it is actually saved
+        for( Reminder reminder : item.reminders )
+        {
+            reminders.add( new Reminder( reminder ) );
+        }
         Collections.sort( reminders, Reminder.comparator );
         showReminders( reminders );
     }
@@ -385,23 +389,32 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
         time.setText( ( hour < 10 ? "0": "" ) + String.valueOf( hour ) + ":" + ( minute < 10 ? "0" : "" ) + String.valueOf( minute ) );
         timeLayout.addView( time );
 
-        ImageButton del = new ImageButton( this );
-        setSize( del, 15, 15 );
-        setMargins( del, 4 , 4, 4, 4 );
-        del.setImageResource( android.R.drawable. ic_menu_close_clear_cancel );
-        del.setColorFilter( getResources().getColor( android.R.color.holo_red_dark ) );
-        del.setTag( new Reminder( hour, minute ) );
-        del.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick( View view )
+        if( remindersAreEditable() )
+        {
+            ImageButton del = new ImageButton( this );
+            setSize( del, 15, 15 );
+            setMargins( del, 4, 4, 4, 4 );
+            del.setImageResource( android.R.drawable.ic_menu_close_clear_cancel );
+            del.setColorFilter( getResources().getColor( android.R.color.holo_red_dark ) );
+            del.setTag( new Reminder( hour, minute ) );
+            del.setOnClickListener( new View.OnClickListener()
             {
-                Reminder reminder = (Reminder) view.getTag();
-                removeReminder( reminder );
-            }
-        } );
-        timeLayout.addView( del );
+                @Override
+                public void onClick( View view )
+                {
+                    Reminder reminder = (Reminder) view.getTag();
+                    removeReminder( reminder );
+                }
+            } );
+            timeLayout.addView( del );
+        }
 
         reminderLayout.addView( timeLayout );
+    }
+
+    protected boolean remindersAreEditable()
+    {
+        return !planIsExpired;
     }
 
     //set width height in dp

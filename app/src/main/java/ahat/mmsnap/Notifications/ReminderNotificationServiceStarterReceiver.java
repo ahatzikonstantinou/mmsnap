@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.Calendar;
 
 import ahat.mmsnap.JSON.ActionPlansStorage;
@@ -13,6 +16,7 @@ import ahat.mmsnap.JSON.JSONArrayConverterActionPlan;
 import ahat.mmsnap.JSON.JSONArrayConverterCopingPlan;
 import ahat.mmsnap.MainActivity;
 import ahat.mmsnap.Models.ActionPlan;
+import ahat.mmsnap.Models.ConversionException;
 import ahat.mmsnap.Models.CopingPlan;
 import ahat.mmsnap.Models.IfThenPlan;
 import ahat.mmsnap.Models.IfThenPlan.WeekDay;
@@ -25,22 +29,7 @@ public class ReminderNotificationServiceStarterReceiver extends BroadcastReceive
     {
         try
         {
-            ActionPlansStorage aps = new ActionPlansStorage( context );
-            JSONArrayConverterActionPlan jacap = new JSONArrayConverterActionPlan();
-            aps.read( jacap );
-
-            CopingPlansStorage cps = new CopingPlansStorage( context );
-            JSONArrayConverterCopingPlan jaccp = new JSONArrayConverterCopingPlan();
-            cps.read( jaccp );
-
-            for( ActionPlan p : jacap.getActionPlans() )
-            {
-                startAlarm( context, p );
-            }
-            for( CopingPlan p : jaccp.getCopingPlans() )
-            {
-                startAlarm( context, p );
-            }
+            startReminderAlarms( context );
         }
         catch( Exception e )
         {
@@ -49,7 +38,27 @@ public class ReminderNotificationServiceStarterReceiver extends BroadcastReceive
         }
     }
 
-    private void startAlarm( Context context, IfThenPlan plan )
+    public static void startReminderAlarms( Context context ) throws IOException, JSONException, ConversionException
+    {
+        ActionPlansStorage aps = new ActionPlansStorage( context );
+        JSONArrayConverterActionPlan jacap = new JSONArrayConverterActionPlan();
+        aps.read( jacap );
+
+        CopingPlansStorage cps = new CopingPlansStorage( context );
+        JSONArrayConverterCopingPlan jaccp = new JSONArrayConverterCopingPlan();
+        cps.read( jaccp );
+
+        for( ActionPlan p : jacap.getActionPlans() )
+        {
+            startAlarm( context, p );
+        }
+        for( CopingPlan p : jaccp.getCopingPlans() )
+        {
+            startAlarm( context, p );
+        }
+    }
+
+    private static void startAlarm( Context context, IfThenPlan plan )
     {
         if( !plan.active )
         {
@@ -71,7 +80,7 @@ public class ReminderNotificationServiceStarterReceiver extends BroadcastReceive
 
                 if( c.after( now ) )
                 {
-                    ReminderAlarmReceiver.setupAlarm( context, plan.year, plan.weekOfYear, day, reminder.hour, reminder.minute, ( plan instanceof ActionPlan ? "action" : "coping" ) );
+                    ReminderAlarmReceiver.setupAlarm( context, plan.year, plan.weekOfYear, day, reminder.hour, reminder.minute );
                 }
             }
         }

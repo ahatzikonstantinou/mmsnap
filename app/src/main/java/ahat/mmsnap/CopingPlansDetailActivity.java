@@ -1,7 +1,11 @@
 package ahat.mmsnap;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.json.JSONException;
 
@@ -22,7 +26,7 @@ public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatA
     @Override
     protected int getActivityResLayout()
     {
-        return R.layout.activity_coping_plans_detail;
+        return R.layout.activity_action_plans_detail;
     }
     @Override
     protected int getContentRootLayoutResId()
@@ -45,6 +49,16 @@ public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatA
         super.onCreate( savedInstanceState );
 
         getSupportActionBar().setSubtitle( R.string.title_activity_coping_plans );
+
+        // fix color and title for the layout
+        LinearLayout borderLayout = findViewById( R.id.action_plan_border_layout );
+        borderLayout.getBackground().setColorFilter( getResources().getColor( R.color.coping_plan ), PorterDuff.Mode.SRC_ATOP );
+        TextView title = findViewById( R.id.action_plan_title_textView );
+        title.getBackground().setColorFilter( getResources().getColor( R.color.coping_plan ), PorterDuff.Mode.SRC_ATOP );
+        title.setText( "COPING PLAN" );
+
+        // hide the coping plan frame which is only used in action plans
+        findViewById( R.id.coping_plan_container_layout ).setVisibility( View.GONE );
     }
 
     public void onBackPressed()
@@ -72,7 +86,7 @@ public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatA
         {
             for( Reminder reminder : item.reminders )
             {
-                ReminderAlarmReceiver.cancelAlarms( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute, "coping" );
+                ReminderAlarmReceiver.cancelAlarm( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute );
             }
         }
 
@@ -81,7 +95,7 @@ public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatA
         {
             for( Reminder reminder : reminders )
             {
-                ReminderAlarmReceiver.setupAlarm( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute, "coping" );
+                ReminderAlarmReceiver.setupAlarm( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute );
             }
         }
 

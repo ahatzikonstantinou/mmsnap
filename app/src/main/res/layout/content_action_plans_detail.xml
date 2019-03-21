@@ -126,6 +126,7 @@
         app:layout_constraintBottom_toTopOf="@+id/date_selector_layout">
 
         <LinearLayout
+            android:id="@+id/action_plan_border_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/subsection_marginBottom"
@@ -260,6 +261,7 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/action_plan_title_textView"
                 android:layout_width="@dimen/subsection_title_width"
                 android:layout_height="@dimen/subsection_title_height"
                 android:layout_centerHorizontal="true"
@@ -334,12 +336,13 @@
                     android:textSize="15sp"/>
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/week_days_layout"
+                android:id="@+id/week_days_reminders_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_border_trnsp_bkg"
                 android:orientation="vertical">
                 <LinearLayout
+                    android:id="@+id/week_days_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -601,8 +604,6 @@
                 </LinearLayout>
 
 
-
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -655,8 +656,6 @@
                 </LinearLayout>
 
 
-
-
             </LinearLayout>
         </LinearLayout>
 
@@ -687,136 +686,140 @@
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintBottom_toTopOf="@+id/active_switch">
 
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/coping_plan_container_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/subsection_marginBottom"
-            android:layout_marginLeft="@dimen/subsection_marginSide"
-            android:layout_marginRight="@dimen/subsection_marginSide"
-            android:layout_marginTop="@dimen/subsection_marginTop"
-            android:background="@drawable/rounded_border_trnsp_bkg"
-            android:backgroundTint="#4AACC5"
-            android:orientation="vertical"
-            android:padding="20dp">
-
-            <!--<include layout="@layout/content_if_then_detail" />-->
+            android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_border_white_bkg"
-                >
+                android:layout_marginBottom="@dimen/subsection_marginBottom"
+                android:layout_marginLeft="@dimen/subsection_marginSide"
+                android:layout_marginRight="@dimen/subsection_marginSide"
+                android:layout_marginTop="@dimen/subsection_marginTop"
+                android:background="@drawable/rounded_border_trnsp_bkg"
+                android:backgroundTint="@color/coping_plan"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-                <TableLayout android:layout_height="wrap_content"
-                             android:layout_width="match_parent">
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        >
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
+                <!--<include layout="@layout/content_if_then_detail" />-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/rounded_border_white_bkg"
+                    >
+
+                    <TableLayout android:layout_height="wrap_content"
+                                 android:layout_width="match_parent">
+                        <TableRow
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_column="1"
-                            android:gravity="center"
-                            android:layout_gravity="center_vertical"
+                            android:layout_margin="2dp"
                             >
-                        <ImageView
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
-                            android:src="@drawable/ic_if_bkg_alt"
-                            android:tint="@color/if_color"
-                            android:scaleY="1.4"
-                            android:scaleX="2"
-                            />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="IF"
-                            android:textAlignment="center"
-                            android:textColor="#ffffff"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:layout_marginEnd="30dp"
-                            android:layout_marginStart="5dp"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            />
-                        </RelativeLayout>
-                        <EditText
-                            android:layout_column="2"
-                            android:layout_weight="30"
-                            android:id="@+id/item_coping_plan_if_statement"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:text="if statement "
-                            android:textSize="15sp"
-                            />
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="2dp"
-                        >
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_column="1"
-                            android:layout_marginRight="5dp"
-                            android:layout_gravity="center_vertical"
-                            >
-
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_column="1"
+                                android:gravity="center"
+                                android:layout_gravity="center_vertical"
+                                >
                             <ImageView
                                 android:layout_height="wrap_content"
                                 android:layout_width="wrap_content"
-                                android:src="@drawable/ic_then_bkg_alt"
-                                android:tint="@color/then"
-                                android:layout_centerInParent="true"
-                                android:scaleY="2"
-                                android:scaleX="3"
+                                android:src="@drawable/ic_if_bkg_alt"
+                                android:tint="@color/if_color"
+                                android:scaleY="1.4"
+                                android:scaleX="2"
                                 />
-
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="#ffffff"
-                                android:text="THEN"
+                                android:text="IF"
                                 android:textAlignment="center"
+                                android:textColor="#ffffff"
                                 android:textSize="16sp"
                                 android:textStyle="bold"
-                                android:layout_gravity="center_vertical"
-                                android:layout_centerInParent="true"
-                                android:paddingEnd="5dp"
+                                android:layout_marginEnd="30dp"
+                                android:layout_marginStart="5dp"
+                                android:paddingTop="2dp"
+                                android:paddingBottom="2dp"
                                 />
-                        </RelativeLayout>
-                        <EditText
-                            android:layout_column="2"
-                            android:layout_weight="30"
-                            android:id="@+id/item_coping_plan_then_statement"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="0dp"
-                            android:text="then statement"
-                            android:textSize="15sp"
-                            app:layout_constraintTop_toBottomOf="@+id/counterfactual_item_if_statement"
-                            app:layout_constraintLeft_toRightOf="@+id/counterfactual_item_then"
-                            android:layout_gravity="center_vertical"
-                            />
-                    </TableRow>
+                            </RelativeLayout>
+                            <EditText
+                                android:layout_column="2"
+                                android:layout_weight="30"
+                                android:id="@+id/item_coping_plan_if_statement"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="if statement "
+                                android:textSize="15sp"
+                                />
+                        </TableRow>
 
-                </TableLayout>
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="2dp"
+                            >
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_column="1"
+                                android:layout_marginRight="5dp"
+                                android:layout_gravity="center_vertical"
+                                >
+
+                                <ImageView
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="wrap_content"
+                                    android:src="@drawable/ic_then_bkg_alt"
+                                    android:tint="@color/then"
+                                    android:layout_centerInParent="true"
+                                    android:scaleY="2"
+                                    android:scaleX="3"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="#ffffff"
+                                    android:text="THEN"
+                                    android:textAlignment="center"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_centerInParent="true"
+                                    android:paddingEnd="5dp"
+                                    />
+                            </RelativeLayout>
+                            <EditText
+                                android:layout_column="2"
+                                android:layout_weight="30"
+                                android:id="@+id/item_coping_plan_then_statement"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:text="then statement"
+                                android:textSize="15sp"
+                                app:layout_constraintTop_toBottomOf="@+id/counterfactual_item_if_statement"
+                                app:layout_constraintLeft_toRightOf="@+id/counterfactual_item_then"
+                                android:layout_gravity="center_vertical"
+                                />
+                        </TableRow>
+
+                    </TableLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-        <RelativeLayout
+            <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -833,6 +836,8 @@
                 />
 
         </RelativeLayout>
+
+        </FrameLayout>
     </FrameLayout>
     <Switch
         android:id="@+id/active_switch"

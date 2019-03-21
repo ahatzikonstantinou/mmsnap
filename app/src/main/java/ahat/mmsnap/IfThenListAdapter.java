@@ -1,20 +1,28 @@
 package ahat.mmsnap;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.android.flexbox.FlexboxLayout;
 
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 import ahat.mmsnap.Models.ActionPlan;
 import ahat.mmsnap.Models.IfThenPlan;
+import ahat.mmsnap.Models.Reminder;
 
 import static ahat.mmsnap.ApplicationStatus.Behavior.ACTIVITY;
 import static ahat.mmsnap.ApplicationStatus.Behavior.ALCOHOL;
@@ -186,7 +194,67 @@ public class IfThenListAdapter extends ArrayAdapter
         {
             view.findViewById( R.id.coping_plan_layout ).setVisibility( View.GONE );
         }
+
+        if( 0 == item.reminders.size() )
+        {
+            view.findViewById( R.id.reminders_layout ).setVisibility( View.GONE );
+        }
+        else
+        {
+            Collections.sort( item.reminders, Reminder.comparator );
+            FlexboxLayout reminderLayout = view.findViewById( R.id.reminder_layout );
+
+            for( Reminder reminder : item.reminders )
+            {
+//                LinearLayout timeLayout = new LinearLayout( view.getContext() );
+//                timeLayout.setLayoutParams( new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT ) );
+//                timeLayout.setOrientation( LinearLayout.HORIZONTAL );
+//                timeLayout.setGravity( Gravity.CENTER_VERTICAL );
+//                setMargins( timeLayout, 4, 4, 4, 4 );
+//                setPadding( timeLayout, 4, 4, 4, 4 );
+
+                TextView time = new TextView( view.getContext() );
+                time.setLayoutParams( new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT ) );
+                setMargins( time, 0, 0, 4, 0 );
+                setPadding( time, 2, 2, 2, 2 );
+                time.setText( ( reminder.hour < 10 ? "0": "" ) + String.valueOf( reminder.hour ) + ":" + ( reminder.minute < 10 ? "0" : "" ) + String.valueOf( reminder.minute ) );
+                reminderLayout.addView( time );
+            }
+        }
+
         return view;
+    }
+
+    //set margins in dp
+    private void setMargins( View view, int left, int top, int right, int bottom )
+    {
+        if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+
+            final float scale = view.getContext().getResources().getDisplayMetrics().density;
+            // convert the DP into pixel
+            int l =  (int)(left * scale + 0.5f);
+            int r =  (int)(right * scale + 0.5f);
+            int t =  (int)(top * scale + 0.5f);
+            int b =  (int)(bottom * scale + 0.5f);
+
+            p.setMargins(l, t, r, b);
+            view.requestLayout();
+        }
+    }
+
+    //set padding in dp
+    private void setPadding( View view, int left, int top, int right, int bottom )
+    {
+        final float scale = view.getContext().getResources().getDisplayMetrics().density;
+        // convert the DP into pixel
+        int l =  (int)(left * scale + 0.5f);
+        int r =  (int)(right * scale + 0.5f);
+        int t =  (int)(top * scale + 0.5f);
+        int b =  (int)(bottom * scale + 0.5f);
+
+        view.setPadding(l, t, r, b);
+        view.requestLayout();
     }
 
     protected IfThenPlan getIfThenPlan( int position )

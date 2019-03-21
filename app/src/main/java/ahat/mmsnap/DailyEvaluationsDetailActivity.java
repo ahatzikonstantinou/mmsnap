@@ -3,6 +3,7 @@ package ahat.mmsnap;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,6 +20,8 @@ import ahat.mmsnap.Models.CopingPlan;
 import ahat.mmsnap.Models.DailyEvaluation;
 import ahat.mmsnap.Models.IfThenPlan;
 import ahat.mmsnap.Models.Reminder;
+
+import static android.view.View.GONE;
 
 public class DailyEvaluationsDetailActivity extends IfThenDetailActivity
 {
@@ -64,17 +67,19 @@ public class DailyEvaluationsDetailActivity extends IfThenDetailActivity
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
-        getSupportActionBar().setSubtitle( R.string.title_activity_action_plans );
+        getSupportActionBar().setSubtitle( R.string.title_activity_daily_evaluations_detail );
 
         // hide the submit button, which is found in the action plan layout included in our layout
-        findViewById( R.id.save ).setVisibility( View.GONE );
+        findViewById( R.id.save ).setVisibility( GONE );
+
+        //stop the soft keyboard from displaying, the user will only evaluate the days
+        this.getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN );
 
         evaluation = (DailyEvaluation) getIntent().getSerializableExtra( "evaluation" );
 
         //setup the layouts and textviews
         if( evaluation.plan instanceof ActionPlan )
         {
-            findViewById( R.id.action_plans_layout ).setVisibility( View.VISIBLE );
             EditText copingIfStatementTextView = findViewById( R.id.item_coping_plan_if_statement );
             EditText copingThenStatementTextView = findViewById( R.id.item_coping_plan_then_statement );
             copingIfStatementTextView.setText( ( (ActionPlan) evaluation.plan ).copingIfStatement );
@@ -82,7 +87,7 @@ public class DailyEvaluationsDetailActivity extends IfThenDetailActivity
         }
         else if( evaluation.plan instanceof CopingPlan )
         {
-            findViewById( R.id.coping_plan_layout ).setVisibility( View.VISIBLE );
+            findViewById( R.id.coping_plan_container_layout ).setVisibility( GONE );
         }
 
         findViewById( R.id.evaluation_layout ).setVisibility( View.VISIBLE );
@@ -90,8 +95,8 @@ public class DailyEvaluationsDetailActivity extends IfThenDetailActivity
         //setup the success, fail buttons
         if( evaluation.isEvaluated() )
         {
-            findViewById( R.id.fail_btn ).setVisibility( View.GONE );
-            findViewById( R.id.success_btn ).setVisibility( View.GONE );
+            findViewById( R.id.fail_btn ).setVisibility( GONE );
+            findViewById( R.id.success_btn ).setVisibility( GONE );
         }
         else
         {
@@ -126,8 +131,9 @@ public class DailyEvaluationsDetailActivity extends IfThenDetailActivity
 
 
         // dates setup
-        findViewById( R.id.week_dates_layout ).setVisibility( View.GONE );
-        findViewById( R.id.week_days_layout ).setVisibility( View.GONE );
+        findViewById( R.id.week_dates_layout ).setVisibility( GONE );
+        findViewById( R.id.week_days_layout ).setVisibility( GONE );
+        findViewById( R.id.week_days_reminders_layout ).setBackgroundResource( 0 );
         TextView dateTextView = findViewById( R.id.date_txt );
         dateTextView.setVisibility( View.VISIBLE );
 
@@ -159,6 +165,12 @@ public class DailyEvaluationsDetailActivity extends IfThenDetailActivity
 //        if( evaluation.getWeekDay() != FRIDAY ) { findViewById( R.id.day_fri_chk ).setVisibility( View.GONE ); }
 //        if( evaluation.getWeekDay() != SATURDAY ) { findViewById( R.id.day_sat_chk ).setVisibility( View.GONE ); }
 //        if( evaluation.getWeekDay() != SUNDAY ) { findViewById( R.id.day_sun_chk ).setVisibility( View.GONE ); }
+
+    }
+
+    protected boolean remindersAreEditable()
+    {
+        return false;
     }
 
     private void scoreEvaluation( boolean success )

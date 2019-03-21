@@ -16,20 +16,17 @@ public class Reminder implements Serializable
 
     public int hour;
     public int minute;
-    public int id;
 
     public Reminder( int hour, int minute )
     {
-        this.id = -1;
         this.hour = hour;
         this.minute = minute;
     }
 
-    public Reminder( int id, int hour, int minute )
+    public Reminder( Reminder reminder )
     {
-        this.id = id;
-        this.hour = hour;
-        this.minute = minute;
+        this.hour = reminder.hour;
+        this.minute = reminder.minute;
     }
 
     public boolean equals( Reminder reminder )

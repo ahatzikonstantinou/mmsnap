@@ -15,13 +15,13 @@
         layout="@layout/content_action_plans_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        />
 
-    <include
-        android:id="@+id/coping_plans_layout"
-        layout="@layout/content_coping_plans_detail"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
+    <!--<include-->
+        <!--android:id="@+id/coping_plans_layout"-->
+        <!--layout="@layout/content_coping_plans_detail"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:visibility="gone"/>-->
 
 </android.support.constraint.ConstraintLayout>

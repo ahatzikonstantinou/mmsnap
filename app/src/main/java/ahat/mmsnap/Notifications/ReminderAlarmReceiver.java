@@ -13,6 +13,7 @@ import java.util.Calendar;
 import ahat.mmsnap.ActionPlansDetailActivity;
 import ahat.mmsnap.Models.IfThenPlan;
 import ahat.mmsnap.Models.Reminder;
+import ahat.mmsnap.Models.ReminderAlarms;
 
 public class ReminderAlarmReceiver extends WakefulBroadcastReceiver
 {
@@ -20,20 +21,20 @@ public class ReminderAlarmReceiver extends WakefulBroadcastReceiver
     private static final String ACTION_START_REMINDER_SERVICE = "ACTION_START_REMINDER_SERVICE";
     private static final String ACTION_DELETE_REMINDER_NOTIFICATION = "ACTION_DELETE_REMINDER_NOTIFICATION";
 
-    private static int generateRequestCode( int year, int weekOfYear, IfThenPlan.WeekDay day, int hour, int minute )
-    {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set( Calendar.YEAR, year );
-        calendar.set( Calendar.WEEK_OF_YEAR, weekOfYear );
-        calendar.set( Calendar.DAY_OF_WEEK, day.toCalendarDayOfWeek() );
-        calendar.set( Calendar.HOUR, hour );
-        calendar.set( Calendar.MINUTE, minute );
+//    private static int generateRequestCode( int year, int weekOfYear, IfThenPlan.WeekDay day, int hour, int minute )
+//    {
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set( Calendar.YEAR, year );
+//        calendar.set( Calendar.WEEK_OF_YEAR, weekOfYear );
+//        calendar.set( Calendar.DAY_OF_WEEK, day.toCalendarDayOfWeek() );
+//        calendar.set( Calendar.HOUR, hour );
+//        calendar.set( Calendar.MINUTE, minute );
+//
+//        return (int) ( calendar.getTimeInMillis() / ( 1000 * 60 ) ); // time in minutes resolution. Good until 4000 AD when it becomes > Max Int
+//
+//    }
 
-        return (int) ( calendar.getTimeInMillis() / ( 1000 * 60 ) ); // time in minutes resolution. Good until 4000 AD when it becomes > Max Int
-
-    }
-
-    public static void setupAlarm( Context context, int year, int weekOfYear, IfThenPlan.WeekDay day, int hour, int minute, String planType )
+    public static void setupAlarm( Context context, int year, int weekOfYear, IfThenPlan.WeekDay day, int hour, int minute )
     {
         Calendar calendar = Calendar.getInstance();
         calendar.set( Calendar.YEAR, year );
@@ -42,15 +43,37 @@ public class ReminderAlarmReceiver extends WakefulBroadcastReceiver
         calendar.set( Calendar.HOUR_OF_DAY, hour );
         calendar.set( Calendar.MINUTE, minute );
 
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService( Context.ALARM_SERVICE );
-        PendingIntent alarmIntent = getStartPendingIntent( context, year, weekOfYear, day, hour, minute, planType );
-        alarmManager.set( AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent );
+        try
+        {
+            ReminderAlarms reminderAlarms = ReminderAlarms.getInstance( context );
+            String key = reminderAlarms.add( year, weekOfYear, day, hour, minute );
+            AlarmManager alarmManager = (AlarmManager) context.getSystemService( Context.ALARM_SERVICE );
+            PendingIntent alarmIntent = getStartPendingIntent( context, key );
+            alarmManager.set( AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent );
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            Log.d( "MMSNAP:", "Could not setup alarm. Error: " + e.getMessage() );
+        }
     }
 
-    public static void cancelAlarms( Context context, int year, int weekOfYear, IfThenPlan.WeekDay day, int hour, int minute, String planType )
+    public static void cancelAlarm( Context context, int year, int weekOfYear, IfThenPlan.WeekDay day, int hour, int minute )
     {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService( Context.ALARM_SERVICE );
-        alarmManager.cancel( getStartPendingIntent( context, year, weekOfYear, day, hour, minute, planType ) );
+        try
+        {
+            ReminderAlarms reminderAlarms = ReminderAlarms.getInstance( context );
+            if( reminderAlarms.remove( year, weekOfYear, day, hour, minute ) )
+            {
+                AlarmManager alarmManager = (AlarmManager) context.getSystemService( Context.ALARM_SERVICE );
+                alarmManager.cancel( getStartPendingIntent( context, ReminderAlarms.generateKey( year, weekOfYear, day, hour, minute )) );
+            }
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            Log.d( "MMSNAP:", "Could not cancel alarm. Error: " + e.getMessage() );
+        }
     }
 
 
@@ -68,8 +91,7 @@ public class ReminderAlarmReceiver extends WakefulBroadcastReceiver
                                                                            Integer.parseInt( parts[5] ),
                                                                            IfThenPlan.WeekDay.valueOf( parts[6] ),
                                                                            Integer.parseInt( parts[7] ),
-                                                                           Integer.parseInt( parts[8] ),
-                                                                           parts[9]
+                                                                           Integer.parseInt( parts[8] )
                                                                            );
         }
         else if( ACTION_DELETE_REMINDER_NOTIFICATION.equals( action ) )
@@ -84,16 +106,10 @@ public class ReminderAlarmReceiver extends WakefulBroadcastReceiver
         }
     }
 
-    private static PendingIntent getStartPendingIntent( Context context,  int year, int weekOfYear, IfThenPlan.WeekDay day, int hour, int minute, String planType )
+    private static PendingIntent getStartPendingIntent( Context context,  String key )
     {
         Intent intent = new Intent( context, ReminderAlarmReceiver.class );
-        String combinedAction = ACTION_START_REMINDER_SERVICE +
-                                "_" + String.valueOf( year ) +
-                                "_" + String.valueOf( weekOfYear ) +
-                                "_" + day.name() +
-                                "_" + String.valueOf( hour ) +
-                                "_" + String.valueOf( minute ) +
-                                "_" + planType;
+        String combinedAction = ACTION_START_REMINDER_SERVICE + " _" + key;
         intent.setAction( combinedAction );
         return PendingIntent.getBroadcast( context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
     }

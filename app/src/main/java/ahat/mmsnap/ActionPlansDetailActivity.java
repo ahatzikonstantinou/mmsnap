@@ -120,7 +120,7 @@ public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatA
         {
             for( Reminder reminder : item.reminders )
             {
-                ReminderAlarmReceiver.cancelAlarms( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute, "action" );
+                ReminderAlarmReceiver.cancelAlarm( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute );
             }
         }
 
@@ -129,7 +129,7 @@ public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatA
         {
             for( Reminder reminder : reminders )
             {
-                ReminderAlarmReceiver.setupAlarm( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute, "action" );
+                ReminderAlarmReceiver.setupAlarm( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute );
             }
         }
 
