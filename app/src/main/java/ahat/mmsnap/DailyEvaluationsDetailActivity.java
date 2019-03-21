@@ -58,7 +58,7 @@ public class DailyEvaluationsDetailActivity extends IfThenDetailActivity
     }
 
     @Override
-    protected void saveItem( ArrayList<IfThenPlan.WeekDay> days, ArrayList<Reminder> reminders ) throws IOException, JSONException, ConversionException
+    protected void saveItem( int year, int weekOfYear, ArrayList<IfThenPlan.WeekDay> days, ArrayList<Reminder> reminders ) throws IOException, JSONException, ConversionException
     {
         // just ignore this. We have other buttons that directly score the evaluation.
     }

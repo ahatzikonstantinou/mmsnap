@@ -1,7 +1,9 @@
 package ahat.mmsnap;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,13 +58,15 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
 
     protected HashMap<ApplicationStatus.Behavior, Boolean> BehaviorIsSelected;
     protected boolean planIsExpired;
+    private int weekOfYear;
+    private int year;
 
     protected abstract int getActivityResLayout();
     protected abstract int getContentRootLayoutResId();
     protected abstract IfThenPlan getIfThenItem();
     protected abstract Class<?> getListActivityClass();
     protected abstract String getSaveErrorMessage();
-    protected abstract void saveItem( ArrayList<IfThenPlan.WeekDay> days, ArrayList<Reminder> reminders ) throws IOException, JSONException, ConversionException;
+    protected abstract void saveItem( int year, int weekOfYear, ArrayList<IfThenPlan.WeekDay> days, ArrayList<Reminder> reminders ) throws IOException, JSONException, ConversionException;
 
     protected IfThenPlan item;
     protected ArrayList<Reminder> reminders = new ArrayList<>();
@@ -136,7 +141,8 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
         pc.set( Calendar.WEEK_OF_YEAR, item.weekOfYear );
         pc.set( Calendar.DAY_OF_WEEK, pc.getFirstDayOfWeek() + 6 );
 
-        planIsExpired = now.get( Calendar.WEEK_OF_YEAR ) != item.weekOfYear || now.get( Calendar.YEAR ) != item.year;
+//        planIsExpired = now.get( Calendar.WEEK_OF_YEAR ) != item.weekOfYear || now.get( Calendar.YEAR ) != item.year;
+        planIsExpired = now.after( pc );
 
         if( planIsExpired )
         {
@@ -201,6 +207,7 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
             findViewById( R.id.day_sun_chk ).setOnClickListener( this );
 
             findViewById( R.id.reminder_btn ).setOnClickListener( this );
+            findViewById( R.id.select_week_btn ).setOnClickListener( this );
         }
 
 
@@ -255,12 +262,26 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
 //            findViewById( R.id.day_sun_fail_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( SUNDAY ) ) && item.isEvaluated( SUNDAY ) && !item.isSuccessful( SUNDAY ) ? View.VISIBLE : View.INVISIBLE );
 //        }
 
+        year = item.year;
+        weekOfYear = item.weekOfYear;
+        setWeekUI( year, weekOfYear );
 
+        // create a copy of the reminders so that additions and removals will not affect the original item before it is actually saved
+        for( Reminder reminder : item.reminders )
+        {
+            reminders.add( new Reminder( reminder ) );
+        }
+        Collections.sort( reminders, Reminder.comparator );
+        showReminders( reminders );
+    }
+
+    private void setWeekUI( int year, int weekOfYear )
+    {
         DateFormatSymbols dfs = new DateFormatSymbols();
 
         Calendar startCal = Calendar.getInstance();
-        startCal.set( Calendar.YEAR, item.year );
-        startCal.set( Calendar.WEEK_OF_YEAR, item.weekOfYear );
+        startCal.set( Calendar.YEAR, year );
+        startCal.set( Calendar.WEEK_OF_YEAR, weekOfYear );
 
         Calendar c = Calendar.getInstance();
         c.set( Calendar.YEAR, startCal.get( Calendar.YEAR ) );
@@ -275,14 +296,6 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
         TextView end = findViewById( R.id.end_date );
         end.setText( dfs.getShortWeekdays()[ c.get( Calendar.DAY_OF_WEEK ) ]+ " " + c.get( Calendar.DAY_OF_MONTH ) + " " +
                      dfs.getShortMonths()[ c.get( Calendar.MONTH ) ] + " " + c.get( Calendar.YEAR ) );
-
-        // create a copy of the reminders so that additions and removals will not affect the original item before it is actually saved
-        for( Reminder reminder : item.reminders )
-        {
-            reminders.add( new Reminder( reminder ) );
-        }
-        Collections.sort( reminders, Reminder.comparator );
-        showReminders( reminders );
     }
 
     @Override
@@ -323,6 +336,39 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle( "Select Reminder Time" );
                 mTimePicker.show();
+                break;
+            case R.id.select_week_btn:
+                Calendar calendar = Calendar.getInstance();
+                int year    = calendar.get( Calendar.YEAR );
+                int month   = calendar.get( Calendar.MONTH );
+                int day     = calendar.get( Calendar.DAY_OF_MONTH );
+                DatePickerDialog dialog = new DatePickerDialog(
+                    IfThenDetailActivity.this,
+                    new DatePickerDialog.OnDateSetListener()
+                    {
+                        public void onDateSet( DatePicker view, int year, int monthOfYear, int dayOfMonth )
+                        {
+                            Calendar newDate = Calendar.getInstance();
+                            newDate.set( year, monthOfYear, dayOfMonth );
+                            year = newDate.get( Calendar.YEAR );
+                            weekOfYear = newDate.get( Calendar.WEEK_OF_YEAR );
+                            setWeekUI( year, weekOfYear );
+                        }
+                    },
+                    year, month, day
+                );
+                // from https://stackoverflow.com/a/4555487
+                final int appFlags = getApplicationInfo().flags;
+                final boolean isDebug = ( appFlags & ApplicationInfo.FLAG_DEBUGGABLE ) != 0;
+                // TODO: ensure that I send the release version to users
+                if( !isDebug )
+                {
+                    dialog.getDatePicker().setMinDate( calendar.getTimeInMillis() );
+//                    TODO: should I add a maxdate to stop users from planning in the future?
+//                    calendar.add( Calendar.DATE, 7 );
+//                    dialog.getDatePicker().setMaxDate( calendar.getTimeInMillis() );
+                }
+                dialog.show();
                 break;
             default:
                 break;
@@ -526,7 +572,7 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
             if( 0 == error.length() )
             {
 //                JSONArrayIOHandler.saveItem( getBaseContext(), item, getFilesDir().getPath() + "/" + FILENAME );
-                saveItem( days, reminders );
+                saveItem( year, weekOfYear, days, reminders );
                 startActivity( new Intent( getBaseContext(), getListActivityClass() ) );
             }
             else

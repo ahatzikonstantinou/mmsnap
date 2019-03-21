@@ -113,7 +113,7 @@ public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatA
     }
 
     @Override
-    protected void saveItem( ArrayList<IfThenPlan.WeekDay> days, ArrayList<Reminder> reminders ) throws IOException, JSONException, ConversionException
+    protected void saveItem( int year, int weekOfYear, ArrayList<IfThenPlan.WeekDay> days, ArrayList<Reminder> reminders ) throws IOException, JSONException, ConversionException
     {
         // cancel previous reminders
         for( IfThenPlan.WeekDay day : item.days )
@@ -129,10 +129,12 @@ public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatA
         {
             for( Reminder reminder : reminders )
             {
-                ReminderAlarmReceiver.setupAlarm( this, item.year, item.weekOfYear, day, reminder.hour, reminder.minute );
+                ReminderAlarmReceiver.setupAlarm( this, year, weekOfYear, day, reminder.hour, reminder.minute );
             }
         }
 
+        item.year = year;
+        item.weekOfYear = weekOfYear;
         item.days = days;
         item.reminders = reminders;
 
