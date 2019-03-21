@@ -2,7 +2,6 @@ package ahat.mmsnap;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -133,7 +132,7 @@ public class AssessmentsActivity extends StateActivity //AppCompatActivity
                 startActivity( intent );
                 break;
             case R.id.assessments_plans_btn:
-                intent = new Intent( this, PlansActivity.class);
+                intent = new Intent( this, IntentionsAndPlansActivity.class);
                 startActivity( intent );
                 break;
             case R.id.assessments_risk_btn:

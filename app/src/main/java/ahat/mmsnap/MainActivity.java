@@ -606,7 +606,8 @@ public class MainActivity extends StateActivity //AppCompatActivity
 //        else
         if( id == R.id.nav_exit )
         {
-            Process.sendSignal(Process.myPid(), Process.SIGNAL_KILL);
+//            Process.sendSignal(Process.myPid(), Process.SIGNAL_KILL);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById( R.id.drawer_layout );

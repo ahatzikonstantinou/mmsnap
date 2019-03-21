@@ -170,7 +170,7 @@
                 android:value="ahat.mmsnap.AssessmentsActivity"/>
         </activity>
         <activity
-            android:name=".PlansActivity"
+            android:name=".IntentionsAndPlansActivity"
             android:label="@string/title_activity_plans"
             android:parentActivityName=".AssessmentsActivity"
             android:theme="@style/AppTheme.NoActionBar">

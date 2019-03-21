@@ -22,7 +22,6 @@ import java.util.Date;
 import ahat.mmsnap.JSON.ActionPlansStorage;
 import ahat.mmsnap.JSON.CopingPlansStorage;
 import ahat.mmsnap.JSON.DailyEvaluationsStorage;
-import ahat.mmsnap.JSON.JSONArrayConverter;
 import ahat.mmsnap.JSON.JSONArrayConverterActionPlan;
 import ahat.mmsnap.JSON.JSONArrayConverterCopingPlan;
 import ahat.mmsnap.JSON.JSONArrayConverterDailyEvaluation;
@@ -45,22 +44,20 @@ public class ApplicationStatus
     public static final int MIN_ACTIVE_PLANS_PER_WEEK = 5;
     public static final int DURATION_DAYS = 40;
 
-    enum Assessment { ILLNESS_PERCEPTION, HEALTH_RISK, SELF_EFFICACY, INTENTIONS, SELF_RATED_HEALTH }
-
-    public enum Behavior {DIET, ACTIVITY, ALCOHOL, SMOKING }
-
-    public class SelfEfficacy
-    {
-        public boolean lifestyle = false;   // I am confident that I can adjust my life to a healthier lifestyle
-        public boolean weekly_goals = false;   // I am confident that I can complete at least four health behaviour goals per week
-        public boolean multimorbidity = false;   // I am confident that I can complete as many behaviour goals as necessary in order to manage my Multimorbidity
-    }
 
     private Context context;
     private Date startDate;
     public Date getStartDate() { return startDate; }
+    public CounterfactualThought counterfactualThought;
 
-    public ArrayList<Behavior> problematicBehaviors = new ArrayList<>( 4 );
+
+
+
+    //
+    // records of initial/final assessment submission (no data, just the act of submiting it)
+    //
+    enum Assessment { ILLNESS_PERCEPTION, HEALTH_RISK, SELF_EFFICACY, INTENTIONS, SELF_RATED_HEALTH }
+
     private ArrayList<Assessment> initialAssessments= new ArrayList<>( Assessment.values().length );
     private ArrayList<Assessment> finalAssessments = new ArrayList<>( Assessment.values().length );
     public void addAssessment( Assessment assessment ) throws IOException, JSONException, ConversionException
@@ -105,6 +102,9 @@ public class ApplicationStatus
         return finalAssessments.contains( assessment );
     }
 
+
+
+
     public void userLoggedIn() throws IOException, JSONException, ConversionException
     {
         if( state.moveNext() )
@@ -113,17 +113,85 @@ public class ApplicationStatus
         }
     }
 
+
+
+
+    //
+    // assessment types and data
+    ///
+    public enum Behavior {DIET, ACTIVITY, ALCOHOL, SMOKING }
+
+    public class SelfEfficacy
+    {
+        public boolean lifestyle = false;   // I am confident that I can adjust my life to a healthier lifestyle
+        public boolean weekly_goals = false;   // I am confident that I can complete at least four health behaviour goals per week
+        public boolean multimorbidity = false;   // I am confident that I can complete as many behaviour goals as necessary in order to manage my Multimorbidity
+    }
+
+    public class IntentionsAndPlans
+    {
+        public boolean plan_exercise_when; //when to exercise
+        public boolean plan_exercise_pastweek; //In the past week have you exercised less than 150 min moderate or 60 min intense manner?
+        public boolean plan_exercise_where; //where to exercise
+        public boolean plan_exercise_how; //how to exercise
+        public boolean plan_exercise_often; //how often to exercise
+        public boolean plan_exercise_whom; //with whom to exercise
+        public boolean plan_exercise_interfere; //what to do if something interferes with my plans
+        public boolean plan_exercise_setbacks; //how to cope with possilble setbacks
+        public boolean plan_exercise_situations; //what to do in difficult situations in order to act according to my intentions
+        public boolean plan_exercise_opportunities; //which good opportunities for action to take
+        public boolean plan_exercise_lapses; //when I have to pay extra attention to prevent lapses
+        public boolean plan_intend_times; //exercise several times per week
+        public boolean plan_intend_sweat; //work up a sweat regularly int.
+        public boolean plan_intend_regularly; //exercise regularly
+        public boolean plan_intend_active; //be physically active for a minimum of 30 minutes at least three times a week
+        public boolean plan_intend_leisure; //increase my leisure time activity
+        public boolean plan_intend_rehabilitation; //adhere to the exercise regime prescribed to me during the rehabilitation
+    }
+
+    public class SelfRatedHealth
+    {
+        public int one_condition_more_serious     = -1;
+        public int time_spent_managing            = -1;
+        public int feel_overwhelmed               = -1;
+        public int causes_are_linked              = -1;
+        public int difficult_all_medications      = -1;
+        public int limited_activities             = -1;
+        public int different_medications_problems = -1;
+        public int mixing_medications             = -1;
+        public int less_effective_treatments      = -1;
+        public int one_cause_another              = -1;
+        public int one_dominates                  = -1;
+        public int conditions_interact            = -1;
+        public int difficult_best_treatment       = -1;
+        public int reduced_social_life            = -1;
+        public int unhappy                        = -1;
+        public int anxious                        = -1;
+        public int angry                          = -1;
+        public int sad                            = -1;
+        public int irritable                      = -1;
+        public int sad_struggle                   = -1;
+    }
+
     public int eqvas;
     public SelfEfficacy selfEfficacy;
-    public CounterfactualThought counterfactualThought;
+    public ArrayList<Behavior> problematicBehaviors = new ArrayList<>( 4 );
+    public IntentionsAndPlans intentionsAndPlans;
+    public SelfRatedHealth selfRatedHealth;
 
-    private static final String FILENAME = "application_status.json";
 
+
+
+    //
+    // constructors (singleton)
+    //
     private ApplicationStatus( Context context ) throws Exception
     {
         this.context = context;
         startDate = new Date();
         selfEfficacy = new SelfEfficacy();
+        intentionsAndPlans = new IntentionsAndPlans();
+        selfRatedHealth = new SelfRatedHealth();
         StateFactory f = new StateFactory( this );
         state = f.create( NotLoggedIn.NAME );
         dailyEvaluations = new ArrayList<>();
@@ -136,6 +204,8 @@ public class ApplicationStatus
         this.context = context;
         startDate = new Date();
         selfEfficacy = new SelfEfficacy();
+        intentionsAndPlans = new IntentionsAndPlans();
+        selfRatedHealth = new SelfRatedHealth();
         StateFactory f = new StateFactory( this );
         this.state = f.create( stateNAME );
         dailyEvaluations = new ArrayList<>();
@@ -157,6 +227,12 @@ public class ApplicationStatus
         return instance;
     }
 
+
+
+
+    //
+    //Daily and weekly evaluations
+    //
     public ArrayList<DailyEvaluation> dailyEvaluations;
 
     public boolean pendingDailyEvaluationsExist() throws IOException, JSONException, ConversionException
@@ -258,6 +334,13 @@ public class ApplicationStatus
     }
 
 
+
+
+    //
+    // reading and writing to storage
+    //
+    private static final String FILENAME = "application_status.json";
+
     private static ApplicationStatus loadApplicationStatus( Context context ) throws Exception
     {
         ApplicationStatus as = new ApplicationStatus( context );
@@ -322,10 +405,50 @@ public class ApplicationStatus
             }
 
             as.eqvas = jsonState.getInt( "eqvas" );
+
             as.selfEfficacy.multimorbidity = jsonState.getBoolean( "selfEfficacy.multimorbidity" );
             as.selfEfficacy.lifestyle = jsonState.getBoolean( "selfEfficacy.lifestyle" );
             as.selfEfficacy.weekly_goals = jsonState.getBoolean( "selfEfficacy.weekly_goals" );
 
+            as.intentionsAndPlans.plan_exercise_when = jsonState.getBoolean( "intentionsAndPlans.plan_exercise_when" );
+            as.intentionsAndPlans.plan_exercise_pastweek = jsonState.getBoolean( "intentionsAndPlans.plan_exercise_pastweek" );
+            as.intentionsAndPlans.plan_exercise_where = jsonState.getBoolean( "intentionsAndPlans.plan_exercise_where" );
+            as.intentionsAndPlans.plan_exercise_how = jsonState.getBoolean( "intentionsAndPlans.plan_exercise_how" );
+            as.intentionsAndPlans.plan_exercise_often = jsonState.getBoolean( "intentionsAndPlans.plan_exercise_often" );
+            as.intentionsAndPlans.plan_exercise_whom = jsonState.getBoolean( "intentionsAndPlans.plan_exercise_whom" );
+            as.intentionsAndPlans.plan_exercise_interfere = jsonState.getBoolean( "intentionsAndPlans.plan_exercise_interfere" );
+            as.intentionsAndPlans.plan_exercise_setbacks = jsonState.getBoolean( "intentionsAndPlans.plan_exercise_setbacks" );
+            as.intentionsAndPlans.plan_exercise_situations = jsonState.getBoolean( "intentionsAndPlans.plan_exercise_situations" );
+            as.intentionsAndPlans.plan_exercise_opportunities = jsonState.getBoolean( "intentionsAndPlans.plan_exercise_opportunities" );
+            as.intentionsAndPlans.plan_exercise_lapses = jsonState.getBoolean( "intentionsAndPlans.plan_exercise_lapses" );
+            as.intentionsAndPlans.plan_intend_times = jsonState.getBoolean( "intentionsAndPlans.plan_intend_times" );
+            as.intentionsAndPlans.plan_intend_sweat = jsonState.getBoolean( "intentionsAndPlans.plan_intend_sweat" );
+            as.intentionsAndPlans.plan_intend_regularly = jsonState.getBoolean( "intentionsAndPlans.plan_intend_regularly" );
+            as.intentionsAndPlans.plan_intend_active = jsonState.getBoolean( "intentionsAndPlans.plan_intend_active" );
+            as.intentionsAndPlans.plan_intend_leisure = jsonState.getBoolean( "intentionsAndPlans.plan_intend_leisure" );
+            as.intentionsAndPlans.plan_intend_rehabilitation = jsonState.getBoolean( "intentionsAndPlans.plan_intend_rehabilitation" );
+
+            as.selfRatedHealth.one_condition_more_serious = jsonState.getInt( "selfRatedHealth.one_condition_more_serious" );
+            as.selfRatedHealth.time_spent_managing = jsonState.getInt( "selfRatedHealth.time_spent_managing" );
+            as.selfRatedHealth.feel_overwhelmed = jsonState.getInt( "selfRatedHealth.feel_overwhelmed" );
+            as.selfRatedHealth.causes_are_linked = jsonState.getInt( "selfRatedHealth.causes_are_linked" );
+            as.selfRatedHealth.difficult_all_medications = jsonState.getInt( "selfRatedHealth.difficult_all_medications" );
+            as.selfRatedHealth.limited_activities = jsonState.getInt( "selfRatedHealth.limited_activities" );
+            as.selfRatedHealth.different_medications_problems = jsonState.getInt( "selfRatedHealth.different_medications_problems" );
+            as.selfRatedHealth.mixing_medications = jsonState.getInt( "selfRatedHealth.mixing_medications" );
+            as.selfRatedHealth.less_effective_treatments = jsonState.getInt( "selfRatedHealth.less_effective_treatments" );
+            as.selfRatedHealth.one_cause_another = jsonState.getInt( "selfRatedHealth.one_cause_another" );
+            as.selfRatedHealth.one_dominates = jsonState.getInt( "selfRatedHealth.one_dominates" );
+            as.selfRatedHealth.conditions_interact = jsonState.getInt( "selfRatedHealth.conditions_interact" );
+            as.selfRatedHealth.difficult_best_treatment = jsonState.getInt( "selfRatedHealth.difficult_best_treatment" );
+            as.selfRatedHealth.reduced_social_life = jsonState.getInt( "selfRatedHealth.reduced_social_life" );
+            as.selfRatedHealth.unhappy = jsonState.getInt( "selfRatedHealth.unhappy" );
+            as.selfRatedHealth.anxious = jsonState.getInt( "selfRatedHealth.anxious" );
+            as.selfRatedHealth.angry = jsonState.getInt( "selfRatedHealth.angry" );
+            as.selfRatedHealth.sad = jsonState.getInt( "selfRatedHealth.sad" );
+            as.selfRatedHealth.irritable = jsonState.getInt( "selfRatedHealth.irritable" );
+            as.selfRatedHealth.sad_struggle = jsonState.getInt( "selfRatedHealth.sad_struggle" );
+            
             DailyEvaluationsStorage des = new DailyEvaluationsStorage( context );
             JSONArrayConverterDailyEvaluation jacde = new JSONArrayConverterDailyEvaluation();
             des.read( jacde );
@@ -392,9 +515,49 @@ public class ApplicationStatus
         o.put( "state", getState().name() );
 
         o.put( "eqvas", eqvas );
+
         o.put( "selfEfficacy.multimorbidity", selfEfficacy.multimorbidity );
         o.put( "selfEfficacy.lifestyle", selfEfficacy.lifestyle );
         o.put( "selfEfficacy.weekly_goals", selfEfficacy.weekly_goals );
+
+        o.put( "intentionsAndPlans.plan_exercise_when", intentionsAndPlans.plan_exercise_when );
+        o.put( "intentionsAndPlans.plan_exercise_pastweek", intentionsAndPlans.plan_exercise_pastweek );
+        o.put( "intentionsAndPlans.plan_exercise_where", intentionsAndPlans.plan_exercise_where );
+        o.put( "intentionsAndPlans.plan_exercise_how", intentionsAndPlans.plan_exercise_how );
+        o.put( "intentionsAndPlans.plan_exercise_often", intentionsAndPlans.plan_exercise_often );
+        o.put( "intentionsAndPlans.plan_exercise_whom", intentionsAndPlans.plan_exercise_whom );
+        o.put( "intentionsAndPlans.plan_exercise_interfere", intentionsAndPlans.plan_exercise_interfere );
+        o.put( "intentionsAndPlans.plan_exercise_setbacks", intentionsAndPlans.plan_exercise_setbacks );
+        o.put( "intentionsAndPlans.plan_exercise_situations", intentionsAndPlans.plan_exercise_situations );
+        o.put( "intentionsAndPlans.plan_exercise_opportunities", intentionsAndPlans.plan_exercise_opportunities );
+        o.put( "intentionsAndPlans.plan_exercise_lapses", intentionsAndPlans.plan_exercise_lapses );
+        o.put( "intentionsAndPlans.plan_intend_times", intentionsAndPlans.plan_intend_times );
+        o.put( "intentionsAndPlans.plan_intend_sweat", intentionsAndPlans.plan_intend_sweat );
+        o.put( "intentionsAndPlans.plan_intend_regularly", intentionsAndPlans.plan_intend_regularly );
+        o.put( "intentionsAndPlans.plan_intend_active", intentionsAndPlans.plan_intend_active );
+        o.put( "intentionsAndPlans.plan_intend_leisure", intentionsAndPlans.plan_intend_leisure );
+        o.put( "intentionsAndPlans.plan_intend_rehabilitation", intentionsAndPlans.plan_intend_rehabilitation );
+
+        o.put( "selfRatedHealth.one_condition_more_serious", selfRatedHealth.one_condition_more_serious );
+        o.put( "selfRatedHealth.time_spent_managing", selfRatedHealth.time_spent_managing );
+        o.put( "selfRatedHealth.feel_overwhelmed", selfRatedHealth.feel_overwhelmed );
+        o.put( "selfRatedHealth.causes_are_linked", selfRatedHealth.causes_are_linked );
+        o.put( "selfRatedHealth.difficult_all_medications", selfRatedHealth.difficult_all_medications );
+        o.put( "selfRatedHealth.limited_activities", selfRatedHealth.limited_activities );
+        o.put( "selfRatedHealth.different_medications_problems", selfRatedHealth.different_medications_problems );
+        o.put( "selfRatedHealth.mixing_medications", selfRatedHealth.mixing_medications );
+        o.put( "selfRatedHealth.less_effective_treatments", selfRatedHealth.less_effective_treatments );
+        o.put( "selfRatedHealth.one_cause_another", selfRatedHealth.one_cause_another );
+        o.put( "selfRatedHealth.one_dominates", selfRatedHealth.one_dominates );
+        o.put( "selfRatedHealth.conditions_interact", selfRatedHealth.conditions_interact );
+        o.put( "selfRatedHealth.difficult_best_treatment", selfRatedHealth.difficult_best_treatment );
+        o.put( "selfRatedHealth.reduced_social_life", selfRatedHealth.reduced_social_life );
+        o.put( "selfRatedHealth.unhappy", selfRatedHealth.unhappy );
+        o.put( "selfRatedHealth.anxious", selfRatedHealth.anxious );
+        o.put( "selfRatedHealth.angry", selfRatedHealth.angry );
+        o.put( "selfRatedHealth.sad", selfRatedHealth.sad );
+        o.put( "selfRatedHealth.irritable", selfRatedHealth.irritable );
+        o.put( "selfRatedHealth.sad_struggle", selfRatedHealth.sad_struggle );
 
         JSONObject jsonCounterfactual = new JSONObject();
         jsonCounterfactual.put( "if", counterfactualThought.ifStatement );
@@ -418,8 +581,11 @@ public class ApplicationStatus
     }
 
 
+
+    //
     // The state of the applicationstatus follows the GoF state pattern
     // States are inner class to be able to access the private members of applicationstatus
+    //
     State state;
     public void setState( State state ) { this.state = state ;}
     public State getState() { return state; }
@@ -634,6 +800,5 @@ public class ApplicationStatus
         Finished( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
         public boolean moveNext() { return false; }
     }
-
 
 }

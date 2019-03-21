@@ -63,7 +63,7 @@
                             android:layout_column="1"
                             />
                         <TextView
-                            android:layout_width="70dp"
+                            android:layout_width="75dp"
                             android:layout_height="wrap_content"
                             android:textAlignment="center"
                             android:textSize="18sp"
@@ -96,31 +96,36 @@
                             android:textColor="#000000"
                             android:text="One of my conditions is more serious than the others"/>
                         <RadioGroup
+                            android:id="@+id/one_condition_more_serious_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:layout_marginEnd="5dp"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/r11_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r12_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r13_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r14_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -142,31 +147,36 @@
                             android:textColor="#000000"
                             android:text="Time spent managing my conditions has made it more difficult to carry out my usual activities"/>
                         <RadioGroup
+                            android:id="@+id/time_spent_managing_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:layout_marginEnd="5dp"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/r21_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r22_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r23_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r24_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -188,31 +198,36 @@
                             android:textColor="#000000"
                             android:text="I feel so overwhelmed by the treatment for one condition it is hard to manage any others"/>
                         <RadioGroup
+                            android:id="@+id/feel_overwhelmed_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/r31_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r32_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r33_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r34_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -234,31 +249,36 @@
                             android:textColor="#000000"
                             android:text="The causes of my conditions are linked"/>
                         <RadioGroup
+                            android:id="@+id/causes_are_linked_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:layout_marginEnd="5dp"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/r41_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r42_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r43_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r44_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -280,31 +300,36 @@
                             android:textColor="#000000"
                             android:text="It is difficult to take all my medications the way I am supposed to"/>
                         <RadioGroup
+                            android:id="@+id/difficult_all_medications_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:layout_marginEnd="5dp"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/r51_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r52_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r53_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r54_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -326,31 +351,36 @@
                             android:textColor="#000000"
                             android:text="Time spent managing my condition has limited my activities"/>
                         <RadioGroup
+                            android:id="@+id/limited_activities_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginEnd="5dp"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/r61_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r62_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r63_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r64_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -372,31 +402,36 @@
                             android:textColor="#000000"
                             android:text="Taking different medications for each of my conditions has caused me problems"/>
                         <RadioGroup
+                            android:id="@+id/different_medications_problems_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/r71_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r72_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r73_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r84_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -418,31 +453,36 @@
                             android:textColor="#000000"
                             android:text="I don't like mixing medications for different conditions"/>
                         <RadioGroup
+                            android:id="@+id/mixing_medications_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/r91_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r92_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r93_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/r94_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -464,31 +504,36 @@
                             android:textColor="#000000"
                             android:text="Having more than one condition makes my treatments less effective"/>
                         <RadioGroup
+                            android:id="@+id/less_effective_treatments_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/ra1_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/ra2_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/ra3_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/ra4_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -510,31 +555,36 @@
                             android:textColor="#000000"
                             android:text="One of my conditions has caused another"/>
                         <RadioGroup
+                            android:id="@+id/one_cause_another_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/rb1_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rb2_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rb3_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rb4_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -556,31 +606,36 @@
                             android:textColor="#000000"
                             android:text="One of my conditions dominates the others"/>
                         <RadioGroup
+                            android:id="@+id/one_dominates_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/rc1_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rc2_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rc3_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rc4_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -602,31 +657,36 @@
                             android:textColor="#000000"
                             android:text="My conditions interact with each other"/>
                         <RadioGroup
+                            android:id="@+id/conditions_interact_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/rd1_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rd2_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rd3_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rd4_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -648,31 +708,36 @@
                             android:textColor="#000000"
                             android:text="Having more than one condition makes it difficult to get the best available treatment"/>
                         <RadioGroup
+                            android:id="@+id/difficult_best_treatment_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/re1_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/re2_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/re3_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/re4_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -694,31 +759,36 @@
                             android:textColor="#000000"
                             android:text="Time spent managing my conditions has reduced my social life"/>
                         <RadioGroup
+                            android:id="@+id/reduced_social_life_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/rf1_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rf2_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rf3_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rf4_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -740,31 +810,36 @@
                             android:textColor="#000000"
                             android:text="Having more than one conditions makes me unhappy"/>
                         <RadioGroup
+                            android:id="@+id/unhappy_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/rq1_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rq2_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rq3_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rq4_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -786,31 +861,36 @@
                             android:textColor="#000000"
                             android:text="Having more than one conditions makes me more anxious"/>
                         <RadioGroup
+                            android:id="@+id/anxious_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/rw1_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rw2_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rw3_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rw4_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -832,31 +912,36 @@
                             android:textColor="#000000"
                             android:text="Having more than one conditions makes me angry or frustrated"/>
                         <RadioGroup
+                            android:id="@+id/angry_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:layout_marginEnd="5dp"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/rs1_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rs2_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rs3_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rs4_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -878,31 +963,36 @@
                             android:textColor="#000000"
                             android:text="Having more than one health problems makes me feel sad"/>
                         <RadioGroup
+                            android:id="@+id/sad_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/rz1_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rz2_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rz3_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rz4_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -924,31 +1014,36 @@
                             android:textColor="#000000"
                             android:text="Having more than one conditions makes me more irritable"/>
                         <RadioGroup
+                            android:id="@+id/irritable_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/rx1_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rx2_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rx3_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rx4_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
@@ -970,31 +1065,36 @@
                             android:textColor="#000000"
                             android:text="If I feel sad or depressed, managing my conditions is a struggle"/>
                         <RadioGroup
+                            android:id="@+id/sad_struggle_rdgrp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_weight="1"
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
                             <RadioButton
+                                android:id="@+id/rr1_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rr2_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rr3_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 />
                             <RadioButton
+                                android:id="@+id/rr4_rd"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:layout_marginRight="5dp"
                                 />
                         </RadioGroup>
                     </TableRow>
