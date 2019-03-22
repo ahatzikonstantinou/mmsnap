@@ -603,8 +603,11 @@ public class MainActivity extends StateActivity //AppCompatActivity
 //        {
 //
 //        }
-//        else
-        if( id == R.id.nav_exit )
+        if( id == R.id.nav_testing )
+        {
+            startActivity( new Intent( this, TestingActivity.class ) );
+        }
+        else if( id == R.id.nav_exit )
         {
 //            Process.sendSignal(Process.myPid(), Process.SIGNAL_KILL);
             finish();

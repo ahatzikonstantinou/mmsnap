@@ -128,4 +128,5 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_achievements">ACHIEVEMENTS</string>
     <string name="achievements_btn_txt">ACHIEVEMENTS</string>
+    <string name="title_activity_testing">Testing</string>
 </resources>

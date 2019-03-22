@@ -48,6 +48,7 @@ public class ApplicationStatus
     private Context context;
     private Date startDate;
     public Date getStartDate() { return startDate; }
+    public void setStartDate( Date date ) { startDate = date; }
     public CounterfactualThought counterfactualThought;
 
 
@@ -58,7 +59,7 @@ public class ApplicationStatus
     //
     enum Assessment { ILLNESS_PERCEPTION, HEALTH_RISK, SELF_EFFICACY, INTENTIONS, SELF_RATED_HEALTH }
 
-    private ArrayList<Assessment> initialAssessments= new ArrayList<>( Assessment.values().length );
+    private ArrayList<Assessment> initialAssessments = new ArrayList<>( Assessment.values().length );
     private ArrayList<Assessment> finalAssessments = new ArrayList<>( Assessment.values().length );
     public void addAssessment( Assessment assessment ) throws IOException, JSONException, ConversionException
     {
@@ -101,7 +102,8 @@ public class ApplicationStatus
     {
         return finalAssessments.contains( assessment );
     }
-
+    public void clearInitialAssessments() { initialAssessments.clear(); }
+    public void clearFinalAssessments() { finalAssessments.clear(); }
 
 
 
@@ -484,7 +486,6 @@ public class ApplicationStatus
         FileOutputStream fos = context.openFileOutput( file.getName(), Context.MODE_PRIVATE );
         JSONObject o = new JSONObject();
 
-        startDate = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime( startDate );
         o.put( "start_date", cal.get( Calendar.YEAR ) + "-" + cal.get( Calendar.MONTH ) + "-" + cal.get( Calendar.DAY_OF_MONTH ) );

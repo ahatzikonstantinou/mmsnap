@@ -36,6 +36,11 @@ public class ReminderAlarmReceiver extends WakefulBroadcastReceiver
 
     public static void setupAlarm( Context context, int year, int weekOfYear, IfThenPlan.WeekDay day, int hour, int minute )
     {
+        setupAlarm( context, year, weekOfYear, day, hour, minute, false );
+    }
+
+    public static void setupAlarm( Context context, int year, int weekOfYear, IfThenPlan.WeekDay day, int hour, int minute, boolean recordAlarmOnlyIfNotExists )
+    {
         Calendar calendar = Calendar.getInstance();
         calendar.set( Calendar.YEAR, year );
         calendar.set( Calendar.WEEK_OF_YEAR, weekOfYear );
@@ -46,7 +51,7 @@ public class ReminderAlarmReceiver extends WakefulBroadcastReceiver
         try
         {
             ReminderAlarms reminderAlarms = ReminderAlarms.getInstance( context );
-            String key = reminderAlarms.add( year, weekOfYear, day, hour, minute );
+            String key = reminderAlarms.add( year, weekOfYear, day, hour, minute, recordAlarmOnlyIfNotExists );
             AlarmManager alarmManager = (AlarmManager) context.getSystemService( Context.ALARM_SERVICE );
             PendingIntent alarmIntent = getStartPendingIntent( context, key );
             alarmManager.set( AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent );
@@ -58,6 +63,7 @@ public class ReminderAlarmReceiver extends WakefulBroadcastReceiver
         }
     }
 
+
     public static void cancelAlarm( Context context, int year, int weekOfYear, IfThenPlan.WeekDay day, int hour, int minute )
     {
         try
@@ -66,7 +72,7 @@ public class ReminderAlarmReceiver extends WakefulBroadcastReceiver
             if( reminderAlarms.remove( year, weekOfYear, day, hour, minute ) )
             {
                 AlarmManager alarmManager = (AlarmManager) context.getSystemService( Context.ALARM_SERVICE );
-                alarmManager.cancel( getStartPendingIntent( context, ReminderAlarms.generateKey( year, weekOfYear, day, hour, minute )) );
+                alarmManager.cancel( getStartPendingIntent( context, ReminderAlarms.generateKey( year, weekOfYear, day, hour, minute ) ) );
             }
         }
         catch( Exception e )
@@ -74,6 +80,16 @@ public class ReminderAlarmReceiver extends WakefulBroadcastReceiver
             e.printStackTrace();
             Log.d( "MMSNAP:", "Could not cancel alarm. Error: " + e.getMessage() );
         }
+    }
+
+    /*
+     * Use this function when cancelling and then removing from ReminderAlarms multiple reminders. Must iterate over ReminderAlarm.HashMap alarms and remove
+     * using iterator in order to avoid ConcurrentModificationException. In this case, iteration must be done outside of ReminderAlarms
+     */
+    public static void cancelAlarm( Context context, String key )
+    {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService( Context.ALARM_SERVICE );
+        alarmManager.cancel( getStartPendingIntent( context, key ) );
     }
 
 

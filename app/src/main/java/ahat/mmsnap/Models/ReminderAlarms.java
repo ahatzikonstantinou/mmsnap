@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import ahat.mmsnap.JSON.JSONArrayIOHandler;
@@ -21,6 +22,10 @@ import ahat.mmsnap.Models.IfThenPlan.WeekDay;
  */
 public class ReminderAlarms
 {
+    private String filePath;
+
+    public enum KeyPart { YEAR, WEEK_OF_YEAR, WEEK_DAY, HOUR, MINUTE }
+
     private static final String FILENAME = "alarms.json";
     private static Context context;
     HashMap<String, Integer> alarms;
@@ -28,6 +33,7 @@ public class ReminderAlarms
 
     private ReminderAlarms()
     {
+        filePath = context.getFilesDir().getPath() + "/" + FILENAME;
         alarms = new HashMap<>();
     }
 
@@ -37,9 +43,14 @@ public class ReminderAlarms
         if( null == instance )
         {
             instance = new ReminderAlarms();
-            instance.read( context.getFilesDir().getPath() + "/" + FILENAME );
+            instance.read();
         }
         return instance;
+    }
+
+    public HashMap<String, Integer> getAlarms()
+    {
+        return alarms;
     }
 
     public static String generateKey( int year, int weekOfYear, WeekDay weekDay, int hour, int minute )
@@ -49,6 +60,26 @@ public class ReminderAlarms
                "_" + weekDay.name() +
                "_" + String.valueOf( hour ) +
                "_" + String.valueOf( minute );
+    }
+
+    public static int parseKey( KeyPart keyPart, String key )
+    {
+        String[] parts = key.split( "_" );
+        switch( keyPart )
+        {
+            case YEAR:
+                return Integer.parseInt( parts[0] );
+            case WEEK_OF_YEAR:
+                return Integer.parseInt( parts[1] );
+            case WEEK_DAY:
+                WeekDay weekDay = WeekDay.valueOf( parts[2] );
+                return weekDay.ordinal();
+            case HOUR:
+                return Integer.parseInt( parts[3] );
+            case MINUTE:
+                return Integer.parseInt( parts[4] );
+        }
+        return -1;
     }
 
     public boolean remove( int year, int weekOfYear, WeekDay weekDay, int hour, int minute ) throws IOException, JSONException
@@ -66,7 +97,7 @@ public class ReminderAlarms
         boolean alarmCanBeCancelled = false;
         if( 1 == count )
         {
-            alarms.remove( key );
+            alarms.remove( key ); //this will cause a ConcurrentModificationException when removing multiple reminder alarms over of for loop for example
             alarmCanBeCancelled = true;
         }
         else
@@ -74,26 +105,40 @@ public class ReminderAlarms
             alarms.put( key, count - 1 );
         }
 
-        write( context.getFilesDir().getPath() + "/" + FILENAME );
+        write();
         return alarmCanBeCancelled;
     }
 
-    public String add( int year, int weekOfYear, WeekDay weekDay, int hour, int minute ) throws IOException, JSONException
+    public String add( int year, int weekOfYear, WeekDay weekDay, int hour, int minute, boolean recordAlarmOnlyIfNotExists ) throws IOException, JSONException
     {
         String key = generateKey( year, weekOfYear, weekDay, hour, minute );
         int count = 0;
+        boolean save = false;
         if( alarms.containsKey( key ) )
         {
-            count = alarms.get( key );
+            if( !recordAlarmOnlyIfNotExists )
+            {
+                count = alarms.get( key );
+                alarms.put( key, count + 1 );
+                save = true;
+            }
         }
-        alarms.put( key, count + 1 );
+        else
+        {
+            alarms.put( key, count + 1 );
+            save = true;
+        }
 
-        write( context.getFilesDir().getPath() + "/" + FILENAME );
+
+        if( save )
+        {
+            write();
+        }
 
         return key;
     }
 
-    private void write( String filePath ) throws IOException, JSONException
+    public void write() throws IOException, JSONException
     {
         JSONArray jsonArray = new JSONArray();
         for( Map.Entry<String, Integer> entry : alarms.entrySet() )
@@ -109,7 +154,7 @@ public class ReminderAlarms
         JSONArrayIOHandler.saveItems( context, jsonArray, filePath );
     }
 
-    private HashMap<String, Integer> read( String filePath ) throws IOException, JSONException
+    public void read() throws IOException, JSONException
     {
         alarms.clear();
         JSONArray jsonArray = JSONArrayIOHandler.loadItems( filePath );
@@ -118,7 +163,6 @@ public class ReminderAlarms
             JSONObject jsonObject = (JSONObject) jsonArray.get( i );
             alarms.put( jsonObject.getString( "key" ), jsonObject.getInt( "count" ) );
         }
-        return alarms;
     }
 
 }

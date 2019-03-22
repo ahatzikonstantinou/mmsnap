@@ -80,7 +80,7 @@ public class ReminderNotificationServiceStarterReceiver extends BroadcastReceive
 
                 if( c.after( now ) )
                 {
-                    ReminderAlarmReceiver.setupAlarm( context, plan.year, plan.weekOfYear, day, reminder.hour, reminder.minute );
+                    ReminderAlarmReceiver.setupAlarm( context, plan.year, plan.weekOfYear, day, reminder.hour, reminder.minute, true );
                 }
             }
         }

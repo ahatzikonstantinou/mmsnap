@@ -34,6 +34,14 @@
                 <!--android:title="Send"/>-->
         <!--</menu>-->
     <!--</item>-->
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_testing"
+            android:title="Testing"
+            android:icon="@drawable/ic_bug_report_black_24dp"
+        />
+    </group>
+
     <group android:id="@+id/grp2" android:checkableBehavior="single" >
         <item
             android:id="@+id/nav_exit"
