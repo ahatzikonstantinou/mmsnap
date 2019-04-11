@@ -10,13 +10,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import ahat.mmsnap.JSON.ActionPlansStorage;
-import ahat.mmsnap.JSON.JSONArrayConverterActionPlan;
-import ahat.mmsnap.Models.ActionPlan;
-import ahat.mmsnap.Models.ConversionException;
-import ahat.mmsnap.Models.IfThenPlan;
-import ahat.mmsnap.Models.Reminder;
-import ahat.mmsnap.Notifications.ReminderAlarmReceiver;
+import ahat.mmsnap.json.ActionPlansStorage;
+import ahat.mmsnap.json.JSONArrayConverterActionPlan;
+import ahat.mmsnap.models.ActionPlan;
+import ahat.mmsnap.models.ConversionException;
+import ahat.mmsnap.models.IfThenPlan;
+import ahat.mmsnap.models.Reminder;
+import ahat.mmsnap.notifications.ReminderAlarmReceiver;
 
 public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatActivity
 {

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
-import ahat.mmsnap.Models.WeeklyEvaluation;
+import ahat.mmsnap.models.WeeklyEvaluation;
 
 import static android.view.View.GONE;
 

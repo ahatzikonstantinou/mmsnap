@@ -10,6 +10,14 @@
     tools:context=".MMSNAPActivity"
     tools:showIn="@layout/activity_mmsnap">
 
+    <FrameLayout
+        android:id="@+id/message_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <include layout="@layout/message_layout"/>
+    </FrameLayout>
 
     <Button
         android:id="@+id/mmsnap_for_btn"
@@ -30,7 +38,7 @@
         app:layout_constraintBottom_toTopOf="@+id/mmsnap_mm_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/message_layout"
         app:layout_constraintHeight_default="wrap"
         app:layout_constraintVertical_chainStyle="spread"/>
 

@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MMSNAPActivity extends AppCompatActivity
     implements OnClickListener
@@ -41,6 +43,33 @@ public class MMSNAPActivity extends AppCompatActivity
         appButton.setOnClickListener( this );
     }
 
+    private void applyLocalStatePolicy()
+    {
+        try
+        {
+            ApplicationStatus as = ApplicationStatus.getInstance( this );
+            TextView messageView = findViewById( R.id.message );
+            if( ApplicationStatus.NoInitialAssessments.NAME == as.getState().name() )
+            {
+                messageView.setText( R.string.please_complete_the_initial_assessments );
+                messageView.setVisibility( View.VISIBLE );
+            }
+            else if( ApplicationStatus.NoFinalAssessments.NAME == as.getState().name() )
+            {
+                messageView.setText( R.string.please_complete_the_final_assessments );
+                messageView.setVisibility( View.VISIBLE );
+            }
+            else
+            {
+                findViewById( R.id.message_layout ).setVisibility( View.GONE );
+            }
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            Toast.makeText( this, "An error occurred retrieving the application status", Toast.LENGTH_SHORT ).show();
+        }
+    }
     @Override
     public void onClick( View view )
     {

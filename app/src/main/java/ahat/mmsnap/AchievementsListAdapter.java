@@ -16,8 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-import ahat.mmsnap.Models.DailyEvaluation;
-import ahat.mmsnap.Models.WeeklyEvaluation;
+import ahat.mmsnap.models.DailyEvaluation;
 
 import static ahat.mmsnap.ApplicationStatus.Behavior.ACTIVITY;
 import static ahat.mmsnap.ApplicationStatus.Behavior.ALCOHOL;

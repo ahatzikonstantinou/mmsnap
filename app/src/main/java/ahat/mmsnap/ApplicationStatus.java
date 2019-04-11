@@ -19,21 +19,21 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import ahat.mmsnap.JSON.ActionPlansStorage;
-import ahat.mmsnap.JSON.CopingPlansStorage;
-import ahat.mmsnap.JSON.DailyEvaluationsStorage;
-import ahat.mmsnap.JSON.JSONArrayConverterActionPlan;
-import ahat.mmsnap.JSON.JSONArrayConverterCopingPlan;
-import ahat.mmsnap.JSON.JSONArrayConverterDailyEvaluation;
-import ahat.mmsnap.JSON.JSONArrayConverterWeeklyEvaluation;
-import ahat.mmsnap.JSON.WeeklyEvaluationsStorage;
-import ahat.mmsnap.Models.ActionPlan;
-import ahat.mmsnap.Models.ConversionException;
-import ahat.mmsnap.Models.CopingPlan;
-import ahat.mmsnap.Models.CounterfactualThought;
-import ahat.mmsnap.Models.DailyEvaluation;
-import ahat.mmsnap.Models.IfThenPlan;
-import ahat.mmsnap.Models.WeeklyEvaluation;
+import ahat.mmsnap.json.ActionPlansStorage;
+import ahat.mmsnap.json.CopingPlansStorage;
+import ahat.mmsnap.json.DailyEvaluationsStorage;
+import ahat.mmsnap.json.JSONArrayConverterActionPlan;
+import ahat.mmsnap.json.JSONArrayConverterCopingPlan;
+import ahat.mmsnap.json.JSONArrayConverterDailyEvaluation;
+import ahat.mmsnap.json.JSONArrayConverterWeeklyEvaluation;
+import ahat.mmsnap.json.WeeklyEvaluationsStorage;
+import ahat.mmsnap.models.ActionPlan;
+import ahat.mmsnap.models.ConversionException;
+import ahat.mmsnap.models.CopingPlan;
+import ahat.mmsnap.models.CounterfactualThought;
+import ahat.mmsnap.models.DailyEvaluation;
+import ahat.mmsnap.models.IfThenPlan;
+import ahat.mmsnap.models.WeeklyEvaluation;
 
 /*
  * Like a configuration class, stores data regarding application state, start date, etc
@@ -324,7 +324,6 @@ public class ApplicationStatus
             {
                 evaluation.score( dietScore, physicalActivityScore, alcoholScore, smokingScore );
                 WeeklyEvaluationsStorage wes = new WeeklyEvaluationsStorage( context );
-//                wes.write( weeklyEvaluations );
                 wes.write( new JSONArrayConverterWeeklyEvaluation( weeklyEvaluations ) );
 
                 state.moveNext();
@@ -457,7 +456,6 @@ public class ApplicationStatus
             as.dailyEvaluations = jacde.getDailyEvaluations();
 
             WeeklyEvaluationsStorage wes = new WeeklyEvaluationsStorage( context );
-//            as.weeklyEvaluations = wes.read();
             JSONArrayConverterWeeklyEvaluation jc = new JSONArrayConverterWeeklyEvaluation();
             wes.read( jc );
             as.weeklyEvaluations = jc.getWeeklyEvaluations();

@@ -1,7 +1,6 @@
 package ahat.mmsnap;
 
 import android.content.Intent;
-import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -19,10 +18,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import ahat.mmsnap.JSON.DailyEvaluationsStorage;
-import ahat.mmsnap.JSON.JSONArrayConverterDailyEvaluation;
-import ahat.mmsnap.Models.ConversionException;
-import ahat.mmsnap.Models.DailyEvaluation;
+import ahat.mmsnap.json.DailyEvaluationsStorage;
+import ahat.mmsnap.json.JSONArrayConverterDailyEvaluation;
+import ahat.mmsnap.models.ConversionException;
+import ahat.mmsnap.models.DailyEvaluation;
 
 public class DailyEvaluationsListActivity extends AppCompatActivity
 {

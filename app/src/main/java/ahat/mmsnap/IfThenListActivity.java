@@ -19,10 +19,10 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import ahat.mmsnap.Models.ConversionException;
-import ahat.mmsnap.Models.IfThenPlan;
-import ahat.mmsnap.Models.Reminder;
-import ahat.mmsnap.Notifications.ReminderAlarmReceiver;
+import ahat.mmsnap.models.ConversionException;
+import ahat.mmsnap.models.IfThenPlan;
+import ahat.mmsnap.models.Reminder;
+import ahat.mmsnap.notifications.ReminderAlarmReceiver;
 
 // Override the abstract methods to create activities that
 // - display a list of items,

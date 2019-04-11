@@ -66,7 +66,7 @@ public class AssessmentsActivity extends StateActivity //AppCompatActivity
             Drawable arrow = getResources().getDrawable( R.drawable.subcategory_btn_img, null );
             if( ApplicationStatus.NoInitialAssessments.NAME == as.getState().name() )
             {
-                messageView.setText( "Please complete the initial assessments to proceed." );
+                messageView.setText( R.string.please_complete_the_initial_assessments );
                 messageView.setVisibility( View.VISIBLE );
 
                 Drawable done = getResources().getDrawable( R.drawable.ic_check_24dp, null );
@@ -80,7 +80,7 @@ public class AssessmentsActivity extends StateActivity //AppCompatActivity
             }
             else if( ApplicationStatus.NoFinalAssessments.NAME == as.getState().name() )
             {
-                messageView.setText( "Please complete the final assessments to proceed." );
+                messageView.setText( R.string.please_complete_the_final_assessments );
                 messageView.setVisibility( View.VISIBLE );
 
                 Drawable done = getResources().getDrawable( R.drawable.ic_check_24dp, null );

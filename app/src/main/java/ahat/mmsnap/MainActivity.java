@@ -1,12 +1,12 @@
 package ahat.mmsnap;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Process;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -32,24 +32,26 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import ahat.mmsnap.JSON.ActionPlansStorage;
-import ahat.mmsnap.JSON.CopingPlansStorage;
-import ahat.mmsnap.JSON.JSONArrayConverterActionPlan;
-import ahat.mmsnap.JSON.JSONArrayConverterCopingPlan;
-import ahat.mmsnap.Models.ActionPlan;
-import ahat.mmsnap.Models.ConversionException;
-import ahat.mmsnap.Models.CopingPlan;
-import ahat.mmsnap.Models.DailyEvaluation;
-import ahat.mmsnap.Models.IfThenPlan;
-import ahat.mmsnap.Notifications.PendingEvaluationsAlarmReceiver;
-import ahat.mmsnap.Notifications.ReminderNotificationServiceStarterReceiver;
+import ahat.mmsnap.json.ActionPlansStorage;
+import ahat.mmsnap.json.CopingPlansStorage;
+import ahat.mmsnap.json.JSONArrayConverterActionPlan;
+import ahat.mmsnap.json.JSONArrayConverterCopingPlan;
+import ahat.mmsnap.models.ActionPlan;
+import ahat.mmsnap.models.ConversionException;
+import ahat.mmsnap.models.CopingPlan;
+import ahat.mmsnap.models.DailyEvaluation;
+import ahat.mmsnap.models.IfThenPlan;
+import ahat.mmsnap.notifications.PendingEvaluationsAlarmReceiver;
+import ahat.mmsnap.notifications.ReminderNotificationServiceStarterReceiver;
+import ahat.mmsnap.rest.RESTAlarmReceiver;
 
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.MONDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.SATURDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.SUNDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.THURSDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.TUESDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.WEDNESDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.MONDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.SATURDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.SUNDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.THURSDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.TUESDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.WEDNESDAY;
+
 
 public class MainActivity extends StateActivity //AppCompatActivity
     implements NavigationView.OnNavigationItemSelectedListener, android.view.View.OnClickListener
@@ -84,6 +86,7 @@ public class MainActivity extends StateActivity //AppCompatActivity
             return false;
         }
     };
+
 
     @Override
     protected void onCreate( Bundle savedInstanceState )
@@ -121,8 +124,18 @@ public class MainActivity extends StateActivity //AppCompatActivity
         achievementsButton = findViewById( R.id.achievements_btn );
         achievementsButton.setOnClickListener( this );
 
+
+        // testing is visible/available only in the debug version
+        if( ( getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE ) == 0 )
+        {
+            findViewById( R.id.nav_testing ).setVisibility( View.GONE );
+        }
+
         // start the alarm that will trigger notifications if there are pending daily or weekly evaluations
         PendingEvaluationsAlarmReceiver.setupAlarm( this );
+
+        // start the alarm that will trigger REST calls
+        RESTAlarmReceiver.setupAlarm( this );
 
         try
         {
@@ -609,8 +622,8 @@ public class MainActivity extends StateActivity //AppCompatActivity
         }
         else if( id == R.id.nav_exit )
         {
-//            Process.sendSignal(Process.myPid(), Process.SIGNAL_KILL);
-            finish();
+            finishAffinity(); // Close all activites
+            System.exit(0 );  // Releasing resources
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById( R.id.drawer_layout );

@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-import ahat.mmsnap.Models.WeeklyEvaluation;
+import ahat.mmsnap.models.WeeklyEvaluation;
 
 public class WeeklyEvaluationsListActivity extends AppCompatActivity
 {

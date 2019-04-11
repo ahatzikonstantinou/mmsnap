@@ -14,12 +14,12 @@ import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import ahat.mmsnap.Models.ActionPlan;
-import ahat.mmsnap.Models.ConversionException;
-import ahat.mmsnap.Models.CopingPlan;
-import ahat.mmsnap.Models.DailyEvaluation;
-import ahat.mmsnap.Models.IfThenPlan;
-import ahat.mmsnap.Models.Reminder;
+import ahat.mmsnap.models.ActionPlan;
+import ahat.mmsnap.models.ConversionException;
+import ahat.mmsnap.models.CopingPlan;
+import ahat.mmsnap.models.DailyEvaluation;
+import ahat.mmsnap.models.IfThenPlan;
+import ahat.mmsnap.models.Reminder;
 
 import static android.view.View.GONE;
 

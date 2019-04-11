@@ -3,8 +3,6 @@ package ahat.mmsnap;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,14 +18,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 
-import ahat.mmsnap.JSON.ActionPlansStorage;
-import ahat.mmsnap.JSON.CopingPlansStorage;
-import ahat.mmsnap.JSON.JSONArrayConverterActionPlan;
-import ahat.mmsnap.JSON.JSONArrayConverterCopingPlan;
-import ahat.mmsnap.Models.IfThenPlan;
-import ahat.mmsnap.Models.ReminderAlarms;
-import ahat.mmsnap.Models.ReminderAlarms.KeyPart;
-import ahat.mmsnap.Notifications.ReminderAlarmReceiver;
+import ahat.mmsnap.json.ActionPlansStorage;
+import ahat.mmsnap.json.CopingPlansStorage;
+import ahat.mmsnap.json.JSONArrayConverterActionPlan;
+import ahat.mmsnap.json.JSONArrayConverterCopingPlan;
+import ahat.mmsnap.models.ReminderAlarms;
+import ahat.mmsnap.notifications.ReminderAlarmReceiver;
 
 public class TestingActivity extends AppCompatActivity implements View.OnClickListener
 {

@@ -12,13 +12,13 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import ahat.mmsnap.JSON.CopingPlansStorage;
-import ahat.mmsnap.JSON.JSONArrayConverterCopingPlan;
-import ahat.mmsnap.Models.ConversionException;
-import ahat.mmsnap.Models.CopingPlan;
-import ahat.mmsnap.Models.IfThenPlan;
-import ahat.mmsnap.Models.Reminder;
-import ahat.mmsnap.Notifications.ReminderAlarmReceiver;
+import ahat.mmsnap.json.CopingPlansStorage;
+import ahat.mmsnap.json.JSONArrayConverterCopingPlan;
+import ahat.mmsnap.models.ConversionException;
+import ahat.mmsnap.models.CopingPlan;
+import ahat.mmsnap.models.IfThenPlan;
+import ahat.mmsnap.models.Reminder;
+import ahat.mmsnap.notifications.ReminderAlarmReceiver;
 
 public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatActivity
 {

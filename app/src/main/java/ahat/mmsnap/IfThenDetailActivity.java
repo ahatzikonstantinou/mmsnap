@@ -33,21 +33,21 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 
-import ahat.mmsnap.Models.ConversionException;
-import ahat.mmsnap.Models.IfThenPlan;
-import ahat.mmsnap.Models.Reminder;
+import ahat.mmsnap.models.ConversionException;
+import ahat.mmsnap.models.IfThenPlan;
+import ahat.mmsnap.models.Reminder;
 
 import static ahat.mmsnap.ApplicationStatus.Behavior.ACTIVITY;
 import static ahat.mmsnap.ApplicationStatus.Behavior.ALCOHOL;
 import static ahat.mmsnap.ApplicationStatus.Behavior.DIET;
 import static ahat.mmsnap.ApplicationStatus.Behavior.SMOKING;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.FRIDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.MONDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.SATURDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.SUNDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.THURSDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.TUESDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.WEDNESDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.FRIDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.MONDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.SATURDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.SUNDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.THURSDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.TUESDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.WEDNESDAY;
 
 
 public abstract class IfThenDetailActivity extends MassDisableActivity //AppCompatActivity

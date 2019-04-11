@@ -10,16 +10,16 @@ import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import ahat.mmsnap.Models.DailyEvaluation;
-import ahat.mmsnap.Models.IfThenPlan;
+import ahat.mmsnap.models.DailyEvaluation;
+import ahat.mmsnap.models.IfThenPlan;
 
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.FRIDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.MONDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.SATURDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.SUNDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.THURSDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.TUESDAY;
-import static ahat.mmsnap.Models.IfThenPlan.WeekDay.WEDNESDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.FRIDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.MONDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.SATURDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.SUNDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.THURSDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.TUESDAY;
+import static ahat.mmsnap.models.IfThenPlan.WeekDay.WEDNESDAY;
 
 public class DailyEvaluationListAdapter extends IfThenListAdapter
 {

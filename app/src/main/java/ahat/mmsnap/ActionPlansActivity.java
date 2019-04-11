@@ -8,11 +8,11 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import ahat.mmsnap.JSON.ActionPlansStorage;
-import ahat.mmsnap.JSON.JSONArrayConverterActionPlan;
-import ahat.mmsnap.Models.ActionPlan;
-import ahat.mmsnap.Models.ConversionException;
-import ahat.mmsnap.Models.IfThenPlan;
+import ahat.mmsnap.json.ActionPlansStorage;
+import ahat.mmsnap.json.JSONArrayConverterActionPlan;
+import ahat.mmsnap.models.ActionPlan;
+import ahat.mmsnap.models.ConversionException;
+import ahat.mmsnap.models.IfThenPlan;
 
 public class ActionPlansActivity extends IfThenListActivity
 {
