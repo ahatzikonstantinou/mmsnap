@@ -15,9 +15,11 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import ahat.mmsnap.json.ActionPlansStorage;
 import ahat.mmsnap.json.CopingPlansStorage;
@@ -186,16 +188,30 @@ public class ApplicationStatus
     public SelfRatedHealth selfRatedHealth;
 
 
+
+
+
     //
     // server data
     //
     public enum Phase { INITIAL, FINAL };
 
-    public class ServerTimestamp
+    public interface ToREST
     {
-        Date  submissionDate      = null;
-        Date  acknowledgementDate = null;
-        Phase phase               = null;
+        JSONObject toREST() throws JSONException, ConversionException;
+
+        void setAcknowledgementDate( Date date );
+
+        Date getSubmissionDate();
+
+        Date getAcknowledgementDate();
+    }
+
+    public class ServerTimestamp implements ToREST
+    {
+        public Date  submissionDate      = null;
+        public Date  acknowledgementDate = null;
+        public Phase phase               = null;
 
         ServerTimestamp(){}
         ServerTimestamp( Date submissionDate, Date acknowledgementDate, Phase phase )
@@ -220,6 +236,35 @@ public class ApplicationStatus
             acknowledgementDate = Util.dateFromJsonString( json.getString( "acknowledgementDate" ) );
             String ps = json.getString( "phase" );
             phase = 0 == ps.length() ? null : Phase.valueOf( ps );
+        }
+
+        public JSONObject toREST() throws JSONException, ConversionException
+        {
+            JSONObject json = new JSONObject();
+            SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault() );
+            String formattedDate = sdf.format( submissionDate );
+            json.put( "date", formattedDate );
+            json.put( "phase", null == phase ? "" : phase.name() );
+
+            return json;
+        }
+
+        @Override
+        public void setAcknowledgementDate( Date date )
+        {
+            acknowledgementDate = date;
+        }
+
+        @Override
+        public Date getSubmissionDate()
+        {
+            return submissionDate;
+        }
+
+        @Override
+        public Date getAcknowledgementDate()
+        {
+            return acknowledgementDate;
         }
     }
 
@@ -246,6 +291,14 @@ public class ApplicationStatus
         {
             super.fromJson( json );
             eqvas = json.getInt( "eqvas" );
+        }
+
+        @Override
+        public JSONObject toREST() throws JSONException, ConversionException
+        {
+            JSONObject json = super.toREST();
+            json.put( "score", eqvas );
+            return json;
         }
     }
 
@@ -285,6 +338,17 @@ public class ApplicationStatus
             smoking = json.getBoolean( "smoking" );
             alcohol = json.getBoolean( "alcohol" );
         }
+
+        @Override
+        public JSONObject toREST() throws JSONException, ConversionException
+        {
+            JSONObject json = super.toREST();
+            json.put( "alcohol", alcohol );
+            json.put( "diet", alcohol );
+            json.put( "physicalActivity", alcohol );
+            json.put( "smoking", alcohol );
+            return json;
+        }
     }
 
     public class ServerSelfEfficacy extends ServerTimestamp
@@ -314,6 +378,16 @@ public class ApplicationStatus
             selfEfficacy.multimorbidity = json.getBoolean( "selfEfficacy.multimorbidity" );
             selfEfficacy.lifestyle = json.getBoolean( "selfEfficacy.lifestyle" );
             selfEfficacy.weekly_goals = json.getBoolean( "selfEfficacy.weekly_goals" );
+        }
+
+        @Override
+        public JSONObject toREST() throws JSONException, ConversionException
+        {
+            JSONObject json = super.toREST();
+            json.put( "completeBehaviourGoals", selfEfficacy.weekly_goals );
+            json.put( "healthierLifestyle", selfEfficacy.lifestyle );
+            json.put( "manageMultimorbidity", selfEfficacy.multimorbidity );
+            return json;
         }
     }
 
@@ -373,6 +447,30 @@ public class ApplicationStatus
             intentionsAndPlans.plan_intend_active = json.getBoolean( "intentionsAndPlans.plan_intend_active" );
             intentionsAndPlans.plan_intend_leisure = json.getBoolean( "intentionsAndPlans.plan_intend_leisure" );
             intentionsAndPlans.plan_intend_rehabilitation = json.getBoolean( "intentionsAndPlans.plan_intend_rehabilitation" );
+        }
+
+        @Override
+        public JSONObject toREST() throws JSONException, ConversionException
+        {
+            JSONObject json = super.toREST();
+            json.put( "whenToExercise", intentionsAndPlans.plan_exercise_when );
+            json.put( "pastWeekExercise", intentionsAndPlans.plan_exercise_pastweek );
+            json.put( "exerciseWhere", intentionsAndPlans.plan_exercise_where );
+            json.put( "exerciseHow", intentionsAndPlans.plan_exercise_how );
+            json.put( "exerciseHowOften", intentionsAndPlans.plan_exercise_often );
+            json.put( "exerciseWithWhom", intentionsAndPlans.plan_exercise_whom );
+            json.put( "plansInterfere", intentionsAndPlans.plan_exercise_interfere );
+            json.put( "setbacksCope", intentionsAndPlans.plan_exercise_setbacks );
+            json.put( "difficultSituations", intentionsAndPlans.plan_exercise_situations );
+            json.put( "goodOpportunities", intentionsAndPlans.plan_exercise_opportunities );
+            json.put( "preventLapses", intentionsAndPlans.plan_exercise_lapses );
+            json.put( "exerciseSeveralTimesPerWeek", intentionsAndPlans.plan_intend_times );
+            json.put( "workUpSweat", intentionsAndPlans.plan_intend_sweat );
+            json.put( "exerciseRegularly", intentionsAndPlans.plan_intend_regularly );
+            json.put( "minimumPhysicalActivity", intentionsAndPlans.plan_intend_active );
+            json.put( "leisureTimeActivity", intentionsAndPlans.plan_intend_leisure );
+            json.put( "exerciseDuringRehabilitation", intentionsAndPlans.plan_intend_rehabilitation );
+            return json;
         }
     }
 
@@ -439,6 +537,47 @@ public class ApplicationStatus
             selfRatedHealth.irritable = json.getInt( "selfRatedHealth.irritable" );
             selfRatedHealth.sad_struggle = json.getInt( "selfRatedHealth.sad_struggle" );
         }
+
+        @Override
+        public JSONObject toREST() throws JSONException, ConversionException
+        {
+            JSONObject json = super.toREST();
+            json.put( "oneConditionMoreSerious", getRESTValue( selfRatedHealth.one_condition_more_serious ) );
+            json.put( "timeSpentManaging", getRESTValue( selfRatedHealth.time_spent_managing ) );
+            json.put( "feelOverwhelmed", getRESTValue( selfRatedHealth.feel_overwhelmed ) );
+            json.put( "causesAreLinked", getRESTValue( selfRatedHealth.causes_are_linked ) );
+            json.put( "difficultAllMedications", getRESTValue( selfRatedHealth.difficult_all_medications ) );
+            json.put( "limitedActivities", getRESTValue( selfRatedHealth.limited_activities ) );
+            json.put( "differentMedicationsProblems", getRESTValue( selfRatedHealth.different_medications_problems ) );
+            json.put( "mixingMedications", getRESTValue( selfRatedHealth.mixing_medications ) );
+            json.put( "lessEffectiveTreatments", getRESTValue( selfRatedHealth.less_effective_treatments ) );
+            json.put( "oneCauseAnother", getRESTValue( selfRatedHealth.one_cause_another ) );
+            json.put( "oneDominates", getRESTValue( selfRatedHealth.one_dominates ) );
+            json.put( "conditionsInteract", getRESTValue( selfRatedHealth.conditions_interact ) );
+            json.put( "difficultBestTreatment", getRESTValue( selfRatedHealth.difficult_best_treatment ) );
+            json.put( "reducedSocialLife", getRESTValue( selfRatedHealth.reduced_social_life ) );
+            json.put( "unhappy", getRESTValue( selfRatedHealth.unhappy ) );
+            json.put( "anxious", getRESTValue( selfRatedHealth.anxious ) );
+            json.put( "angry", getRESTValue( selfRatedHealth.angry ) );
+            json.put( "sad", getRESTValue( selfRatedHealth.sad ) );
+            json.put( "irritable", getRESTValue( selfRatedHealth.irritable ) );
+            json.put( "sadStruggle", getRESTValue( selfRatedHealth.sad_struggle ) );
+
+            return json;
+        }
+
+        private String getRESTValue( int value )
+        {
+            switch( value )
+            {
+                case 0: return "STRONGLY_DISAGREE";
+                case 1: return "DISAGREE";
+                case 2: return "AGREE";
+                case 3: return "STRONGLY_AGREE";
+            }
+
+            return "";
+        }
     }
 
     public class ServerDailyEvaluation extends ServerTimestamp
@@ -469,6 +608,24 @@ public class ApplicationStatus
             JSONConverterDailyEvaluation jc = new JSONConverterDailyEvaluation( json );
             jc.from();
             dailyEvaluation = jc.getDailyEvaluation();
+        }
+
+        @Override
+        public JSONObject toREST() throws JSONException, ConversionException
+        {
+            JSONObject json = super.toREST();
+            json.put( "diet", dailyEvaluation.plan.isTarget( Behavior.DIET )  );
+            json.put( "alcohol", dailyEvaluation.plan.isTarget( Behavior.ALCOHOL ) );
+            json.put( "physicalActivity", dailyEvaluation.plan.isTarget( Behavior.ACTIVITY )  );
+            json.put( "smoking", dailyEvaluation.plan.isTarget( Behavior.SMOKING )  );
+            json.put( "copingIfStatement", dailyEvaluation.plan instanceof ActionPlan ? ( (ActionPlan) dailyEvaluation.plan ).copingIfStatement : "" );
+            json.put( "copingThenStatement", dailyEvaluation.plan instanceof ActionPlan ? ( (ActionPlan) dailyEvaluation.plan ).copingThenStatement : ""  );
+            json.put( "ifStatement", dailyEvaluation.plan.ifStatement );
+            json.put( "thenStatement", dailyEvaluation.plan.thenStatement );
+            json.put( "success", dailyEvaluation.isSuccessful() );
+            json.put( "type", dailyEvaluation.plan instanceof ActionPlan ? "ACTION" : "COPING" );
+
+            return json;
         }
     }
 
@@ -501,20 +658,34 @@ public class ApplicationStatus
             jc.from();
             weeklyEvaluation = jc.getWeeklyEvaluation();
         }
+
+        @Override
+        public JSONObject toREST() throws JSONException, ConversionException
+        {
+            JSONObject json = super.toREST();
+            json.put( "diet", weeklyEvaluation.getDiet()  );
+            json.put( "alcohol", weeklyEvaluation.getAlcohol() );
+            json.put( "physicalActivity", weeklyEvaluation.getPhysicalActivity() );
+            json.put( "smoking", weeklyEvaluation.getSmoking() );
+            json.put( "weekOfYear", weeklyEvaluation.getWeekOfYear() );
+            json.put( "year", weeklyEvaluation.getYear() );
+
+            return json;
+        }
     }
 
     public class ServerData
     {
-        ArrayList<ServerEQVAS> eqvas;
-        ArrayList<ServerProblematicBehaviors> problematicBehaviors;
-        ServerSelfEfficacy selfEfficacyInitial;
-        ServerSelfEfficacy selfEfficacyFinal;
-        ServerIntentionsAndPlans intentionsAndPlansInitial;
-        ServerIntentionsAndPlans intentionsAndPlansFinal;
-        ServerSelfRatedHealth selfRatedHealthInitial;
-        ServerSelfRatedHealth selfRatedHealthFinal;
-        ArrayList<ServerDailyEvaluation> dailyEvaluations;
-        ArrayList<ServerWeeklyEvaluation> weeklyEvaluations;
+        public ArrayList<ServerEQVAS> eqvas;
+        public ArrayList<ServerProblematicBehaviors> problematicBehaviors;
+        public ServerSelfEfficacy selfEfficacyInitial;
+        public ServerSelfEfficacy selfEfficacyFinal;
+        public ServerIntentionsAndPlans intentionsAndPlansInitial;
+        public ServerIntentionsAndPlans intentionsAndPlansFinal;
+        public ServerSelfRatedHealth selfRatedHealthInitial;
+        public ServerSelfRatedHealth selfRatedHealthFinal;
+        public ArrayList<ServerDailyEvaluation> dailyEvaluations;
+        public ArrayList<ServerWeeklyEvaluation> weeklyEvaluations;
 
         public void add( final int eqvas )
         {
@@ -688,6 +859,7 @@ public class ApplicationStatus
 
 
 
+
     //
     // constructors (singleton)
     //
@@ -785,6 +957,7 @@ public class ApplicationStatus
             if( id == evaluation.id )
             {
                 evaluation.evaluate( success );
+                serverData.add( evaluation );
                 DailyEvaluationsStorage s = new DailyEvaluationsStorage( context );
                 s.write( new JSONArrayConverterDailyEvaluation( dailyEvaluations ) );
                 state.moveNext();
@@ -829,6 +1002,7 @@ public class ApplicationStatus
             if( evaluation.getWeekOfYear() == weekOfYear && evaluation.getYear() == year )
             {
                 evaluation.score( dietScore, physicalActivityScore, alcoholScore, smokingScore );
+                serverData.add( evaluation );
                 WeeklyEvaluationsStorage wes = new WeeklyEvaluationsStorage( context );
                 wes.write( new JSONArrayConverterWeeklyEvaluation( weeklyEvaluations ) );
 
