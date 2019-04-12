@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class RESTService extends IntentService
 {
-    public static final String REST_URL = "http://192.168.1.35:8080";
+    public static final String REST_URL = "http://192.168.1.31:8081";
     private static final String ACTION_START = "ACTION_START";
 
     public RESTService()

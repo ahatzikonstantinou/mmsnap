@@ -54,7 +54,7 @@ public class IntentionsAndPlansActivity extends MassDisableActivity // AppCompat
 
                     as.addAssessment( ApplicationStatus.Assessment.INTENTIONS );
 
-                    //TODO SEND_TO_SERVER
+                    as.serverData.add( as.intentionsAndPlans );
 
                     startActivity( getParentActivityIntent() );
                 }

@@ -32,7 +32,6 @@ public class EfficacyActivity extends MassDisableActivity // AppCompatActivity
             {
                 try
                 {
-                    //TODO send to server
                     ApplicationStatus as = ApplicationStatus.getInstance( view.getContext() );
                     as.selfEfficacy.lifestyle = ( ( CheckBox ) findViewById( R.id.efficacy_lifestyle_cbx ) ).isChecked();
                     as.selfEfficacy.weekly_goals = ( ( CheckBox ) findViewById( R.id.efficacy_goals_cbx ) ).isChecked();
@@ -40,7 +39,8 @@ public class EfficacyActivity extends MassDisableActivity // AppCompatActivity
 
                     as.addAssessment( ApplicationStatus.Assessment.SELF_EFFICACY );
 
-                    //TODO SEND_TO_SERVER
+                    as.serverData.add( as.selfEfficacy );
+
                     startActivity( getParentActivityIntent() );
                 }
                 catch( Exception e )

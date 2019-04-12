@@ -2,25 +2,17 @@ package ahat.mmsnap.rest;
 
 import android.app.Application;
 
-import com.google.gson.Gson;
-
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 public class App extends Application
 {
-    private String jwtToken;
+    private static String jwtToken;
 
-    public String getJwtToken()
+    public static String getJwtToken()
     {
         return jwtToken;
     }
 
-    public void setJwtToken( String jwtToken )
+    public static void setJwtToken( String _jwtToken )
     {
-        this.jwtToken = jwtToken;
+        jwtToken = _jwtToken;
     }
 }

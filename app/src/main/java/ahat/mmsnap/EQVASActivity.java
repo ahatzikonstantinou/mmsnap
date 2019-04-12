@@ -90,7 +90,7 @@ public class EQVASActivity extends AppCompatActivity
                     as.eqvas = Integer.parseInt( mEditText.getText().toString() );
                     as.addAssessment( ApplicationStatus.Assessment.ILLNESS_PERCEPTION );
 
-                    //TODO SEND_TO_SERVER
+                    as.serverData.add( as.eqvas );
 
                     startActivity( getParentActivityIntent() );
                 }

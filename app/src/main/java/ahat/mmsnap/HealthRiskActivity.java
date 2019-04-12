@@ -67,7 +67,7 @@ public class HealthRiskActivity extends AppCompatActivity
 
                         as.addAssessment( ApplicationStatus.Assessment.HEALTH_RISK );
 
-                        //TODO SEND_TO_SERVER
+                        as.serverData.add( as.problematicBehaviors );
 
                         AlertDialog alertDialog = new AlertDialog.Builder(HealthRiskActivity.this).create();
                         alertDialog.setTitle("Alert");

@@ -10,7 +10,7 @@
 
     <!-- Strings related to Settings -->
     <string name="pref_header_about">About</string>
-    <string name="summary_about">We are a team of like-minded people, specialized in development of Android App Development creating new trends across the app space. Glad to Help in anyway!</string>
+    <string name="summary_about">MMSNAP is a research project aiming to provide help to people facing multimorbidity!</string>
     <string name="app_version">1.0</string>
     <string name="summary_support">Got any queries? We are happy to help!</string>
     <string name="title_send_feedback">Send Feedback</string>
@@ -133,4 +133,6 @@
     <string name="title_activity_testing">Testing</string>
     <string name="please_complete_the_final_assessments">Please complete the final assessments to proceed.</string>
     <string name="please_complete_the_initial_assessments">Please complete the initial assessments to proceed.</string>
+    <string name="title_user">User</string>
+    <string name="key_remoteUserId">remoteUserId</string>
 </resources>

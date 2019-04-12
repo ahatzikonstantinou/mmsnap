@@ -3,6 +3,7 @@ package ahat.mmsnap;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -49,6 +50,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ahat.mmsnap.rest.App;
+import ahat.mmsnap.rest.AuthJsonObjectRequest;
 import ahat.mmsnap.rest.RESTService;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -269,8 +271,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                                                           try
                                                                           {
                                                                               loginSuccess();
-                                                                              String message = "jwt: " + response.getString( "id_token" );
-                                                                              Toast.makeText( LoginActivity.this, message, Toast.LENGTH_SHORT ).show();
+                                                                              App.setJwtToken( response.getString( "id_token" ) );
+//                                                                              String message = "jwt: " + response.getString( "id_token" );
+//                                                                              Toast.makeText( LoginActivity.this, message, Toast.LENGTH_SHORT ).show();
+
+                                                                              //also get the remote user id
+                                                                              getRemoteUserId( LoginActivity.this );
                                                                           }
                                                                           catch ( JSONException e )
                                                                           {
@@ -501,6 +507,50 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             e.printStackTrace();
         }
         startActivity( new Intent( this, MainActivity.class ) );
+    }
+
+    public static void getRemoteUserId( final Context context )
+    {
+        RequestQueue queue = Volley.newRequestQueue( context );
+        String url = RESTService.REST_URL + "/api/users/user";
+
+        JsonObjectRequest request = new AuthJsonObjectRequest(
+        Request.Method.GET, url, null,
+        new Response.Listener<JSONObject>()
+        {
+            @Override
+            public void onResponse( JSONObject response )
+            {
+                if( null != response )
+                {
+                    try
+                    {
+                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences( context );
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putInt( context.getString(R.string.key_remoteUserId ), response.getInt( "id" ) );
+                        editor.commit();
+
+//                        String message = "remoteUserId: " + response.getInt( "id" );
+//                        Toast.makeText( context, message, Toast.LENGTH_SHORT ).show();
+                    }
+                    catch( JSONException e )
+                    {
+                        e.printStackTrace();
+                        Log.e( "MMSNAP:", "Error receiving remote user id: " + e.getMessage() );
+                    }
+                }
+            }
+        },
+        new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse( VolleyError error )
+            {
+                String message = "Retrieval of remote user id failed. Error: " + error.getMessage();
+                Toast.makeText( context, message, Toast.LENGTH_SHORT ).show();
+            }
+        } );
+        queue.add(request);
     }
 }
 

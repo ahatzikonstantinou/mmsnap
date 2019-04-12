@@ -11,6 +11,10 @@ public abstract class JSONObjectConverter implements Converter
     {
         return jsonObject;
     }
+    public void setJsonObject( JSONObject jsonObject )
+    {
+        this.jsonObject = jsonObject;
+    }
     protected boolean converted;
     @Override
     public boolean isConverted()

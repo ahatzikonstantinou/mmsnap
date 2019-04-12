@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="General">
-        <EditTextPreference
-            android:key="@string/key_username"
-            android:summary="@string/username"
-            android:title="@string/title_username" />
-        <EditTextPreference
-            android:key="@string/key_password"
-            android:summary="@string/password"
-            android:title="@string/title_password" />
+    <PreferenceCategory android:title="Credentials">
+        <!--<EditTextPreference-->
+            <!--android:key="@string/key_username"-->
+            <!--android:summary="@string/username"-->
+            <!--android:title="@string/title_username" />-->
+        <!--<EditTextPreference-->
+            <!--android:key="@string/key_password"-->
+            <!--android:summary="@string/password"-->
+            <!--android:title="@string/title_password" />-->
+        <Preference
+            android:key="key_username"
+            android:summary="username"
+            android:title="@string/title_user"
+            />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_header_about">
 
