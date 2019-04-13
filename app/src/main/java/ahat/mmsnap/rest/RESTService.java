@@ -153,6 +153,7 @@ public class RESTService extends IntentService
                     {
                         if( null != response )
                         {
+                            // TODO: get new token if current is expired and retransmit
                             try
                             {
                                 toREST.setAcknowledgementDate( new Date() );

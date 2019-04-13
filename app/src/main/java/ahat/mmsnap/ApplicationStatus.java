@@ -1082,9 +1082,14 @@ public class ApplicationStatus
     {
         int before = weeklyEvaluations.size();
 
+        Calendar endDate = Calendar.getInstance();
+        while( endDate.get( Calendar.DAY_OF_WEEK ) != Calendar.SUNDAY )
+        {
+            endDate.add( Calendar.DAY_OF_MONTH, -1 );
+        }
         weeklyEvaluations = WeeklyEvaluation.createMissing(
             startDate,
-            new Date(),
+            endDate.getTime(),
             weeklyEvaluations,
             problematicBehaviors.contains( Behavior.DIET ),
             problematicBehaviors.contains( Behavior.SMOKING ),
