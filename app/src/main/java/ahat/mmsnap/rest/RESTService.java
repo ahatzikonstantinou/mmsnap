@@ -61,20 +61,45 @@ public class RESTService extends IntentService
     }
 
 
+    private boolean processByStatePolicy( ApplicationStatus.State state )
+    {
+        switch( state.name() )
+        {
+            case ApplicationStatus.InOrder.NAME:
+            case ApplicationStatus.WeeklyEvaluationPending.NAME:
+            case ApplicationStatus.DailyEvaluationPending.NAME:
+            case ApplicationStatus.NoFinalAssessments.NAME:
+            case ApplicationStatus.Finished.NAME:
+                return true;
+        }
+
+        return false;
+    }
+
     public void processREST()
     {
         try
         {
             ApplicationStatus as = ApplicationStatus.getInstance( this );
+
+            if( !processByStatePolicy( as.getState() ) )
+            {
+                return;
+            }
+
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences( this );
             JSONObject jsonUser = new JSONObject();
             jsonUser.put( "id", Integer.parseInt( settings.getString( getString( R.string.key_remoteUserId ), "" ) ) );
 
+            transmit( as.serverData.eqvasInitial, jsonUser, "/api/e-q-vas" );
+            transmit( as.serverData.eqvasFinal, jsonUser, "/api/e-q-vas" );
             for( ApplicationStatus.ServerEQVAS eqvas : as.serverData.eqvas )
             {
                 transmit( eqvas, jsonUser, "/api/e-q-vas" );
             }
 
+            transmit( as.serverData.problematicBehaviorsInitial, jsonUser, "/api/health-risks" );
+            transmit( as.serverData.problematicBehaviorsFinal, jsonUser, "/api/health-risks" );
             for( ApplicationStatus.ServerProblematicBehaviors problematicBehavior : as.serverData.problematicBehaviors )
             {
                 transmit( problematicBehavior, jsonUser, "/api/health-risks" );

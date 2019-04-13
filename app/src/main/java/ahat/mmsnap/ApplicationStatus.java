@@ -39,6 +39,7 @@ import ahat.mmsnap.models.CounterfactualThought;
 import ahat.mmsnap.models.DailyEvaluation;
 import ahat.mmsnap.models.IfThenPlan;
 import ahat.mmsnap.models.WeeklyEvaluation;
+import ahat.mmsnap.rest.RESTService;
 
 /*
  * Like a configuration class, stores data regarding application state, start date, etc
@@ -676,7 +677,11 @@ public class ApplicationStatus
 
     public class ServerData
     {
+        public ServerEQVAS eqvasInitial;
+        public ServerEQVAS eqvasFinal;
         public ArrayList<ServerEQVAS> eqvas;
+        public ServerProblematicBehaviors problematicBehaviorsInitial;
+        public ServerProblematicBehaviors problematicBehaviorsFinal;
         public ArrayList<ServerProblematicBehaviors> problematicBehaviors;
         public ServerSelfEfficacy selfEfficacyInitial;
         public ServerSelfEfficacy selfEfficacyFinal;
@@ -687,54 +692,93 @@ public class ApplicationStatus
         public ArrayList<ServerDailyEvaluation> dailyEvaluations;
         public ArrayList<ServerWeeklyEvaluation> weeklyEvaluations;
 
+        public void transmitData()
+        {
+            context.startService( RESTService.createIntentStart( context ) );
+        }
+
         public void add( final int eqvas )
         {
-            this.eqvas.add( new ServerEQVAS( eqvas, new Date(), null, getPhase() ) );
+            Phase phase = getPhase();
+            if( Phase.INITIAL == phase )
+            {
+                this.eqvasInitial = new ServerEQVAS( eqvas, new Date(), null, Phase.INITIAL );
+            }
+            else if( Phase.FINAL == phase )
+            {
+                this.eqvasFinal = new ServerEQVAS( eqvas, new Date(), null, Phase.FINAL );
+            }
+            else
+            {
+                this.eqvas.add( new ServerEQVAS( eqvas, new Date(), null, null ) );
+            }
+            transmitData();
         }
         public void add( final ArrayList<Behavior> problematicBehaviors )
         {
-            this.problematicBehaviors.add( new ServerProblematicBehaviors( problematicBehaviors, new Date(), null, getPhase() ) );
+            Phase phase = getPhase();
+            if( Phase.INITIAL == phase )
+            {
+                this.problematicBehaviorsInitial = new ServerProblematicBehaviors( problematicBehaviors, new Date(), null, Phase.INITIAL );
+            }
+            else if( Phase.FINAL == phase )
+            {
+                this.problematicBehaviorsFinal = new ServerProblematicBehaviors( problematicBehaviors, new Date(), null, Phase.FINAL );
+            }
+            else
+            {
+                this.problematicBehaviors.add( new ServerProblematicBehaviors( problematicBehaviors, new Date(), null, null ) );
+            }
+            transmitData();
         }
         public void add( final SelfRatedHealth selfRatedHealth )
         {
-            if( getPhase() == Phase.INITIAL )
+            Phase phase = getPhase();
+            if( Phase.INITIAL == phase )
             {
                 selfRatedHealthInitial = new ServerSelfRatedHealth( selfRatedHealth, new Date(), null, Phase.INITIAL );
             }
-            else if( getPhase() == Phase.FINAL )
+            else if( Phase.FINAL == phase )
             {
                 selfRatedHealthFinal = new ServerSelfRatedHealth( selfRatedHealth, new Date(), null, Phase.FINAL );
             }
+            transmitData();
         }
         public void add( final IntentionsAndPlans intentionsAndPlans )
         {
-            if( getPhase() == Phase.INITIAL )
+            Phase phase = getPhase();
+            if( Phase.INITIAL == phase )
             {
                 intentionsAndPlansInitial = new ServerIntentionsAndPlans( intentionsAndPlans, new Date(), null, Phase.INITIAL );
             }
-            else if( getPhase() == Phase.FINAL )
+            else if( Phase.FINAL == phase )
             {
                 intentionsAndPlansFinal = new ServerIntentionsAndPlans( intentionsAndPlans, new Date(), null, Phase.FINAL );
             }
+            transmitData();
         }
         public void add( final SelfEfficacy selfEfficacy )
         {
-            if( getPhase() == Phase.INITIAL )
+            Phase phase = getPhase();
+            if( Phase.INITIAL == phase )
             {
                 selfEfficacyInitial = new ServerSelfEfficacy( selfEfficacy, new Date(), null, Phase.INITIAL );
             }
-            else if( getPhase() == Phase.FINAL )
+            else if( Phase.FINAL == phase )
             {
                 selfEfficacyFinal = new ServerSelfEfficacy( selfEfficacy, new Date(), null, Phase.FINAL );
             }
+            transmitData();
         }
         public void add( final DailyEvaluation dailyEvaluation )
         {
             dailyEvaluations.add( new ServerDailyEvaluation( dailyEvaluation, new Date(), null ) );
+            transmitData();
         }
         public void add( final WeeklyEvaluation weeklyEvaluation )
         {
             weeklyEvaluations.add( new ServerWeeklyEvaluation( weeklyEvaluation, new Date(), null ) );
+            transmitData();
         }
 
         private Phase getPhase()
@@ -768,6 +812,8 @@ public class ApplicationStatus
         {
             JSONObject json = new JSONObject();
 
+            json.put( "eqvasInitial", eqvasInitial.toJson() );
+            json.put( "eqvasFinal", eqvasFinal.toJson() );
             JSONArray eqvasJsonArray = new JSONArray();
             for( ServerEQVAS value  : eqvas )
             {
@@ -775,6 +821,8 @@ public class ApplicationStatus
             }
             json.put( "eqvas", eqvasJsonArray );
 
+            json.put( "problematicBehaviorsInitial", problematicBehaviorsInitial.toJson() );
+            json.put( "problematicBehaviorsFinal", problematicBehaviorsFinal.toJson() );
             JSONArray behaviorsJsonArray = new JSONArray();
             for( ServerProblematicBehaviors value  : problematicBehaviors )
             {
@@ -809,6 +857,8 @@ public class ApplicationStatus
 
         public void fromJson( JSONObject json ) throws JSONException, ConversionException
         {
+            eqvasInitial.fromJson( json.getJSONObject( "eqvasInitial" ) );
+            eqvasFinal.fromJson( json.getJSONObject( "eqvasFinal" ) );
             JSONArray eqvasJsonArray = json.getJSONArray( "eqvas" );
             eqvas = new ArrayList<>( eqvasJsonArray.length() );
             for( int i  = 0 ; i < eqvasJsonArray.length() ; i++ )
@@ -818,6 +868,8 @@ public class ApplicationStatus
                 eqvas.add( s );
             }
 
+            problematicBehaviorsInitial.fromJson( json.getJSONObject( "problematicBehaviorsInitial" ) );
+            problematicBehaviorsFinal.fromJson( json.getJSONObject( "problematicBehaviorsFinal" ) );
             JSONArray problematicBehaviorsJsonArray = json.getJSONArray( "problematicBehaviors" );
             problematicBehaviors = new ArrayList<>( problematicBehaviorsJsonArray.length() );
             for( int i  = 0 ; i < problematicBehaviorsJsonArray.length() ; i++ )
@@ -851,6 +903,62 @@ public class ApplicationStatus
                 s.fromJson( weeklyEvaluationsJsonArray.getJSONObject( i ) );
                 weeklyEvaluations.add( s );
             }
+        }
+
+        public boolean allDataTransmitted()
+        {
+            boolean eqvasTransmitted = true;
+            for( ServerEQVAS eqvas : eqvas )
+            {
+                if( null == eqvas.acknowledgementDate )
+                {
+                    eqvasTransmitted = false;
+                    break;
+                }
+            }
+            eqvasTransmitted = eqvasTransmitted && ( null != eqvasInitial.acknowledgementDate ) && ( null != eqvasFinal.acknowledgementDate );
+
+            boolean problematicBehaviorsTransmitted = true;
+            for( ServerProblematicBehaviors pb : problematicBehaviors )
+            {
+                if( null == pb.acknowledgementDate )
+                {
+                    problematicBehaviorsTransmitted = false;
+                    break;
+                }
+            }
+            problematicBehaviorsTransmitted = problematicBehaviorsTransmitted && ( null != problematicBehaviorsInitial.acknowledgementDate ) && ( null != problematicBehaviorsFinal.acknowledgementDate );
+
+            boolean dailyEvaluationsTransmitted = true;
+            for( ServerDailyEvaluation evaluation : dailyEvaluations )
+            {
+                if( null == evaluation.acknowledgementDate )
+                {
+                    dailyEvaluationsTransmitted = false;
+                    break;
+                }
+            }
+
+            boolean weeklyEvaluationsTransmitted = true;
+            for( ServerWeeklyEvaluation evaluation : weeklyEvaluations )
+            {
+                if( null == evaluation.acknowledgementDate )
+                {
+                    weeklyEvaluationsTransmitted = false;
+                    break;
+                }
+            }
+
+            return eqvasTransmitted &&
+                   problematicBehaviorsTransmitted &&
+                   null != selfEfficacyInitial.acknowledgementDate &&
+                   null != selfEfficacyFinal.acknowledgementDate &&
+                   null != intentionsAndPlansInitial.acknowledgementDate &&
+                   null != intentionsAndPlansFinal.acknowledgementDate &&
+                   null != selfRatedHealthInitial.acknowledgementDate &&
+                   null != selfRatedHealthFinal.acknowledgementDate &&
+                   dailyEvaluationsTransmitted &&
+                   weeklyEvaluationsTransmitted;
         }
     }
 
@@ -1272,7 +1380,13 @@ public class ApplicationStatus
     // States are inner class to be able to access the private members of applicationstatus
     //
     State state;
-    public void setState( State state ) { this.state = state ;}
+    public void setState( State state )
+    {
+        this.state = state;
+        // on state change is a good time to transmit any untransmitted assessments and evaluations
+        serverData.transmitData();
+    }
+
     public State getState() { return state; }
 
     public class StateFactory
@@ -1358,7 +1472,7 @@ public class ApplicationStatus
     }
     public class InOrder extends State
     {
-        static final String NAME = "InOrder";
+        public static final String NAME = "InOrder";
         public String name() { return NAME; }
         InOrder( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
         public boolean moveNext()
@@ -1399,7 +1513,7 @@ public class ApplicationStatus
     }
     public class WeeklyEvaluationPending extends InOrder
     {
-        static final String NAME = "WeeklyEvaluationPending";
+        public static final String NAME = "WeeklyEvaluationPending";
         public String name() { return NAME; }
         WeeklyEvaluationPending( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
         public boolean moveNext()
@@ -1432,7 +1546,7 @@ public class ApplicationStatus
     }
     public class DailyEvaluationPending extends InOrder
     {
-        static final String NAME = "DaillyEvaluationPending";
+        public static final String NAME = "DaillyEvaluationPending";
         public String name() { return NAME; }
         DailyEvaluationPending( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
         public boolean moveNext()
@@ -1465,7 +1579,7 @@ public class ApplicationStatus
     }
     public class NoFinalAssessments extends NoAssessments
     {
-        static final String NAME = "NoFinalAssessments";
+        public static final String NAME = "NoFinalAssessments";
         public String name() { return NAME; }
         NoFinalAssessments( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
         public boolean moveNext()
@@ -1480,9 +1594,24 @@ public class ApplicationStatus
     }
     public class Finished extends State
     {
-        static final String NAME = "Finished";
+        public static final String NAME = "Finished";
         public String name() { return NAME; }
         Finished( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
+        public boolean moveNext()
+        {
+            if( applicationStatus.serverData.allDataTransmitted() )
+            {
+                applicationStatus.setState( new Complete( applicationStatus ) );
+                return true;
+            }
+            return false;
+        }
+    }
+    public class Complete extends State
+    {
+        public static final String NAME = "Complete";
+        public String name() { return NAME; }
+        Complete( ApplicationStatus applicationStatus ) { super( applicationStatus ); }
         public boolean moveNext() { return false; }
     }
 
