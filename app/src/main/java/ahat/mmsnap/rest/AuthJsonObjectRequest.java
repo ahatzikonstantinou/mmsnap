@@ -25,9 +25,10 @@ public class AuthJsonObjectRequest extends JsonObjectRequest
      */
     public AuthJsonObjectRequest( int method, String url, @Nullable JSONObject jsonRequest,
                                   Response.Listener<JSONObject> listener,
-                                  @Nullable Response.ErrorListener errorListener )
+                                  @Nullable JWTRefreshErrorListener errorListener )
     {
         super( method, url, jsonRequest, listener, errorListener );
+        errorListener.setParentRequest( this );
     }
 
     @Override
@@ -37,4 +38,5 @@ public class AuthJsonObjectRequest extends JsonObjectRequest
         headers.put("Authorization", "Bearer " + App.getJwtToken() );
         return headers;
     }
+
 }

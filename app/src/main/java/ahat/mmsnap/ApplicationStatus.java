@@ -797,7 +797,11 @@ public class ApplicationStatus
         ServerData()
         {
             eqvas = new ArrayList<>();
+            eqvasInitial = new ServerEQVAS( -1, null, null, null );
+            eqvasFinal = new ServerEQVAS( -1, null, null, null );
             problematicBehaviors = new ArrayList<>();
+            problematicBehaviorsInitial = new ServerProblematicBehaviors( new ArrayList<Behavior>(), null, null, null );
+            problematicBehaviorsFinal = new ServerProblematicBehaviors( new ArrayList<Behavior>(), null, null, null );
             selfEfficacyInitial = new ServerSelfEfficacy( new SelfEfficacy(), null, null, null );
             selfEfficacyFinal = new ServerSelfEfficacy( new SelfEfficacy(), null, null, null );
             intentionsAndPlansInitial = new ServerIntentionsAndPlans( new IntentionsAndPlans(), null, null, null );

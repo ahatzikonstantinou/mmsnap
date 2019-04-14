@@ -135,4 +135,10 @@
     <string name="please_complete_the_initial_assessments">Please complete the initial assessments to proceed.</string>
     <string name="title_user">User</string>
     <string name="key_remoteUserId">remoteUserId</string>
+    <string name="title_change_password">Change password</string>
+    <string name="action_change_password">Change</string>
+    <string name="prompt_verify_new_password">Verify new password</string>
+    <string name="prompt_old_password">Old password</string>
+    <string name="prompt_new_password">New password</string>
+    <string name="error_verify_password">Verification does not match new password</string>
 </resources>

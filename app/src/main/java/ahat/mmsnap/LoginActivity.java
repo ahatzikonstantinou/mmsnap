@@ -51,6 +51,7 @@ import org.json.JSONObject;
 
 import ahat.mmsnap.rest.App;
 import ahat.mmsnap.rest.AuthJsonObjectRequest;
+import ahat.mmsnap.rest.JWTRefreshErrorListener;
 import ahat.mmsnap.rest.RESTService;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -250,9 +251,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             JSONObject jsonBody = new JSONObject();
             try
             {
-
                 jsonBody.put( "username", username );
                 jsonBody.put( "password", password );
+                jsonBody.put( "rememberMe", true );
             }
             catch( JSONException e )
             {
@@ -515,7 +516,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         String url = RESTService.REST_URL + "/api/users/user";
 
         JsonObjectRequest request = new AuthJsonObjectRequest(
-        Request.Method.GET, url, null,
+            Request.Method.GET, url, null,
         new Response.Listener<JSONObject>()
         {
             @Override
@@ -541,15 +542,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             }
         },
-        new Response.ErrorListener()
-        {
-            @Override
-            public void onErrorResponse( VolleyError error )
+        new JWTRefreshErrorListener(
+            context,
+            new JWTRefreshErrorListener.Listener()
             {
-                String message = "Retrieval of remote user id failed. Error: " + error.getMessage();
-                Toast.makeText( context, message, Toast.LENGTH_SHORT ).show();
+                @Override
+                public void onError( VolleyError error )
+                {
+                    String message = "Retrieval of remote user id failed. Error: " + error.getMessage();
+                    Toast.makeText( context, message, Toast.LENGTH_SHORT ).show();
+                }
             }
-        } );
+        )
+//        new Response.ErrorListener()
+//        {
+//            @Override
+//            public void onErrorResponse( VolleyError error )
+//            {
+//                String message = "Retrieval of remote user id failed. Error: " + error.getMessage();
+//                Toast.makeText( context, message, Toast.LENGTH_SHORT ).show();
+//            }
+//        }
+        );
         queue.add(request);
     }
 }

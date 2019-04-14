@@ -168,14 +168,25 @@ public class RESTService extends IntentService
                         }
                     }
                 },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse( VolleyError error )
+                new JWTRefreshErrorListener(
+                    this,
+                    new JWTRefreshErrorListener.Listener()
                     {
-                        Log.e( "MMSNAP:", "Transmission of EQVAS failed. Error: " + error.getMessage() );
-                    }
-                } );
+                        @Override
+                        public void onError( VolleyError error )
+                        {
+                            Log.e( "MMSNAP:", "Transmission of EQVAS failed. Error: " + error.getMessage() );
+                        }
+                    } )
+//                new Response.ErrorListener()
+//                {
+//                    @Override
+//                    public void onErrorResponse( VolleyError error )
+//                    {
+//                        Log.e( "MMSNAP:", "Transmission of EQVAS failed. Error: " + error.getMessage() );
+//                    }
+//                }
+                );
             queue.add( request );
         }
         catch( Exception e )

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
@@ -13,11 +12,9 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -31,9 +28,12 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ahat.mmsnap.AppCompatPreferenceActivity;
-import ahat.mmsnap.R;
+import java.util.HashMap;
+import java.util.Map;
+
 import ahat.mmsnap.rest.App;
+import ahat.mmsnap.rest.AuthStringRequest;
+import ahat.mmsnap.rest.JWTRefreshErrorListener;
 import ahat.mmsnap.rest.RESTService;
 
 public class SettingsActivity extends AppCompatPreferenceActivity
@@ -229,6 +229,126 @@ public class SettingsActivity extends AppCompatPreferenceActivity
                     return true;
                 }
             });
+
+
+
+
+            Preference dialogPasswordPreference = getPreferenceScreen().findPreference( "key_password" );
+            dialogPasswordPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference preference) {
+
+                    final Dialog chngPswd = new Dialog( getActivity() );
+                    // Set GUI of login screen
+                    chngPswd.setContentView(R.layout.change_password_dlg );
+                    final EditText oldPasswordEditText = chngPswd.findViewById( R.id.old_password );
+                    final EditText newPasswordEditText = chngPswd.findViewById( R.id.new_password );
+                    final EditText vewrifyNewPasswordEditText = chngPswd.findViewById( R.id.verify_new_password );
+
+                    //debugging
+                    oldPasswordEditText.setText( "user" );
+                    newPasswordEditText.setText( "user" );
+                    vewrifyNewPasswordEditText.setText( "user" );
+
+                    final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences( getActivity() );
+
+                    chngPswd.findViewById( R.id.cancel_button ).setOnClickListener( new View.OnClickListener() {
+                        @Override
+                        public void onClick( View view )
+                        {
+                            chngPswd.dismiss();
+                        }
+                    } );
+                    chngPswd.findViewById( R.id.change_button ).setOnClickListener( new View.OnClickListener() {
+                        @Override
+                        public void onClick( View view )
+                        {
+                            final String oldPassword = oldPasswordEditText.getText().toString();
+                            final String newPassword = newPasswordEditText.getText().toString();
+                            final String verifyNewPassword = vewrifyNewPasswordEditText.getText().toString();
+
+                            if( oldPassword.isEmpty() )
+                            {
+                                oldPasswordEditText.setError( getString( R.string.error_field_required ) );
+                                oldPasswordEditText.requestFocus();
+                                return;
+                            }
+
+                            if( newPassword.isEmpty() )
+                            {
+                                newPasswordEditText.setError( getString( R.string.error_field_required ) );
+                                newPasswordEditText.requestFocus();
+                                return;
+                            }
+
+                            if( verifyNewPassword.isEmpty() )
+                            {
+                                vewrifyNewPasswordEditText.setError( getString( R.string.error_field_required ) );
+                                vewrifyNewPasswordEditText.requestFocus();
+                                return;
+                            }
+
+                            if( !verifyNewPassword.equals( newPassword ) )
+                            {
+                                vewrifyNewPasswordEditText.setError( getString( R.string.error_verify_password ) );
+                                vewrifyNewPasswordEditText.requestFocus();
+                                return;
+                            }
+
+                            chngPswd.findViewById( R.id.change_password_progress ).setVisibility( View.VISIBLE );
+                            RequestQueue queue = Volley.newRequestQueue( getActivity() );
+                            String url = RESTService.REST_URL + "/api/account/change-password ";
+
+                            final AuthStringRequest request = new AuthStringRequest(
+                                Request.Method.POST, url,
+                                new Response.Listener<String>()
+                                {
+                                    @Override
+                                    public void onResponse( String response )
+                                    {
+                                        if( null != response )
+                                        {
+                                            SharedPreferences.Editor editor = settings.edit();
+                                            editor.putString( getString( R.string.key_password ), newPassword );
+                                            editor.commit();
+
+                                            chngPswd.dismiss();
+
+                                            Toast.makeText( getActivity(), "Password changed successfully!", Toast.LENGTH_SHORT ).show();
+                                        }
+                                    }
+                                },
+                                new JWTRefreshErrorListener(
+                                        getActivity(),
+                                        new JWTRefreshErrorListener.Listener()
+                                        {
+                                            @Override
+                                            public void onError( VolleyError error )
+                                            {
+                                                chngPswd.findViewById( R.id.change_password_progress ).setVisibility( View.INVISIBLE );
+                                                String message = "Password change failed. Error: " + error.getMessage();
+                                                Toast.makeText( getActivity(), message, Toast.LENGTH_SHORT ).show();
+                                            }
+                                        }
+                                    )
+                                )
+                                {
+                                    @Override
+                                    protected Map<String, String> getParams()
+                                    {
+                                        Map<String, String> params = new HashMap<String, String>();
+                                        params.put("", newPassword );
+
+                                        return params;
+                                    }
+                                };
+                            queue.add(request);
+                        }
+                    } );
+                    chngPswd.show();
+                    return true;
+                }
+            });
+
 
             // feedback preference click listener
             Preference myPref = findPreference(getString(R.string.key_send_feedback));
