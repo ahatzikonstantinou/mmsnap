@@ -65,9 +65,8 @@ public class HealthRiskActivity extends AppCompatActivity
                             targetBehaviors.add( "Alcohol consumption" );
                         }
 
-                        as.addAssessment( ApplicationStatus.Assessment.HEALTH_RISK );
-
                         as.serverData.add( as.problematicBehaviors );
+                        as.addAssessment( ApplicationStatus.Assessment.HEALTH_RISK );
 
                         AlertDialog alertDialog = new AlertDialog.Builder(HealthRiskActivity.this).create();
                         alertDialog.setTitle("Alert");

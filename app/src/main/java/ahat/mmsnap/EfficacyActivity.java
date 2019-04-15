@@ -37,9 +37,8 @@ public class EfficacyActivity extends MassDisableActivity // AppCompatActivity
                     as.selfEfficacy.weekly_goals = ( ( CheckBox ) findViewById( R.id.efficacy_goals_cbx ) ).isChecked();
                     as.selfEfficacy.multimorbidity = ( ( CheckBox ) findViewById( R.id.efficacy_mm_cbx ) ).isChecked();
 
-                    as.addAssessment( ApplicationStatus.Assessment.SELF_EFFICACY );
-
                     as.serverData.add( as.selfEfficacy );
+                    as.addAssessment( ApplicationStatus.Assessment.SELF_EFFICACY );
 
                     startActivity( getParentActivityIntent() );
                 }

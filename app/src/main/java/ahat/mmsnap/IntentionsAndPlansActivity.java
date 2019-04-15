@@ -52,9 +52,8 @@ public class IntentionsAndPlansActivity extends MassDisableActivity // AppCompat
                     as.intentionsAndPlans.plan_intend_leisure = ( (CheckBox) findViewById( R.id.plan_intend_leisure_cbx  ) ).isChecked();
                     as.intentionsAndPlans.plan_intend_rehabilitation = ( (CheckBox) findViewById( R.id.plan_intend_rehabilitation_cbx  ) ).isChecked();
 
-                    as.addAssessment( ApplicationStatus.Assessment.INTENTIONS );
-
                     as.serverData.add( as.intentionsAndPlans );
+                    as.addAssessment( ApplicationStatus.Assessment.INTENTIONS );
 
                     startActivity( getParentActivityIntent() );
                 }

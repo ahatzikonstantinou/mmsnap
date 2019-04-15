@@ -27,7 +27,11 @@ public class StateActivity extends AppCompatActivity
         try
         {
             ApplicationStatus status = ApplicationStatus.getInstance( this );
-            if( ApplicationStatus.NotLoggedIn.NAME == status.getState().name() )
+            if( status.passwordIsBeingReset )
+            {
+                startActivity( new Intent( this, ResetPasswordActivity.class ) );
+            }
+            else if( ApplicationStatus.NotLoggedIn.NAME == status.getState().name() )
             {
                 if( 0 != getIntent().getComponent().getClassName().compareTo( LoginActivity.class.getName() ) )    // ahat: == does not work here, I don't know why
                 {

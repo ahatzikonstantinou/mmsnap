@@ -2,6 +2,7 @@ package ahat.mmsnap;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -12,22 +13,28 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,6 +73,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity
                 }
                 else if (preference.getKey().equals("key_password")) {
                     preference.setSummary("*********");
+                }
+                else if (preference.getKey().equals("key_email")) {
+                    preference.setSummary(stringValue);
                 }
             } else {
                 preference.setSummary(stringValue);
@@ -130,106 +140,202 @@ public class SettingsActivity extends AppCompatPreferenceActivity
 
             // EditText change listener
             bindPreferenceSummaryToValue(findPreference(getString(R.string.key_username)));
+            bindPreferenceSummaryToValue(findPreference(getString(R.string.key_email)));
 //            bindPreferenceSummaryToValue(findPreference(getString(R.string.key_password)));
 
-            Preference dialogPreference = getPreferenceScreen().findPreference( "key_username" );
-            dialogPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                public boolean onPreferenceClick(Preference preference) {
+//            Preference dialogPreference = getPreferenceScreen().findPreference( "key_username" );
+//            dialogPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+//                public boolean onPreferenceClick(Preference preference) {
+//
+//                    final Dialog login = new Dialog( getActivity() );
+//                    // Set GUI of login screen
+//                    login.setContentView(R.layout.login_dlg );
+//                    final EditText usernameEditText = login.findViewById( R.id.username );
+//                    final EditText passwordEditText = login.findViewById( R.id.password );
+//                    final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences( getActivity() );
+//                    usernameEditText.setText( settings.getString( getString( R.string.key_username ), ""  ) );
+//                    passwordEditText.setText( settings.getString( getString( R.string.key_password ), ""  ) );
+//
+//                    login.findViewById( R.id.cancel_button ).setOnClickListener( new View.OnClickListener() {
+//                        @Override
+//                        public void onClick( View view )
+//                        {
+//                            login.dismiss();
+//                        }
+//                    } );
+//                    login.findViewById( R.id.sign_in_button ).setOnClickListener( new View.OnClickListener() {
+//                        @Override
+//                        public void onClick( View view )
+//                        {
+//                            login.findViewById( R.id.login_progress ).setVisibility( View.VISIBLE );
+//
+//                            final String username = usernameEditText.getText().toString();
+//                            final String password = passwordEditText.getText().toString();
+//
+//                            RequestQueue queue = Volley.newRequestQueue( getActivity() );
+//                            String url = RESTService.REST_URL + "/api/authenticate";
+//                            JSONObject jsonBody = new JSONObject();
+//                            try
+//                            {
+//
+//                                jsonBody.put( "username", username );
+//                                jsonBody.put( "password", password );
+//                            }
+//                            catch( JSONException e )
+//                            {
+//                                e.printStackTrace();
+//                                Log.e( "MMSNAP:", "Error during preferences login: " + e.getMessage() );
+//                            }
+//
+//                            JsonObjectRequest request = new JsonObjectRequest(
+//                                Request.Method.POST, url, jsonBody,
+//                                new Response.Listener<JSONObject>()
+//                                {
+//                                   @Override
+//                                    public void onResponse( JSONObject response )
+//                                    {
+//                                        if( null != response )
+//                                        {
+//                                            // success!
+//
+//                                            // refresh jwt and get the remote user id in case the user login changed
+//                                            try
+//                                            {
+//                                                App.setJwtToken( response.getString( "id_token" ) );
+//                                                LoginActivity.getRemoteUserInfo( getActivity() );
+//                                            }
+//                                            catch ( JSONException e )
+//                                            {
+//                                                e.printStackTrace();
+//                                                Log.e( "MMSNAP:", "Error receiving login answer: " + e.getMessage() );
+//                                            }
+//
+//                                            SharedPreferences.Editor editor = settings.edit();
+//                                            editor.putString( getString( R.string.key_username ), username );
+//                                            editor.putString( getString( R.string.key_password ), password );
+//                                            editor.commit();
+//
+//                                            findPreference( getString( R.string.key_username ) ).setSummary( username );
+//
+//                                            login.dismiss();
+//
+//                                            Toast.makeText( getActivity(), "Login success!", Toast.LENGTH_SHORT ).show();
+//                                        }
+//                                    }
+//                                },
+//                                new Response.ErrorListener()
+//                                {
+//                                   @Override
+//                                   public void onErrorResponse( VolleyError error)
+//                                   {
+//                                       login.findViewById( R.id.login_progress ).setVisibility( View.INVISIBLE );
+//                                       String message = "Login failed. Error: " + error.getMessage();
+//                                       Toast.makeText( getActivity(), message, Toast.LENGTH_SHORT ).show();
+//                                   }
+//                            });
+//                            queue.add(request);
+//                        }
+//                    } );
+//                    login.show();
+//                    return true;
+//                }
+//            });
 
-                    final Dialog login = new Dialog( getActivity() );
-                    // Set GUI of login screen
-                    login.setContentView(R.layout.login_dlg );
-                    final EditText usernameEditText = login.findViewById( R.id.username );
-                    final EditText passwordEditText = login.findViewById( R.id.password );
-                    final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences( getActivity() );
-                    usernameEditText.setText( settings.getString( getString( R.string.key_username ), ""  ) );
-                    passwordEditText.setText( settings.getString( getString( R.string.key_password ), ""  ) );
 
-                    login.findViewById( R.id.cancel_button ).setOnClickListener( new View.OnClickListener() {
-                        @Override
-                        public void onClick( View view )
-                        {
-                            login.dismiss();
-                        }
-                    } );
-                    login.findViewById( R.id.sign_in_button ).setOnClickListener( new View.OnClickListener() {
-                        @Override
-                        public void onClick( View view )
-                        {
-                            login.findViewById( R.id.login_progress ).setVisibility( View.VISIBLE );
-
-                            final String username = usernameEditText.getText().toString();
-                            final String password = passwordEditText.getText().toString();
-
-                            RequestQueue queue = Volley.newRequestQueue( getActivity() );
-                            String url = RESTService.REST_URL + "/api/authenticate";
-                            JSONObject jsonBody = new JSONObject();
-                            try
-                            {
-
-                                jsonBody.put( "username", username );
-                                jsonBody.put( "password", password );
-                            }
-                            catch( JSONException e )
-                            {
-                                e.printStackTrace();
-                                Log.e( "MMSNAP:", "Error during preferences login: " + e.getMessage() );
-                            }
-
-                            JsonObjectRequest request = new JsonObjectRequest(
-                                Request.Method.POST, url, jsonBody,
-                                new Response.Listener<JSONObject>()
+            Preference dialogResetPasswordPreference = getPreferenceScreen().findPreference( "key_reset_password" );
+            dialogResetPasswordPreference.setOnPreferenceClickListener(
+                new Preference.OnPreferenceClickListener()
+                {
+                    @Override
+                    public boolean onPreferenceClick( Preference preference )
+                    {
+                        final AlertDialog resetPasswordDialog = new AlertDialog.Builder( getActivity() )
+                            .setTitle( getActivity().getString( R.string.dlg_reset_password_title) )
+                            .setCancelable( true )
+                            .setMessage( "You will receive a key in the email account that you have registered with MMSNAP. Use this key to reset your password." )
+                            .setNegativeButton( android.R.string.cancel, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick( DialogInterface dialogInterface, int i )
                                 {
-                                   @Override
-                                    public void onResponse( JSONObject response )
+                                    dialogInterface.cancel();
+                                }
+                            } )
+                            .setPositiveButton( android.R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick( final DialogInterface dialogInterface, int i )
+                                {
+                                    final Context context = getActivity();
+                                    // get email
+                                    final String email = PreferenceManager.getDefaultSharedPreferences( context ).getString( getActivity().getString( R.string.key_email ), "" );
+                                    if( email.isEmpty() )
                                     {
-                                        if( null != response )
-                                        {
-                                            // success!
-
-                                            // refresh jwt and get the remote user id in case the user login changed
-                                            try
-                                            {
-                                                App.setJwtToken( response.getString( "id_token" ) );
-                                                LoginActivity.getRemoteUserId( getActivity() );
-                                            }
-                                            catch ( JSONException e )
-                                            {
-                                                e.printStackTrace();
-                                                Log.e( "MMSNAP:", "Error receiving login answer: " + e.getMessage() );
-                                            }
-
-                                            SharedPreferences.Editor editor = settings.edit();
-                                            editor.putString( getString( R.string.key_username ), username );
-                                            editor.putString( getString( R.string.key_password ), password );
-                                            editor.commit();
-
-                                            findPreference( getString( R.string.key_username ) ).setSummary( username );
-
-                                            login.dismiss();
-
-                                            Toast.makeText( getActivity(), "Login success!", Toast.LENGTH_SHORT ).show();
-                                        }
+                                        dialogInterface.dismiss();
+                                        Toast.makeText( context, "No email found", Toast.LENGTH_SHORT ).show();
+                                        return;
                                     }
-                                },
-                                new Response.ErrorListener()
-                                {
-                                   @Override
-                                   public void onErrorResponse( VolleyError error)
-                                   {
-                                       login.findViewById( R.id.login_progress ).setVisibility( View.INVISIBLE );
-                                       String message = "Login failed. Error: " + error.getMessage();
-                                       Toast.makeText( getActivity(), message, Toast.LENGTH_SHORT ).show();
-                                   }
-                            });
-                            queue.add(request);
-                        }
-                    } );
-                    login.show();
-                    return true;
-                }
-            });
 
+                                    // start password reset
+                                    RequestQueue queue =  Volley.newRequestQueue( context );
+                                    StringRequest request = new StringRequest(
+                                        Request.Method.POST,
+                                        RESTService.REST_URL + "/api/account/reset-password/init",
+                                        new Response.Listener<String>()
+                                        {
+                                            @Override
+                                            public void onResponse( String response )
+                                            {
+                                                try
+                                                {
+                                                    ApplicationStatus as = ApplicationStatus.getInstance( context );
+                                                    as.resetPassword();
+                                                    dialogInterface.dismiss();
+                                                    context.startActivity( new Intent( context, ResetPasswordActivity.class ) );
+                                                }
+                                                catch( Exception e )
+                                                {
+                                                    e.printStackTrace();
+                                                    String message = "Password reset failed for email " + email;
+                                                    Log.e( "MMSNAP:", message + ". Error: " + e.getMessage() );
+                                                    Toast.makeText( context, message, Toast.LENGTH_SHORT ).show();
+                                                }
+                                            }
+                                        },
+                                        new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse( VolleyError error )
+                                            {
+                                                String message = "Password reset failed for email " + email;
+                                                Toast.makeText( context, message, Toast.LENGTH_SHORT ).show();
+                                            }
+                                        }
+                                    )
+                                    {
+                                        // override this because String request sends header "Content-Type","application/x-www-form-urlencoded" which distorts the body content
+                                        // while the api requires "Content-Type", "application/json"
+                                        @Override    public Map<String, String> getHeaders() throws AuthFailureError
+                                        {
+                                            Map<String, String> headers = new HashMap<String, String>();
+                                            headers.put("Content-Type", "application/json");
+                                            return headers;
+                                        }
+
+                                        //override this because api requires that the body is only the email
+                                        @Override
+                                        public byte[] getBody() throws AuthFailureError
+                                        {
+                                            String httpPostBody = email;
+                                            return httpPostBody.getBytes();
+                                        }
+                                    };
+                                    queue.add( request );
+                                }
+                            } )
+                            .create();
+                        resetPasswordDialog.show();
+                        return false;
+                    }
+}
+            );
 
 
 
@@ -245,9 +351,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity
                     final EditText vewrifyNewPasswordEditText = chngPswd.findViewById( R.id.verify_new_password );
 
                     //debugging
-                    oldPasswordEditText.setText( "user" );
-                    newPasswordEditText.setText( "user" );
-                    vewrifyNewPasswordEditText.setText( "user" );
+//                    oldPasswordEditText.setText( "user" );
+//                    newPasswordEditText.setText( "user" );
+//                    vewrifyNewPasswordEditText.setText( "user" );
 
                     final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences( getActivity() );
 
@@ -319,6 +425,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity
                                 },
                                 new JWTRefreshErrorListener(
                                         getActivity(),
+                                        oldPassword,
                                         new JWTRefreshErrorListener.Listener()
                                         {
                                             @Override
@@ -332,13 +439,22 @@ public class SettingsActivity extends AppCompatPreferenceActivity
                                     )
                                 )
                                 {
-                                    @Override
-                                    protected Map<String, String> getParams()
+                                    // override this because String request sends header "Content-Type","application/x-www-form-urlencoded" which distorts the body content
+                                    // while the api requires "Content-Type", "application/json"
+                                    @Override    public Map<String, String> getHeaders() throws AuthFailureError
                                     {
-                                        Map<String, String> params = new HashMap<String, String>();
-                                        params.put("", newPassword );
+                                        // be carefull to get headers from super because it contains the jwt bearer header
+                                        Map<String, String> headers = super.getHeaders();
+                                        headers.put("Content-Type", "application/json");
+                                        return headers;
+                                    }
 
-                                        return params;
+                                    // override this because api requires that the body is only the new password
+                                    @Override
+                                    public byte[] getBody() throws AuthFailureError
+                                    {
+                                        String httpPostBody = newPassword;
+                                        return httpPostBody.getBytes();
                                     }
                                 };
                             queue.add(request);

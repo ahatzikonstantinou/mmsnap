@@ -52,12 +52,24 @@ public class ApplicationStatus
 
 
     private Context context;
-    private Date startDate;
+    private Date    startDate;
+    public  boolean passwordIsBeingReset;
+
     public Date getStartDate() { return startDate; }
     public void setStartDate( Date date ) { startDate = date; }
     public CounterfactualThought counterfactualThought;
 
+    public void resetPassword() throws IOException, JSONException, ConversionException
+    {
+        passwordIsBeingReset = true;
+        save();
+    }
 
+    public void passwordHasBeenReset() throws IOException, JSONException, ConversionException
+    {
+        passwordIsBeingReset = false;
+        save();
+    }
 
 
     //
@@ -182,7 +194,6 @@ public class ApplicationStatus
     }
 
     public int eqvas;
-    public void setEQVAS( int _eqvas ) { eqvas = _eqvas; serverData.add( eqvas ); }
     public SelfEfficacy selfEfficacy;
     public ArrayList<Behavior> problematicBehaviors = new ArrayList<>( 4 );
     public IntentionsAndPlans intentionsAndPlans;
@@ -195,7 +206,7 @@ public class ApplicationStatus
     //
     // server data
     //
-    public enum Phase { INITIAL, FINAL };
+    public enum Phase { INITIAL, FINAL, IN_PROGRESS };
 
     public interface ToREST
     {
@@ -242,7 +253,7 @@ public class ApplicationStatus
         public JSONObject toREST() throws JSONException, ConversionException
         {
             JSONObject json = new JSONObject();
-            SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault() );
+            SimpleDateFormat sdf = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss.S'Z'", Locale.getDefault() );
             String formattedDate = sdf.format( submissionDate );
             json.put( "date", formattedDate );
             json.put( "phase", null == phase ? "" : phase.name() );
@@ -345,9 +356,9 @@ public class ApplicationStatus
         {
             JSONObject json = super.toREST();
             json.put( "alcohol", alcohol );
-            json.put( "diet", alcohol );
-            json.put( "physicalActivity", alcohol );
-            json.put( "smoking", alcohol );
+            json.put( "diet", diet );
+            json.put( "physicalActivity", physicalActivity );
+            json.put( "smoking", smoking );
             return json;
         }
     }
@@ -587,7 +598,7 @@ public class ApplicationStatus
         ServerDailyEvaluation(){}
         ServerDailyEvaluation( DailyEvaluation dailyEvaluation, Date submissionDate, Date acknowledgementDate )
         {
-            super( submissionDate, acknowledgementDate, null );
+            super( submissionDate, acknowledgementDate, Phase.IN_PROGRESS );
             this.dailyEvaluation = dailyEvaluation;
         }
 
@@ -636,7 +647,7 @@ public class ApplicationStatus
         ServerWeeklyEvaluation(){}
         ServerWeeklyEvaluation( WeeklyEvaluation weeklyEvaluation, Date submissionDate, Date acknowledgementDate )
         {
-            super( submissionDate, acknowledgementDate, null );
+            super( submissionDate, acknowledgementDate, Phase.IN_PROGRESS );
             this.weeklyEvaluation = weeklyEvaluation;
         }
 
@@ -697,87 +708,94 @@ public class ApplicationStatus
             context.startService( RESTService.createIntentStart( context ) );
         }
 
-        public void add( final int eqvas )
+        public void add( final int eqvas ) throws IOException, JSONException, ConversionException
         {
             Phase phase = getPhase();
             if( Phase.INITIAL == phase )
             {
-                this.eqvasInitial = new ServerEQVAS( eqvas, new Date(), null, Phase.INITIAL );
+                this.eqvasInitial = new ServerEQVAS( eqvas, Calendar.getInstance().getTime(), null, Phase.INITIAL );
             }
             else if( Phase.FINAL == phase )
             {
-                this.eqvasFinal = new ServerEQVAS( eqvas, new Date(), null, Phase.FINAL );
+                this.eqvasFinal = new ServerEQVAS( eqvas, Calendar.getInstance().getTime(), null, Phase.FINAL );
             }
             else
             {
-                this.eqvas.add( new ServerEQVAS( eqvas, new Date(), null, null ) );
+                this.eqvas.add( new ServerEQVAS( eqvas, Calendar.getInstance().getTime(), null, Phase.IN_PROGRESS ) );
             }
+            save();
             transmitData();
         }
-        public void add( final ArrayList<Behavior> problematicBehaviors )
+        public void add( final ArrayList<Behavior> problematicBehaviors ) throws IOException, JSONException, ConversionException
         {
             Phase phase = getPhase();
             if( Phase.INITIAL == phase )
             {
-                this.problematicBehaviorsInitial = new ServerProblematicBehaviors( problematicBehaviors, new Date(), null, Phase.INITIAL );
+                this.problematicBehaviorsInitial = new ServerProblematicBehaviors( problematicBehaviors, Calendar.getInstance().getTime(), null, Phase.INITIAL );
             }
             else if( Phase.FINAL == phase )
             {
-                this.problematicBehaviorsFinal = new ServerProblematicBehaviors( problematicBehaviors, new Date(), null, Phase.FINAL );
+                this.problematicBehaviorsFinal = new ServerProblematicBehaviors( problematicBehaviors, Calendar.getInstance().getTime(), null, Phase.FINAL );
             }
             else
             {
-                this.problematicBehaviors.add( new ServerProblematicBehaviors( problematicBehaviors, new Date(), null, null ) );
+                this.problematicBehaviors.add( new ServerProblematicBehaviors( problematicBehaviors, Calendar.getInstance().getTime(), null, Phase.IN_PROGRESS ) );
             }
+            save();
             transmitData();
         }
-        public void add( final SelfRatedHealth selfRatedHealth )
+        public void add( final SelfRatedHealth selfRatedHealth ) throws IOException, JSONException, ConversionException
         {
             Phase phase = getPhase();
             if( Phase.INITIAL == phase )
             {
-                selfRatedHealthInitial = new ServerSelfRatedHealth( selfRatedHealth, new Date(), null, Phase.INITIAL );
+                selfRatedHealthInitial = new ServerSelfRatedHealth( selfRatedHealth, Calendar.getInstance().getTime(), null, Phase.INITIAL );
             }
             else if( Phase.FINAL == phase )
             {
-                selfRatedHealthFinal = new ServerSelfRatedHealth( selfRatedHealth, new Date(), null, Phase.FINAL );
+                selfRatedHealthFinal = new ServerSelfRatedHealth( selfRatedHealth, Calendar.getInstance().getTime(), null, Phase.FINAL );
             }
+            save();
             transmitData();
         }
-        public void add( final IntentionsAndPlans intentionsAndPlans )
+        public void add( final IntentionsAndPlans intentionsAndPlans ) throws IOException, JSONException, ConversionException
         {
             Phase phase = getPhase();
             if( Phase.INITIAL == phase )
             {
-                intentionsAndPlansInitial = new ServerIntentionsAndPlans( intentionsAndPlans, new Date(), null, Phase.INITIAL );
+                intentionsAndPlansInitial = new ServerIntentionsAndPlans( intentionsAndPlans, Calendar.getInstance().getTime(), null, Phase.INITIAL );
             }
             else if( Phase.FINAL == phase )
             {
-                intentionsAndPlansFinal = new ServerIntentionsAndPlans( intentionsAndPlans, new Date(), null, Phase.FINAL );
+                intentionsAndPlansFinal = new ServerIntentionsAndPlans( intentionsAndPlans, Calendar.getInstance().getTime(), null, Phase.FINAL );
             }
+            save();
             transmitData();
         }
-        public void add( final SelfEfficacy selfEfficacy )
+        public void add( final SelfEfficacy selfEfficacy ) throws IOException, JSONException, ConversionException
         {
             Phase phase = getPhase();
             if( Phase.INITIAL == phase )
             {
-                selfEfficacyInitial = new ServerSelfEfficacy( selfEfficacy, new Date(), null, Phase.INITIAL );
+                selfEfficacyInitial = new ServerSelfEfficacy( selfEfficacy, Calendar.getInstance().getTime(), null, Phase.INITIAL );
             }
             else if( Phase.FINAL == phase )
             {
-                selfEfficacyFinal = new ServerSelfEfficacy( selfEfficacy, new Date(), null, Phase.FINAL );
+                selfEfficacyFinal = new ServerSelfEfficacy( selfEfficacy, Calendar.getInstance().getTime(), null, Phase.FINAL );
             }
+            save();
             transmitData();
         }
-        public void add( final DailyEvaluation dailyEvaluation )
+        public void add( final DailyEvaluation dailyEvaluation ) throws IOException, JSONException, ConversionException
         {
-            dailyEvaluations.add( new ServerDailyEvaluation( dailyEvaluation, new Date(), null ) );
+            dailyEvaluations.add( new ServerDailyEvaluation( dailyEvaluation, Calendar.getInstance().getTime(), null ) );
+            save();
             transmitData();
         }
-        public void add( final WeeklyEvaluation weeklyEvaluation )
+        public void add( final WeeklyEvaluation weeklyEvaluation ) throws IOException, JSONException, ConversionException
         {
-            weeklyEvaluations.add( new ServerWeeklyEvaluation( weeklyEvaluation, new Date(), null ) );
+            weeklyEvaluations.add( new ServerWeeklyEvaluation( weeklyEvaluation, Calendar.getInstance().getTime(), null ) );
+            save();
             transmitData();
         }
 
@@ -790,6 +808,13 @@ public class ApplicationStatus
             else if( state.name().equals( NoFinalAssessments.NAME ) )
             {
                 return Phase.FINAL;
+            }
+            else if( state.name().equals( InOrder.NAME ) ||
+                     state.name().equals( WeeklyEvaluationPending.NAME ) ||
+                     state.name().equals( DailyEvaluationPending.NAME )
+            )
+            {
+                return Phase.IN_PROGRESS;
             }
             return null;
         }
@@ -988,6 +1013,7 @@ public class ApplicationStatus
         weeklyEvaluations = new ArrayList<>();
         counterfactualThought = new CounterfactualThought();
         serverData = new ServerData();
+        passwordIsBeingReset = false;
     }
 
     private ApplicationStatus( Context context, String stateNAME ) throws Exception
@@ -1003,6 +1029,7 @@ public class ApplicationStatus
         weeklyEvaluations = new ArrayList<>();
         counterfactualThought = new CounterfactualThought();
         serverData = new ServerData();
+        passwordIsBeingReset = false;
     }
 
     // ApplicationStatus is a singleton
@@ -1264,6 +1291,8 @@ public class ApplicationStatus
             as.counterfactualThought.active = jsonCounterfactual.getBoolean( "active" );
 
             as.serverData.fromJson( jsonState.getJSONObject( "server_data" ) );
+
+            as.passwordIsBeingReset = jsonState.getBoolean( "passwordIsBeingReset" );
         }
         finally
         {
@@ -1366,6 +1395,8 @@ public class ApplicationStatus
         o.put( "counterfactual", jsonCounterfactual );
 
         o.put( "server_data", serverData.toJson() );
+
+        o.put( "passwordIsBeingReset", passwordIsBeingReset );
 
         try
         {

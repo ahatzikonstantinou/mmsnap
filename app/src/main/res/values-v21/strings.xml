@@ -108,4 +108,10 @@
     <string name="prompt_old_password">Old password</string>
     <string name="prompt_new_password">New password</string>
     <string name="error_verify_password">Verification does not match new password</string>
+    <string name="title_reset_password">Reset password</string>
+    <string name="dlg_reset_password_title">Reset Password</string>
+    <string name="key_email">key_email</string>
+    <string name="prompt_reset_password_key">Key</string>
+    <string name="action_reset_password">Reset password</string>
+    <string name="title_email">Email</string>
 </resources>

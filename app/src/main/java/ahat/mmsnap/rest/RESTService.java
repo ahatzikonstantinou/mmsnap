@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import ahat.mmsnap.ApplicationStatus;
@@ -27,12 +28,15 @@ import ahat.mmsnap.R;
 
 public class RESTService extends IntentService
 {
-    public static final String REST_URL = "http://192.168.1.31:8081";
+    public static final String REST_URL = "http://192.168.1.31:8080";
     private static final String ACTION_START = "ACTION_START";
+    private static Calendar lastTrasmissiondate;
+    private static final int minRetransmissionSeconds = 180;
 
     public RESTService()
     {
         super( RESTService.class.getSimpleName() );
+        lastTrasmissiondate = null;
     }
 
     public static Intent createIntentStart( Context context )
@@ -78,6 +82,21 @@ public class RESTService extends IntentService
 
     public void processREST()
     {
+        // transmit at least after minRetransmissionSeconds from last transmission to allow for answer
+        // and avoid retransmitting the same data multiple times
+        if( null != lastTrasmissiondate )
+        {
+            lastTrasmissiondate.add( Calendar.SECOND, minRetransmissionSeconds );
+            if( Calendar.getInstance().before( lastTrasmissiondate ) )
+            {
+                //no transmission yet
+                //
+                return;
+            }
+        }
+
+        lastTrasmissiondate = Calendar.getInstance();
+
         try
         {
             ApplicationStatus as = ApplicationStatus.getInstance( this );
@@ -89,7 +108,7 @@ public class RESTService extends IntentService
 
             SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences( this );
             JSONObject jsonUser = new JSONObject();
-            jsonUser.put( "id", Integer.parseInt( settings.getString( getString( R.string.key_remoteUserId ), "" ) ) );
+            jsonUser.put( "id", settings.getInt( getString( R.string.key_remoteUserId ), -1 ) );
 
             transmit( as.serverData.eqvasInitial, jsonUser, "/api/e-q-vas" );
             transmit( as.serverData.eqvasFinal, jsonUser, "/api/e-q-vas" );
@@ -153,7 +172,6 @@ public class RESTService extends IntentService
                     {
                         if( null != response )
                         {
-                            // TODO: get new token if current is expired and retransmit
                             try
                             {
                                 toREST.setAcknowledgementDate( new Date() );
@@ -163,7 +181,7 @@ public class RESTService extends IntentService
                             catch( Exception e )
                             {
                                 e.printStackTrace();
-                                Log.e( "MMSNAP:", "Error transmitting EQVAS: " + e.getMessage() );
+                                Log.e( "MMSNAP:", "Error transmitting to server: " + e.getMessage() );
                             }
                         }
                     }
@@ -175,7 +193,7 @@ public class RESTService extends IntentService
                         @Override
                         public void onError( VolleyError error )
                         {
-                            Log.e( "MMSNAP:", "Transmission of EQVAS failed. Error: " + error.getMessage() );
+                            Log.e( "MMSNAP:", "Transmission to server failed. Error: " + error.getMessage() );
                         }
                     } )
 //                new Response.ErrorListener()
@@ -192,7 +210,7 @@ public class RESTService extends IntentService
         catch( Exception e )
         {
             e.printStackTrace();
-            Log.e( "MMSNAP:", "Error transmitting EQVAS: " + e.getMessage() );
+            Log.e( "MMSNAP:", "Error ransmitting to server: " + e.getMessage() );
         }
     }
 }

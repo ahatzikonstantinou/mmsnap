@@ -29,6 +29,7 @@ public class JWTRefreshErrorListener implements Response.ErrorListener
     public void setParentRequest( Request request ){ parentRequest = request; }
     private Listener listener;
     private boolean jwtRefreshAlreadyAttempted;
+    private String currentPassword;
 
     public JWTRefreshErrorListener( Context context, Listener listener )
     {
@@ -36,6 +37,16 @@ public class JWTRefreshErrorListener implements Response.ErrorListener
         this.parentRequest = null;
         this.listener = listener;
         jwtRefreshAlreadyAttempted = false;
+        currentPassword = null;
+    }
+
+    public JWTRefreshErrorListener( Context context, String currentPassword, Listener listener )
+    {
+        this.context = context;
+        this.parentRequest = null;
+        this.listener = listener;
+        jwtRefreshAlreadyAttempted = false;
+        this.currentPassword = currentPassword;
     }
 
     /**
@@ -54,10 +65,15 @@ public class JWTRefreshErrorListener implements Response.ErrorListener
             final RequestQueue queue = Volley.newRequestQueue( context );
             String url = RESTService.REST_URL + "/api/authenticate";
             JSONObject jsonBody = new JSONObject();
+            if( null == currentPassword )
+            {
+                currentPassword = settings.getString( context.getString( R.string.key_password ), "" );
+            }
             try
             {
                 jsonBody.put( "username", settings.getString( context.getString( R.string.key_username ), "" ) );
-                jsonBody.put( "password", settings.getString( context.getString( R.string.key_password ), "" ) );
+                jsonBody.put( "password", currentPassword );
+                jsonBody.put( "rememberMe", true );
             }
             catch( JSONException e )
             {

@@ -102,9 +102,8 @@ public class SelfRatedHealthActivity extends MassDisableActivity // AppCompatAct
                     as.selfRatedHealth.irritable = getValueFrom( R.id.irritable_rdgrp );
                     as.selfRatedHealth.sad_struggle = getValueFrom( R.id.sad_struggle_rdgrp );
 
-                    as.addAssessment( ApplicationStatus.Assessment.SELF_RATED_HEALTH );
-
                     as.serverData.add( as.selfRatedHealth );
+                    as.addAssessment( ApplicationStatus.Assessment.SELF_RATED_HEALTH );
 
                     startActivity( getParentActivityIntent() );
                 }

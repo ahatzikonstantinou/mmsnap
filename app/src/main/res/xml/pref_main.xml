@@ -10,13 +10,27 @@
             <!--android:summary="@string/password"-->
             <!--android:title="@string/title_password" />-->
         <Preference
-            android:key="key_username"
+            android:key="@string/key_username"
+            android:selectable="false"
             android:summary="username"
-            android:title="@string/title_user"
-            />
+            android:title="@string/title_user" />
+        <Preference
+            android:key="@string/key_email"
+            android:selectable="false"
+            android:summary="@string/email"
+            android:title="@string/title_email" />
+        <!--<Preference-->
+            <!--android:key="key_username"-->
+            <!--android:summary="username"-->
+            <!--android:title="@string/title_user"-->
+            <!--/>-->
         <Preference
             android:key="key_password"
             android:title="@string/title_change_password"
+            />
+        <Preference
+            android:key="key_reset_password"
+            android:title="@string/title_reset_password"
             />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/pref_header_about">
