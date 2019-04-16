@@ -21,14 +21,6 @@ public class LoginActivity extends ResetPasswordActivity
     }
 
     @Override
-    protected void setActionBar()
-    {
-        Toolbar toolbar = findViewById( R.id.toolbar );
-        setSupportActionBar( toolbar );
-    }
-
-
-    @Override
     protected void onBeforeResetPasswordFinish( ApplicationStatus applicationStatus ) throws IOException, JSONException, ConversionException
     {
         applicationStatus.userLoggedIn();

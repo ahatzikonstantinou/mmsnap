@@ -29,20 +29,13 @@ import ahat.mmsnap.rest.RESTService;
 
 public class ResetPasswordActivity extends AppCompatActivity
 {
-
-    protected void setActionBar()
-    {
-        Toolbar toolbar = findViewById( R.id.toolbar );
-        setSupportActionBar( toolbar );
-        getSupportActionBar().setDisplayHomeAsUpEnabled( true );
-    }
-
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_reset_password );
-        setActionBar();
+        Toolbar toolbar = findViewById( R.id.toolbar );
+        setSupportActionBar( toolbar );
 
         findViewById( R.id.reset_password_button ).setOnClickListener(
             new View.OnClickListener() {
