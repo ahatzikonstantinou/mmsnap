@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
@@ -423,26 +424,31 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
         LinearLayout timeLayout = new LinearLayout( this );
         timeLayout.setLayoutParams( new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT ) );
         timeLayout.setOrientation( LinearLayout.HORIZONTAL );
-        timeLayout.setBackground( getDrawable( R.drawable.rounded_border_trnsp_bkg ) );
+        timeLayout.setBackground( getDrawable( R.drawable.rounded_border_lightgrey_bkg ) );
         timeLayout.setGravity( Gravity.CENTER_VERTICAL );
         setMargins( timeLayout, 4, 4, 4, 4 );
-        setPadding( timeLayout, 4, 4, 4, 4 );
+        setPadding( timeLayout, 8, 4, 4, 4 );
 //        timeLayout.setBackgroundColor( Color.parseColor( "#888888" )  );
-        timeLayout.getBackground().setColorFilter( Color.parseColor("#888888" ), PorterDuff.Mode.SRC_ATOP);
+//        timeLayout.getBackground().setColorFilter( Color.parseColor("#888888" ), PorterDuff.Mode.SRC_ATOP);
 
         TextView time = new TextView( this );
         time.setLayoutParams( new LinearLayout.LayoutParams( LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT ) );
         time.setText( ( hour < 10 ? "0": "" ) + String.valueOf( hour ) + ":" + ( minute < 10 ? "0" : "" ) + String.valueOf( minute ) );
+        time.setTextColor( getResources().getColor( android.R.color.secondary_text_light ) );
         timeLayout.addView( time );
 
         if( remindersAreEditable() )
         {
             ImageButton del = new ImageButton( this );
-            setSize( del, 15, 15 );
-            setMargins( del, 4, -10, 0, -10 );  //negative margins and excessive padding are used to increase the clickable area
-            setPadding( del, 24, 14, 24, 14 );
+            setSize( del, 16, 16 );
+            setMargins( del, 6, 2, 0, 2 );  //negative margins and excessive padding are used to increase the clickable area
+            setPadding( del, 1, 1, 1, 1 );
+//            setPadding( del, 24, 14, 24, 14 );
+            Drawable d = getResources().getDrawable( R.drawable.rounded_border_red_bkg, null );
+            del.setBackground( d );
             del.setImageResource( android.R.drawable.ic_menu_close_clear_cancel );
-            del.setColorFilter( getResources().getColor( android.R.color.holo_red_dark ) );
+            del.setColorFilter( getResources().getColor( android.R.color.white ) );
+            del.setScaleType( ImageView.ScaleType.CENTER_INSIDE );
             del.setTag( new Reminder( hour, minute ) );
             del.setOnClickListener( new View.OnClickListener()
             {
