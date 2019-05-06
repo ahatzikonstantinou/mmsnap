@@ -16,15 +16,37 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@android:color/black">
+        android:layout_margin="5dp">
 
-        <TextView
-            android:id="@+id/message"
-            android:layout_width="wrap_content"
+        <!--<TextView-->
+            <!--android:id="@+id/message"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textColor="@android:color/primary_text_dark"-->
+            <!--android:text="Please complete all pending evaluations"-->
+            <!--android:layout_margin="10dp"/>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/primary_text_dark"
-            android:text="Please complete all pending evaluations"
-            android:layout_margin="10dp"/>
+            android:background="@drawable/rounded_lightgrey_border_white_bkg"
+            android:gravity="center"
+            android:padding="10dp">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_dialog_alert"
+                android:tint="@color/yellow_warning"/>
+            <TextView
+                android:id="@+id/message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/secondary_text_light"
+                android:text="Please complete all pending evaluations"
+                android:textSize="13sp"
+                android:layout_marginStart="4dp"
+                />
+        </LinearLayout>
 
     </FrameLayout>
 

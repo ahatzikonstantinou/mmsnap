@@ -311,8 +311,8 @@ public abstract class IfThenListActivity extends AppCompatActivity
         else
         {
 //            startActivity( getParentActivityIntent() );
-            startActivity( new Intent( this, IfThenActivity.class ) );
-
+//            startActivity( new Intent( this, MainActivity.class ) );
+            finish();
         }
     }
 

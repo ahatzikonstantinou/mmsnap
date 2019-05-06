@@ -226,7 +226,7 @@ public class MainActivity extends StateActivity //AppCompatActivity
                 {
                     days += plan.days.size();
                 }
-                findViewById( R.id.main_message ).setVisibility( days >= ApplicationStatus.MIN_ACTIVE_PLANS_PER_WEEK ? View.GONE : View.VISIBLE );
+                findViewById( R.id.main_message_layout ).setVisibility( days >= ApplicationStatus.MIN_ACTIVE_PLANS_PER_WEEK ? View.GONE : View.VISIBLE );
 
                 // setup today's plans list
                 ArrayList<IfThenPlan> todaysPlans = new ArrayList<>();
@@ -296,7 +296,7 @@ public class MainActivity extends StateActivity //AppCompatActivity
                 findViewById( R.id.if_then_layout ).setVisibility( View.INVISIBLE );  // ifThenButton.setVisibility( View.INVISIBLE );
 //                achievementsButton.setVisibility( View.INVISIBLE );
                 findViewById( R.id.bottom_navigation ).setVisibility( View.GONE );
-                findViewById( R.id.main_message ).setVisibility( View.GONE );
+                findViewById( R.id.main_message_layout ).setVisibility( View.GONE );
             }
 
 

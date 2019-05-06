@@ -7,7 +7,7 @@
     android:padding="3dp"
     android:layout_margin="12dp"
     android:orientation="horizontal"
-    android:background="@drawable/rounded_border_white_bkg"
+    android:background="@drawable/rounded_lightgrey_border_white_bkg"
     android:descendantFocusability="blocksDescendants"
     >
 

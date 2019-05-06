@@ -1445,10 +1445,16 @@ public class ApplicationStatus
                     return new NoInitialAssessments( applicationStatus );
                 case InOrder.NAME:
                     return new InOrder( applicationStatus );
+                case WeeklyEvaluationPending.NAME:
+                    return new WeeklyEvaluationPending( applicationStatus );
+                case DailyEvaluationPending.NAME:
+                    return new DailyEvaluationPending( applicationStatus );
                 case NoFinalAssessments.NAME:
                     return new NoFinalAssessments( applicationStatus );
                 case Finished.NAME:
                     return new Finished( applicationStatus );
+                case Complete.NAME:
+                    return new Complete( applicationStatus );
                 default:
                     throw new Exception( "Unknown Application state " + stateNAME );
             }

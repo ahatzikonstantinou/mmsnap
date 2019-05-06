@@ -66,7 +66,8 @@ public class ActionPlansDetailActivity extends IfThenDetailActivity //AppCompatA
 
     public void onBackPressed()
     {
-        startActivity( new Intent( this, ActionPlansActivity.class ) );
+//        startActivity( new Intent( this, ActionPlansActivity.class ) );
+        finish();
     }
 
     protected IfThenPlan getIfThenItem()

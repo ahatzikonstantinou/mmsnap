@@ -75,7 +75,8 @@ public class HealthRiskActivity extends AppCompatActivity
                                                new DialogInterface.OnClickListener() {
                                                   public void onClick( DialogInterface dialog, int which) {
                                                       dialog.dismiss();
-                                                      startActivity( getParentActivityIntent() );
+//                                                      startActivity( getParentActivityIntent() );
+                                                      finish();
                                                   }
                                               });
                         alertDialog.show();
@@ -109,7 +110,8 @@ public class HealthRiskActivity extends AppCompatActivity
     @Override
     public void onBackPressed()
     {
-        startActivity( new Intent( this, MainActivity.class ) );
+//        startActivity( new Intent( this, MainActivity.class ) );
+        finish();
     }
 
 }

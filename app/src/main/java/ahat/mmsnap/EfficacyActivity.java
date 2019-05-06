@@ -40,7 +40,8 @@ public class EfficacyActivity extends MassDisableActivity // AppCompatActivity
                     as.serverData.add( as.selfEfficacy );
                     as.addAssessment( ApplicationStatus.Assessment.SELF_EFFICACY );
 
-                    startActivity( getParentActivityIntent() );
+//                    startActivity( getParentActivityIntent() );
+                    finish();
                 }
                 catch( Exception e )
                 {
@@ -75,7 +76,8 @@ public class EfficacyActivity extends MassDisableActivity // AppCompatActivity
     @Override
     public void onBackPressed()
     {
-        startActivity( new Intent( this, MainActivity.class ) );
+//        startActivity( new Intent( this, MainActivity.class ) );
+        finish();
     }
 
 }

@@ -88,7 +88,7 @@ public class DailyEvaluationsListActivity extends AppCompatActivity
                 filterPendingOnly( true );
             }
 
-            findViewById( R.id.message ).setVisibility( pendingExist( items ) ? View.VISIBLE : View.GONE );
+            findViewById( R.id.message_layout ).setVisibility( pendingExist( items ) ? View.VISIBLE : View.GONE );
         }
         catch( Exception e )
         {
@@ -126,7 +126,8 @@ public class DailyEvaluationsListActivity extends AppCompatActivity
     @Override
     public void onBackPressed()
     {
-        startActivity( new Intent( this, IfThenActivity.class ) );
+        finish();
+        startActivity( new Intent( this, MainActivity.class ) );
     }
 
     @Override

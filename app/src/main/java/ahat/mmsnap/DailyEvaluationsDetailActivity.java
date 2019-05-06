@@ -127,6 +127,10 @@ public class DailyEvaluationsDetailActivity extends IfThenDetailActivity
             {
                 hideBehaviorUI( behavior );
             }
+            else
+            {
+                showBehaviorUI( behavior );
+            }
         }
 
 
@@ -180,6 +184,7 @@ public class DailyEvaluationsDetailActivity extends IfThenDetailActivity
             ApplicationStatus as = ApplicationStatus.getInstance( this );
             as.scoreDailyEvaluation( evaluation.id, success );
 
+            finish();
             startActivity( getParentActivityIntent() );
         }
         catch( Exception e )
@@ -193,6 +198,7 @@ public class DailyEvaluationsDetailActivity extends IfThenDetailActivity
     @Override
     public void onBackPressed()
     {
+        finish();
         startActivity( getParentActivityIntent() );
     }
 

@@ -51,8 +51,8 @@ public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatA
         getSupportActionBar().setSubtitle( R.string.title_activity_coping_plans );
 
         // fix color and title for the layout
-        LinearLayout borderLayout = findViewById( R.id.action_plan_border_layout );
-        borderLayout.getBackground().setColorFilter( getResources().getColor( R.color.coping_plan ), PorterDuff.Mode.SRC_ATOP );
+//        LinearLayout borderLayout = findViewById( R.id.action_plan_border_layout );
+//        borderLayout.getBackground().setColorFilter( getResources().getColor( R.color.coping_plan ), PorterDuff.Mode.SRC_ATOP );
         TextView title = findViewById( R.id.action_plan_title_textView );
         title.getBackground().setColorFilter( getResources().getColor( R.color.coping_plan ), PorterDuff.Mode.SRC_ATOP );
         title.setText( "COPING PLAN" );
@@ -63,7 +63,8 @@ public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatA
 
     public void onBackPressed()
     {
-        startActivity( new Intent( this, CopingPlansActivity.class ) );
+//        startActivity( new Intent( this, CopingPlansActivity.class ) );
+        finish();
     }
 
     @Override

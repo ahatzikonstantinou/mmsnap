@@ -34,7 +34,7 @@
             android:layout_marginRight="@dimen/subsection_marginSide"
             android:layout_marginTop="@dimen/subsection_marginTop"
             android:orientation="vertical"
-            android:padding="3dp">
+            android:padding="8dp">
 
             <TextView
                 android:layout_width="@dimen/subsection_title_width"
@@ -145,7 +145,7 @@
             android:layout_marginRight="@dimen/subsection_marginSide"
             android:layout_marginTop="@dimen/subsection_marginTop"
             android:orientation="vertical"
-            android:padding="3dp">
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/action_plan_title_textView"
@@ -310,7 +310,7 @@
             android:layout_marginRight="@dimen/subsection_marginSide"
             android:layout_marginTop="@dimen/subsection_marginTop"
             android:orientation="vertical"
-            android:padding="3dp">
+            android:padding="8dp">
 
             <TextView
                 android:layout_width="@dimen/subsection_title_width"
@@ -744,7 +744,7 @@
                 android:layout_marginRight="@dimen/subsection_marginSide"
                 android:layout_marginTop="@dimen/subsection_marginTop"
                 android:orientation="vertical"
-                android:padding="3dp">
+                android:padding="8dp">
 
                 <TextView
                     android:layout_width="@dimen/subsection_title_width"

@@ -105,7 +105,8 @@ public class SelfRatedHealthActivity extends MassDisableActivity // AppCompatAct
                     as.serverData.add( as.selfRatedHealth );
                     as.addAssessment( ApplicationStatus.Assessment.SELF_RATED_HEALTH );
 
-                    startActivity( getParentActivityIntent() );
+//                    startActivity( getParentActivityIntent() );
+                    finish();
                 }
                 catch( Exception e )
                 {
@@ -191,7 +192,8 @@ public class SelfRatedHealthActivity extends MassDisableActivity // AppCompatAct
     @Override
     public void onBackPressed()
     {
-        startActivity( new Intent( this, MainActivity.class ) );
+//        startActivity( new Intent( this, MainActivity.class ) );
+        finish();
     }
 
     private boolean checkAllQuestionsAnswered( int[] radiogroupResIds )

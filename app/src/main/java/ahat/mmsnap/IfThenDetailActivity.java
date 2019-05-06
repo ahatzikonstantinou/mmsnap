@@ -579,7 +579,8 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
             {
 //                JSONArrayIOHandler.saveItem( getBaseContext(), item, getFilesDir().getPath() + "/" + FILENAME );
                 saveItem( year, weekOfYear, days, reminders );
-                startActivity( new Intent( getBaseContext(), getListActivityClass() ) );
+//                startActivity( new Intent( getBaseContext(), getListActivityClass() ) );
+                finish();
             }
             else
             {
@@ -637,19 +638,29 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
 
     protected void hideBehaviorUI( ApplicationStatus.Behavior behavior )
     {
+        displayBehaviorUI( behavior, false );
+    }
+
+    protected void showBehaviorUI( ApplicationStatus.Behavior behavior )
+    {
+        displayBehaviorUI( behavior, true );
+    }
+
+    protected void displayBehaviorUI( ApplicationStatus.Behavior behavior, boolean show )
+    {
         switch( behavior )
         {
             case DIET:
-                findViewById( R.id.eating_image ).setVisibility( View.GONE );
+                findViewById( R.id.eating_image ).setVisibility( show ? View.VISIBLE : View.GONE );
                 break;
             case ACTIVITY:
-                findViewById( R.id.activity_image ).setVisibility( View.GONE );
+                findViewById( R.id.activity_image ).setVisibility( show ? View.VISIBLE : View.GONE );
                 break;
             case ALCOHOL:
-                findViewById( R.id.alcohol_image).setVisibility( View.GONE );
+                findViewById( R.id.alcohol_image).setVisibility( show ? View.VISIBLE : View.GONE );
                 break;
             case SMOKING:
-                findViewById( R.id.smoking_image ).setVisibility( View.GONE );
+                findViewById( R.id.smoking_image ).setVisibility( show ? View.VISIBLE : View.GONE );
                 break;
         }
     }

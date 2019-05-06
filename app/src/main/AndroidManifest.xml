@@ -105,11 +105,11 @@
         <activity
             android:name=".CounterfactualDetailActivity"
             android:label="@string/title_activity_counterfactual_detail"
-            android:parentActivityName=".IfThenActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ahat.mmsnap.IfThenActivity"/>
+                android:value="ahat.mmsnap.MainActivity"/>
         </activity>
         <activity
             android:name=".CopingPlansActivity"

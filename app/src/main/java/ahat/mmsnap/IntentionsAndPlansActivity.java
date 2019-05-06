@@ -55,7 +55,8 @@ public class IntentionsAndPlansActivity extends MassDisableActivity // AppCompat
                     as.serverData.add( as.intentionsAndPlans );
                     as.addAssessment( ApplicationStatus.Assessment.INTENTIONS );
 
-                    startActivity( getParentActivityIntent() );
+//                    startActivity( getParentActivityIntent() );
+                    finish();
                 }
                 catch( Exception e )
                 {
@@ -105,7 +106,8 @@ public class IntentionsAndPlansActivity extends MassDisableActivity // AppCompat
     @Override
     public void onBackPressed()
     {
-        startActivity( new Intent( this, MainActivity.class ) );
+//        startActivity( new Intent( this, MainActivity.class ) );
+        finish();
     }
 
 }

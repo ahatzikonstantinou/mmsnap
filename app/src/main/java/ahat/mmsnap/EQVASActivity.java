@@ -91,7 +91,8 @@ public class EQVASActivity extends AppCompatActivity
                     as.serverData.add( as.eqvas );
                     as.addAssessment( ApplicationStatus.Assessment.ILLNESS_PERCEPTION );
 
-                    startActivity( getParentActivityIntent() );
+//                    startActivity( getParentActivityIntent() );
+                    finish();
                 }
                 catch( Exception e )
                 {
@@ -118,7 +119,8 @@ public class EQVASActivity extends AppCompatActivity
     @Override
     public void onBackPressed()
     {
-        startActivity( new Intent( this, MainActivity.class ) );
+//        startActivity( new Intent( this, MainActivity.class ) );
+        finish();
     }
 
 }
