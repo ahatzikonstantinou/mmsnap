@@ -37,9 +37,9 @@
     <string name="agents_btn_txt">AGENTS</string>
     <string name="title_activity_mmsnap">MM SNAP</string>
     <string name="what_this_app_is_for">WHAT THIS APP IS FOR</string>
-    <string name="about_multimorbidity_mm">ABOUT MULTIMORBIDITY MM</string>
+    <string name="about_multimorbidity_mm">ABOUT MULTI - MORBIDITY MM</string>
     <string name="the_association_between_mm_mb">THE ASSOCIATION BETWEEN MM - MB</string>
-    <string name="about_multibehaviour_mb">ABOUT MULTIBEHAVIOUR MB</string>
+    <string name="about_multibehaviour_mb">ABOUT MULTI - BEHAVIOUR MB</string>
     <string name="how_to_use_this_app">HOW TO USE THIS APP</string>
     <string name="how_to_use_this_app_text">My MM SNAP is a mobile health application aiming to support, your efforts on changing multiple targeted health risk behaviours (Smoking, Nutrition, Alcohol, Physical activity) that while they are involved in the progression of your Multimorbidity health issue you still find difficult to change. In main page you see the main five steps of the app. You can navigate yourself in each section you want but this is something strictly recommended for experienced users. For new users it is highly suggested to follow the step by step process as present here to optimize your ability to obtain your goal.&lt;br>&lt;br>
         The first step of this process is to start from the “My MM SNAP” section. Within this section you will find general information about “what this app is for” and “how to use this app” alongside educational information on the health issues that are under examination such as Multimorbidity (MM), Multibehaviour (MB) and the importance of multiple behavioural change as a self-management process.&lt;br>&lt;br>
@@ -114,4 +114,5 @@
     <string name="prompt_reset_password_key">Key</string>
     <string name="action_reset_password">Reset password</string>
     <string name="title_email">Email</string>
+    <string name="daily_evaluations_btn_text">DAILY EVALUATIONS</string>
 </resources>

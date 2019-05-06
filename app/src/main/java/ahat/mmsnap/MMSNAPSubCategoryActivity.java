@@ -3,7 +3,9 @@ package ahat.mmsnap;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -110,22 +112,32 @@ public class MMSNAPSubCategoryActivity extends AppCompatActivity
                         case 0:
                             f = MMSNAPSubCategoryFragment.newInstance( 0,  R.string.what_this_app_is_for, R.string.what_this_up_is_for_text, R.color.how_to_use_this_app );
                             getSupportActionBar().setSubtitle( R.string.what_this_app_is_for );
+                            getSupportActionBar().setBackgroundDrawable( new ColorDrawable( getResources().getColor( R.color.how_to_use_this_app ) ) );
+                            getSupportActionBar().setElevation(0);
                             break;
                         case 1:
                             f = MMSNAPSubCategoryFragment.newInstance(1,  R.string.about_multimorbidity_mm, R.string.about_multimorbidity_mm_text, R.color.about_multimorbidity_mm );
                             getSupportActionBar().setSubtitle( R.string.about_multimorbidity_mm );
+                            getSupportActionBar().setBackgroundDrawable( new ColorDrawable( getResources().getColor( R.color.about_multimorbidity_mm ) ) );
+                            getSupportActionBar().setElevation(0);
                             break;
                         case 2:
                             f = MMSNAPSubCategoryFragment.newInstance(2,  R.string.about_multibehaviour_mb, R.string.about_multibehaviour_mb_text, R.color.about_multibehaviour_mb );
                             getSupportActionBar().setSubtitle( R.string.about_multibehaviour_mb );
+                            getSupportActionBar().setBackgroundDrawable( new ColorDrawable( getResources().getColor( R.color.about_multibehaviour_mb ) ) );
+                            getSupportActionBar().setElevation(0);
                             break;
                         case 3:
                             f = MMSNAPSubCategoryFragment.newInstance(3,  R.string.the_association_between_mm_mb, R.string.the_association_between_mm_mb_text, R.color.the_association_between_mm_mb );
                             getSupportActionBar().setSubtitle( R.string.the_association_between_mm_mb );
+                            getSupportActionBar().setBackgroundDrawable( new ColorDrawable( getResources().getColor( R.color.the_association_between_mm_mb ) ) );
+                            getSupportActionBar().setElevation(0);
                             break;
                         case 4:
                             f = MMSNAPSubCategoryFragment.newInstance(4,  R.string.how_to_use_this_app, R.string.how_to_use_this_app_text, R.color.how_to_use_this_app );
                             getSupportActionBar().setSubtitle( R.string.how_to_use_this_app );
+                            getSupportActionBar().setBackgroundDrawable( new ColorDrawable( getResources().getColor( R.color.how_to_use_this_app ) ) );
+                            getSupportActionBar().setElevation(0);
                             break;
                         default:
                             break;
@@ -145,14 +157,20 @@ public class MMSNAPSubCategoryActivity extends AppCompatActivity
                         case 0:
                             f = MMSNAPSubCategoryFragment.newInstance( 0,  R.string.what_is_the_if_then_statements, R.string.what_is_the_if_then_statements_text, R.color.edu_what_btn );
                             getSupportActionBar().setSubtitle( R.string.what_is_the_if_then_statements );
+                            getSupportActionBar().setBackgroundDrawable( new ColorDrawable( getResources().getColor( R.color.edu_what_btn ) ) );
+                            getSupportActionBar().setElevation(0);
                             break;
                         case 1:
                             f = MMSNAPSubCategoryFragment.newInstance( 1,  R.string.how_to_word_effective_if, R.string.how_to_word_effective_if_text, R.color.edu_if_btn );
                             getSupportActionBar().setSubtitle( R.string.how_to_word_effective_if );
+                            getSupportActionBar().setBackgroundDrawable( new ColorDrawable( getResources().getColor( R.color.edu_if_btn ) ) );
+                            getSupportActionBar().setElevation(0);
                             break;
                         case 2:
                             f = MMSNAPSubCategoryFragment.newInstance( 2,  R.string.how_to_word_effective_then, R.string.how_to_word_effective_then_text, R.color.edu_then_btn );
                             getSupportActionBar().setSubtitle( R.string.how_to_word_effective_then );
+                            getSupportActionBar().setBackgroundDrawable( new ColorDrawable( getResources().getColor( R.color.edu_then_btn ) ) );
+                            getSupportActionBar().setElevation(0);
                             break;
                         default:
                             break;

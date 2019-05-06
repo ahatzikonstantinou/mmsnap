@@ -87,7 +87,7 @@
         android:drawableTint="#FFFFFF"
         android:paddingLeft="22dp"
         android:paddingRight="10dp"
-        android:text="DAILY EVALUATIONS"
+        android:text="@string/daily_evaluations_btn_text"
         android:textColor="#FFFFFF"
         android:textSize="21dp"
         android:textStyle="bold"

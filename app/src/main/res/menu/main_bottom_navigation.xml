@@ -11,6 +11,11 @@
         android:icon="@drawable/ic_main_attention_24dp"
         android:title="Attention"/>
 
+ <item
+        android:id="@+id/navigation_achievements"
+        android:icon="@drawable/ic_achievement_black_24dp"
+        android:title="Achievements"/>
+
     <item
         android:id="@+id/navigation_sections"
         android:icon="@drawable/ic_main_sections_24dp"

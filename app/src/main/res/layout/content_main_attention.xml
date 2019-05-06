@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:background="@color/main_background_color"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
     android:id="@+id/attention_root_layout">
 
     <!--tools:context=".MainActivity"-->
@@ -20,28 +19,38 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/subsection_marginTop"
-            android:layout_marginBottom="@dimen/subsection_marginBottom"
-            android:layout_marginRight="@dimen/subsection_marginSide"
-            android:layout_marginLeft="@dimen/subsection_marginSide"
-            android:padding="15dp"
-            android:background="@drawable/mmsnap_subcategory_border"
-            android:backgroundTint="@color/attention"
+            android:layout_marginTop="@dimen/main_marginTop"
+            android:layout_marginBottom="@dimen/main_marginBottom"
+            android:layout_marginRight="@dimen/main_marginSide"
+            android:layout_marginLeft="@dimen/main_marginSide"
+            android:padding="2dp"
             android:orientation="vertical">
+
+            <TextView
+                android:layout_width="@dimen/subsection_title_width"
+                android:layout_height="@dimen/subsection_title_height"
+                android:text="@string/attention_frame_title"
+                android:textColor="@android:color/tertiary_text_light"
+                android:textSize="@dimen/subsection_title_textSize"
+                android:textStyle="bold"
+                />
 
             <LinearLayout
                 android:id="@+id/diet_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rounded_lightgrey_border_white_bkg"
+                android:padding="10dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="vertical"
                 android:visibility="gone">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="5dp"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#000000"
+                    android:textColor="@android:color/secondary_text_light"
                     android:text="DIET"/>
                 <TextView
                     android:id="@+id/attention_remaining_diet"
@@ -52,8 +61,7 @@
                     android:padding="8dp"
                     android:layout_marginBottom="4dp"
                     android:textSize="15sp"
-                    android:textColor="#000000"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:textColor="@android:color/primary_text_light"
                     android:text="Two plans have not been met yet"/>
                 <TextView
                     android:id="@+id/attention_target_diet"
@@ -63,8 +71,7 @@
                     android:drawablePadding="5dp"
                     android:padding="8dp"
                     android:textSize="15sp"
-                    android:textColor="#000000"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:textColor="@android:color/primary_text_light"
                     android:text="You need to meet one more plan to achieve this week's target"/>
             </LinearLayout>
 
@@ -72,15 +79,18 @@
                 android:id="@+id/smoking_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rounded_lightgrey_border_white_bkg"
+                android:padding="10dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="vertical"
                 android:visibility="gone">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="5dp"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#000000"
+                    android:textColor="@android:color/secondary_text_light"
                     android:text="SMOKING"/>
                 <TextView
                     android:id="@+id/attention_remaining_smoking"
@@ -91,8 +101,7 @@
                     android:padding="8dp"
                     android:layout_marginBottom="4dp"
                     android:textSize="15sp"
-                    android:textColor="#000000"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:textColor="@android:color/primary_text_light"
                     android:text="Have you smoked a cigarette - even one puff - during the past SEVEN DAYS?"/>
                 <TextView
                     android:id="@+id/attention_target_smoking"
@@ -102,8 +111,7 @@
                     android:drawablePadding="5dp"
                     android:padding="8dp"
                     android:textSize="15sp"
-                    android:textColor="#000000"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:textColor="@android:color/primary_text_light"
                     android:text="You need to meet one more plan to achieve this week's target"/>
             </LinearLayout>
 
@@ -111,15 +119,18 @@
                 android:id="@+id/physical_activity_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rounded_lightgrey_border_white_bkg"
+                android:padding="10dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="vertical"
                 android:visibility="gone">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="5dp"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#000000"
+                    android:textColor="@android:color/secondary_text_light"
                     android:text="PHYSICAL ACTIVITY"/>
                 <TextView
                     android:id="@+id/attention_remaining_activity"
@@ -130,8 +141,7 @@
                     android:padding="8dp"
                     android:layout_marginBottom="4dp"
                     android:textSize="15sp"
-                    android:textColor="#000000"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:textColor="@android:color/primary_text_light"
                     android:text="On how many of the last SEVEN DAYS did you participate in at least 30 minutes of physical activity? (Total minutes of continuous activity, including walking)"/>
                 <TextView
                     android:id="@+id/attention_target_activity"
@@ -141,8 +151,7 @@
                     android:drawablePadding="5dp"
                     android:padding="8dp"
                     android:textSize="15sp"
-                    android:textColor="#000000"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:textColor="@android:color/primary_text_light"
                     android:text="You need to meet one more plan to achieve this week's target"/>
             </LinearLayout>
 
@@ -150,15 +159,17 @@
                 android:id="@+id/alcohol_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rounded_lightgrey_border_white_bkg"
+                android:padding="10dp"
                 android:orientation="vertical"
                 android:visibility="gone">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="5dp"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    android:textColor="#000000"
+                    android:textColor="@android:color/secondary_text_light"
                     android:text="ALCOHOL DRINKING"/>
                 <TextView
                     android:id="@+id/attention_remaining_alcohol"
@@ -169,8 +180,7 @@
                     android:padding="8dp"
                     android:layout_marginBottom="4dp"
                     android:textSize="15sp"
-                    android:textColor="#000000"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:textColor="@android:color/primary_text_light"
                     android:text="Have you managed to drink alcohol within the recommended limit - of at least 14 standard units of drink - in the last SEVEN DAYS?"/>
                 <TextView
                     android:id="@+id/attention_target_alcohol"
@@ -180,28 +190,27 @@
                     android:drawablePadding="5dp"
                     android:padding="8dp"
                     android:textSize="15sp"
-                    android:textColor="#000000"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:textColor="@android:color/primary_text_light"
                     android:text="You need to meet one more plan to achieve this week's target"/>
             </LinearLayout>
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent">-->
 
-            <TextView
-                android:layout_width="@dimen/subsection_title_width"
-                android:layout_height="@dimen/subsection_title_height"
-                android:layout_centerHorizontal="true"
-                android:background="@color/attention"
-                android:text="@string/attention_frame_title"
-                android:textAlignment="center"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/subsection_title_textSize"
-                android:textStyle="bold"
-                />
-        </RelativeLayout>
+            <!--<TextView-->
+                <!--android:layout_width="@dimen/subsection_title_width"-->
+                <!--android:layout_height="@dimen/subsection_title_height"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:background="@color/attention"-->
+                <!--android:text="@string/attention_frame_title"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="#ffffff"-->
+                <!--android:textSize="@dimen/subsection_title_textSize"-->
+                <!--android:textStyle="bold"-->
+                <!--/>-->
+        <!--</RelativeLayout>-->
         <!--</FrameLayout>-->
 </FrameLayout>

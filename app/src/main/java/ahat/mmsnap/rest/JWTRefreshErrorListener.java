@@ -58,7 +58,7 @@ public class JWTRefreshErrorListener implements Response.ErrorListener
     @Override
     public void onErrorResponse( final VolleyError error )
     {
-        if( !jwtRefreshAlreadyAttempted && 401 == error.networkResponse.statusCode && null != parentRequest )
+        if( !jwtRefreshAlreadyAttempted && null != error.networkResponse && 401 == error.networkResponse.statusCode && null != parentRequest )
         {
             jwtRefreshAlreadyAttempted = true;
             final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences( context );

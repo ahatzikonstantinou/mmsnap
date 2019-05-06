@@ -191,7 +191,7 @@ public class SelfRatedHealthActivity extends MassDisableActivity // AppCompatAct
     @Override
     public void onBackPressed()
     {
-        startActivity( new Intent( this, AssessmentsActivity.class ) );
+        startActivity( new Intent( this, MainActivity.class ) );
     }
 
     private boolean checkAllQuestionsAnswered( int[] radiogroupResIds )

@@ -2,9 +2,12 @@ package ahat.mmsnap;
 
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -58,11 +61,11 @@ public class MainActivity extends StateActivity //AppCompatActivity
 {
 
     private TextView counterfactualTextView;
-    private Button educationButton;
-    private Button ifThenButton;
-    private Button achievementsButton;
+//    private Button educationButton;
+//    private Button ifThenButton;
+//    private Button achievementsButton;
 
-    private enum Display { TODAY, ATTENTION, SECTIONS };
+    private enum Display { TODAY, ATTENTION, ACHIEVEMENTS, SECTIONS };
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
         = new BottomNavigationView.OnNavigationItemSelectedListener()
@@ -78,6 +81,9 @@ public class MainActivity extends StateActivity //AppCompatActivity
                     return true;
                 case R.id.navigation_attention:
                     show( Display.ATTENTION );
+                    return true;
+                case R.id.navigation_achievements:
+                    show( Display.ACHIEVEMENTS );
                     return true;
                 case R.id.navigation_sections:
                     show( Display.SECTIONS );
@@ -113,16 +119,36 @@ public class MainActivity extends StateActivity //AppCompatActivity
         bottomNavigationView.setOnNavigationItemSelectedListener( mOnNavigationItemSelectedListener );
 
         //buttons events
-        Button mmsnapButton = findViewById( R.id.mmsnap_btn );
-        mmsnapButton.setOnClickListener( this );
-        Button assessmentsButton = findViewById( R.id.assessments_btn );
-        assessmentsButton.setOnClickListener( this );
-        educationButton = findViewById( R.id.education_btn );
-        educationButton.setOnClickListener( this );
-        ifThenButton = findViewById( R.id.if_then_btn );
-        ifThenButton.setOnClickListener( this );
-        achievementsButton = findViewById( R.id.achievements_btn );
-        achievementsButton.setOnClickListener( this );
+//        Button mmsnapButton = findViewById( R.id.mmsnap_btn );
+//        mmsnapButton.setOnClickListener( this );
+//        Button assessmentsButton = findViewById( R.id.assessments_btn );
+//        assessmentsButton.setOnClickListener( this );
+//        educationButton = findViewById( R.id.education_btn );
+//        educationButton.setOnClickListener( this );
+//        ifThenButton = findViewById( R.id.if_then_btn );
+//        ifThenButton.setOnClickListener( this );
+//        achievementsButton = findViewById( R.id.achievements_btn );
+//        achievementsButton.setOnClickListener( this );
+
+        findViewById( R.id.mmsnap_for_btn ).setOnClickListener( this );
+        findViewById( R.id.mmsnap_mm_btn ).setOnClickListener( this );
+        findViewById( R.id.mmsnap_assoc_btn ).setOnClickListener( this );
+        findViewById( R.id.mmsnap_mb_btn ).setOnClickListener( this );
+        findViewById( R.id.mmsnap_app_btn ).setOnClickListener( this );
+        findViewById( R.id.assessments_illness_btn ).setOnClickListener( this );
+        findViewById( R.id.assessments_risk_btn ).setOnClickListener( this );
+        findViewById( R.id.assessments_efficacy_btn ).setOnClickListener( this );
+        findViewById( R.id.assessments_plans_btn ).setOnClickListener( this );
+        findViewById( R.id.assessments_health_btn ).setOnClickListener( this );
+        findViewById( R.id.assessments_weekly_btn ).setOnClickListener( this );
+        findViewById( R.id.edu_what_btn ).setOnClickListener( this );
+        findViewById( R.id.edu_if_btn ).setOnClickListener( this );
+        findViewById( R.id.edu_then_btn ).setOnClickListener( this );
+        findViewById( R.id.edu_test_btn ).setOnClickListener( this );
+        findViewById( R.id.if_then_counterfactual_btn ).setOnClickListener( this );
+        findViewById( R.id.if_then_action_btn ).setOnClickListener( this );
+        findViewById( R.id.if_then_coping_btn ).setOnClickListener( this );
+        findViewById( R.id.daily_evaluations_btn ).setOnClickListener( this );
 
 
         // testing is visible/available only in the debug version
@@ -153,9 +179,25 @@ public class MainActivity extends StateActivity //AppCompatActivity
 
         try
         {
+            ApplicationStatus as = ApplicationStatus.getInstance( this );
+
+            // setup achievements
+            try
+            {
+                final ArrayList<DailyEvaluation> evaluations = as.dailyEvaluations;
+                ListView list = findViewById( R.id.achievements_list );
+                AchievementsListAdapter adapter = new AchievementsListAdapter( this, evaluations, R.id.achievements_list );
+                list.setAdapter( adapter );
+            }
+            catch( Exception e )
+            {
+                e.printStackTrace();
+                Snackbar.make( findViewById( android.R.id.content ), "Could not load daily evaluations", Snackbar.LENGTH_SHORT ).show();
+            }
+
+
             // setup the counterfactual thought message
             counterfactualTextView = findViewById( R.id.main_counterfactual );
-            ApplicationStatus as = ApplicationStatus.getInstance( this );
 
             if( as.counterfactualThought.active && as.counterfactualThought.ifStatement.trim().length() > 0 && as.counterfactualThought.thenStatement.trim().length() > 0 )
             {
@@ -179,7 +221,12 @@ public class MainActivity extends StateActivity //AppCompatActivity
             {
                 // setup the not enough weekly plans message
                 ArrayList<IfThenPlan> weekPlans = loadWeeksActivePlans();
-                findViewById( R.id.main_message ).setVisibility( weekPlans.size() >= ApplicationStatus.MIN_ACTIVE_PLANS_PER_WEEK ? View.GONE : View.VISIBLE );
+                int days = 0;
+                for( IfThenPlan plan : weekPlans )
+                {
+                    days += plan.days.size();
+                }
+                findViewById( R.id.main_message ).setVisibility( days >= ApplicationStatus.MIN_ACTIVE_PLANS_PER_WEEK ? View.GONE : View.VISIBLE );
 
                 // setup today's plans list
                 ArrayList<IfThenPlan> todaysPlans = new ArrayList<>();
@@ -238,17 +285,66 @@ public class MainActivity extends StateActivity //AppCompatActivity
         try
         {
             ApplicationStatus as = ApplicationStatus.getInstance( this );
+            TextView messageView = findViewById( R.id.message );
+
             if( ApplicationStatus.NoInitialAssessments.NAME.equals( as.getState().name() ) ||
                 ApplicationStatus.NoFinalAssessments.NAME.equals( as.getState().name() ) )
             {
                 show( Display.SECTIONS );
                 counterfactualTextView.setVisibility( View.GONE );
-                educationButton.setVisibility( View.INVISIBLE );
-                ifThenButton.setVisibility( View.INVISIBLE );
-                achievementsButton.setVisibility( View.INVISIBLE );
+                findViewById( R.id.education_layout ).setVisibility( View.INVISIBLE );  // educationButton.setVisibility( View.INVISIBLE );
+                findViewById( R.id.if_then_layout ).setVisibility( View.INVISIBLE );  // ifThenButton.setVisibility( View.INVISIBLE );
+//                achievementsButton.setVisibility( View.INVISIBLE );
                 findViewById( R.id.bottom_navigation ).setVisibility( View.GONE );
                 findViewById( R.id.main_message ).setVisibility( View.GONE );
             }
+
+
+            if( ApplicationStatus.NoInitialAssessments.NAME.equals( as.getState().name() ) )
+            {
+                messageView.setText( R.string.please_complete_the_initial_assessments );
+                messageView.setVisibility( View.VISIBLE );
+
+                findViewById( R.id.illness_warning_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.ILLNESS_PERCEPTION ) ? View.GONE : View.VISIBLE );
+                findViewById( R.id.risk_warning_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.HEALTH_RISK ) ? View.GONE : View.VISIBLE );
+                findViewById( R.id.efficacy_warning_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.SELF_EFFICACY ) ? View.GONE : View.VISIBLE );
+                findViewById( R.id.plans_warning_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.INTENTIONS ) ? View.GONE : View.VISIBLE );
+                findViewById( R.id.health_warning_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.SELF_RATED_HEALTH ) ? View.GONE : View.VISIBLE );
+
+                findViewById( R.id.illness_ok_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.ILLNESS_PERCEPTION ) ? View.VISIBLE : View.GONE );
+                findViewById( R.id.risk_ok_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.HEALTH_RISK ) ? View.VISIBLE : View.GONE );
+                findViewById( R.id.efficacy_ok_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.SELF_EFFICACY ) ? View.VISIBLE : View.GONE );
+                findViewById( R.id.plans_ok_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.INTENTIONS ) ? View.VISIBLE : View.GONE );
+                findViewById( R.id.health_ok_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.SELF_RATED_HEALTH ) ? View.VISIBLE : View.GONE );
+
+            }
+            else if( ApplicationStatus.NoFinalAssessments.NAME.equals( as.getState().name() ) )
+            {
+                messageView.setText( R.string.please_complete_the_final_assessments );
+                messageView.setVisibility( View.VISIBLE );
+
+                findViewById( R.id.illness_warning_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.ILLNESS_PERCEPTION ) ? View.GONE : View.VISIBLE );
+                findViewById( R.id.risk_warning_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.HEALTH_RISK ) ? View.GONE : View.VISIBLE );
+                findViewById( R.id.efficacy_warning_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.SELF_EFFICACY ) ? View.GONE : View.VISIBLE );
+                findViewById( R.id.plans_warning_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.INTENTIONS ) ? View.GONE : View.VISIBLE );
+                findViewById( R.id.health_warning_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.SELF_RATED_HEALTH ) ? View.GONE : View.VISIBLE );
+
+                findViewById( R.id.illness_ok_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.ILLNESS_PERCEPTION ) ? View.VISIBLE : View.GONE );
+                findViewById( R.id.risk_ok_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.HEALTH_RISK ) ? View.VISIBLE : View.GONE );
+                findViewById( R.id.efficacy_ok_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.SELF_EFFICACY ) ? View.VISIBLE : View.GONE );
+                findViewById( R.id.plans_ok_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.INTENTIONS ) ? View.VISIBLE : View.GONE );
+                findViewById( R.id.health_ok_img ).setVisibility( as.initialAssessmentsContain( ApplicationStatus.Assessment.SELF_RATED_HEALTH ) ? View.VISIBLE : View.GONE );
+
+            }
+            else
+            {
+                findViewById( R.id.message_layout ).setVisibility( View.GONE );
+
+                findViewById( R.id.efficacy_lock_img ).setVisibility( View.VISIBLE );
+                findViewById( R.id.plans_lock_img ).setVisibility( View.VISIBLE );
+                findViewById( R.id.health_lock_img ).setVisibility( View.VISIBLE );
+            }
+
         }
         catch( Exception e )
         {
@@ -366,13 +462,19 @@ public class MainActivity extends StateActivity //AppCompatActivity
 
         if( error )
         {
-            Drawable warning = ContextCompat.getDrawable( this, android.R.drawable.ic_dialog_alert );
+            Drawable dr = ContextCompat.getDrawable( this, android.R.drawable.ic_dialog_alert );
+            Bitmap bitmap = ( (BitmapDrawable) dr).getBitmap();
+            // Scale it to 80 x 80
+            Drawable warning = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 80, 80, true));
             warning.setColorFilter(new PorterDuffColorFilter( getResources().getColor( R.color.yellow_warning ), PorterDuff.Mode.MULTIPLY));
             textView.setCompoundDrawablesRelativeWithIntrinsicBounds( warning, null, null, null );
         }
         else if( complete )
         {
-            Drawable check = ContextCompat.getDrawable( this, R.drawable.ic_check_24dp );
+            Drawable dr = ContextCompat.getDrawable( this, R.drawable.ic_check_24dp );
+            Bitmap bitmap = ( (BitmapDrawable) dr).getBitmap();
+            // Scale it to 80 x 80
+            Drawable check = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, 80, 80, true));
             textView.setCompoundDrawablesRelativeWithIntrinsicBounds( check, null, null, null );
         }
     }
@@ -479,7 +581,7 @@ public class MainActivity extends StateActivity //AppCompatActivity
         aps.read( jcap );
         for( ActionPlan plan : jcap.getActionPlans() )
         {
-            if( plan.year == c.get( Calendar.YEAR ) && plan.weekOfYear == c.get( Calendar.WEEK_OF_YEAR ) )
+            if( plan.year == c.get( Calendar.YEAR ) && plan.weekOfYear == c.get( Calendar.WEEK_OF_YEAR ) && plan.active )
             {
                 plans.add( plan );
             }
@@ -490,7 +592,7 @@ public class MainActivity extends StateActivity //AppCompatActivity
         cps.read( jccp );
         for( CopingPlan plan : jccp.getCopingPlans() )
         {
-            if( plan.year == c.get( Calendar.YEAR ) && plan.weekOfYear == c.get( Calendar.WEEK_OF_YEAR ) )
+            if( plan.year == c.get( Calendar.YEAR ) && plan.weekOfYear == c.get( Calendar.WEEK_OF_YEAR )  && plan.active )
             {
                 plans.add( plan );
             }
@@ -503,26 +605,123 @@ public class MainActivity extends StateActivity //AppCompatActivity
     public void onClick( View view )
     {
         Intent intent;
+        Bundle b = new Bundle();
         switch (view.getId()){
-            case R.id.mmsnap_btn:
-                intent = new Intent(this, MMSNAPActivity.class);
+//            case R.id.mmsnap_btn:
+//                intent = new Intent(this, MMSNAPActivity.class);
+//                startActivity( intent );
+//                break;
+//            case R.id.assessments_btn:
+//                intent = new Intent(this, AssessmentsActivity.class);
+//                startActivity( intent );
+//                break;
+//            case R.id.education_btn:
+//                intent = new Intent(this, EduActivity.class);
+//                startActivity( intent );
+//                break;
+//            case R.id.if_then_btn:
+//                intent = new Intent(this, IfThenActivity.class);
+//                startActivity( intent );
+//                break;
+//            case R.id.achievements_btn:
+//                intent = new Intent(this, AchievementsActivity.class);
+//                startActivity( intent );
+//                break;
+            case R.id.mmsnap_for_btn:
+                intent = new Intent(this, MMSNAPSubCategoryActivity.class);
+                b.putSerializable( "section", MMSNAPSubCategoryActivity.Section.MMSNAP );
+                b.putInt( "subcategory", 0 );
+                intent.putExtras( b );
                 startActivity( intent );
                 break;
-            case R.id.assessments_btn:
-                intent = new Intent(this, AssessmentsActivity.class);
+            case R.id.mmsnap_mm_btn:
+                intent = new Intent(this, MMSNAPSubCategoryActivity.class);
+                b.putSerializable( "section", MMSNAPSubCategoryActivity.Section.MMSNAP );
+                b.putInt( "subcategory", 1 );
+                intent.putExtras( b );
                 startActivity( intent );
                 break;
-            case R.id.education_btn:
-                intent = new Intent(this, EduActivity.class);
+            case R.id.mmsnap_mb_btn:
+                intent = new Intent(this, MMSNAPSubCategoryActivity.class);
+                b.putSerializable( "section", MMSNAPSubCategoryActivity.Section.MMSNAP );
+                b.putInt( "subcategory", 2 );
+                intent.putExtras( b );
                 startActivity( intent );
                 break;
-            case R.id.if_then_btn:
-                intent = new Intent(this, IfThenActivity.class);
+            case R.id.mmsnap_assoc_btn:
+                intent = new Intent(this, MMSNAPSubCategoryActivity.class);
+                b.putSerializable( "section", MMSNAPSubCategoryActivity.Section.MMSNAP );
+                b.putInt( "subcategory", 3 );
+                intent.putExtras( b );
                 startActivity( intent );
                 break;
-            case R.id.achievements_btn:
-                intent = new Intent(this, AchievementsActivity.class);
+            case R.id.mmsnap_app_btn:
+                intent = new Intent(this, MMSNAPSubCategoryActivity.class);
+                b.putSerializable( "section", MMSNAPSubCategoryActivity.Section.MMSNAP );
+                b.putInt( "subcategory", 4 );
+                intent.putExtras( b );
                 startActivity( intent );
+                break;
+            case R.id.assessments_illness_btn:
+                intent = new Intent( this, EQVASActivity.class);
+                startActivity( intent );
+                break;
+            case R.id.assessments_risk_btn:
+                intent = new Intent( this, HealthRiskActivity.class);
+                startActivity( intent );
+                break;
+            case R.id.assessments_efficacy_btn:
+                intent = new Intent( this, EfficacyActivity.class);
+                startActivity( intent );
+                break;
+            case R.id.assessments_plans_btn:
+                intent = new Intent( this, IntentionsAndPlansActivity.class);
+                startActivity( intent );
+                break;
+            case R.id.assessments_health_btn:
+                intent = new Intent( this, SelfRatedHealthActivity.class);
+                startActivity( intent );
+                break;
+            case R.id.assessments_weekly_btn:
+                intent = new Intent( this, WeeklyEvaluationsListActivity.class);
+                startActivity( intent );
+                break;
+            case R.id.edu_what_btn:
+                intent = new Intent( this, MMSNAPSubCategoryActivity.class);
+                b.putSerializable( "section", MMSNAPSubCategoryActivity.Section.EDU );
+                b.putInt( "subcategory", 0 );
+                intent.putExtras( b );
+                startActivity( intent );
+                break;
+            case R.id.edu_if_btn:
+                intent = new Intent( this, MMSNAPSubCategoryActivity.class);
+                b.putSerializable( "section", MMSNAPSubCategoryActivity.Section.EDU );
+                b.putInt( "subcategory", 1 );
+                intent.putExtras( b );
+                startActivity( intent );
+                break;
+            case R.id.edu_then_btn:
+                intent = new Intent( this, MMSNAPSubCategoryActivity.class);
+                b.putSerializable( "section", MMSNAPSubCategoryActivity.Section.EDU );
+                b.putInt( "subcategory", 2 );
+                intent.putExtras( b );
+                startActivity( intent );
+                break;
+            case R.id.edu_test_btn:
+                intent = new Intent( this, TestActivity.class);
+                startActivity( intent );
+                break;
+            case R.id.if_then_counterfactual_btn:
+                startActivity( new Intent( this, CounterfactualDetailActivity.class) );
+                break;
+            case R.id.if_then_action_btn:
+                startActivity( new Intent( this, ActionPlansActivity.class) );
+                break;
+            case R.id.if_then_coping_btn:
+                startActivity( new Intent( this, CopingPlansActivity.class) );
+                break;
+            case R.id.daily_evaluations_btn:
+                startActivity( new Intent( this, DailyEvaluationsListActivity.class) );
                 break;
             default:
                 break;
@@ -536,18 +735,28 @@ public class MainActivity extends StateActivity //AppCompatActivity
             case TODAY:
                 findViewById( R.id.main_today_layout ).setVisibility( View.VISIBLE );
                 findViewById( R.id.main_attention_layout ).setVisibility( View.GONE );
+                findViewById( R.id.main_achievements_layout ).setVisibility( View.GONE );
                 findViewById( R.id.main_sections_layout ).setVisibility( View.GONE );
                 getSupportActionBar().setSubtitle( R.string.title_activity_todays_plans );
                 break;
             case ATTENTION:
                 findViewById( R.id.main_today_layout ).setVisibility( View.GONE );
                 findViewById( R.id.main_attention_layout ).setVisibility( View.VISIBLE );
+                findViewById( R.id.main_achievements_layout ).setVisibility( View.GONE );
                 findViewById( R.id.main_sections_layout ).setVisibility( View.GONE );
                 getSupportActionBar().setSubtitle( R.string.attention_frame_title );
+                break;
+            case ACHIEVEMENTS:
+                findViewById( R.id.main_today_layout ).setVisibility( View.GONE );
+                findViewById( R.id.main_attention_layout ).setVisibility( View.GONE );
+                findViewById( R.id.main_achievements_layout ).setVisibility( View.VISIBLE );
+                findViewById( R.id.main_sections_layout ).setVisibility( View.GONE );
+                getSupportActionBar().setSubtitle( R.string.title_activity_achievements );
                 break;
             case SECTIONS:
                 findViewById( R.id.main_today_layout ).setVisibility( View.GONE );
                 findViewById( R.id.main_attention_layout ).setVisibility( View.GONE );
+                findViewById( R.id.main_achievements_layout ).setVisibility( View.GONE );
                 findViewById( R.id.main_sections_layout ).setVisibility( View.VISIBLE );
                 getSupportActionBar().setSubtitle( R.string.main_subtitle_sections );
                 break;

@@ -13,6 +13,8 @@
     <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     >
 
     <FrameLayout
@@ -20,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_lightgrey_border_white_bkg"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent">
 
@@ -30,17 +33,23 @@
             android:layout_marginLeft="@dimen/subsection_marginSide"
             android:layout_marginRight="@dimen/subsection_marginSide"
             android:layout_marginTop="@dimen/subsection_marginTop"
-            android:background="@drawable/rounded_border_trnsp_bkg"
-            android:backgroundTint="#F79647"
             android:orientation="vertical"
             android:padding="3dp">
+
+            <TextView
+                android:layout_width="@dimen/subsection_title_width"
+                android:layout_height="@dimen/subsection_title_height"
+                android:text="HEALTH BEHAVIORS"
+                android:textColor="@android:color/secondary_text_light"
+                android:textSize="@dimen/subsection_title_textSize"
+                android:textStyle="bold"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginTop="10dp"
                 android:padding="10dp">
 
                 <ImageView
@@ -98,22 +107,22 @@
             </LinearLayout>
 
         </LinearLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
-            <TextView
-                android:layout_width="@dimen/subsection_title_width"
-                android:layout_height="@dimen/subsection_title_height"
-                android:layout_centerHorizontal="true"
-                android:background="#F79647"
-                android:text="HEALTH BEHAVIORS"
-                android:textAlignment="center"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/subsection_title_textSize"
-                android:textStyle="bold"
-                />
-        </RelativeLayout>
+            <!--<TextView-->
+                <!--android:layout_width="@dimen/subsection_title_width"-->
+                <!--android:layout_height="@dimen/subsection_title_height"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:background="#F79647"-->
+                <!--android:text="HEALTH BEHAVIORS"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="#ffffff"-->
+                <!--android:textSize="@dimen/subsection_title_textSize"-->
+                <!--android:textStyle="bold"-->
+                <!--/>-->
+        <!--</RelativeLayout>-->
 
     </FrameLayout>
 
@@ -121,6 +130,8 @@
         android:id="@+id/action_plan_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_lightgrey_border_white_bkg"
+        android:layout_marginTop="5dp"
         app:layout_constraintTop_toBottomOf="@+id/behavior_layout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/date_selector_layout">
@@ -133,11 +144,18 @@
             android:layout_marginLeft="@dimen/subsection_marginSide"
             android:layout_marginRight="@dimen/subsection_marginSide"
             android:layout_marginTop="@dimen/subsection_marginTop"
-            android:background="@drawable/rounded_border_trnsp_bkg"
-            android:backgroundTint="#F79647"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="3dp">
 
+            <TextView
+                android:id="@+id/action_plan_title_textView"
+                android:layout_width="@dimen/subsection_title_width"
+                android:layout_height="@dimen/subsection_title_height"
+                android:text="ACTION PLAN"
+                android:textColor="@android:color/secondary_text_light"
+                android:textSize="@dimen/subsection_title_textSize"
+                android:textStyle="bold"
+                />
             <!--<include layout="@layout/content_if_then_detail" />-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -145,7 +163,6 @@
                 android:padding="5dp"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
-                android:background="@drawable/rounded_border_white_bkg"
                 >
 
                 <TableLayout android:layout_height="wrap_content"
@@ -256,30 +273,32 @@
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
-            <TextView
-                android:id="@+id/action_plan_title_textView"
-                android:layout_width="@dimen/subsection_title_width"
-                android:layout_height="@dimen/subsection_title_height"
-                android:layout_centerHorizontal="true"
-                android:background="#F79647"
-                android:text="ACTION PLAN"
-                android:textAlignment="center"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/subsection_title_textSize"
-                android:textStyle="bold"
-                />
+            <!--<TextView-->
+                <!--android:id="@+id/action_plan_title_textView"-->
+                <!--android:layout_width="@dimen/subsection_title_width"-->
+                <!--android:layout_height="@dimen/subsection_title_height"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:background="#F79647"-->
+                <!--android:text="ACTION PLAN"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="#ffffff"-->
+                <!--android:textSize="@dimen/subsection_title_textSize"-->
+                <!--android:textStyle="bold"-->
+                <!--/>-->
 
-        </RelativeLayout>
+        <!--</RelativeLayout>-->
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/date_selector_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_lightgrey_border_white_bkg"
+        android:layout_marginTop="5dp"
         app:layout_constraintTop_toBottomOf="@+id/action_plan_layout"
         app:layout_constraintBottom_toTopOf="@+id/coping_plan_layout">
 
@@ -290,10 +309,17 @@
             android:layout_marginLeft="@dimen/subsection_marginSide"
             android:layout_marginRight="@dimen/subsection_marginSide"
             android:layout_marginTop="@dimen/subsection_marginTop"
-            android:background="@drawable/rounded_border_trnsp_bkg"
-            android:backgroundTint="#F79647"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="3dp">
+
+            <TextView
+                android:layout_width="@dimen/subsection_title_width"
+                android:layout_height="@dimen/subsection_title_height"
+                android:text="ACTION DATE"
+                android:textColor="@android:color/secondary_text_light"
+                android:textSize="@dimen/subsection_title_textSize"
+                android:textStyle="bold"
+                />
 
             <TextView
                 android:id="@+id/date_txt"
@@ -347,7 +373,6 @@
                 android:id="@+id/week_days_reminders_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rounded_border_trnsp_bkg"
                 android:orientation="vertical">
                 <LinearLayout
                     android:id="@+id/week_days_layout"
@@ -678,29 +703,31 @@
             </LinearLayout>
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
-            <TextView
-                android:layout_width="@dimen/subsection_title_width"
-                android:layout_height="@dimen/subsection_title_height"
-                android:layout_centerHorizontal="true"
-                android:background="#F79647"
-                android:text="ACTION DATE"
-                android:textAlignment="center"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/subsection_title_textSize"
-                android:textStyle="bold"
-                />
+            <!--<TextView-->
+                <!--android:layout_width="@dimen/subsection_title_width"-->
+                <!--android:layout_height="@dimen/subsection_title_height"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:background="#F79647"-->
+                <!--android:text="ACTION DATE"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="#ffffff"-->
+                <!--android:textSize="@dimen/subsection_title_textSize"-->
+                <!--android:textStyle="bold"-->
+                <!--/>-->
 
-        </RelativeLayout>
+        <!--</RelativeLayout>-->
     </FrameLayout>
 
     <FrameLayout
     android:id="@+id/coping_plan_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/rounded_lightgrey_border_white_bkg"
+    android:layout_marginTop="5dp"
     app:layout_constraintTop_toBottomOf="@+id/date_selector_layout"
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintBottom_toTopOf="@+id/active_switch">
@@ -716,10 +743,17 @@
                 android:layout_marginLeft="@dimen/subsection_marginSide"
                 android:layout_marginRight="@dimen/subsection_marginSide"
                 android:layout_marginTop="@dimen/subsection_marginTop"
-                android:background="@drawable/rounded_border_trnsp_bkg"
-                android:backgroundTint="@color/coping_plan"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="3dp">
+
+                <TextView
+                    android:layout_width="@dimen/subsection_title_width"
+                    android:layout_height="@dimen/subsection_title_height"
+                    android:text="COPING PLAN"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:textSize="@dimen/subsection_title_textSize"
+                    android:textStyle="bold"
+                    />
 
                 <!--<include layout="@layout/content_if_then_detail" />-->
                 <LinearLayout
@@ -728,7 +762,6 @@
                     android:padding="5dp"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    android:background="@drawable/rounded_border_white_bkg"
                     >
 
                     <TableLayout android:layout_height="wrap_content"
@@ -838,23 +871,23 @@
 
             </LinearLayout>
 
-            <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            <!--<RelativeLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
-            <TextView
-                android:layout_width="@dimen/subsection_title_width"
-                android:layout_height="@dimen/subsection_title_height"
-                android:layout_centerHorizontal="true"
-                android:background="@color/coping_plan"
-                android:text="COPING PLAN"
-                android:textAlignment="center"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/subsection_title_textSize"
-                android:textStyle="bold"
-                />
+            <!--<TextView-->
+                <!--android:layout_width="@dimen/subsection_title_width"-->
+                <!--android:layout_height="@dimen/subsection_title_height"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:background="@color/coping_plan"-->
+                <!--android:text="COPING PLAN"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="#ffffff"-->
+                <!--android:textSize="@dimen/subsection_title_textSize"-->
+                <!--android:textStyle="bold"-->
+                <!--/>-->
 
-        </RelativeLayout>
+        <!--</RelativeLayout>-->
 
         </FrameLayout>
     </FrameLayout>
@@ -883,8 +916,9 @@
             android:id="@+id/save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_border_trnsp_bkg"
+            android:background="@drawable/rounded_5dp_grey_border_white_bkg"
             android:text="Save"
+            android:textColor="@color/primary_button_text"
             android:layout_margin="10dp"
         />
 
@@ -897,7 +931,8 @@
             <Button
                 android:id="@+id/fail_btn"
                 android:text="FAIL"
-                android:background="@drawable/rounded_border_trnsp_bkg"
+                android:textColor="@color/danger_button_text"
+                android:background="@drawable/rounded_5dp_grey_border_white_bkg"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"
@@ -905,7 +940,8 @@
             <Button
                 android:id="@+id/success_btn"
                 android:text="SUCCESS"
-                android:background="@drawable/rounded_border_trnsp_bkg"
+                android:textColor="@color/primary_button_text"
+                android:background="@drawable/rounded_5dp_grey_border_white_bkg"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:layout_width="wrap_content"

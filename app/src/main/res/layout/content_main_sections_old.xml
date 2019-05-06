@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<FrameLayout-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--&gt;-->
+    <!--<ScrollView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background_color"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+
+    <!--tools:context=".MainActivity"-->
+    <!--tools:showIn="@layout/app_bar_main"-->
+
+
+    <Button
+        android:id="@+id/mmsnap_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginStart="25dp"
+        android:background="@drawable/mmsnap_btn_bkg"
+        android:drawableLeft="@drawable/mmsnap_btn_img"
+        android:drawableTint="#EFE4B0"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/mm_snap_btn_text"
+        android:textColor="#EFE4B0"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/assessments_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintVertical_chainStyle="spread"/>
+
+    <Button
+        android:id="@+id/assessments_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/assessments_btn_bkg"
+        android:drawableLeft="@drawable/assessments_btn_img"
+        android:drawableTint="#EFE4B0"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/assessments_btn_txt"
+        android:textColor="#EFE4B0"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/education_btn"
+        app:layout_constraintEnd_toEndOf="@+id/mmsnap_btn"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/mmsnap_btn"
+        app:layout_constraintTop_toBottomOf="@+id/mmsnap_btn"/>
+
+    <Button
+        android:id="@+id/education_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/education_btn_bkg"
+        android:drawableLeft="@drawable/education_btn_img"
+        android:drawableTint="#EFE4B0"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/education_btn_txt"
+        android:textColor="#EFE4B0"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/if_then_btn"
+        app:layout_constraintEnd_toEndOf="@+id/assessments_btn"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/assessments_btn"
+        app:layout_constraintTop_toBottomOf="@+id/assessments_btn"/>
+
+    <Button
+        android:id="@+id/if_then_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/if_then_btn_bkg"
+        android:drawableLeft="@drawable/if_then_btn_img"
+        android:drawableTint="#22B14C"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/if_then_btn_txt"
+        android:textColor="#22B14C"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/achievements_btn"
+        app:layout_constraintEnd_toEndOf="@+id/education_btn"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/education_btn"
+        app:layout_constraintTop_toBottomOf="@+id/education_btn"/>
+
+    <Button
+        android:id="@+id/achievements_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/achievements_btn_bkg"
+        android:drawableLeft="@drawable/achievements_btn_img"
+        android:drawableTint="#EFE4B0"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/achievements_btn_txt"
+        android:textColor="#EFE4B0"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/if_then_btn"
+        app:layout_constraintHeight_default="wrap"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/if_then_btn"
+        app:layout_constraintTop_toBottomOf="@+id/if_then_btn"/>
+
+</android.support.constraint.ConstraintLayout>
+
+    <!--</ScrollView>-->
+<!--</FrameLayout>-->

@@ -18,15 +18,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/subsection_marginTop"
-            android:layout_marginBottom="@dimen/subsection_marginBottom"
-            android:layout_marginRight="@dimen/subsection_marginSide"
-            android:layout_marginLeft="@dimen/subsection_marginSide"
-            android:padding="15dp"
-            android:background="@drawable/mmsnap_subcategory_border"
-            android:backgroundTint="@color/todays_plans"
+            android:layout_marginTop="@dimen/main_marginTop"
+            android:layout_marginBottom="@dimen/main_marginBottom"
+            android:layout_marginRight="@dimen/main_marginSide"
+            android:layout_marginLeft="@dimen/main_marginSide"
+            android:padding="2dp"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="@dimen/subsection_title_width"
+                android:layout_height="@dimen/subsection_title_height"
+                android:text="@string/today_s_plans"
+                android:textColor="@android:color/tertiary_text_light"
+                android:textSize="@dimen/subsection_title_textSize"
+                android:textStyle="bold"
+                />
             <ListView
                 android:id="@+id/todays_listview"
                 android:layout_width="match_parent"
@@ -37,21 +43,21 @@
             </ListView>
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent">-->
 
-            <TextView
-                android:layout_width="@dimen/subsection_title_width"
-                android:layout_height="@dimen/subsection_title_height"
-                android:layout_centerHorizontal="true"
-                android:background="@color/todays_plans"
-                android:text="@string/today_s_plans"
-                android:textAlignment="center"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/subsection_title_textSize"
-                android:textStyle="bold"
-                />
-        </RelativeLayout>
+            <!--<TextView-->
+                <!--android:layout_width="@dimen/subsection_title_width"-->
+                <!--android:layout_height="@dimen/subsection_title_height"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:background="@color/todays_plans"-->
+                <!--android:text="@string/today_s_plans"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="#ffffff"-->
+                <!--android:textSize="@dimen/subsection_title_textSize"-->
+                <!--android:textStyle="bold"-->
+                <!--/>-->
+        <!--</RelativeLayout>-->
         <!--</FrameLayout>-->
 </FrameLayout>

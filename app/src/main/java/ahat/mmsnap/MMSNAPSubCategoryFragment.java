@@ -48,8 +48,8 @@ public class MMSNAPSubCategoryFragment extends Fragment
 
         View view = inflater.inflate( R.layout.mmsnapsub_category_fragment, container, false );
 
-        LinearLayout ll = ( LinearLayout ) view.findViewById( R.id.mmsnap_subcategory_linearlayout );
-        ll.getBackground().setColorFilter( getResources().getColor( getArguments().getInt( "colorResId" ) ), PorterDuff.Mode.SRC_ATOP );
+//        LinearLayout ll = ( LinearLayout ) view.findViewById( R.id.mmsnap_subcategory_linearlayout );
+//        ll.getBackground().setColorFilter( getResources().getColor( getArguments().getInt( "colorResId" ) ), PorterDuff.Mode.SRC_ATOP );
 
         TextView title = ( TextView ) view.findViewById( R.id.mmsnap_subcategory_title_textview );
         title.setText( getResources().getString( getArguments().getInt( "titleResId" ) ) );

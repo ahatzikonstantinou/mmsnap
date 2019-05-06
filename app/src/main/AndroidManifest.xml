@@ -114,20 +114,20 @@
         <activity
             android:name=".CopingPlansActivity"
             android:label="@string/title_activity_coping_plans"
-            android:parentActivityName=".IfThenActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ahat.mmsnap.IfThenActivity"/>
+                android:value="ahat.mmsnap.MainActivity"/>
         </activity>
         <activity
             android:name=".ActionPlansActivity"
             android:label="@string/title_activity_action_plans"
-            android:parentActivityName=".IfThenActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ahat.mmsnap.IfThenActivity"/>
+                android:value="ahat.mmsnap.MainActivity"/>
         </activity>
         <activity
             android:name=".IfThenActivity"
@@ -159,56 +159,56 @@
         <activity
             android:name=".EQVASActivity"
             android:label="@string/title_activity_eqvas"
-            android:parentActivityName=".AssessmentsActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ahat.mmsnap.AssessmentsActivity"/>
+                android:value="ahat.mmsnap.MainActivity"/>
         </activity>
         <activity
             android:name=".WeeklyEvaluationActivity"
             android:label="@string/title_activity_weekly_evaluation"
-            android:parentActivityName=".AssessmentsActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ahat.mmsnap.AssessmentsActivity"/>
+                android:value="ahat.mmsnap.MainActivity"/>
         </activity>
         <activity
             android:name=".SelfRatedHealthActivity"
             android:label="@string/title_activity_self_rated_health"
-            android:parentActivityName=".AssessmentsActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ahat.mmsnap.AssessmentsActivity"/>
+                android:value="ahat.mmsnap.MainActivity"/>
         </activity>
         <activity
             android:name=".IntentionsAndPlansActivity"
             android:label="@string/title_activity_plans"
-            android:parentActivityName=".AssessmentsActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ahat.mmsnap.AssessmentsActivity"/>
+                android:value="ahat.mmsnap.MainActivity"/>
         </activity>
         <activity
             android:name=".HealthRiskActivity"
             android:label="@string/title_activity_health_risk"
-            android:parentActivityName=".AssessmentsActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ahat.mmsnap.AssessmentsActivity"/>
+                android:value="ahat.mmsnap.MainActivity"/>
         </activity>
         <activity
             android:name=".EfficacyActivity"
             android:label="@string/title_activity_efficacy"
-            android:parentActivityName=".AssessmentsActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ahat.mmsnap.AssessmentsActivity"/>
+                android:value="ahat.mmsnap.MainActivity"/>
         </activity>
         <activity
             android:name=".AssessmentsActivity"

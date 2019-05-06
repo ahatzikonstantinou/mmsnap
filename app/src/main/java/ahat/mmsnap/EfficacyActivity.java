@@ -75,7 +75,7 @@ public class EfficacyActivity extends MassDisableActivity // AppCompatActivity
     @Override
     public void onBackPressed()
     {
-        startActivity( new Intent( this, AssessmentsActivity.class ) );
+        startActivity( new Intent( this, MainActivity.class ) );
     }
 
 }
