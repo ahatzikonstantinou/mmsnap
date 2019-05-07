@@ -54,7 +54,7 @@ public class CopingPlansDetailActivity extends IfThenDetailActivity //AppCompatA
 //        LinearLayout borderLayout = findViewById( R.id.action_plan_border_layout );
 //        borderLayout.getBackground().setColorFilter( getResources().getColor( R.color.coping_plan ), PorterDuff.Mode.SRC_ATOP );
         TextView title = findViewById( R.id.action_plan_title_textView );
-        title.getBackground().setColorFilter( getResources().getColor( R.color.coping_plan ), PorterDuff.Mode.SRC_ATOP );
+//        title.getBackground().setColorFilter( getResources().getColor( R.color.coping_plan ), PorterDuff.Mode.SRC_ATOP );
         title.setText( "COPING PLAN" );
 
         // hide the coping plan frame which is only used in action plans

@@ -127,7 +127,11 @@ public class DailyEvaluationsListActivity extends AppCompatActivity
     public void onBackPressed()
     {
         finish();
-        startActivity( new Intent( this, MainActivity.class ) );
+        Intent intent = new Intent(this, MainActivity.class);
+        Bundle b = new Bundle();
+        b.putSerializable( "display", MainActivity.Display.SECTIONS );
+        intent.putExtras( b );
+        startActivity( intent );
     }
 
     @Override

@@ -146,8 +146,6 @@
                 android:layout_marginLeft="@dimen/subsection_marginSide"
                 android:layout_marginRight="@dimen/subsection_marginSide"
                 android:layout_marginTop="@dimen/subsection_marginTop"
-                android:background="@drawable/mmsnap_subcategory_border"
-                android:backgroundTint="@color/edu_test_btn"
                 android:orientation="vertical"
                 android:padding="3dip">
 
@@ -299,22 +297,22 @@
                 </ScrollView>
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent">-->
 
-                <TextView
-                    android:layout_width="@dimen/subsection_title_width"
-                    android:layout_height="@dimen/subsection_title_height"
-                    android:layout_centerHorizontal="true"
-                    android:background="@color/edu_test_btn"
-                    android:text="@string/if_then_knowledge_test_btn_txt"
-                    android:textAlignment="center"
-                    android:textColor="#ffffff"
-                    android:textSize="@dimen/subsection_title_textSize"
-                    android:textStyle="bold"
-                    />
-            </RelativeLayout>
+                <!--<TextView-->
+                    <!--android:layout_width="@dimen/subsection_title_width"-->
+                    <!--android:layout_height="@dimen/subsection_title_height"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:background="@color/edu_test_btn"-->
+                    <!--android:text="@string/if_then_knowledge_test_btn_txt"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:textColor="#ffffff"-->
+                    <!--android:textSize="@dimen/subsection_title_textSize"-->
+                    <!--android:textStyle="bold"-->
+                    <!--/>-->
+            <!--</RelativeLayout>-->
         </FrameLayout>
     <!--</ScrollView>-->
 

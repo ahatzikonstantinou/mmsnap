@@ -79,7 +79,13 @@ public class CounterfactualDetailActivity extends AppCompatActivity
                     as.counterfactualThought.thenStatement = thenStatement;
                     as.counterfactualThought.active = activeSwitch.isChecked();
                     as.save();
-                    startActivity( new Intent( CounterfactualDetailActivity.this, IfThenActivity.class ) );
+//                    startActivity( new Intent( CounterfactualDetailActivity.this, IfThenActivity.class ) );
+
+                    Intent intent = new Intent( CounterfactualDetailActivity.this, MainActivity.class );
+                    Bundle b = new Bundle();
+                    b.putSerializable( "display", MainActivity.Display.SECTIONS );
+                    intent.putExtras( b );
+                    startActivity( intent );
                 }
                 catch( Exception e )
                 {

@@ -16,33 +16,36 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp">
+        android:layout_height="match_parent">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/subsection_marginTop"
-                android:layout_marginBottom="@dimen/subsection_marginBottom"
-                android:layout_marginRight="@dimen/subsection_marginSide"
-                android:layout_marginLeft="@dimen/subsection_marginSide"
+                android:layout_margin="10dp"
                 android:padding="15dp"
-                android:background="@drawable/mmsnap_subcategory_border"
-                android:backgroundTint="@color/assessments_plans_btn"
+                android:background="@drawable/rounded_lightgrey_border_white_bkg"
                 android:orientation="vertical">
 
-
+                <TextView
+                    android:layout_width="@dimen/subsection_title_width"
+                    android:layout_height="@dimen/subsection_title_height"
+                    android:text="@string/assessments_plans_btn_text"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:textSize="@dimen/subsection_title_textSize"
+                    android:textStyle="bold"
+                    />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:text="Tick the box if you agree with the statement"/>
 
@@ -56,7 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:text="I have made a detailed plan regarding ..."/>
 
                 <CheckBox
@@ -64,9 +67,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="when to exercise"/>
@@ -76,9 +79,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="In the past week have you exercised less than 150 min moderate or 60 min intense manner?"/>
@@ -88,9 +91,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="where to exercise"/>
@@ -100,9 +103,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="how to exercise"/>
@@ -112,9 +115,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="how often to exercise"/>
@@ -124,9 +127,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="with whom to exercise"/>
@@ -136,9 +139,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="what to do if something interferes with my plans"/>
@@ -148,9 +151,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="how to cope with possilble setbacks"/>
@@ -160,9 +163,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="what to do in difficult situations in order to act according to my intentions"/>
@@ -172,9 +175,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="which good opportunities for action to take"/>
@@ -184,9 +187,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="when I have to pay extra attention to prevent lapses"/>
@@ -202,7 +205,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_marginTop="25dp"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:text="I intend to ..."/>
 
                 <CheckBox
@@ -210,9 +213,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="exercise several times per week"/>
@@ -222,9 +225,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="work up a sweat regularly int."/>
@@ -234,9 +237,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="exercise regularly"/>
@@ -246,9 +249,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="be physically active for a minimum of 30 minutes at least three times a week"/>
@@ -258,9 +261,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="increase my leisure time activity"/>
@@ -270,39 +273,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="adhere to the exercise regime prescribed to me during the rehabilitation"/>
 
-                <Button
-                    android:id="@+id/plan_submit_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_trnsp_bkg"
-                    android:text="Submit"/>
+
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+            <Button
+                android:id="@+id/plan_submit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_5dp_grey_border_white_bkg"
+                android:textColor="@color/primary_button_text"
+                android:backgroundTint="@color/primary_button_bkg"
+                android:text="Submit"/>
+            <!--<RelativeLayout-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="fill_parent">-->
 
-                <TextView
-                    android:layout_width="@dimen/subsection_title_width"
-                    android:layout_height="@dimen/subsection_title_height"
-                    android:layout_centerHorizontal="true"
-                    android:background="@color/assessments_plans_btn"
-                    android:text="@string/assessments_plans_btn_text"
-                    android:textAlignment="center"
-                    android:textColor="#ffffff"
-                    android:textSize="@dimen/subsection_title_textSize"
-                    android:textStyle="bold"
-                    />
-            </RelativeLayout>
-        </FrameLayout>
+                <!--<TextView-->
+                    <!--android:layout_width="@dimen/subsection_title_width"-->
+                    <!--android:layout_height="@dimen/subsection_title_height"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:background="@color/assessments_plans_btn"-->
+                    <!--android:text="@string/assessments_plans_btn_text"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:textColor="#ffffff"-->
+                    <!--android:textSize="@dimen/subsection_title_textSize"-->
+                    <!--android:textStyle="bold"-->
+                    <!--/>-->
+            <!--</RelativeLayout>-->
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

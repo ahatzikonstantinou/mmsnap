@@ -36,6 +36,14 @@ public class WeeklyEvaluationActivity extends MassDisableActivity // AppCompatAc
         getSupportActionBar().setTitle( R.string.title_activity_assessments );
         getSupportActionBar().setSubtitle( R.string.title_activity_weekly_evaluation );
 
+        toolbar.setNavigationOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick( View view )
+            {
+                onBackPressed();
+            }
+        } );
+
         evaluation = (WeeklyEvaluation) getIntent().getSerializableExtra( "evaluation" );
 
         Calendar startCal = Calendar.getInstance();
@@ -141,6 +149,17 @@ public class WeeklyEvaluationActivity extends MassDisableActivity // AppCompatAc
         }
 
         return i;
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        Bundle b = new Bundle();
+        b.putSerializable( "display", MainActivity.Display.SECTIONS );
+        intent.putExtras( b );
+        startActivity( intent );
     }
 
 }

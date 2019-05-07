@@ -1,5 +1,6 @@
 package ahat.mmsnap;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
@@ -18,6 +19,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -65,7 +67,7 @@ public class MainActivity extends StateActivity //AppCompatActivity
 //    private Button ifThenButton;
 //    private Button achievementsButton;
 
-    private enum Display { TODAY, ATTENTION, ACHIEVEMENTS, SECTIONS };
+    public enum Display { TODAY, ATTENTION, ACHIEVEMENTS, SECTIONS };
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
         = new BottomNavigationView.OnNavigationItemSelectedListener()
@@ -175,7 +177,15 @@ public class MainActivity extends StateActivity //AppCompatActivity
         }
 
         // the application starts with TODAY's plans in view
-        show( Display.TODAY );
+//        show( Display.TODAY );
+        Display display = Display.TODAY;
+
+        Bundle b = getIntent().getExtras();
+        if( null != b && b.containsKey(  "display" ) )
+        {
+            display = (Display) b.get( "display" );
+        }
+        show( display );
 
         try
         {
@@ -409,7 +419,6 @@ public class MainActivity extends StateActivity //AppCompatActivity
             textView.setCompoundDrawablesRelativeWithIntrinsicBounds( check, null, null, null );
         }
     }
-
 
     private void setRemainingText( int totalPlans, int remainingPlans, ApplicationStatus.Behavior behavior )
     {
@@ -773,7 +782,19 @@ public class MainActivity extends StateActivity //AppCompatActivity
         }
         else
         {
-            super.onBackPressed();
+//            super.onBackPressed();
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder( this );
+            alertDialog.setNegativeButton( android.R.string.no, null )
+                       .setTitle("Exit MMSNAP")
+                       .setMessage("Are you sure you wish to exit MMSNAP?" )
+                       .setCancelable(true)
+                       .setPositiveButton( android.R.string.yes,
+                                           new DialogInterface.OnClickListener() {
+                                               public void onClick( DialogInterface dialog, int which) {
+                                                   finish();
+                                               }
+                                           })
+                       .show();
         }
     }
 

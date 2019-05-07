@@ -15,32 +15,36 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp">
+        android:layout_height="match_parent">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/subsection_marginTop"
-                android:layout_marginBottom="@dimen/subsection_marginBottom"
-                android:layout_marginRight="@dimen/subsection_marginSide"
-                android:layout_marginLeft="@dimen/subsection_marginSide"
+                android:layout_margin="10dp"
                 android:padding="15dp"
-                android:background="@drawable/mmsnap_subcategory_border"
-                android:backgroundTint="@color/assessments_efficacy_btn"
+                android:background="@drawable/rounded_lightgrey_border_white_bkg"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="@dimen/subsection_title_width"
+                    android:layout_height="@dimen/subsection_title_height"
+                    android:text="@string/assessments_efficacy_btn_text"
+                    android:textColor="@android:color/secondary_text_light"
+                    android:textSize="@dimen/subsection_title_textSize"
+                    android:textStyle="bold"
+                    />
 
                 <TextView
                     android:id="@+id/editText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:text="Tick the box if you agree with the statement"/>
 
@@ -49,9 +53,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="I am confident that I can adjust my life to a healthier lifestyle"/>
@@ -61,9 +65,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="I am confident that I can complete at least four health behaviour goals per week"/>
@@ -73,38 +77,44 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_white_bkg"
+                    android:background="#f5f5f5"
                     android:padding="10dp"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:button="@null"
                     android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                     android:text="I am confident that I can complete as many behaviour goals as necessary in order to manage my Multimorbidity"/>
 
-                <Button
-                    android:id="@+id/efficacy_submit_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rounded_border_trnsp_bkg"
-                    android:text="Submit"/>
+
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+            <Button
+                android:id="@+id/efficacy_submit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_5dp_grey_border_white_bkg"
+                android:backgroundTint="@color/primary_button_bkg"
+                android:textColor="@color/primary_button_text"
+                android:text="Submit"/>
 
-                <TextView
-                    android:layout_width="@dimen/subsection_title_width"
-                    android:layout_height="@dimen/subsection_title_height"
-                    android:layout_centerHorizontal="true"
-                    android:background="@color/assessments_efficacy_btn"
-                    android:text="@string/assessments_efficacy_btn_text"
-                    android:textAlignment="center"
-                    android:textColor="#ffffff"
-                    android:textSize="@dimen/subsection_title_textSize"
-                    android:textStyle="bold"
-                    />
-            </RelativeLayout>
-        </FrameLayout>
+            <!--<RelativeLayout-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="fill_parent">-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="@dimen/subsection_title_width"-->
+                    <!--android:layout_height="@dimen/subsection_title_height"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:background="@color/assessments_efficacy_btn"-->
+                    <!--android:text="@string/assessments_efficacy_btn_text"-->
+                    <!--android:textAlignment="center"-->
+                    <!--android:textColor="#ffffff"-->
+                    <!--android:textSize="@dimen/subsection_title_textSize"-->
+                    <!--android:textStyle="bold"-->
+                    <!--/>-->
+            <!--</RelativeLayout>-->
+
+
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -311,8 +311,12 @@ public abstract class IfThenListActivity extends AppCompatActivity
         else
         {
 //            startActivity( getParentActivityIntent() );
-//            startActivity( new Intent( this, MainActivity.class ) );
             finish();
+            Intent intent = new Intent(this, MainActivity.class);
+            Bundle b = new Bundle();
+            b.putSerializable( "display", MainActivity.Display.SECTIONS );
+            intent.putExtras( b );
+            startActivity( intent );
         }
     }
 

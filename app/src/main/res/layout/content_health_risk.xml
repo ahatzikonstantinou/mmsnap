@@ -15,33 +15,37 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp">
-    <FrameLayout
+        android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/subsection_marginTop"
-            android:layout_marginBottom="@dimen/subsection_marginBottom"
-            android:layout_marginRight="@dimen/subsection_marginSide"
-            android:layout_marginLeft="@dimen/subsection_marginSide"
+            android:layout_margin="10dp"
             android:padding="15dp"
-            android:background="@drawable/mmsnap_subcategory_border"
-            android:backgroundTint="@color/assessments_risk_btn"
+            android:background="@drawable/rounded_lightgrey_border_white_bkg"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="@dimen/subsection_title_width"
+                android:layout_height="@dimen/subsection_title_height"
+                android:text="@string/assessments_risk_btn_text"
+                android:textColor="@android:color/secondary_text_light"
+                android:textSize="@dimen/subsection_title_textSize"
+                android:textStyle="bold"
+                />
 
             <CheckBox
                 android:id="@+id/risk_smoke_cbx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/rounded_border_white_bkg"
+                android:background="#f5f5f5"
                 android:padding="10dp"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:button="@null"
                 android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                 android:text="Are you smoking one cigarette per week?"/>
@@ -50,10 +54,10 @@
                 android:id="@+id/risk_exercise_cbx"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#f5f5f5"
                 android:layout_margin="10dp"
-                android:background="@drawable/rounded_border_white_bkg"
                 android:padding="10dp"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:button="@null"
                 android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                 android:text="In the past week have you exercised less than 150 min moderate or 60 min intense manner?"/>
@@ -63,9 +67,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/rounded_border_white_bkg"
+                android:background="#f5f5f5"
                 android:padding="10dp"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:button="@null"
                 android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                 android:text="Are you regularly eating less than 5 portions [125 ml] of fruits/vegetables on a daily basis? [1 portion = 1 orange]"/>
@@ -75,39 +79,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:background="@drawable/rounded_border_white_bkg"
+                android:background="#f5f5f5"
                 android:padding="10dp"
-                android:textSize="18sp"
+                android:textSize="15sp"
                 android:button="@null"
                 android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                 android:text="Are you drinking alcohol more than 10 for women and more than 15 for men standard drinks per week? [1 standard drink = 1/2 pint of beer or 1 glass of wine]"/>
 
-            <Button
-                android:id="@+id/risk_submit_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/rounded_border_trnsp_bkg"
-                android:text="Submit"/>
-
         </LinearLayout>
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+        <Button
+            android:id="@+id/risk_submit_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/rounded_5dp_grey_border_white_bkg"
+            android:backgroundTint="@color/primary_button_bkg"
+            android:textColor="@color/primary_button_text"
+            android:text="Submit"/>
+        <!--<RelativeLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent">-->
 
-            <TextView
-                android:layout_width="@dimen/subsection_title_width"
-                android:layout_height="@dimen/subsection_title_height"
-                android:layout_centerHorizontal="true"
-                android:background="@color/assessments_risk_btn"
-                android:text="@string/assessments_risk_btn_text"
-                android:textAlignment="center"
-                android:textColor="#ffffff"
-                android:textSize="@dimen/subsection_title_textSize"
-                android:textStyle="bold"
-                />
-        </RelativeLayout>
-    </FrameLayout>
+            <!--<TextView-->
+                <!--android:layout_width="@dimen/subsection_title_width"-->
+                <!--android:layout_height="@dimen/subsection_title_height"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:background="@color/assessments_risk_btn"-->
+                <!--android:text="@string/assessments_risk_btn_text"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textColor="#ffffff"-->
+                <!--android:textSize="@dimen/subsection_title_textSize"-->
+                <!--android:textStyle="bold"-->
+                <!--/>-->
+        <!--</RelativeLayout>-->
+    </LinearLayout>
     </ScrollView>
 </LinearLayout>

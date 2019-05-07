@@ -56,7 +56,7 @@ public class WeeklyEvaluationsListActivity extends AppCompatActivity
                                          }
             );
 
-            findViewById( R.id.message ).setVisibility( as.pendingWeeklyEvaluationsExist() ? View.VISIBLE : View.GONE );
+            findViewById( R.id.message_layout ).setVisibility( as.pendingWeeklyEvaluationsExist() ? View.VISIBLE : View.GONE );
         }
         catch( Exception e )
         {
@@ -76,6 +76,11 @@ public class WeeklyEvaluationsListActivity extends AppCompatActivity
     {
 //        startActivity( new Intent( this, MainActivity.class ) );
         finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        Bundle b = new Bundle();
+        b.putSerializable( "display", MainActivity.Display.SECTIONS );
+        intent.putExtras( b );
+        startActivity( intent );
     }
 
 }

@@ -69,7 +69,7 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick( View view )
     {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder( this );//.create();
-        alertDialog .setNegativeButton( android.R.string.no, null );
+        alertDialog.setNegativeButton( android.R.string.no, null );
 
         switch( view.getId() )
         {

@@ -211,58 +211,6 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
             findViewById( R.id.select_week_btn ).setOnClickListener( this );
         }
 
-
-
-
-
-//            if( !item.isEvaluated() )
-//            {
-//                Calendar c = Calendar.getInstance();
-//                c.set( Calendar.YEAR, item.year );
-//                c.set( Calendar.WEEK_OF_YEAR, item.weekOfYear );
-//
-//                c.set( Calendar.DAY_OF_WEEK, Calendar.MONDAY );
-//                if( now.after( c ) && item.hasDay( MONDAY ) ){ findViewById( R.id.mon_layout ).setOnClickListener( this ); }
-//
-//                c.set( Calendar.DAY_OF_WEEK, Calendar.TUESDAY );
-//                if( now.after( c ) && item.hasDay( TUESDAY ) ){ findViewById( R.id.tue_layout ).setOnClickListener( this ); }
-//
-//                c.set( Calendar.DAY_OF_WEEK, Calendar.WEDNESDAY );
-//                if( now.after( c ) && item.hasDay( WEDNESDAY ) ){ findViewById( R.id.wed_layout ).setOnClickListener( this ); }
-//
-//                c.set( Calendar.DAY_OF_WEEK, Calendar.THURSDAY );
-//                if( now.after( c ) && item.hasDay( THURSDAY ) ){ findViewById( R.id.thu_layout ).setOnClickListener( this ); }
-//
-//                c.set( Calendar.DAY_OF_WEEK, Calendar.FRIDAY );
-//                if( now.after( c ) && item.hasDay( FRIDAY ) ){ findViewById( R.id.fri_layout ).setOnClickListener( this ); }
-//
-//                c.set( Calendar.DAY_OF_WEEK, Calendar.SATURDAY );
-//                if( now.after( c ) && item.hasDay( SATURDAY ) ){ findViewById( R.id.sat_layout ).setOnClickListener( this ); }
-//
-//                c.set( Calendar.DAY_OF_WEEK, Calendar.SUNDAY );
-//                if( now.after( c ) && item.hasDay( SUNDAY ) ){ findViewById( R.id.sun_layout ).setOnClickListener( this ); }
-//            }
-
-
-        // success (/check) and fail images are displayed only if a plan is expired or in evaluation mode
-//        if( planIsExpired )
-//        {
-//            findViewById( R.id.day_mon_check_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( MONDAY ) ) && item.isEvaluated( MONDAY ) && item.isSuccessful( MONDAY ) ? View.VISIBLE : View.INVISIBLE );
-//            findViewById( R.id.day_tue_check_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( TUESDAY ) ) && item.isEvaluated( TUESDAY ) && item.isSuccessful( TUESDAY ) ? View.VISIBLE : View.INVISIBLE );
-//            findViewById( R.id.day_wed_check_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( WEDNESDAY ) ) && item.isEvaluated( WEDNESDAY ) && item.isSuccessful( WEDNESDAY ) ? View.VISIBLE : View.INVISIBLE );
-//            findViewById( R.id.day_thu_check_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( THURSDAY ) ) && item.isEvaluated( THURSDAY ) && item.isSuccessful( THURSDAY ) ? View.VISIBLE : View.INVISIBLE );
-//            findViewById( R.id.day_fri_check_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( FRIDAY ) ) && item.isEvaluated( FRIDAY ) && item.isSuccessful( FRIDAY ) ? View.VISIBLE : View.INVISIBLE );
-//            findViewById( R.id.day_sat_check_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( SATURDAY ) ) && item.isEvaluated( SATURDAY ) && item.isSuccessful( SATURDAY ) ? View.VISIBLE : View.INVISIBLE );
-//            findViewById( R.id.day_sun_check_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( SUNDAY ) ) && item.isEvaluated( SUNDAY ) && item.isSuccessful( SUNDAY ) ? View.VISIBLE : View.INVISIBLE );
-//            findViewById( R.id.day_mon_fail_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( MONDAY ) ) && item.isEvaluated( MONDAY ) && !item.isSuccessful( MONDAY ) ? View.VISIBLE : View.INVISIBLE );
-//            findViewById( R.id.day_tue_fail_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( TUESDAY ) ) && item.isEvaluated( TUESDAY ) && !item.isSuccessful( TUESDAY ) ? View.VISIBLE : View.INVISIBLE );
-//            findViewById( R.id.day_wed_fail_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( WEDNESDAY ) ) && item.isEvaluated( WEDNESDAY ) && !item.isSuccessful( WEDNESDAY ) ? View.VISIBLE : View.INVISIBLE );
-//            findViewById( R.id.day_thu_fail_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( THURSDAY ) ) && item.isEvaluated( THURSDAY ) && !item.isSuccessful( THURSDAY ) ? View.VISIBLE : View.INVISIBLE );
-//            findViewById( R.id.day_fri_fail_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( FRIDAY ) ) && item.isEvaluated( FRIDAY ) && !item.isSuccessful( FRIDAY ) ? View.VISIBLE : View.INVISIBLE );
-//            findViewById( R.id.day_sat_fail_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( SATURDAY ) ) && item.isEvaluated( SATURDAY ) && !item.isSuccessful( SATURDAY ) ? View.VISIBLE : View.INVISIBLE );
-//            findViewById( R.id.day_sun_fail_img ).setVisibility( ( planIsExpired || evaluationMode || item.dayHasPassed( SUNDAY ) ) && item.isEvaluated( SUNDAY ) && !item.isSuccessful( SUNDAY ) ? View.VISIBLE : View.INVISIBLE );
-//        }
-
         year = item.year;
         weekOfYear = item.weekOfYear;
         setWeekUI( year, weekOfYear );
@@ -579,8 +527,8 @@ public abstract class IfThenDetailActivity extends MassDisableActivity //AppComp
             {
 //                JSONArrayIOHandler.saveItem( getBaseContext(), item, getFilesDir().getPath() + "/" + FILENAME );
                 saveItem( year, weekOfYear, days, reminders );
-//                startActivity( new Intent( getBaseContext(), getListActivityClass() ) );
                 finish();
+                startActivity( new Intent( getBaseContext(), getListActivityClass() ) );
             }
             else
             {
