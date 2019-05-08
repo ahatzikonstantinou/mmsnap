@@ -81,6 +81,7 @@ public class CounterfactualDetailActivity extends AppCompatActivity
                     as.save();
 //                    startActivity( new Intent( CounterfactualDetailActivity.this, IfThenActivity.class ) );
 
+                    finish();
                     Intent intent = new Intent( CounterfactualDetailActivity.this, MainActivity.class );
                     Bundle b = new Bundle();
                     b.putSerializable( "display", MainActivity.Display.SECTIONS );

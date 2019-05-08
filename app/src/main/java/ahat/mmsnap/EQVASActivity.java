@@ -52,7 +52,7 @@ public class EQVASActivity extends AppCompatActivity
             }
 
             public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
+                // Auto-generated method stub
             }
 
             public void onStopTrackingTouch(SeekBar seekBar) {
@@ -91,8 +91,13 @@ public class EQVASActivity extends AppCompatActivity
                     as.serverData.add( as.eqvas );
                     as.addAssessment( ApplicationStatus.Assessment.ILLNESS_PERCEPTION );
 
-//                    startActivity( getParentActivityIntent() );
                     finish();
+                    Intent intent = new Intent( EQVASActivity.this, MainActivity.class );
+                    Bundle b = new Bundle();
+                    b.putSerializable( "display", MainActivity.Display.SECTIONS );
+                    intent.putExtras( b );
+                    startActivity( intent );
+
                 }
                 catch( Exception e )
                 {

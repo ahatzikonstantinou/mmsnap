@@ -40,8 +40,12 @@ public class EfficacyActivity extends MassDisableActivity // AppCompatActivity
                     as.serverData.add( as.selfEfficacy );
                     as.addAssessment( ApplicationStatus.Assessment.SELF_EFFICACY );
 
-//                    startActivity( getParentActivityIntent() );
                     finish();
+                    Intent intent = new Intent( EfficacyActivity.this, MainActivity.class );
+                    Bundle b = new Bundle();
+                    b.putSerializable( "display", MainActivity.Display.SECTIONS );
+                    intent.putExtras( b );
+                    startActivity( intent );
                 }
                 catch( Exception e )
                 {

@@ -75,8 +75,14 @@ public class HealthRiskActivity extends AppCompatActivity
                                                new DialogInterface.OnClickListener() {
                                                   public void onClick( DialogInterface dialog, int which) {
                                                       dialog.dismiss();
-//                                                      startActivity( getParentActivityIntent() );
+
                                                       finish();
+                                                      Intent intent = new Intent( HealthRiskActivity.this, MainActivity.class );
+                                                      Bundle b = new Bundle();
+                                                      b.putSerializable( "display", MainActivity.Display.SECTIONS );
+                                                      intent.putExtras( b );
+                                                      startActivity( intent );
+
                                                   }
                                               });
                         alertDialog.show();

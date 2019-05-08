@@ -12,6 +12,8 @@ import android.graphics.drawable.ScaleDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationMenu;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -184,6 +186,8 @@ public class MainActivity extends StateActivity //AppCompatActivity
         if( null != b && b.containsKey(  "display" ) )
         {
             display = (Display) b.get( "display" );
+            BottomNavigationMenuView bottomNavigationMenu = findViewById( R.id.bottom_navigation );
+            bottomNavigationView.getMenu().getItem( display.ordinal() ).setChecked( true );
         }
         show( display );
 
@@ -791,7 +795,7 @@ public class MainActivity extends StateActivity //AppCompatActivity
                        .setPositiveButton( android.R.string.yes,
                                            new DialogInterface.OnClickListener() {
                                                public void onClick( DialogInterface dialog, int which) {
-                                                   finish();
+                                                   exit();
                                                }
                                            })
                        .show();
@@ -852,12 +856,17 @@ public class MainActivity extends StateActivity //AppCompatActivity
         }
         else if( id == R.id.nav_exit )
         {
-            finishAffinity(); // Close all activites
-            System.exit(0 );  // Releasing resources
+            exit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById( R.id.drawer_layout );
         drawer.closeDrawer( GravityCompat.START );
         return true;
+    }
+
+    private void exit()
+    {
+        finishAffinity(); // Close all activites
+        System.exit(0 );  // Releasing resources
     }
 }

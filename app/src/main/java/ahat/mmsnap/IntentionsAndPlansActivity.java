@@ -55,8 +55,12 @@ public class IntentionsAndPlansActivity extends MassDisableActivity // AppCompat
                     as.serverData.add( as.intentionsAndPlans );
                     as.addAssessment( ApplicationStatus.Assessment.INTENTIONS );
 
-//                    startActivity( getParentActivityIntent() );
                     finish();
+                    Intent intent = new Intent( IntentionsAndPlansActivity.this, MainActivity.class );
+                    Bundle b = new Bundle();
+                    b.putSerializable( "display", MainActivity.Display.SECTIONS );
+                    intent.putExtras( b );
+                    startActivity( intent );
                 }
                 catch( Exception e )
                 {

@@ -1,5 +1,6 @@
 package ahat.mmsnap;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -106,22 +107,20 @@ public class ResetPasswordActivity extends AppCompatActivity
 
                                 try
                                 {
-                                    ApplicationStatus as = ApplicationStatus.getInstance( view.getContext() );
-                                    as.passwordHasBeenReset();
-
                                     String username = response.getString( "login" );
                                     String email = response.getString( "email" );
                                     int remoteUserId = response.getInt( "id" );
 
-                                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences( view.getContext() );
-                                    SharedPreferences.Editor editor = settings.edit();
-                                    editor.putInt( getString( R.string.key_remoteUserId ), remoteUserId );
-                                    editor.putString( getString( R.string.key_email ), email );
-                                    editor.putString( getString( R.string.key_username ), username );
-                                    editor.putString( getString( R.string.key_password ), password );
-                                    editor.commit();
-                                    
-                                    onBeforeResetPasswordFinish( as );
+                                    resetPasswordSuccess( view.getContext(), remoteUserId, email, username, password );
+//                                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences( view.getContext() );
+//                                    SharedPreferences.Editor editor = settings.edit();
+//                                    editor.putInt( getString( R.string.key_remoteUserId ), remoteUserId );
+//                                    editor.putString( getString( R.string.key_email ), email );
+//                                    editor.putString( getString( R.string.key_username ), username );
+//                                    editor.putString( getString( R.string.key_password ), password );
+//                                    editor.commit();
+//
+//                                    onBeforeResetPasswordFinish( as );
                                 }
                                 catch( Exception e )
                                 {
@@ -130,17 +129,23 @@ public class ResetPasswordActivity extends AppCompatActivity
                                     Log.e( "MMSNAP:", "Password reset finish failed to update ApplicationStatus. Error: " + e.getMessage() );
                                     return;
                                 }
-                                Toast.makeText( ResetPasswordActivity.this, "Password reset was successful", Toast.LENGTH_SHORT ).show();
-                                finish();
-                                view.getContext().startActivity( new Intent( view.getContext(), MainActivity.class ) );
+//                                Toast.makeText( ResetPasswordActivity.this, "Password reset was successful", Toast.LENGTH_SHORT ).show();
+//                                finish();
+//                                view.getContext().startActivity( new Intent( view.getContext(), MainActivity.class ) );
                             }
                         },
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse( VolleyError error )
                             {
-                                progressBar.setVisibility( View.GONE );
-                                Toast.makeText( ResetPasswordActivity.this, "Password reset failed", Toast.LENGTH_SHORT ).show();
+
+                                //TODO: remove for proper server communication
+                                // code used only for debugging when server is not available
+                                resetPasswordSuccess( view.getContext(), 1, "user@domain.com", "user", "user" );
+
+                                // restore following code for proper function
+//                                progressBar.setVisibility( View.GONE );
+//                                Toast.makeText( ResetPasswordActivity.this, "Password reset failed", Toast.LENGTH_SHORT ).show();
                             }
                         }
                     );
@@ -154,5 +159,34 @@ public class ResetPasswordActivity extends AppCompatActivity
     {
     }
 
+    private void resetPasswordSuccess( Context context, int remoteUserId, String email, String username, String password )
+    {
+        try
+        {
 
+            ApplicationStatus as = ApplicationStatus.getInstance( context );
+            as.passwordHasBeenReset();
+
+            SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences( context );
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putInt( getString( R.string.key_remoteUserId ), remoteUserId );
+            editor.putString( getString( R.string.key_email ), email );
+            editor.putString( getString( R.string.key_username ), username );
+            editor.putString( getString( R.string.key_password ), password );
+            editor.apply();
+
+            onBeforeResetPasswordFinish( as );
+
+            Toast.makeText( ResetPasswordActivity.this, "Password reset was successful", Toast.LENGTH_SHORT ).show();
+            finish();
+            startActivity( new Intent( context, MainActivity.class ) );
+
+        }
+        catch( Exception e )
+        {
+            e.printStackTrace();
+            Toast.makeText( ResetPasswordActivity.this, "An unexpected error occurred during saving new password.", Toast.LENGTH_SHORT ).show();
+            Log.e( "MMSNAP:", "Reset password save failed. Error: " + e.getMessage() );
+        }
+    }
 }

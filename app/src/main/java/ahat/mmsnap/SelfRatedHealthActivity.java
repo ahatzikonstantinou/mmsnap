@@ -105,8 +105,12 @@ public class SelfRatedHealthActivity extends MassDisableActivity // AppCompatAct
                     as.serverData.add( as.selfRatedHealth );
                     as.addAssessment( ApplicationStatus.Assessment.SELF_RATED_HEALTH );
 
-//                    startActivity( getParentActivityIntent() );
                     finish();
+                    Intent intent = new Intent( SelfRatedHealthActivity.this, MainActivity.class );
+                    Bundle b = new Bundle();
+                    b.putSerializable( "display", MainActivity.Display.SECTIONS );
+                    intent.putExtras( b );
+                    startActivity( intent );
                 }
                 catch( Exception e )
                 {
