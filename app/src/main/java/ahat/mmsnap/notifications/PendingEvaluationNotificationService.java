@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -28,9 +29,10 @@ public class PendingEvaluationNotificationService extends IntentService
     }
 
     @Override
-    public void onCreate()
+    public int onStartCommand( Intent intent, int flags, int startId )
     {
         initChannels( this );
+        return Service.START_STICKY;
     }
 
     public static Intent createIntentStart( Context context )
