@@ -25,6 +25,11 @@ public class PendingEvaluationNotificationService extends IntentService
     public PendingEvaluationNotificationService()
     {
         super( PendingEvaluationNotificationService.class.getSimpleName() );
+    }
+
+    @Override
+    public void onCreate()
+    {
         initChannels( this );
     }
 

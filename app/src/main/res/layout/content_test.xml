@@ -91,6 +91,7 @@
             android:id="@+id/edu_test_prompt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="@string/edu_test_prompt"
             android:layout_weight="100"
             android:layout_gravity="center_vertical"
