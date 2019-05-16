@@ -1,13 +1,5 @@
 {
   "tests" : [
-    { "then": "then 1", "wrong": "wrong 1", "right": "right 1" },
-    { "then": "then 2", "wrong": "wrong 2", "right": "right 2" },
-    { "then": "then 3", "wrong": "wrong 3", "right": "right 3" },
-    { "then": "then 4", "wrong": "wrong 4", "right": "right 4" },
-    { "then": "then 5", "wrong": "wrong 5", "right": "right 5" },
-    { "then": "then 6", "wrong": "wrong 6", "right": "right 6" },
-    { "then": "then 7", "wrong": "wrong 7", "right": "right 7" },
-    { "then": "then 8", "wrong": "wrong 8", "right": "right 8" },
-    { "then": "then 9", "wrong": "wrong 9", "right": "right 9" }
+    { "then": "I will go for a 30 minutes walk", "wrong": "someday this week I am free", "right": "I return early from work this Friday" }
   ]
 }

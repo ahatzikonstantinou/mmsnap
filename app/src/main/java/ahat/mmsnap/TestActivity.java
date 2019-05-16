@@ -1,6 +1,7 @@
 package ahat.mmsnap;
 
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -212,20 +213,28 @@ public class TestActivity extends AppCompatActivity
         mPlayButton.setVisibility( View.VISIBLE );
         if( correct && !timedOut )
         {
-            ifLayout.getBackground().setColorFilter( getResources().getColor( R.color.then ), PorterDuff.Mode.SRC_ATOP);
+//            ifLayout.getBackground().setColorFilter( getResources().getColor( R.color.then ), PorterDuff.Mode.SRC_ATOP);
+            int color = getResources().getColor( if1Right ? R.color.statement_dark : R.color.statement_light );
+            ifLayout.getBackground().setColorFilter( color, PorterDuff.Mode.SRC_ATOP );
+            Drawable d = getResources().getDrawable( R.drawable.ic_if_bkg_alt );
+            d.setColorFilter( color, PorterDuff.Mode.SRC_ATOP );
+            ( ( Button ) findViewById( R.id.edu_test_if_btn ) ).setBackground( d );
             correctImageView.setVisibility( View.VISIBLE );
             errorImageView.setVisibility( View.GONE );
         }
         else
         {
-            ifLayout.getBackground().setColorFilter( getResources().getColor( R.color.if_color ), PorterDuff.Mode.SRC_ATOP);
+            int color = getResources().getColor( R.color.if_color );
+            ifLayout.getBackground().setColorFilter( color, PorterDuff.Mode.SRC_ATOP);
+            Drawable d = getResources().getDrawable( R.drawable.ic_if_bkg_alt );
+            d.setColorFilter( color, PorterDuff.Mode.SRC_ATOP );
+            ( ( Button ) findViewById( R.id.edu_test_if_btn ) ).setBackground( d );
             correctImageView.setVisibility( View.GONE );
             errorImageView.setVisibility( View.VISIBLE );
         }
 
         mPlayButton.setText( "Play again" );
     }
-
 
     protected void startTimer( final int offset )
     {
