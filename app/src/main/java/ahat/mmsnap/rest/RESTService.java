@@ -28,7 +28,7 @@ import ahat.mmsnap.R;
 
 public class RESTService extends IntentService
 {
-    public static final String REST_URL = "http://192.168.1.31:8080";
+    public static final String REST_URL = "https://www.mm-snap.com"; //"http://192.168.1.31:8080";
     private static final String ACTION_START = "ACTION_START";
     private static Calendar lastTrasmissiondate;
     private static final int minRetransmissionSeconds = 180;
